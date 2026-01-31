@@ -1,4 +1,6 @@
 # PDHelpDesk-Power-App
+This repository provides both the .msapp file and an extract version of the `.msapp` file.
+---
 # Power App Deployment & Restoration Guide
 
 This guide outlines the process for restructuring and deploying the application into a new environment with minimal errors.

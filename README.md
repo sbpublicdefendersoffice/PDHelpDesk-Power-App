@@ -56,3 +56,8 @@ A good rule of thumb is to create a backup every **3 months** or sooner.
     ```powershell
     pac canvas unpack --msapp "C:\path\to\your\App Name.msapp" --sources "C:\destination\path\AppFolder"
     ```
+6. **Repack the Application**
+    Navigate to your working folder, and remember the paths, in a new terminal run the following:
+    ```powershell
+    pac canvas pack --msapp "C:\exampleoutputpath\NewNameOfApp.msapp" --sources "C:\examplepathtosourcefolder\NameOfApp"
+    ```

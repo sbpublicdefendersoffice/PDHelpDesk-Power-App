@@ -1,0 +1,463 @@
+"'Automation Rules' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |-
+        =UpdateContext({RuleNumber:1,ARName:"Angie",ARUserID:1,ARCategoryID:1,ARLocationID:1,NewRule:true})
+    OnVisible: |-
+        =UpdateContext({tableMod:false});
+        UpdateContext({reAssignRule:Blank()});
+        LookUp('Ticket Automation Rules',categoryId = SelectCategoryTADropdown.Selected.ID And locationId = TAModLocationSelect.Selected.ID)
+
+    AutomationRulesContainer As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        AutomationRulesHeaderContainer As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            Container24 As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =4
+
+                HomeBackgroundGradient_69 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =130
+                    HtmlText: =Home_Background_Gradient.HtmlText
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                AutomationRulesLabel As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =Parent.Height-TemplateWebHeader_1.Height
+                    Size: =If('Automation Rules'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Automation Rules"
+                    Width: =Parent.Width
+                    Y: =TemplateWebHeader_1.Height
+                    ZIndex: =2
+
+                AutomationRulesWebHeader As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: ='Automation Rules'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    ZIndex: =3
+
+        AutomationRulesMainSectionContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            ZIndex: =3
+
+            ContentContainer As groupContainer.manualLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                FillPortions: =0
+                Height: =Parent.Height
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                Width: =Parent.Width
+                ZIndex: =2
+
+                SelectedAutomationTable As gallery.galleryVertical:
+                    BorderThickness: =2
+                    DelayItemLoading: =true
+                    Fill: =RGBA(241, 244, 249, 1)
+                    Height: =300
+                    Items: =Filter('Ticket Automation Rules',categoryId = SelectCategoryTADropdown.Selected.ID)
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplatePadding: =0
+                    TemplateSize: =50
+                    Width: =Parent.Width/1.1
+                    X: =TATableHeader.X
+                    Y: =TATableHeader.Y+TATableHeader.Height
+                    ZIndex: =1
+
+                    Container15 As groupContainer.horizontalAutoLayoutContainer:
+                        BorderThickness: =1
+                        Height: =Parent.TemplateHeight
+                        LayoutGridColumns: =6
+                        LayoutGridRows: =6
+                        LayoutMode: =LayoutMode.Auto
+                        Width: =Parent.TemplateWidth
+                        ZIndex: =4
+
+                        Label1 As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            FillPortions: =1
+                            Height: =Parent.Height
+                            LayoutMaxHeight: =
+                            LayoutMaxWidth: =
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =ThisItem.Name
+                            ZIndex: =1
+
+                        Label1_1 As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            FillPortions: =1
+                            Height: =Parent.Height
+                            LayoutMaxHeight: =
+                            LayoutMaxWidth: =
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =LookUp(Category,ID = ThisItem.categoryId).Name
+                            X: =40
+                            Y: =40
+                            ZIndex: =2
+
+                        Label1_3 As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            FillPortions: =1
+                            Height: =Parent.Height
+                            LayoutMaxHeight: =
+                            LayoutMaxWidth: =
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =LookUp(Locations,ID = ThisItem.locationId).Name
+                            X: =60
+                            Y: =60
+                            ZIndex: =3
+
+                TATableHeader As groupContainer.horizontalAutoLayoutContainer:
+                    BorderColor: =RGBA(9, 33, 98, 1)
+                    BorderThickness: =2
+                    Height: =34
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMode: =LayoutMode.Auto
+                    Width: =Parent.Width/1.1
+                    X: =SelectCategoryTADropdown.X
+                    Y: =SelectCategoryTADropdown.Y+SelectCategoryTADropdown.Height+20
+                    ZIndex: =2
+
+                    TATablePerson As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        FillPortions: =1
+                        Height: =34
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: ="Technician"
+                        Width: =200
+                        X: =60
+                        Y: =60
+                        ZIndex: =1
+
+                    CategorySelectTA_2 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        FillPortions: =1
+                        Height: =34
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: ="Category"
+                        Width: =200
+                        X: =60
+                        Y: =60
+                        ZIndex: =2
+
+                    CategorySelectTA_3 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        FillPortions: =1
+                        Height: =34
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: ="Location"
+                        Width: =200
+                        X: =60
+                        Y: =60
+                        ZIndex: =3
+
+                SelectCategoryTADropdown As dropdown:
+                    AllowEmptySelection: =true
+                    ChevronBackground: =ColorScheme.primary
+                    Default: =
+                    Items: =Sort(Filter(Category,parentId=Blank()),Name)
+                    X: =CategorySelectTA.X
+                    Y: =CategorySelectTA.Y+CategorySelectTA.Height
+                    ZIndex: =4
+
+                CategorySelectTA As label:
+                    BorderThickness: =2
+                    Color: =RGBA(255, 255, 255, 1)
+                    Fill: =ColorScheme.primary
+                    Height: =34
+                    Text: ="Select a Category"
+                    Width: =200
+                    X: =40
+                    Y: =20
+                    ZIndex: =5
+
+                Button4 As button:
+                    Fill: =ColorScheme.primary
+                    OnSelect: |-
+                        =UpdateContext({tableMod:true});
+                    Text: ="Modify Table"
+                    X: =(Parent.Width-Self.Width)/2
+                    Y: =SelectedAutomationTable.Y+SelectedAutomationTable.Height+25
+                    ZIndex: =6
+
+                Container37 As groupContainer.manualLayoutContainer:
+                    Height: =Parent.Height
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    Visible: =tableMod
+                    Width: =Parent.Width
+                    ZIndex: =17
+
+                    TableModTint As rectangle:
+                        Fill: =RGBA(56, 96, 178, .25)
+                        Height: =Parent.Height
+                        Visible: =tableMod
+                        Width: =Parent.Width
+                        ZIndex: =18
+
+                    TableModBackground As rectangle:
+                        BorderThickness: =1
+                        Fill: =RGBA(241, 244, 249, 1)
+                        Height: =Parent.Height/1.1
+                        Visible: =tableMod
+                        Width: =Parent.Width/1.1
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =(Parent.Height-Self.Height)/2
+                        ZIndex: =19
+
+                    TableModHeader As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =50
+                        Size: =16
+                        Text: ="Modifying "&LookUp(Category,ID=SelectCategoryTADropdown.Selected.ID,Name)&" Table"
+                        Visible: =tableMod
+                        Width: =TableModBackground.Width
+                        X: =TableModBackground.X
+                        Y: =TableModBackground.Y
+                        ZIndex: =20
+
+                    TAModRuleSubmit As button:
+                        DisplayMode: =If(!IsBlank(LookUp('Ticket Automation Rules',categoryId = SelectCategoryTADropdown.Selected.ID And locationId = TAModLocationSelect.Selected.ID)),If(TAModChangeRuleCheck.Visible And TAModChangeRuleCheck.Value,DisplayMode.Edit,DisplayMode.Disabled ),DisplayMode.Edit)
+                        Fill: =ColorScheme.primary
+                        OnSelect: |
+                            =If(TAModChangeRuleCheck.Visible And TAModChangeRuleCheck.Value
+                            ,UpdateContext({reAssignRule:LookUp('Ticket Automation Rules',categoryId = SelectCategoryTADropdown.Selected.ID And locationId = TAModLocationSelect.Selected.ID).ID});
+                            Patch('Ticket Automation Rules',LookUp('Ticket Automation Rules',ID = reAssignRule),
+                            {
+                                Title: TAModPersonSelect.Selected.fullName,
+                                userID: TAModPersonSelect.Selected.ID,
+                                categoryId: SelectCategoryTADropdown.Selected.ID,
+                                locationId: TAModLocationSelect.Selected.ID
+                            
+                            }),
+                            
+                            Patch('Ticket Automation Rules',Defaults('Ticket Automation Rules'),
+                            {
+                                Title: TAModPersonSelect.Selected.fullName,
+                                userID: TAModPersonSelect.Selected.ID,
+                                categoryId: SelectCategoryTADropdown.Selected.ID,
+                                locationId: TAModLocationSelect.Selected.ID
+                            
+                            }));
+                            Refresh('Ticket Automation Rules');
+                        Text: =If(TAModChangeRuleCheck.Visible And TAModChangeRuleCheck.Value, "Modify Rule", "New Rule")
+                        Visible: =tableMod
+                        X: =(TableModBackground.Width-Self.Width)/2 +TableModBackground.X
+                        Y: =If(TAModChangeRuleCheck.Visible,TAModChangeRuleCheck.Height)+TAModChangeRuleCheck.Y+15
+                        ZIndex: =21
+
+                    TAModChangeRuleCheck As checkbox:
+                        CheckboxSize: =50
+                        Height: =60
+                        Size: =16
+                        Text: =If(IsBlank(LookUp('Ticket Automation Rules',locationId = TAModLocationSelect.Selected.ID And categoryId = SelectCategoryTADropdown.Selected.ID)),"","Reassign Rule?")
+                        Visible: =!IsBlank(LookUp('Ticket Automation Rules',locationId = TAModLocationSelect.Selected.ID And categoryId = SelectCategoryTADropdown.Selected.ID)) && tableMod
+                        Width: =250
+                        X: =(TableModBackground.Width-Self.Width)/2 +TableModBackground.X
+                        Y: =TAModLocationSelect.Y+TAModLocationSelect.Height+25
+                        ZIndex: =22
+
+                    TAModLocationSelect As dropdown:
+                        AllowEmptySelection: =true
+                        ChevronBackground: =ColorScheme.primary
+                        Default: =
+                        Items: =Locations
+                        Visible: =tableMod
+                        Width: =TableModBackground.Width/1.1
+                        X: =TAModLocationLabel.X
+                        Y: =TAModLocationLabel.Y+TAModLocationLabel.Height
+                        ZIndex: =23
+
+                    TAModLocationLabel As label:
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Size: =16
+                        Text: ="Location"
+                        Visible: =tableMod
+                        X: =TAModTechLabel.X
+                        Y: =TAModPersonSelect.Y+TAModPersonSelect.Height+25
+                        ZIndex: =24
+
+                    TAModPersonSelect As dropdown:
+                        AllowEmptySelection: =true
+                        ChevronBackground: =ColorScheme.primary
+                        Default: =
+                        FontWeight: =FontWeight.Lighter
+                        Items: =Filter(Users,userRole = "tech" || userRole="admin")
+                        Visible: =tableMod
+                        Width: =TableModBackground.Width/1.1
+                        X: =TAModTechLabel.X
+                        Y: =TAModTechLabel.Y+TAModTechLabel.Height
+                        ZIndex: =25
+
+                    TAModTechLabel As label:
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Size: =16
+                        Text: ="Technician"
+                        Visible: =tableMod
+                        X: =TableModBackground.X+40
+                        Y: =TableModBackground.Y+TableModHeader.Height+25
+                        ZIndex: =26
+
+                    Icon24 As icon:
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =RGBA(203, 102, 102, 1)
+                        Height: =48
+                        Icon: =Icon.Cancel
+                        OnSelect: |-
+                            =UpdateContext({tableMod:false});
+                            UpdateContext({reAssignRule:Blank()})
+                        Visible: =tableMod
+                        Width: =48
+                        X: =TableModHeader.Width-Self.Width+TableModHeader.X
+                        Y: =TableModHeader.Y
+                        ZIndex: =27
+
+        AutomationRulesFooter As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Automation Rules'.Size =1
+            Width: =Parent.Width
+            ZIndex: =4
+
+            AutomationRulesMobileMenu As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    AutomationRulesBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =AutomationRulesLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(AutomationRulesHeaderContainer.Height-AutomationRulesLabel.Height)/1.05
+        ZIndex: =2
+
+    AutomationRulesWebMenu As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Automation Rules'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    FeedbackBugReportAutoR As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =4
+

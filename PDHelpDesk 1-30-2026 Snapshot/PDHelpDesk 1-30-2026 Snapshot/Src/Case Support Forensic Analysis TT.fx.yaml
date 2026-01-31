@@ -1,0 +1,1894 @@
+"'Case Support Forensic Analysis TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm(CSForensicAnalysisForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        UpdateContext({altImagePopUp:false,usingCamera:false});
+        ClearCollect(forensicCol,
+        {
+            userName:"",
+            application:"",
+            physicalType:"",
+            clientPermission:false
+        });
+        Clear(forensicCol);
+
+    CSForensicAnalysisMainContainer As groupContainer.horizontalAutoLayoutContainer:
+        Height: ='Case Support Forensic Analysis TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='Case Support Forensic Analysis TT'.Width
+        ZIndex: =1
+
+        CSForensicAnalysisVerticalLayoutContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            CSForensicAnalysisHeaderContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                ForensicAnalysisHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =4
+
+                    HomeBackgroundGradient_49 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    CSForensicAnalysisHeaderLabel As label:
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-CSForensicAnalysisWebHeader.Height
+                        Size: =If('Case Support Forensic Analysis TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Forensic Analysis Form"
+                        Width: =Parent.Width
+                        Y: =CSForensicAnalysisWebHeader.Height
+                        ZIndex: =2
+
+                    CSForensicAnalysisWebHeader As compWebHeader:
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='Case Support Forensic Analysis TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        ZIndex: =3
+
+            CSForensicAnalysisMainContentContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                CSForensicAnalysisForm As form:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    CSForensicAnalysisSpecificIssue_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank(CSForensicAnalysisSpecificIssueDropdown.Selected.Name), false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        CSForensicAnalysisSpecificIssueLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =1
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Selection"
+                            Width: =120
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSForensicAnalysisSpecificIssueError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =CSForensicAnalysisSpecificIssueDropdown.Y + CSForensicAnalysisSpecificIssueDropdown.Height
+                            ZIndex: =3
+
+                        CSForensicAnalysisSpecificIssueStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSForensicAnalysisSpecificIssueLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSForensicAnalysisSpecificIssueLabel.Y
+                            ZIndex: =4
+
+                        CSForensicAnalysisSpecificIssueDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            DisabledBorderColor: =RGBA(9, 33, 98, 1)
+                            DisplayMode: =DisplayMode.View
+                            Height: =35
+                            Items: =Filter(Category, parentId = CSForensicAnalysisSubCategoryDropdown.Selected.ID)
+                            Width: =CSForensicAnalysisTitleInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSForensicAnalysisTitle_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        CSForensicAnalysisTitleLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Case Number"
+                            Width: =130
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSForensicAnalysisTitleError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =65
+                            ZIndex: =3
+
+                        CSForensicAnalysisTitleStarVisible As label:
+                            Align: =Align.Center
+                            Color: =CSForensicAnalysisTitleLabel.Color
+                            Height: =CSForensicAnalysisTitleLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSForensicAnalysisTitleLabel.Y
+                            ZIndex: =4
+
+                        CSForensicAnalysisTitleInput As text:
+                            Default: =""
+                            Height: =35
+                            HintText: ="Enter the case number"
+                            Width: =If('Case Support Forensic Analysis TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSForensicAnalysisMainCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        CSForensicAnalysisMainCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSForensicAnalysisMainCategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =CSForensicAnalysisMainCategoryDropdown.Y + CSForensicAnalysisMainCategoryDropdown.Height
+                            ZIndex: =3
+
+                        CSForensicAnalysisMainCategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSForensicAnalysisMainCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =10
+                            ZIndex: =4
+
+                        CSForensicAnalysisMainCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSForensicAnalysisSubCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        CSForensicAnalysisSubCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSForensicAnalysisSubcategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =73
+                            ZIndex: =3
+
+                        CSForensicAnalysisSubcategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSForensicAnalysisSubCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSForensicAnalysisSubCategoryLabel.Y
+                            ZIndex: =4
+
+                        CSForensicAnalysisSubCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = CSForensicAnalysisMainCategoryDropdown.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSForensicAnalysisFields As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =200
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        Group3 As group:
+                            Height: =5
+                            Width: =5
+                            X: =12
+                            Y: =28
+                            ZIndex: =13
+
+                            Rectangle8 As rectangle:
+                                BorderThickness: =2
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device"
+                                Width: =CSForensicAnalysisTitleInput.Width
+                                X: =30
+                                Y: =20
+                                ZIndex: =11
+
+                            Label45 As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =Rectangle8.Height
+                                Size: =15
+                                Text: ="Add media to be analyzed"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device"
+                                Width: =Rectangle8.Width
+                                X: =Rectangle8.X
+                                Y: =Rectangle8.Y
+                                ZIndex: =12
+
+                            Rectangle9 As rectangle:
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device"
+                                Width: =Rectangle8.Width
+                                X: =30
+                                Y: =Rectangle8.Y+Rectangle8.Height
+                                ZIndex: =13
+
+                            TextInput10 As text:
+                                Default: =""
+                                Height: =30
+                                HintText: ="Enter the type, such as Hard Drive, Usb Stick, Mobile Phone, Laptop, etc."
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device"
+                                Width: =If('Case Support Forensic Analysis TT'.Size=1,Rectangle9.Width-10,Rectangle9.Width/1.25)
+                                X: =35
+                                Y: =(Rectangle9.Height-Self.Height)/2 +Rectangle9.Y
+                                ZIndex: =14
+
+                            Button8 As button:
+                                Fill: =ColorScheme.primary
+                                Height: =30
+                                OnSelect: |-
+                                    =If(Len(TextInput10.Text)>0,
+                                    Patch(forensicCol,Defaults(forensicCol),
+                                    {
+                                        physicalType:TextInput10.Text
+                                    });,Notify("Cannot add blank entry"));
+                                    
+                                    Reset(TextInput10);
+                                Text: ="Add"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device"
+                                Width: =If('Case Support Forensic Analysis TT'.Size=1,100,Rectangle9.Width-TextInput10.Width -35)
+                                X: =If('Case Support Forensic Analysis TT'.Size=1,(TextInput10.Width-Self.Width)/2+TextInput10.X,TextInput10.Width+TextInput10.X+10)
+                                Y: =If('Case Support Forensic Analysis TT'.Size=1,Rectangle9.Y+Rectangle9.Height+10,TextInput10.Y)
+                                ZIndex: =15
+
+                        Group4 As group:
+                            Height: =5
+                            Width: =5
+                            X: =1
+                            Y: =13
+                            ZIndex: =16
+
+                            Rectangle10 As rectangle:
+                                BorderThickness: =2
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device" && !IsEmpty(forensicCol)
+                                Width: =Rectangle8.Width
+                                X: =Rectangle8.X
+                                Y: =207
+                                ZIndex: =8
+
+                            "Gallery8 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver5.0'":
+                                '#CopilotOverlayLabel': ="Filtered"
+                                BorderThickness: =1
+                                DelayItemLoading: =true
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =200
+                                Items: =forensicCol
+                                Layout: =Layout.Vertical
+                                LoadingSpinner: =LoadingSpinner.Data
+                                TemplatePadding: =0
+                                TemplateSize: =50
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device" && !IsEmpty(forensicCol)
+                                Width: =Rectangle8.Width
+                                X: =30
+                                Y: =257
+                                ZIndex: =9
+
+                                Title3 As label:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    BorderThickness: =1
+                                    Color: =RGBA(71, 69, 64, 1)
+                                    DisabledColor: =RGBA(186, 186, 186, 1)
+                                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                    Height: =Parent.TemplateHeight
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =12.5
+                                    Size: =14
+                                    Text: =ThisItem.physicalType
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =Parent.TemplateWidth
+                                    ZIndex: =1
+
+                                Button17 As button:
+                                    BorderColor: =
+                                    Color: =RGBA(0, 0, 0, 0)
+                                    Fill: =Color.Transparent
+                                    Height: =Parent.TemplateHeight
+                                    HoverFill: =RGBA(118, 0, 0, .4)
+                                    OnSelect: =Remove(forensicCol, ThisItem)
+                                    PressedFill: =RGBA(118, 0, 0, .8)
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: ="Remove"
+                                    Visible: =If('Case Support Forensic Analysis TT'.Size=1,false,true)
+                                    Width: =Parent.TemplateWidth
+                                    ZIndex: =2
+
+                                Icon19 As icon.CancelBadge:
+                                    Height: =Self.Width
+                                    Icon: =Icon.CancelBadge
+                                    OnSelect: =Remove(forensicCol, ThisItem)
+                                    Visible: =If('Case Support Forensic Analysis TT'.Size=1,true,false)
+                                    Width: =24
+                                    X: =Parent.TemplateWidth-Self.Width
+                                    ZIndex: =3
+
+                            Label46 As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =Rectangle10.Height
+                                Size: =15
+                                Text: ="Media to be submitted for analysis"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device" && !IsEmpty(forensicCol)
+                                Width: =Rectangle10.Width
+                                X: =30
+                                Y: =207
+                                ZIndex: =10
+
+                        Group5 As group:
+                            Height: =5
+                            Width: =5
+                            X: =60
+                            Y: =60
+                            ZIndex: =31
+
+                            Rectangle8_3 As rectangle:
+                                BorderThickness: =2
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                Width: =CSForensicAnalysisTitleInput.Width
+                                X: =30
+                                Y: =40
+                                ZIndex: =16
+
+                            Label45_1 As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =Rectangle8_3.Height
+                                Size: =15
+                                Text: ="Add information for applications"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                Width: =Rectangle8_3.Width
+                                X: =Rectangle8_3.X  
+                                Y: =Rectangle8_3.Y
+                                ZIndex: =17
+
+                            Rectangle9_1 As rectangle:
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =If('Case Support Forensic Analysis TT'.Size=1,370,100)
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                Width: =Rectangle8_3.Width
+                                X: =Rectangle8_3.X
+                                Y: =Rectangle8_3.Y+Rectangle8_3.Height
+                                ZIndex: =18
+
+                            TextInput10_1 As text:
+                                Default: =""
+                                Height: =30
+                                HintText: ="Enter User name for app"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                Width: =If('Case Support Forensic Analysis TT'.Size=1,Rectangle8_3.Width-10,Rectangle8_3.Width/4 -10)
+                                X: =35
+                                Y: =140
+                                ZIndex: =20
+
+                            Button8_1 As button:
+                                Fill: =ColorScheme.primary
+                                Height: =30
+                                OnSelect: |-
+                                    =If(Len(Trim(TextInput10_1.Text))>0 &&Len(Trim(TextInput10_2.Text)),
+                                    
+                                    Patch(forensicCol,Defaults(forensicCol),
+                                    {
+                                        userName:TextInput10_1.Text,
+                                        application:TextInput10_2.Text,
+                                        clientPermission:Checkbox4.Value
+                                    });
+                                    Reset(TextInput10_1);
+                                    Reset(TextInput10_2);
+                                    Reset(Checkbox4);,
+                                    Notify("Missing username or application name"))
+                                RadiusBottomLeft: =15
+                                RadiusBottomRight: =15
+                                RadiusTopLeft: =15
+                                RadiusTopRight: =15
+                                Text: ="Add"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                Width: =Rectangle8_3.Width/4 -10
+                                X: =If('Case Support Forensic Analysis TT'.Size=1,(Parent.Width-Self.Width)/2,Rectangle9_1.Width-Self.Width + Rectangle9_1.X - 5)
+                                Y: =If('Case Support Forensic Analysis TT'.Size=1,Checkbox4.Y+Checkbox4.Height+20+Rectangle8_3.X,140)
+                                ZIndex: =21
+
+                            Label47 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Text: ="User Name"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                Width: =If('Case Support Forensic Analysis TT'.Size=1,Rectangle8_3.Width,Rectangle8_3.Width/4)
+                                X: =30
+                                Y: =Rectangle8_3.Y+Rectangle8_3.Height
+                                ZIndex: =25
+
+                            TextInput10_2 As text:
+                                Default: =""
+                                Height: =30
+                                HintText: ="Enter app name"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                Width: =TextInput10_1.Width
+                                X: =If('Case Support Forensic Analysis TT'.Size=1,TextInput10_1.X,TextInput10_1.Width+TextInput10_1.X+10)
+                                Y: =If('Case Support Forensic Analysis TT'.Size=1,Label47_1.Y+Label47_1.Height+10,140)
+                                ZIndex: =26
+
+                            Checkbox4 As checkbox:
+                                Height: =30
+                                Text: =If(Self.Value = true, "Yes", "No")
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                Width: =100
+                                X: =If('Case Support Forensic Analysis TT'.Size=1,(Parent.Width-Self.Width)/2+Rectangle8_3.X,TextInput10_2.X+TextInput10_2.Width+(TextInput10_2.Width/3))
+                                Y: =If('Case Support Forensic Analysis TT'.Size=1,Label47_2.Y+Label47_2.Height+10,140)
+                                ZIndex: =27
+
+                            Label47_1 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Text: ="Application"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                Width: =Label47.Width
+                                X: =If('Case Support Forensic Analysis TT'.Size=1,30,Label47.X+Label47.Width)
+                                Y: =If('Case Support Forensic Analysis TT'.Size=1,TextInput10_1.Y+TextInput10_1.Height+10,Rectangle8_3.Y+Rectangle8_3.Height)
+                                ZIndex: =28
+
+                            Label47_2 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Text: ="Client Permisssion?"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                Width: =Label47.Width
+                                X: =If('Case Support Forensic Analysis TT'.Size=1,30,Label47_1.X+Label47_1.Width)
+                                Y: =If('Case Support Forensic Analysis TT'.Size=1,TextInput10_2.Y+TextInput10_2.Height+10,Rectangle8_3.Y+Rectangle8_3.Height)
+                                ZIndex: =29
+
+                            Label47_3 As label:
+                                Align: =Align.Center
+                                BorderThickness: =If('Case Support Forensic Analysis TT'.Size=1,0,1)
+                                Text: =""
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                Width: =Label47.Width
+                                X: =Label47_2.X+Label47_2.Width
+                                Y: =Rectangle8_3.Y+Rectangle8_3.Height
+                                ZIndex: =30
+
+                        Group7 As group:
+                            Height: =5
+                            Width: =5
+                            X: =100
+                            Y: =100
+                            ZIndex: =35
+
+                            Rectangle10_1 As rectangle:
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol)
+                                Width: =CSForensicAnalysisTitleInput.Width
+                                X: =30
+                                Y: =Rectangle9_1.Height+Rectangle9_1.Y+20
+                                ZIndex: =22
+
+                            "Gallery8_1 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver5.0'":
+                                '#CopilotOverlayLabel': ="Filtered"
+                                BorderThickness: =1
+                                DelayItemLoading: =true
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =200
+                                Items: =forensicCol
+                                Layout: =Layout.Vertical
+                                LoadingSpinner: =LoadingSpinner.Data
+                                TemplatePadding: =0
+                                TemplateSize: =50
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol) && 'Case Support Forensic Analysis TT'.Size>1
+                                Width: =CSForensicAnalysisTitleInput.Width
+                                X: =Rectangle10_1.X
+                                Y: =Label48.Y+Label48.Height
+                                ZIndex: =23
+
+                                Title3_1 As label:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    BorderThickness: =1
+                                    Color: =RGBA(71, 69, 64, 1)
+                                    DisabledColor: =RGBA(186, 186, 186, 1)
+                                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                    Height: =Parent.TemplateHeight
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =12.5
+                                    Size: =14
+                                    Text: =ThisItem.userName
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =Parent.TemplateWidth/3
+                                    ZIndex: =1
+
+                                Title3_2 As label:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    BorderThickness: =1
+                                    Color: =RGBA(71, 69, 64, 1)
+                                    DisabledColor: =RGBA(186, 186, 186, 1)
+                                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                    Height: =Parent.TemplateHeight
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =12.5
+                                    Size: =14
+                                    Text: =ThisItem.application
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =Parent.TemplateWidth/3
+                                    X: =Title3_1.Width
+                                    ZIndex: =2
+
+                                Title3_3 As label:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    BorderThickness: =1
+                                    Color: =RGBA(71, 69, 64, 1)
+                                    DisabledColor: =RGBA(186, 186, 186, 1)
+                                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                    Height: =Parent.TemplateHeight
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =12.5
+                                    Size: =14
+                                    Text: =If(ThisItem.clientPermission, "Yes","No")
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =Parent.TemplateWidth/3
+                                    X: =Title3_2.X+Title3_2.Width
+                                    ZIndex: =3
+
+                                Button17_1 As button:
+                                    BorderColor: =
+                                    Color: =RGBA(0, 0, 0, 0)
+                                    Fill: =Color.Transparent
+                                    Height: =Parent.TemplateHeight
+                                    HoverFill: =RGBA(118, 0, 0, .4)
+                                    OnSelect: =Remove(forensicCol, ThisItem)
+                                    PressedFill: =RGBA(118, 0, 0, .8)
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: ="Remove"
+                                    Width: =Parent.TemplateWidth
+                                    ZIndex: =4
+
+                            Label46_1 As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =Rectangle10_1.Height
+                                Size: =15
+                                Text: ="Social Media profiles to be analyzed"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol)
+                                Width: =Rectangle10_1.Width
+                                X: =Rectangle10_1.X
+                                Y: =Rectangle10_1.Y
+                                ZIndex: =24
+
+                            Label48 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =46
+                                Text: ="User Name"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol) && 'Case Support Forensic Analysis TT'.Size>1
+                                Width: =Rectangle10_1.Width/3
+                                X: =30
+                                Y: =Rectangle10_1.Height+Rectangle10_1.Y
+                                ZIndex: =31
+
+                            Label48_1 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =46
+                                Text: ="Application"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol) && 'Case Support Forensic Analysis TT'.Size>1
+                                Width: =Rectangle10_1.Width/3
+                                X: =Label48.X+Label48.Width
+                                Y: =Rectangle10_1.Height+Rectangle10_1.Y
+                                ZIndex: =32
+
+                            Label48_2 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =46
+                                Text: ="Obtained Permission?"
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol) && 'Case Support Forensic Analysis TT'.Size>1
+                                Width: =Rectangle10_1.Width/3
+                                X: =Label48_1.X+Label48_1.Width
+                                Y: =Rectangle10_1.Height+Rectangle10_1.Y
+                                ZIndex: =33
+
+                            StatutesGalleryMobile_1 As gallery.galleryVertical:
+                                '#CopilotOverlayLabel': ="Filtered"
+                                BorderThickness: =1
+                                Default: =//First(MyTicketsGallery.AllItems)
+                                DelayItemLoading: |-
+                                    =//false
+                                    true
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =300
+                                Items: =forensicCol
+                                Layout: =Layout.Vertical
+                                LoadingSpinner: |-
+                                    =//LoadingSpinner.None
+                                    LoadingSpinner.Controls
+                                TemplatePadding: =10
+                                TemplateSize: |-
+                                    =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                    //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+                                    
+                                    If(MyTickets.Size > 1, 250, 240)
+                                Transition: =Transition.Push
+                                Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol)&&'Case Support Forensic Analysis TT'.Size=1
+                                Width: =Rectangle10_1.Width
+                                WrapCount: =RoundDown((Parent.Width / 320), 0)
+                                X: =Rectangle10_1.X
+                                Y: =Rectangle10_1.Y+Rectangle10_1.Height
+                                ZIndex: =34
+
+                                Rectangle6_4 As rectangle:
+                                    BorderColor: =RGBA(0, 0, 0, 0)
+                                    BorderThickness: =25
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Image6_4.Height
+                                    OnSelect: =Select(Parent)
+                                    Width: =Image6_4.Width
+                                    ZIndex: =1
+
+                                Image6_4 As image:
+                                    Height: |-
+                                        =//250
+                                        Parent.TemplateHeight
+                                    Image: |-
+                                        ="data:image/svg+xml," & EncodeUrl(
+                                            "<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+                                        <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+                                        <svg version='1.1'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 " & Self.Width & " " & Self.Height & "' width='" & Self.Width & "' height='" & Self.Height & "'>
+                                            <defs>" &
+                                            // ----- Box for fill
+                                         "<path d='" &
+                                         // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0,0) &
+                                            // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                            // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                         "Z' id='box' stroke='" & "#ff0000" & "' stroke-width='" & 0 & "'></path>
+                                            </defs>
+                                            <g>
+                                                <g>
+                                                    <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>
+                                                        <feFlood></feFlood>
+                                                        <feComposite in2='SourceAlpha' operator='in'></feComposite>
+                                                        <feGaussianBlur stdDeviation='" & 5 & "'></feGaussianBlur>
+                                                        <feOffset dx='" & 0 & "' dy='" & 0 & "' result='afterOffset'></feOffset>
+                                                        <feFlood flood-color='" & "#000000" & "' flood-opacity='" & Substitute(Text(0.5), ",", ".") & "'></feFlood>
+                                                        <feComposite in2='afterOffset' operator='in'></feComposite>
+                                                        <feMorphology operator='dilate' radius='1'></feMorphology>
+                                                        <feComposite in2='SourceAlpha' operator='out'></feComposite>
+                                                    </filter>" &
+                                                    // ----- Box for shadow
+                                         "<path d='" &
+                                         // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                            // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                         "Z' id='Component1' filter='url(#shadow)'></path>
+                                                </g>
+                                                <use xlink:href='#box' opacity='1' fill='" & "#ffffff" & "' fill-opacity='" & Substitute(Text(0), ",", ".") & "'></use>
+                                            </g>
+                                            <g>
+                                                " &
+                                                // ----- Edge
+                                         If(
+                                                true,
+                                                Switch(
+                                                    "left",
+                                                    "left",// -- Position: left
+                                                    "<path d='" &
+                                                // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) + 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Upper right
+                                         "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Lower right
+                                         "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) + 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                         "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>",
+                                                     "right",// -- Position: right
+                                                    "<path d='" &
+                                                // Upper left
+                                         "M" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                // Lower left
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                         "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>"
+                                                   
+                                                )
+                                            ) & "
+                                            </g>
+                                        </svg>"
+                                        )
+                                    OnSelect: =Select(Parent)
+                                    Width: |-
+                                        =//329
+                                        Parent.TemplateWidth
+                                    ZIndex: =2
+
+                                btnBkg_4 As button:
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Parent.TemplateHeight
+                                    HoverFill: =Self.Fill
+                                    OnSelect: =Select(Parent)
+                                    PressedFill: =Self.Fill
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: =""
+                                    Visible: =false
+                                    Width: =Parent.TemplateWidth
+                                    ZIndex: =3
+
+                                TitleLabel_4 As label:
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =54
+                                    OnSelect: =Select(Parent)
+                                    Size: =12
+                                    Text: |-
+                                        ="Permisson Obtained: "&ThisItem.clientPermission
+                                    Width: |-
+                                        =//208
+                                        Parent.TemplateWidth - Icon18_1.Width - 47
+                                    X: =24
+                                    Y: =27
+                                    ZIndex: =4
+
+                                DateExpiredLabel_3 As label:
+                                    Align: =Align.Center
+                                    Height: |-
+                                        =//25
+                                        34
+                                    OnSelect: =Select(Parent)
+                                    Size: =11
+                                    Text: =ThisItem.userName
+                                    Width: =StartedLabelTextValue_2.Width
+                                    X: =ExpiresLabelText_2.X
+                                    Y: =ExpiresLabelText_2.Y+ExpiresLabelText_2.Height
+                                    ZIndex: =7
+
+                                ExpiresLabelText_2 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Height: =25
+                                    OnSelect: =Select(Parent)
+                                    Size: =10
+                                    Text: ="User Name"
+                                    Visible: |-
+                                        =//is_admin
+                                        true
+                                    Width: |-
+                                        =//154
+                                        80
+                                    X: |-
+                                        =//67
+                                        StaratedLabelText_2.X
+                                    Y: |-
+                                        =//180
+                                        //Parent.TemplateHeight - Self.Height - 27
+                                        Rectangle19.Y+Rectangle19.Height+10
+                                    ZIndex: =8
+
+                                OverlapButton_2 As button:
+                                    BorderThickness: =0
+                                    Fill: =Color.Transparent
+                                    Height: |-
+                                        =//220
+                                        Parent.TemplateHeight
+                                    HoverFill: =Self.Fill
+                                    OnSelect: |-
+                                        =
+                                        
+                                        // Sharepoint List
+                                        UpdateContext({CnSPopUp:true,CnSRecord:ThisItem});
+                                    PressedFill: =Self.Fill
+                                    Text: =""
+                                    Width: |-
+                                        =//303
+                                        Parent.TemplateWidth
+                                    X: |-
+                                        =//24
+                                        (Parent.TemplateWidth - Self.Width) / 2
+                                    Y: |-
+                                        =//15
+                                        (Parent.TemplateHeight - Self.Height) / 2
+                                    ZIndex: =13
+
+                                Icon18_1 As icon.CancelBadge:
+                                    Height: =32
+                                    Icon: =Icon.CancelBadge
+                                    OnSelect: =Remove(forensicCol,ThisItem)
+                                    Width: =32
+                                    X: =Parent.TemplateWidth - Self.Width - 23
+                                    Y: =27
+                                    ZIndex: =14
+
+                                Rectangle20 As rectangle:
+                                    BorderThickness: =1
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Height: =ExpiresLabelText_2.Height+DateExpiredLabel_3.Height
+                                    OnSelect: =Select(Parent)
+                                    Width: =Parent.TemplateWidth/1.5
+                                    X: =ExpiresLabelText_2.X
+                                    Y: =ExpiresLabelText_2.Y
+                                    ZIndex: =16
+
+                                Group11 As group:
+                                    Height: =5
+                                    Width: =5
+                                    X: =60
+                                    Y: =60
+                                    ZIndex: =16
+
+                                    StartedLabelTextValue_2 As label:
+                                        Align: =Align.Center
+                                        Height: |-
+                                            =//25
+                                            34
+                                        OnSelect: =Select(Parent)
+                                        Size: =11
+                                        Text: =ThisItem.application
+                                        Width: |-
+                                            =//143
+                                            Parent.TemplateWidth - StaratedLabelText_2.Width - 47
+                                        Wrap: =false
+                                        X: |-
+                                            =//89
+                                            (Parent.TemplateWidth-Self.Width)/2
+                                        Y: |
+                                            =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                            //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                            //((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                            StaratedLabelText_2.Y+StaratedLabelText_2.Height
+                                        ZIndex: =11
+
+                                    StaratedLabelText_2 As label:
+                                        Align: =Align.Center
+                                        BorderThickness: =1
+                                        Height: =25
+                                        OnSelect: =Select(Parent)
+                                        Size: =10
+                                        Text: ="App"
+                                        Width: =67
+                                        X: =(Parent.TemplateWidth-Self.Width)/4
+                                        Y: |
+                                            =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                            //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                            ((Parent.TemplateHeight - Self.Height) / 2.8) 
+                                        ZIndex: =12
+
+                                    Rectangle19 As rectangle:
+                                        BorderThickness: =1
+                                        Fill: =RGBA(0, 0, 0, 0)
+                                        Height: =StaratedLabelText_2.Height+StartedLabelTextValue_2.Height
+                                        OnSelect: =Select(Parent)
+                                        Width: =Parent.TemplateWidth/1.5
+                                        X: =StaratedLabelText_2.X
+                                        Y: =StaratedLabelText_2.Y
+                                        ZIndex: =15
+
+                    CSForensicAnalysisDescription_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        CSForensicAnalysisDescriptionLabel As label:
+                            AutoHeight: =true
+                            Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSForensicAnalysisDescriptionErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =CSForensicAnalysisDescriptionTextInputArea.Y + CSForensicAnalysisDescriptionTextInputArea.Height
+                            ZIndex: =3
+
+                        CSForesnsicAnalysisDescriptionStarVisible As label:
+                            Align: =Align.Center
+                            Color: =CSForensicAnalysisDescriptionLabel.Color
+                            Height: =CSForensicAnalysisDescriptionLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSForensicAnalysisDescriptionLabel.Y
+                            ZIndex: =4
+
+                        CSForensicAnalysisDescriptionTextInputArea As text:
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: ="Please Describe Your Issue"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: =CSForensicAnalysisDescription_DataCard.Visible
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    CSForensicAnalysisLocationID_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        CSForensicAnalysisLocationIDLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSForensicAnalysisLocationIDErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =CSForensicAnalysisLocationIDDropdown.Y + CSForensicAnalysisLocationIDDropdown.Height
+                            ZIndex: =3
+
+                        CSForensicAnalysisLocationIDStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSForensicAnalysisLocationIDLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSForensicAnalysisLocationIDLabel.Y
+                            ZIndex: =4
+
+                        CSForensicAnalysisLocationIDDropdown As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =Parent.Height/3.5
+                            Items: =Locations
+                            Width: =CSForensicAnalysisTitleInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSForensicAnalysisAttatchments_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/2, Parent.Height/3.5)
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        CSForensicAnalysisAttachmentControl As attachments:
+                            BorderColor: =Color.Black
+                            Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/1.5, Parent.Height/1.5)
+                            IsInDataCard: =true
+                            Items: =RTEImages
+                            MaxAttachments: =10
+                            PaddingBottom: =5
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            Width: =If('Case Support Forensic Analysis TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =36
+                            ZIndex: =1
+
+                        Button25_162 As button:
+                            Fill: =ColorScheme.primary
+                            Height: =64
+                            Text: =
+                            Width: =64
+                            X: =Icon11_40.X-8
+                            Y: =Icon11_40.Y-8
+                            ZIndex: =2
+
+                        Icon11_40 As icon.Camera:
+                            Color: =RGBA(255, 255, 255, 1)
+                            Height: =48
+                            Icon: =Icon.Camera
+                            OnSelect: |-
+                                =UpdateContext({altImagePopUp:true,usingCamera:true})
+                            Width: =48
+                            X: =If('Case Support Forensic Analysis TT'.Size=1,(CSForensicAnalysisAttachmentControl.Width-Self.Width)/2+Self.Width,CSForensicAnalysisAttachmentControl.X+CSForensicAnalysisAttachmentControl.Width+Self.Width)
+                            Y: =If('Case Support Forensic Analysis TT'.Size=1,(CSForensicAnalysisAttachmentControl.Y+CSForensicAnalysisAttachmentControl.Height+20),(Parent.Height-Self.Height)/2)
+                            ZIndex: =3
+
+                        Button25_163 As button:
+                            Fill: =RGBA(0, 0, 0, 0)
+                            Height: =64
+                            HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                            OnSelect: =Select(Icon11_40)
+                            PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+                            Text: =
+                            Width: =64
+                            X: =Icon11_40.X-8
+                            Y: =Icon11_40.Y-8
+                            ZIndex: =4
+
+                        Button25_160 As button:
+                            Fill: =ColorScheme.primary
+                            Height: =64
+                            Text: =
+                            Width: =64
+                            X: =Icon12_40.X-8
+                            Y: =Icon12_40.Y-8
+                            ZIndex: =5
+
+                        Icon12_40 As icon.Copy:
+                            Color: =RGBA(255, 255, 255, 1)
+                            Height: =48
+                            Icon: =Icon.Paste
+                            OnSelect: |-
+                                =UpdateContext({altImagePopUp:true,usingCamera:false})
+                            Width: =48
+                            X: =If('Case Support Forensic Analysis TT'.Size=1,(CSForensicAnalysisAttachmentControl.Width-Self.Width)/2-Self.Width,(CSForensicAnalysisAttachmentControl.X-Self.Width)/2)
+                            Y: =If('Case Support Forensic Analysis TT'.Size=1,(CSForensicAnalysisAttachmentControl.Y+CSForensicAnalysisAttachmentControl.Height+20),(Parent.Height-Self.Height)/2)
+                            ZIndex: =6
+
+                        Button25_161 As button:
+                            Fill: =RGBA(0, 0, 0, 0)
+                            Height: =64
+                            HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                            OnSelect: =Select(Icon12_40)
+                            PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+                            Text: =
+                            Width: =64
+                            X: =Icon12_40.X-8
+                            Y: =Icon12_40.Y-8
+                            ZIndex: =7
+
+                    CSForensicAnalysisButtons_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        CSForensicAnalysisSubmitButton As button:
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: =CSForensicAnalysisCancelButton.Height
+                            OnSelect: |
+                                =
+                                If(!CSForensicAnalysisDescriptionTextInputArea.Visible,
+                                UpdateContext({TicketDescText:Concatenate(If(CSForensicAnalysisSpecificIssueDropdown.Selected.Name="Computer/Mobile Device","Physical Media Requested for analysis:"&Char(13)&Concat(forensicCol,physicalType,Char(13)),"Social Media Requested for Analysis:"&Char(13)&Concat(forensicCol,"Application: "&application&Char(13)&"User Name: "&userName& "     Have client permission: "&clientPermission,Char(13))))}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    !IsBlank(CSForensicAnalysisLocationIDDropdown.Selected.Name) And !IsEmpty(forensicCol) And Len(Trim(CSForensicAnalysisTitleInput.Text))>0 ,
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: CSForensicAnalysisTitleInput.Text,
+                                                description: Trim(CSForensicAnalysisDescriptionTextInputArea.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: CSForensicAnalysisMainCategoryDropdown.Selected.ID,
+                                                category: CSForensicAnalysisSubCategoryDropdown.Selected.ID,
+                                                subCategory: CSForensicAnalysisSpecificIssueDropdown.Selected.ID,
+                                                locationId: CSForensicAnalysisLocationIDDropdown.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(CSForensicAnalysisAttachmentControl.Attachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = CSForensicAnalysisMainCategoryDropdown.Selected.ID && locationId = CSForensicAnalysisLocationIDDropdown.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = CSForensicAnalysisMainCategoryDropdown.Selected.ID && locationId = CSForensicAnalysisLocationIDDropdown.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" Forensic Analysis ("&CSForensicAnalysisSpecificIssueDropdown.Selected.Name&")"
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                    ForAll(
+                                        CSForensicAnalysisAttachmentControl.Attachments As Attachment,
+                                               /*AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file: {
+                                                    contentBytes: Value,
+                                                    name: Name
+                                                }
+                                            }
+                                        )*/
+                                        If(Left(Attachment.Value,6) = "appres", 
+                                        AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) ;,
+                                
+                                
+                                With({varHTMLTable: Split(Attachment.Name , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",Attachment.Name)+32},With({varB64End:Find("""",Mid(Attachment.Name,varB64Start))-1},CopyPasteTest.Run(Mid(Attachment.Name,varB64Start,varB64End),Attachment.Value & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        )
+                                    );
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm(CSForensicAnalysisForm);
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({CSForensicAnalysisPopup:true});
+                            Text: ="Submit"
+                            Width: =CSForensicAnalysisCancelButton.Width
+                            X: =CSForensicAnalysisCancelButton.X + (Self.Width*1.3)
+                            Y: =CSForensicAnalysisCancelButton.Y
+                            ZIndex: =1
+
+                        CSForensicAnalysisCancelButton As button:
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm(CSForensicAnalysisForm);
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('Case Support Forensic Analysis TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            CSForensicAnalysisFooter As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='Case Support Forensic Analysis TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                CSForensicAnalysisMobileMenu As compMobileMenu_3:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    CSForensicAnalysisBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =CSForensicAnalysisHeaderLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm(CSForensicAnalysisForm); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(CSForensicAnalysisHeaderContainer.Height-CSForensicAnalysisHeaderLabel.Height)/1.05
+        ZIndex: =2
+
+    CSForensicAnalysisWebMenu As compWebMenu_3:
+        Visible: ='Case Support Forensic Analysis TT'.Size > 1
+        ZIndex: =3
+
+    TechAssignMessageRTE_43 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            //Combine string as html body
+            /*
+            Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+            , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")*/
+            
+            "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                <tr>
+                <td>
+                    <Table style="&Char(34)&"width:100% "&Char(34)&">
+                    <tr>
+                    <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+            	A ticket has been asssigned to you, to check additional ticket details: 
+                <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+            	</div>
+                    </th>
+                    </tr>
+            	<br>
+                    <tr>
+                    <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+            	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                <br>
+                Ticket # "&rec.ID&"
+                <br>
+                Status: "&rec.status&"
+                <br>
+                <br>
+                "&rec.description&"
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Height: =9
+        Visible: =false
+        Width: =0
+        X: =892
+        Y: =759
+        ZIndex: =4
+
+    TicketCreatorMessageRTE_43 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            /*
+            Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.</div>")*/
+            
+            "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                <tr>
+                <td>
+                    <Table style="&Char(34)&"width:100% "&Char(34)&">
+                    <tr>
+                    <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+            	Your ticket has been created, a technician will be assigned to your case, if you would like to see additional details about your ticket: 
+                <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+            	</div>
+                    </th>
+                    </tr>
+            	<br>
+                    <tr>
+                    <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+            	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                <br>
+                Ticket # "&rec.ID&"
+                <br>
+                Status: "&rec.status&"
+                <br>
+                <br>
+                "&rec.description&"
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Height: =99
+        Visible: =false
+        Width: =293
+        X: =988
+        Y: =40
+        ZIndex: =5
+
+    RichTextEditor2_42 As richTextEditor:
+        Default: =
+        Height: =20
+        Visible: =false
+        Width: =208
+        X: =40
+        Y: =40
+        ZIndex: =6
+
+    AlternativeAddImageContainer_41 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =altImagePopUp
+        Width: =Parent.Width
+        ZIndex: =7
+
+        AlternativeAddImageBackgroundTint_41 As rectangle:
+            Fill: =RGBA(56, 96, 178, .35)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        AlternativeAddImageBackground_41 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(227, 234, 243, 1)
+            Height: =Parent.Height/1.10
+            Width: =Parent.Width/1.10
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        AlternativeAddImageHeader_41 As rectangle:
+            BorderThickness: =2
+            Height: =80
+            Width: =AlternativeAddImageBackground_41.Width
+            X: =AlternativeAddImageBackground_41.X
+            Y: =AlternativeAddImageBackground_41.Y
+            ZIndex: =3
+
+        AlternativeAddImageHeaderLabel_41 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =AlternativeAddImageHeader_41.Height
+            Size: =18
+            Text: ="Using "&If(usingCamera, "Camera","Copy Paste")
+            Width: =AlternativeAddImageHeader_41.Width
+            X: =AlternativeAddImageHeader_41.X
+            Y: =AlternativeAddImageHeader_41.Y
+            ZIndex: =4
+
+        CopyPasteRTE_41 As richTextEditor:
+            Default: ="Erase this text and then you can paste your Screenshot here, then hit add at the bottom, you have to do this for every screenshot you add."
+            Height: =AlternativeAddImageBackground_41.Height/1.5
+            Visible: =!usingCamera
+            Width: =AlternativeAddImageBackground_41.Width
+            X: =AlternativeAddImageBackground_41.X
+            Y: =AlternativeAddImageBackground_41.Y+AlternativeAddImageHeader_41.Height
+            ZIndex: =5
+
+        Camera_40 As camera:
+            Camera: |-
+                =//Checks if there are anyback cameras, if there are none then default the camera to the first one otherwise use the first back camera
+                If(IsBlank(LookUp(Camera_40.AvailableDevices, "Back" in Name).Id),0,LookUp(Camera_40.AvailableDevices, "Back" in Name).Id)
+            Height: =AlternativeAddImageBackground_41.Height/1.5
+            OnSelect: |-
+                =UpdateContext({photoCounter:photoCounter+1});
+                Collect(RTEImages,{copyName:"Photo"&photoCounter,base64Image: "<img src="&JSON(Camera_40.Photo,JSONFormat.IncludeBinaryData)&" />"});
+                UpdateContext({altImagePopUp:false});
+            Visible: =usingCamera
+            Width: =AlternativeAddImageBackground_41.Width
+            X: =AlternativeAddImageBackground_41.X
+            Y: =AlternativeAddImageBackground_41.Y+AlternativeAddImageHeader_41.Height
+            ZIndex: =6
+
+        AddScreenshotButton_40 As button:
+            OnSelect: |-
+                =If( "<img" in CopyPasteRTE_41.HtmlText, Collect(RTEImages,{copyName:TextInput3.Text, base64Image:CopyPasteRTE_41.HtmlText});
+                Reset(CopyPasteRTE_41);
+                Reset(TextInput3), Notify("No Valid Image"));
+                UpdateContext({altImagePopUp:false})
+            Text: =If(usingCamera,"Take Picture","Add ScreenShot")
+            Visible: =!usingCamera
+            Width: =250
+            X: =(AlternativeAddImageBackground_41.Width-Self.Width)/2 +AlternativeAddImageBackground_41.X
+            Y: =AlternativeAddImageBackground_41.Height-Self.Height-7
+            ZIndex: =7
+
+        ClosePanelButton_40 As icon.Cancel:
+            BorderThickness: =1
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(203, 102, 102, 1)
+            Height: =40
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =UpdateContext({altImagePopUp:false});
+                Reset(CopyPasteRTE_41);
+            Width: =40
+            X: =AlternativeAddImageHeader_41.Width+AlternativeAddImageHeader_41.X-Self.Width
+            Y: =AlternativeAddImageHeader_41.Y
+            ZIndex: =8
+
+        CameraInfoLabel_40 As label:
+            Align: =Align.Center
+            Height: =50
+            Size: =18
+            Text: ="Tap or Click the camera to take a picture"
+            Visible: =usingCamera
+            Width: =Camera_40.Width
+            X: =(AlternativeAddImageBackground_41.Width-Self.Width)/2 +AlternativeAddImageBackground_41.X
+            Y: =AlternativeAddImageBackground_41.Height-Self.Height-7
+            ZIndex: =9
+
+    CSForensicAnalysisPopup As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =CSForensicAnalysisPopup
+        Width: =Parent.Width
+        ZIndex: =8
+
+        ACPopupBackground_40 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_40 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_47 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_40.Width
+            X: =ACPopupRectangle_40.X
+            Y: =ACPopupRectangle_40.Y
+            ZIndex: =3
+
+        Label10_58 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_47.Width
+            X: =Rectangle8_47.X
+            Y: =Rectangle8_47.Y
+            ZIndex: =4
+
+        Button1_46 As button:
+            OnSelect: |-
+                =UpdateContext({CSForensicAnalysisPopup:false});
+            Text: ="Close"
+            X: =(ACPopupRectangle_40.Width-Self.Width)/2 +ACPopupRectangle_40.X
+            Y: =ACPopupRectangle_40.Height-Self.Height
+            ZIndex: =9
+
+        Label18_133 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(CSForensicAnalysisLocationIDDropdown.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank(CSForensicAnalysisLocationIDDropdown.Selected.Name),"Location Missing", "Location OK")
+            Width: =ACPopupRectangle_40.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_47.Y+Rectangle8_47.Height+15
+            ZIndex: =11
+
+        Label18_134 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(CSForensicAnalysisTitleInput.Text))=0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(CSForensicAnalysisTitleInput.Text))=0, "Case Number Blank","Case Number OK" )
+            Width: =ACPopupRectangle_40.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_133.Y+Label18_133.Height+10
+            ZIndex: =12
+
+        Label18_135 As label:
+            Align: =Align.Center
+            Color: =If(IsEmpty(forensicCol),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsEmpty(forensicCol), "List Blank","List OK" )
+            Width: =ACPopupRectangle_40.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_134.Y+Label18_134.Height+10
+            ZIndex: =13
+
+    FeedbackBugReportFA As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =9
+

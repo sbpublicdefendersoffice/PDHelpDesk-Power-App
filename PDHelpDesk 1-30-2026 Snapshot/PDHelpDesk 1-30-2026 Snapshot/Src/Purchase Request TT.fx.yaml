@@ -1,0 +1,636 @@
+"'Purchase Request TT' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnVisible: |-
+        =//Clear the collections
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({TemplateErrorPopup_1:false});
+        ClearCollect(PRItems,
+        {
+            ItemName:"",
+            ItemLink: "",
+            Quantity: 1,
+            DeploymentSite:"",
+            Requestor:"",
+            DeliveryInformation:"",
+            Recipient:"",
+            Price:""
+        
+        });
+        Clear(PRItems);
+
+    TemplateContainer_6 As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        TemplateHeaderContainer_6 As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            TemplateHeaderGroup_4 As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =3
+
+                TemplateWebHeader_6 As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: ='Purchase Request TT'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    Fill: =Color.Transparent
+
+                HeaderBackgroundGradient_5 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =130
+                    HtmlText: |-
+                        ="<div style='
+                        height:"&Self.Height-1&"px;
+                        width:100%;
+                        background: rgb(53,89,137);
+                        background: linear-gradient(90deg, rgba(53,89,137,1) 0%, rgba(0,18,107,1) 100%);' ></div>"
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                TemplateLabel_5 As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =48
+                    Size: =If('Purchase Request TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Create Purchase Request"
+                    Width: =Parent.Width
+                    Y: =TemplateWebHeader_6.Height
+                    ZIndex: =3
+
+        MainSectionTemplateContainer_6 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =6
+
+            Form5 As form:
+                AlignInContainer: =AlignInContainer.Start
+                DataSource: =Tickets
+                DefaultMode: =FormMode.New
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =250
+                LayoutMinWidth: =400
+                NumberOfColumns: =1
+                Width: =Parent.Width
+                ZIndex: =1
+
+                PRDisclaimer As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =10
+                    Width: =1366
+                    X: =0
+                    Y: =0
+                    ZIndex: =1
+
+                PREntry As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =400
+                    Width: =Parent.Width
+                    X: =0
+                    Y: =10
+                    ZIndex: =1
+
+                    Rectangle42 As rectangle:
+                        BorderThickness: =2
+                        Fill: =RGBA(241, 244, 249, 1)
+                        Height: =Parent.Height/1.1
+                        Width: =Parent.Width/1.1
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =12
+                        ZIndex: =1
+
+                    TextInput20 As text:
+                        Default: =
+                        HintText: ="Item Name"
+                        Width: =Rectangle42.Width/3 -30
+                        X: =Rectangle42.X+30
+                        Y: =Label79_9.Y+Label79_9.Height +30
+                        ZIndex: =2
+
+                    TextInput20_1 As text:
+                        Default: =
+                        HintText: ="Item Link"
+                        Width: =TextInput20.Width
+                        X: =TextInput20.X
+                        Y: =TextInput20.Y+TextInput20.Height+30
+                        ZIndex: =3
+
+                    TextInput20_2 As text:
+                        Default: =
+                        HintText: ="Deployment Site"
+                        Width: =TextInput20.Width
+                        X: =TextInput20.X+TextInput20.Width+10
+                        Y: =TextInput20.Y
+                        ZIndex: =4
+
+                    ComboBox2 As combobox:
+                        DisplayFields: =["fullName"]
+                        InputTextPlaceholder: ="Find Requestors"
+                        Items: =Users
+                        SearchFields: =["ComplianceAssetId"]
+                        SearchItems: =Search(Users,ComboBox2.SearchText,ComplianceAssetId)
+                        Width: =TextInput20_1.Width
+                        X: =TextInput20_1.X+TextInput20_1.Width+10
+                        Y: =TextInput20_1.Y
+                        ZIndex: =5
+
+                    TextInput20_3 As text:
+                        Default: =
+                        HintText: ="Delivery Information"
+                        Width: =TextInput20.Width
+                        X: =TextInput20_2.X+TextInput20_2.Width+10
+                        Y: =TextInput20_2.Y
+                        ZIndex: =6
+
+                    Button32 As button:
+                        OnSelect: |-
+                            =If( Len(Trim(TextInput20.Text))>0 And Len(Trim(TextInput20_1.Text))>0 And Len(Trim(TextInput20_2.Text))>0 And Len(Trim(TextInput20_3.Text))>0 And Len(Trim(TextInput20_4.Text))>0 And !IsBlank(ComboBox2.SelectedItems),
+                            Patch(PRItems,Defaults(PRItems),
+                            {ItemName:TextInput20.Text,
+                            ItemLink:TextInput20_1.Text,
+                            Quantity:Value(TextInput20_4.Text),
+                            DeploymentSite:TextInput20_2.Text,
+                            Requestor:Concat(ComboBox2.SelectedItems,fullName,","),
+                            DeliveryInformation:TextInput20_3.Text,
+                            Price:TextInput23.Text,
+                            Recipient:TextInput22.Text});
+                            
+                            Reset(TextInput20);
+                            Reset(TextInput20_1);
+                            Reset(TextInput20_2);
+                            Reset(TextInput20_3);
+                            Reset(TextInput20_4);
+                            Reset(TextInput23);
+                            Reset(TextInput22);
+                            Reset(ComboBox2););
+                        Text: ="Add"
+                        X: =(Rectangle42.Width-Self.Width)/2 +Rectangle42.X
+                        Y: =300
+                        ZIndex: =7
+
+                    TextInput20_4 As text:
+                        Default: =
+                        HintText: ="Quantity"
+                        Width: =TextInput20.Width
+                        X: =ComboBox2.X+ComboBox2.Width+10
+                        Y: =ComboBox2.Y
+                        ZIndex: =8
+
+                    Label79_9 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary  
+                        Text: ="Enter Purchase Item"
+                        Width: =Rectangle42.Width
+                        X: =Rectangle42.X
+                        Y: =Rectangle42.Y
+                        ZIndex: =9
+
+                    TextInput22 As text:
+                        Default: =
+                        HintText: ="Enter Recipient"
+                        Width: =TextInput23.Width
+                        X: =TextInput23.X+TextInput23.Width+15
+                        Y: =TextInput23.Y
+                        ZIndex: =10
+
+                    TextInput23 As text:
+                        Default: =
+                        HintText: ="Item Price"
+                        Width: =TextInput20.Width
+                        X: =TextInput20.X
+                        Y: =TextInput20_1.Y+Self.Height+30
+                        ZIndex: =11
+
+                WorkingPRList As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =200
+                    Visible: =!IsEmpty(Gallery14.AllItems)
+                    Width: =Parent.Width
+                    X: =0
+                    Y: =11
+                    ZIndex: =1
+
+                    Gallery14 As gallery.variableTemplateHeightGallery:
+                        BorderThickness: =2
+                        DelayItemLoading: =true
+                        Fill: =RGBA(241, 244, 249, 1)
+                        Height: =373
+                        Items: =PRItems
+                        Layout: =Layout.Vertical
+                        LoadingSpinner: =LoadingSpinner.Data
+                        TemplatePadding: =0
+                        TemplateSize: =50
+                        Width: =Parent.Width/1.1
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =Label79.Y+Label79.Height
+                        ZIndex: =1
+
+                        GalleryPRItem As htmlViewer:
+                            BorderStyle: =BorderStyle.Solid
+                            BorderThickness: =2
+                            Color: =RGBA(0, 121, 187, 1)
+                            Height: =50
+                            HtmlText: |-
+                                ="<div style='text-align:center'><a href='"&ThisItem.ItemLink&"'>"&ThisItem.ItemName&"</a></div>"
+                            Width: =1.5*Parent.TemplateWidth/7
+                            ZIndex: =2
+
+                        GalleryPRQuantity As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            Fill: =Color.Transparent
+                            Height: =50
+                            Text: =ThisItem.Quantity
+                            Width: =Parent.TemplateWidth/14
+                            X: =GalleryPRItem.Width
+                            ZIndex: =3
+
+                        GalleryPRDeploymentSite As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            Fill: =Color.Transparent
+                            Height: =50
+                            Text: =ThisItem.DeploymentSite
+                            Width: =Parent.TemplateWidth/7
+                            X: =GalleryPRQuantity.X+GalleryPRQuantity.Width
+                            ZIndex: =4
+
+                        GalleryPRRequestor As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            Fill: =Color.Transparent
+                            Height: =50
+                            Text: =ThisItem.Requestor
+                            Width: =Parent.TemplateWidth/7
+                            X: =GalleryPRDeliveryInfo.X+GalleryPRDeliveryInfo.Width
+                            ZIndex: =5
+
+                        GalleryPRDeliveryInfo As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            Fill: =Color.Transparent
+                            Height: =50
+                            Text: =ThisItem.DeliveryInformation
+                            Width: =Parent.TemplateWidth/7
+                            X: =GalleryPRDeploymentSite.X+GalleryPRDeploymentSite.Width
+                            ZIndex: =6
+
+                        GalleryPRRecipient As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            Fill: =Color.Transparent
+                            Height: =50
+                            Text: =ThisItem.Recipient
+                            Width: =Parent.TemplateWidth/7
+                            X: =GalleryPRRequestor.X+GalleryPRRequestor.Width
+                            ZIndex: =7
+
+                        GalleryPRPrice As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            Fill: =Color.Transparent
+                            Height: =50
+                            Text: =ThisItem.Price
+                            Width: =Parent.TemplateWidth/7
+                            X: =GalleryPRRecipient.X+GalleryPRRecipient.Width
+                            ZIndex: =8
+
+                    Label79 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary  
+                        Text: ="Item"
+                        Width: =1.5*Gallery14.Width/7
+                        X: =Gallery14.X
+                        ZIndex: =2
+
+                    Label79_1 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary  
+                        Text: ="Quantity"
+                        Width: =Gallery14.Width/14
+                        X: =Label79.X+Label79.Width
+                        ZIndex: =3
+
+                    Label79_2 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary  
+                        Text: ="Deployment Site"
+                        Width: =Gallery14.Width/7
+                        X: =Label79_1.X+Label79_1.Width
+                        Y: =Label79.Y
+                        ZIndex: =4
+
+                    Label79_3 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary  
+                        Text: ="Requestor"
+                        Width: =Gallery14.Width/7
+                        X: =Label79_4.X+Label79_4.Width
+                        ZIndex: =5
+
+                    Label79_4 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary  
+                        Text: ="Delivery Information"
+                        Width: =Gallery14.Width/7
+                        X: =Label79_2.X+Label79_2.Width
+                        ZIndex: =6
+
+                    Label79_10 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary  
+                        Text: ="Recipient"
+                        Width: =Gallery14.Width/7
+                        X: =Label79_3.X+Label79_3.Width
+                        ZIndex: =7
+
+                    Label79_11 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary  
+                        Text: ="Price"
+                        Width: =Gallery14.Width/7
+                        X: =Label79_10.X+Label79_10.Width
+                        ZIndex: =8
+
+                "'Submit PR' As typedDataCard.blankCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =200
+                    Visible: =!IsEmpty(Gallery14.AllItems)
+                    Width: =1366
+                    X: =0
+                    Y: =12
+                    ZIndex: =1
+
+                    Button33 As button:
+                        OnSelect: |-
+                            =//First create the main Purchase Request
+                            Set(tempPR,Patch('Purchase Requests',Defaults('Purchase Requests'),
+                            {
+                                Title: "Purchase Request "& Text(Today(),"mm/dd/yyyy"),
+                                LastUpdated: Now(),
+                                Status:{Value:"Not Started"}
+                            }
+                            ););
+                            ForAll(PRItems As Items, Patch('Purchase Request Items',Defaults('Purchase Request Items'),
+                            {
+                                PRId:tempPR.ID,
+                                Title: Items.ItemName,
+                                ItemLink:"<a href='"&Items.ItemLink&"'>"&Items.ItemName&"</a>",
+                                Quantity:Items.Quantity,
+                                DeploymentSite:Items.DeploymentSite,
+                                Requestors:Items.Requestor,
+                                DeliveryInformation:Items.DeliveryInformation,
+                                MetricDate:Month(Now())&"/"&Year(Now()),
+                                Price: Value(Items.Price),
+                                Recipient: Items.Recipient
+                            } ));
+                            SendEmail.Run("mperez@countyofsb.org","Incoming Purchase Request",HtmlText13.HtmlText,"bmodell@countyofsb.org,"&User().Email);
+                            Navigate('Purchase Request List');
+                        Text: ="Submit"
+                        X: =(Parent.Width- Self.Width)/2
+                        Y: =84
+                        ZIndex: =1
+
+        TemplateFooter_6 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Purchase Request TT'.Size=1
+            Width: =Parent.Width
+            ZIndex: =7
+
+            TemplateWebMobileMenu_6 As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    TemplateErrorPopup_1 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =TemplateErrorPopup_1
+        Width: =Parent.Width
+        ZIndex: =2
+
+        TemplateErrorBackground_1 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =8
+
+        TemplateErrorWindow_1 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =9
+
+        TemplateErrorHeaderRectangle_1 As rectangle:
+            BorderThickness: =2
+            Width: =TemplateErrorWindow_1.Width
+            X: =TemplateErrorWindow_1.X
+            Y: =TemplateErrorWindow_1.Y
+            ZIndex: =10
+
+        TemplateErrorHeader_1 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =TemplateErrorHeaderRectangle_1.Width
+            X: =TemplateErrorHeaderRectangle_1.X
+            Y: =TemplateErrorHeaderRectangle_1.Y
+            ZIndex: =11
+
+        TemplateField1Label_1 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank('S/APowerAppLocationIDDropdown'.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank('S/APowerAppLocationIDDropdown'.Selected.Name),"Location Missing", "Location OK")
+            Width: =TemplateErrorWindow_1.Width
+            X: =PopupRectangle_5.X
+            Y: =TemplateErrorHeaderRectangle_1.Y+TemplateErrorHeaderRectangle_1.Height+15
+            ZIndex: =12
+
+        CloseTemplateErrorButton_1 As button:
+            OnSelect: |-
+                =UpdateContext({TemplateErrorPopup:false});
+            Text: ="Close"
+            X: =(TemplateErrorWindow_1.Width-Self.Width)/2 +TemplateErrorWindow_1.X
+            Y: =TemplateErrorWindow_1.Height-Self.Height
+            ZIndex: =13
+
+    TemplateWebMenu_6 As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Purchase Request TT'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    TemplateBackButton_7 As icon.BackArrow:
+        Color: =Color.White
+        Height: =TemplateLabel_5.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(TemplateHeaderContainer_6.Height-TemplateLabel_5.Height)/1.05
+        ZIndex: =3
+
+    FeedbackBugReportTemp_3 As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =4
+
+    EnableTemplateFormError_1 As button:
+        OnSelect: |-
+            =UpdateContext({TemplateErrorPopup:true})
+        Text: ="Error Popup"
+        Visible: =false
+        X: =80
+        Y: =123
+        ZIndex: =4
+
+    HtmlText13 As htmlViewer:
+        Height: =24
+        HtmlText: |-
+            ="<table style='border-style: double ; width:100% '>
+                <tr>
+                <td>
+                    <Table style='width:100%'>
+                    <tr>
+                    <th style='border-bottom-style: solid;'>
+            	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style='text-align:center;'>
+            	A new Purchase request has been created, here is a summary of the request.
+            	</div>
+                    </th>
+                    </tr>
+                    <tr>
+                    <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>
+            	<div>
+            	Purchase Request
+                    </tr>
+                    </td>
+                    <tr>
+                    <td style='font-family: monospace; font-size: 20px '>
+                    <Table style='width:100%; border-style:double'>
+                    <tr>
+                    <th style='border: 3px solid black; text-align: center; background-color:#355989; color: white'>Item</th>
+                    <th style='border: 3px solid black; text-align: center; background-color:#355989; color: white'>Quantity</th>
+                    <th style='border: 3px solid black; text-align: center; background-color:#355989; color: white'>Deployment Site</th>
+                    <th style='border: 3px solid black; text-align: center; background-color:#355989; color: white'>Delivery Information</th>
+                    <th style='border: 3px solid black; text-align: center; background-color:#355989; color: white'>Requestors</th>
+                    <th style='border: 3px solid black; text-align: center; background-color:#355989; color: white'>Recipient</th>
+                    <th style='border: 3px solid black; text-align: center; background-color:#355989; color: white'>Price</th>
+                    </tr>
+                    
+                    "&Concat(PRItems,"<tr><td style='border: 1px solid'><a style='color:blue' href='"&ItemLink&"'>"&ItemName&"</a></td><td style='border: 1px solid'>"&Quantity&"</td><td style='border: 1px solid'>"&DeploymentSite&"</td><td style='border: 1px solid'>"&DeliveryInformation&"</td><td style='border: 1px solid'>"&Requestor&"</td><td style='border: 1px solid'>"&Recipient&"</td><td style='border: 1px solid'>"&Price&"</td>","</tr>")&"
+                    </Table>
+                    </tr>
+                    </td>
+                
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Visible: =false
+        Width: =42
+        X: =93
+        Y: =328
+        ZIndex: =5
+

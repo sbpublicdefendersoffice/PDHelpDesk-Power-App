@@ -1,0 +1,937 @@
+"'Hardware Account Lockout TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm(HardwareALForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({altImagePopUp:false,usingCamera:false});
+        UpdateContext({HALPopup:false});
+
+    HardwareALMainContainer As groupContainer.horizontalAutoLayoutContainer:
+        Height: ='Hardware Account Lockout TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='Hardware Account Lockout TT'.Width
+        ZIndex: =2
+
+        HardwareALVerticalLayoutContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            HardwareALHeaderContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                AccountLockoutHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =11
+
+                    HomeBackgroundGradient_26 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    HardwareALHeaderLabel As label:
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-HardwareALWebHeader.Height
+                        Size: =If('Hardware Account Lockout TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Hardware Lockout Form"
+                        Width: =Parent.Width
+                        Y: =HardwareALWebHeader.Height
+                        ZIndex: =2
+
+                    HardwareALWebHeader As compWebHeader:
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='Hardware Account Lockout TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        Height: |-
+                            =82
+                            //Parent.Height
+                        ZIndex: =3
+
+            HardwareALMainContentContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                HardwareALForm As form:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    HardwareALTitle_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        HardwareALTitleLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Name of File"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        HardwareALTitleError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HardwareALTitleInput.Y + HardwareALTitleInput.Height
+                            ZIndex: =3
+
+                        HardwareALTitleStarVisible As label:
+                            Align: =Align.Center
+                            Color: =HardwareALTitleLabel.Color
+                            Height: =HardwareALTitleLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =HardwareALTitleLabel.Y
+                            ZIndex: =4
+
+                        HardwareALTitleInput As text:
+                            Default: =""
+                            Height: =Parent.Height/3.5
+                            HintText: ="Please Enter A Title"
+                            Width: =Parent.Width/1.10
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    HardwareALMainCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Hardware Account Lockout TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        HardwareALMainCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        HardwareALMainCategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HardwareALMainCategoryDropdown.Y + HardwareALMainCategoryDropdown.Height
+                            ZIndex: =3
+
+                        HardwareALMainCategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =HardwareALMainCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =HardwareALMainCategoryLabel.Y
+                            ZIndex: =4
+
+                        HardwareALMainCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    HardwareALSubCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Hardware Account Lockout TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        HardwareALSubCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        HardwareALSubcategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HardwareALSubCategoryDropdown.Y + HardwareALSubCategoryDropdown.Height
+                            ZIndex: =3
+
+                        HardwareALSubcategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =HardwareALSubCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =HardwareALSubCategoryLabel.Y
+                            ZIndex: =4
+
+                        HardwareALSubCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = HardwareALMainCategoryDropdown.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    HardwareALFields As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =220
+                        Visible: =false
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        Label20 As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Service"
+                            Width: =70
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        TextInput12 As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =35
+                            HintText: ="Type in the service you need password assistance with."
+                            Width: =If('Hardware Account Lockout TT'.Size=1,Parent.Width/1.2 ,Parent.Width/1.1)
+                            X: =30
+                            Y: =Label20.Height+Label20.Y-1
+                            ZIndex: =2
+
+                        Rectangle11 As rectangle:
+                            BorderColor: =RGBA(39, 67, 125, 1)
+                            BorderThickness: =2
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =Label20_1.Height+Radio1.Height
+                            Width: =TextInput12.Width
+                            X: =30
+                            Y: =Label20_1.Y
+                            ZIndex: =3
+
+                        Radio1 As radio:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            Height: =If('Hardware Account Lockout TT'.Size=1, 150,60)
+                            Items: |-
+                                =Table(
+                                {
+                                    Question:"Forgot Password",
+                                    Option:1
+                                },
+                                {
+                                    Question:"Change Password",
+                                    Option:2
+                                },
+                                {
+                                    Question:"Other",
+                                    Option:3
+                                }
+                                )
+                            Layout: =If('Hardware Account Lockout TT'.Size=1,Layout.Vertical,Layout.Horizontal)
+                            Width: =If('Hardware Account Lockout TT'.Size=1,TextInput12.Width,TextInput12.Width/2)
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =Label20_1.Y+Label20_1.Height
+                            ZIndex: =4
+
+                        Label20_1 As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Text: ="Assistance Type"
+                            X: =30
+                            Y: =TextInput12.Y+TextInput12.Height+20
+                            ZIndex: =5
+
+                    HardwareALSpecificIssue_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank(HardwareALSpecificIssueDropdown.Selected.Name), false, true)
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        HardwareALSpecificIssueLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        HardwareALSpecificIssueError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HardwareALSpecificIssueDropdown.Y + HardwareALSpecificIssueDropdown.Height
+                            ZIndex: =3
+
+                        HardwareALSpecificIssueStarVisible As label:
+                            Align: =Align.Center
+                            Height: =HardwareALSpecificIssueLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =HardwareALSpecificIssueLabel.Y
+                            ZIndex: =4
+
+                        HardwareALSpecificIssueDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =35
+                            Items: =Filter(Category, parentId = HardwareALSubCategoryDropdown.Selected.ID)
+                            Width: =TextInput12.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    HardwareALDescription_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Hardware Account Lockout TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: |-
+                            =//Radio1.Selected.Option=3
+                            true
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        HardwareALDescriptionLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 16, 96, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Describe Issue"
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        HardwareALDescriptionErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HardwareALDescriptionTextInputArea.Y + HardwareALDescriptionTextInputArea.Height
+                            ZIndex: =3
+
+                        HardwareALDescriptionStarVisible As label:
+                            Align: =Align.Center
+                            Height: =HardwareALDescriptionLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =HardwareALDescriptionLabel.Y
+                            ZIndex: =4
+
+                        HardwareALDescriptionTextInputArea As text:
+                            Default: =TicketDescText
+                            EnableSpellCheck: =true
+                            Height: =Parent.Height/1.5
+                            HintText: ="Microsoft, County passport, Odyssey"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: =HardwareALDescription_DataCard.Visible
+                            Width: =TextInput12.Width
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    HardwareALLocationID_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        HardwareALLocationIDLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        HardwareALLocationIDErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HardwareALLocationIDDropdown.Y + HardwareALLocationIDDropdown.Height
+                            ZIndex: =3
+
+                        HardwareALLocationIDStarVisible As label:
+                            Align: =Align.Center
+                            Height: =HardwareALLocationIDLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =HardwareALLocationIDLabel.Y
+                            ZIndex: =4
+
+                        HardwareALLocationIDDropdown As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =35
+                            Items: =Locations
+                            Width: =TextInput12.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    HardwareALAttatchments_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        AddMediaButton_17 As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                            Text: ="Add Media"
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =(Parent.Height-Self.Height)/2
+                            ZIndex: =8
+
+                    HardwareALButtons_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Hardware Account Lockout TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        HardwareALSubmitButton As button:
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: =HardwareALCancelButton.Height
+                            OnSelect: |
+                                =
+                                If(!HardwareALDescriptionTextInputArea.Visible,
+                                UpdateContext({TicketDescText:Concatenate("Request: "&Radio1.Selected.Question)}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    !IsBlank(Radio1.Selected.Option) And !IsBlank(HardwareALLocationIDDropdown.Selected.Name) And
+                                If(Radio1.Selected.Question="Other", If(Len(Trim(HardwareALDescriptionTextInputArea.Text))=0,false,true),true),
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: HardwareALTitleInput.Text,
+                                                description: If(Radio1.Selected.Question = "Other","Account Issue: Other"&Char(13)&Char(13),"")&Trim(HardwareALDescriptionTextInputArea.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: HardwareALMainCategoryDropdown.Selected.ID,
+                                                category: HardwareALSubCategoryDropdown.Selected.ID,
+                                                subCategory: HardwareALSpecificIssueDropdown.Selected.ID,
+                                                locationId: HardwareALLocationIDDropdown.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(JointAttachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = HardwareALMainCategoryDropdown.Selected.ID && locationId = HardwareALLocationIDDropdown.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = HardwareALMainCategoryDropdown.Selected.ID && locationId = HardwareALLocationIDDropdown.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" Hardware Account Lockout Request"
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                ForAll(
+                                    attItems As Attachment,
+                                            AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) 
+                                );
+                                ForAll(
+                                    RTEImages As RTEI,
+                                    With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        );
+                                
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm(HardwareALForm);
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({HALPopup:true});
+                            Text: ="Submit"
+                            Width: =HardwareALCancelButton.Width
+                            X: =HardwareALCancelButton.X + (Self.Width*1.3)
+                            Y: =HardwareALCancelButton.Y
+                            ZIndex: =1
+
+                        HardwareALCancelButton As button:
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm(HardwareALForm);
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('Hardware Account Lockout TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            HardwareALFooter As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='Hardware Account Lockout TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                HardwareALMobileMenu As compMobileMenu:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    HardwareALBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =HardwareALHeaderLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm(HardwareALForm); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(HardwareALHeaderContainer.Height-HardwareALHeaderLabel.Height)/1.05
+        ZIndex: =3
+
+    HardwareALWebMenu As compWebMenu:
+        Visible: ='Hardware Account Lockout TT'.Size > 1
+        ZIndex: =4
+
+    HALPopup As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =HALPopup
+        Width: =Parent.Width
+        ZIndex: =9
+
+        ACPopupBackground_17 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_17 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_24 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_17.Width
+            X: =ACPopupRectangle_17.X
+            Y: =ACPopupRectangle_17.Y
+            ZIndex: =3
+
+        Label10_35 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_24.Width
+            X: =Rectangle8_24.X
+            Y: =Rectangle8_24.Y
+            ZIndex: =4
+
+        Button1_23 As button:
+            OnSelect: |-
+                =UpdateContext({HALPopup:false});
+            Text: ="Close"
+            X: =(ACPopupRectangle_17.Width-Self.Width)/2 +ACPopupRectangle_17.X
+            Y: =ACPopupRectangle_17.Height-Self.Height
+            ZIndex: =9
+
+        Label18_61 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(HardwareALLocationIDDropdown.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank(HardwareALLocationIDDropdown.Selected.Name),"Location Missing", "Location OK")
+            Width: =ACPopupRectangle_17.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_24.Y+Rectangle8_24.Height+15
+            ZIndex: =11
+
+        Label18_62 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(Radio1.Selected.Option),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank(Radio1.Selected.Option),"No Option Selected", "Selection OK")
+            Width: =ACPopupRectangle_17.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_61.Y+Label18_61.Height+10
+            ZIndex: =12
+
+        Label18_63 As label:
+            Align: =Align.Center
+            Color: =If(Radio1.Selected.Question="Other", If(Len(Trim(HardwareALDescriptionTextInputArea.Text))>0,Color.Green,Color.Red),Color.Red)
+            Size: =20
+            Text: =If(Radio1.Selected.Question="Other", If(Len(Trim(HardwareALDescriptionTextInputArea.Text))>0,"Additional Details OK","Additional Details Blank"),"Additional Details Blank")
+            Visible: =Radio1.Selected.Question = "Other"
+            Width: =ACPopupRectangle_17.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_62.Y+Label18_62.Height+10
+            ZIndex: =13
+
+    FeedbackBugReportAL As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='Hardware Account Lockout TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =10
+
+    AddMedia_18 As AddMedia:
+        AMSize: ='Hardware Account Lockout TT'.Size
+        AttachCameraOff: =Set(AttachCamera,false);
+        AttachCameraOn: =Set(AttachCamera,true);
+        DisablePickMedia: =Set(AttachFiles,false)
+        EnablePickMedia: =Set(AttachFiles,true)
+        InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+        OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+        PhotoModeDisable: =Set(AttachPhoto,false)
+        PhotoModeEnable: =Set(AttachPhoto,true)
+        Visible: =varOpenMedia
+        ZIndex: =11
+

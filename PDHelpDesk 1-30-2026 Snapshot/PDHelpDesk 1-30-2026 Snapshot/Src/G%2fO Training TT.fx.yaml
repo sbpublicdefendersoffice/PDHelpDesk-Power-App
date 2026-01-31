@@ -1,0 +1,1093 @@
+"'G/O Training TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |-
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm('G/OTrainingForm');
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({usingCamera:false,altImagePopUp:false});
+        UpdateContext({'G/OTrainingPopup':false})
+
+    "'G/OTrainingMainContainer' As groupContainer.horizontalAutoLayoutContainer":
+        Height: ='G/O Training TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='G/O Training TT'.Width
+        ZIndex: =2
+
+        "'G/OTrainingVerticalLayoutContainer' As groupContainer.verticalAutoLayoutContainer":
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            "'G/OTrainingHeaderContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                GeneralTrainingsHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =11
+
+                    HomeBackgroundGradient_19 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    "'G/OTrainingHeaderLabel' As label":
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-'G/OTrainingWebHeader'.Height
+                        Size: =If('G/O Training TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="General/Other Training Form"
+                        Width: =Parent.Width
+                        Y: ='G/OTrainingWebHeader'.Height
+                        ZIndex: =2
+
+                    "'G/OTrainingWebHeader' As compWebHeader":
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='G/O Training TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        Height: |-
+                            =82
+                            //Parent.Height
+                        ZIndex: =3
+
+            "'G/OTrainingMainContentContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                "'G/OTrainingForm' As form":
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    "'G/OTrainingTitle_DataCard' As typedDataCard.textualEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        "'G/OTrainingTitleLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Name of Training"
+                            Width: =160
+                            Wrap: =false
+                            X: =30
+                            Y: ='eDefenderAdding/CodingDisclaimerLabel_8'.Height+25
+                            ZIndex: =1
+
+                        "'G/OTrainingTitleError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='G/OTrainingTitleInput'.Y + 'G/OTrainingTitleInput'.Height
+                            ZIndex: =3
+
+                        "'G/OTrainingTitleStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='G/OTrainingTitleLabel'.Color
+                            Height: ='G/OTrainingTitleLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='G/OTrainingTitleLabel'.Y
+                            ZIndex: =4
+
+                        "'G/OTrainingTitleInput' As text":
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =35
+                            HintText: ="What is the training for? PowerApps? Kofax? etc."
+                            Width: =If('G/O Training TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: ='G/OTrainingTitleLabel'.Y+'G/OTrainingTitleLabel'.Height
+                            ZIndex: =5
+
+                        "'eDefenderAdding/CodingDisclaimerLabel_8' As label":
+                            Align: =Align.Center
+                            BorderColor: =RGBA(221, 79, 14, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(221, 79, 14, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =If('G/O Training TT'.Size=1,100,50)
+                            Size: =If('eDefender Adding/Coding Items TT'.Size =1,13,16)
+                            Text: ="When Submitting media, DO NOT SUBMIT DOCUMENTS CONTAINING SENSITIVE/RESTRICTED DATA. All case-related files should be uploaded to the Box File."
+                            Width: =Parent.Width
+                            ZIndex: =6
+
+                    "'G/OTrainingMainCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'G/O Training TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        "'G/OTrainingMainCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'G/OTrainingMainCategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='G/OTrainingMainCategoryDropdown'.Y + 'G/OTrainingMainCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'G/OTrainingMainCategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='G/OTrainingMainCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='G/OTrainingMainCategoryLabel'.Y
+                            ZIndex: =4
+
+                        "'G/OTrainingMainCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'G/OTrainingSubCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'G/O Training TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        "'G/OTrainingSubCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'G/OTrainingSubcategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='G/OTrainingSubCategoryDropdown'.Y + 'G/OTrainingSubCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'G/OTrainingSubcategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='G/OTrainingSubCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='G/OTrainingSubCategoryLabel'.Y
+                            ZIndex: =4
+
+                        "'G/OTrainingSubCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = 'G/OTrainingMainCategoryDropdown'.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'G/OTrainingFields' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =240
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        GeneralTrainingInfoInput As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =100
+                            HintText: ="Reasons for training, comments, concerns"
+                            Mode: =TextMode.MultiLine
+                            Width: ='G/OTrainingTitleInput'.Width
+                            X: =30
+                            Y: ='G/OTrainingInfoInputLabel'.Y+'G/OTrainingInfoInputLabel'.Height
+                            ZIndex: =1
+
+                        "'G/OTrainingInfoInputLabel' As label":
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Additional Training Information"
+                            Width: =300
+                            X: =30
+                            Y: =If('G/O Training TT'.Size=1, 'G/OEndDatePicker'.Y+'G/OEndDatePicker'.Height+5,GeneralTrainingTraineeInput.Y+GeneralTrainingTraineeInput.Height+20)
+                            ZIndex: =2
+
+                        "'G/OEndDatePicker' As datepicker":
+                            DefaultDate: =Blank() 
+                            Height: =35
+                            IconBackground: =ColorScheme.primary
+                            InputTextPlaceholder: ="Select End Date"
+                            Width: =If('G/O Training TT'.Size=1,'G/OTrainingTitleInput'.Width ,'G/OTrainingTitleInput'.Width/3 -10)
+                            X: =If('G/O Training TT'.Size=1,30,'G/OStartDatePicker'.Width+'G/OStartDatePicker'.X+10)
+                            Y: =If('G/O Training TT'.Size=1,'G/OStartDatePicker'.Height+'G/OStartDatePicker'.Y+30,GeneralTrainingTraineeInput.Y)
+                            ZIndex: =3
+
+                        GeneralTrainingEndLabel As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Date End"
+                            Width: =90
+                            X: ='G/OEndDatePicker'.X
+                            Y: ='G/OEndDatePicker'.Y-Self.Height
+                            ZIndex: =4
+
+                        "'G/OStartDatePicker' As datepicker":
+                            DefaultDate: =Blank() 
+                            Height: =35
+                            IconBackground: =ColorScheme.primary 
+                            InputTextPlaceholder: ="Select Start Date"
+                            Width: =If('G/O Training TT'.Size=1,'G/OTrainingTitleInput'.Width ,'G/OTrainingTitleInput'.Width/3 -10)
+                            X: =If('G/O Training TT'.Size=1,30,GeneralTrainingTraineeInput.X+GeneralTrainingTraineeInput.Width+10)
+                            Y: =If('G/O Training TT'.Size=1,GeneralTrainingTraineeInput.Y+GeneralTrainingTraineeInput.Height+30,GeneralTrainingTraineeInput.Y)
+                            ZIndex: =5
+
+                        GeneralTrainingStartLabel As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Date Start"
+                            Width: =100
+                            X: ='G/OStartDatePicker'.X
+                            Y: ='G/OStartDatePicker'.Y-Self.Height
+                            ZIndex: =6
+
+                        GeneralTrainingTraineeInput As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =35
+                            HintText: ="First and Last name"
+                            Width: =If('G/O Training TT'.Size=1,'G/OTrainingTitleInput'.Width ,'G/OTrainingTitleInput'.Width/3 -10)
+                            X: =30
+                            Y: =46
+                            ZIndex: =7
+
+                        "'G/OTraineeLabel' As label":
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Trainee"
+                            Width: =75
+                            X: =30
+                            Y: =GeneralTrainingTraineeInput.Y-Self.Height
+                            ZIndex: =8
+
+                    "'G/OTrainingSpecificIssue_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank('G/OTrainingSpecificIssueDropdown'.Selected.Name), false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        "'G/OTrainingSpecificIssueLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'G/OTrainingSpecificIssueError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='G/OTrainingSpecificIssueDropdown'.Y + 'G/OTrainingSpecificIssueDropdown'.Height
+                            ZIndex: =3
+
+                        "'G/OTrainingSpecificIssueStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='G/OTrainingSpecificIssueLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='G/OTrainingSpecificIssueLabel'.Y
+                            ZIndex: =4
+
+                        "'G/OTrainingSpecificIssueDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = 'G/OTrainingSubCategoryDropdown'.Selected.ID)
+                            Width: ='G/OTrainingTitleInput'.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'G/OTrainingDescription_DataCard' As typedDataCard.textualEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'G/O Training TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        "'G/OTrainingDescriptionLabel' As label":
+                            AutoHeight: =true
+                            Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'G/OTrainingDescriptionErrorMessage' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='G/OTrainingDescriptionTextInputArea'.Y + 'G/OTrainingDescriptionTextInputArea'.Height
+                            ZIndex: =3
+
+                        "'G/OTrainingDescriptionStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='G/OTrainingDescriptionLabel'.Color
+                            Height: ='G/OTrainingDescriptionLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='G/OTrainingDescriptionLabel'.Y
+                            ZIndex: =4
+
+                        "'G/OTrainingDescriptionTextInputArea' As text":
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: ="Please Describe Your Issue"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: ='G/OTrainingDescription_DataCard'.Visible
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    "'G/OTrainingLocationID_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        "'G/OTrainingLocationIDLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'G/OTrainingLocationIDErrorMessage' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='G/OTrainingLocationIDDropDown'.Y + 'G/OTrainingLocationIDDropDown'.Height
+                            ZIndex: =3
+
+                        "'G/OTrainingLocationIDStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='G/OTrainingLocationIDLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='G/OTrainingLocationIDLabel'.Y
+                            ZIndex: =4
+
+                        "'G/OTrainingLocationIDDropDown' As dropdown":
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =Parent.Height/3.5
+                            Items: =Locations
+                            Width: ='G/OTrainingTitleInput'.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'G/OTrainingAttatchments_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        AddMediaButton_12 As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                            Text: ="Add Media"
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =(Parent.Height-Self.Height)/2
+                            ZIndex: =8
+
+                    "'G/OTrainingButtons_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'G/O Training TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        "'G/OTrainingSubmitButton' As button":
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: ='G/OTrainingCancelButton'.Height
+                            OnSelect: |
+                                =
+                                If(!'G/OTrainingDescriptionTextInputArea'.Visible,
+                                UpdateContext({TicketDescText:Concatenate("Trainee: "&GeneralTrainingTraineeInput.Text&Char(13),Char(13)&"Start Date: "&DateValue('G/OStartDatePicker'.SelectedDate)&"     Date End: "&DateValue('G/OEndDatePicker'.SelectedDate)&Char(13)&Char(13),"Additional Training Information:"&Char(13),GeneralTrainingInfoInput.Text)}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    Len(Trim('G/OTrainingTitleInput'.Text))>0 And Len(Trim(GeneralTrainingTraineeInput.Text))>0 And (!IsBlank('G/OStartDatePicker'.SelectedDate) 
+                                    And !IsBlank('G/OEndDatePicker'.SelectedDate)) And Len(Trim(GeneralTrainingInfoInput.Text))>0 And
+                                !IsBlank('G/OTrainingLocationIDDropDown'.Selected.Name),
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: 'G/OTrainingTitleInput'.Text,
+                                                description: Trim('G/OTrainingDescriptionTextInputArea'.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: 'G/OTrainingMainCategoryDropdown'.Selected.ID,
+                                                category: 'G/OTrainingSubCategoryDropdown'.Selected.ID,
+                                                subCategory: 'G/OTrainingSpecificIssueDropdown'.Selected.ID,
+                                                locationId: 'G/OTrainingLocationIDDropDown'.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(JointAttachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = 'G/OTrainingMainCategoryDropdown'.Selected.ID && locationId = 'G/OTrainingLocationIDDropDown'.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = 'G/OTrainingMainCategoryDropdown'.Selected.ID && locationId = 'G/OTrainingLocationIDDropDown'.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" General Tranining Request -"&'G/OTrainingTitleInput'.Text
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                ForAll(
+                                    attItems As Attachment,
+                                            AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) 
+                                );
+                                ForAll(
+                                    RTEImages As RTEI,
+                                    With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        );
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm('G/OTrainingForm');
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({'G/OTrainingPopup':true});
+                            Text: ="Submit"
+                            Width: ='G/OTrainingCancelButton'.Width
+                            X: ='G/OTrainingCancelButton'.X + (Self.Width*1.3)
+                            Y: ='G/OTrainingCancelButton'.Y
+                            ZIndex: =1
+
+                        "'G/OTrainingCancelButton' As button":
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm('G/OTrainingForm');
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('G/O Training TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            "'G/OTrainingFooter' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='G/O Training TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                "'G/OTrainingMobileMenu' As compMobileMenu":
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    "'G/OTrainingBackButton' As icon.BackArrow":
+        Color: =Color.White
+        Height: ='G/OTrainingHeaderLabel'.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm('G/OTrainingForm'); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =('G/OTrainingHeaderContainer'.Height-'G/OTrainingHeaderLabel'.Height)/1.05
+        ZIndex: =3
+
+    "'G/OTrainingWebMenu' As compWebMenu":
+        Visible: ='G/O Training TT'.Size > 1
+        ZIndex: =4
+
+    AlternativeAddImageContainer_16 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =altImagePopUp
+        Width: =Parent.Width
+        ZIndex: =8
+
+        AlternativeAddImageBackgroundTint_16 As rectangle:
+            Fill: =RGBA(56, 96, 178, .35)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        AlternativeAddImageBackground_16 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(227, 234, 243, 1)
+            Height: =Parent.Height/1.10
+            Width: =Parent.Width/1.10
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        AlternativeAddImageHeader_16 As rectangle:
+            BorderThickness: =2
+            Height: =80
+            Width: =AlternativeAddImageBackground_16.Width
+            X: =AlternativeAddImageBackground_16.X
+            Y: =AlternativeAddImageBackground_16.Y
+            ZIndex: =3
+
+        AlternativeAddImageHeaderLabel_16 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =AlternativeAddImageHeader_16.Height
+            Size: =18
+            Text: ="Using "&If(usingCamera, "Camera","Copy Paste")
+            Width: =AlternativeAddImageHeader_16.Width
+            X: =AlternativeAddImageHeader_16.X
+            Y: =AlternativeAddImageHeader_16.Y
+            ZIndex: =4
+
+        CopyPasteRTE_16 As richTextEditor:
+            Default: ="Erase this text and then you can paste your Screenshot here, then hit add at the bottom, you have to do this for every screenshot you add."
+            Height: =AlternativeAddImageBackground_16.Height/1.5
+            Visible: =!usingCamera
+            Width: =AlternativeAddImageBackground_16.Width
+            X: =AlternativeAddImageBackground_16.X
+            Y: =AlternativeAddImageBackground_16.Y+AlternativeAddImageHeader_16.Height
+            ZIndex: =5
+
+        Camera_15 As camera:
+            Camera: |-
+                =//Checks if there are anyback cameras, if there are none then default the camera to the first one otherwise use the first back camera
+                If(IsBlank(LookUp(Camera_15.AvailableDevices, "Back" in Name).Id),0,LookUp(Camera_15.AvailableDevices, "Back" in Name).Id)
+            Height: =AlternativeAddImageBackground_16.Height/1.5
+            OnSelect: |-
+                =UpdateContext({photoCounter:photoCounter+1});
+                Collect(RTEImages,{copyName:"Photo"&photoCounter,base64Image: "<img src="&JSON(Camera_15.Photo,JSONFormat.IncludeBinaryData)&" />"});
+                UpdateContext({altImagePopUp:false});
+            Visible: =usingCamera
+            Width: =AlternativeAddImageBackground_16.Width
+            X: =AlternativeAddImageBackground_16.X
+            Y: =AlternativeAddImageBackground_16.Y+AlternativeAddImageHeader_16.Height
+            ZIndex: =6
+
+        AddScreenshotButton_15 As button:
+            OnSelect: |-
+                =If( "<img" in CopyPasteRTE_16.HtmlText, Collect(RTEImages,{copyName:TextInput3.Text, base64Image:CopyPasteRTE_16.HtmlText});
+                Reset(CopyPasteRTE_16);
+                Reset(TextInput3), Notify("No Valid Image"));
+                UpdateContext({altImagePopUp:false})
+            Text: =If(usingCamera,"Take Picture","Add ScreenShot")
+            Visible: =!usingCamera
+            Width: =250
+            X: =(AlternativeAddImageBackground_16.Width-Self.Width)/2 +AlternativeAddImageBackground_16.X
+            Y: =AlternativeAddImageBackground_16.Height-Self.Height-7
+            ZIndex: =7
+
+        ClosePanelButton_15 As icon.Cancel:
+            BorderThickness: =2
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(203, 102, 102, 1)
+            Height: =40
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =UpdateContext({altImagePopUp:false});
+                Reset(CopyPasteRTE_16);
+            Width: =40
+            X: =AlternativeAddImageHeader_16.Width+AlternativeAddImageHeader_16.X-Self.Width
+            Y: =AlternativeAddImageHeader_16.Y
+            ZIndex: =8
+
+        CameraInfoLabel_15 As label:
+            Align: =Align.Center
+            Height: =50
+            Size: =18
+            Text: ="Tap or Click the camera to take a picture"
+            Visible: =usingCamera
+            Width: =Camera_15.Width
+            X: =(AlternativeAddImageBackground_16.Width-Self.Width)/2 +AlternativeAddImageBackground_16.X
+            Y: =AlternativeAddImageBackground_16.Height-Self.Height-7
+            ZIndex: =9
+
+    "'G/OTrainingPopup' As groupContainer.manualLayoutContainer":
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: ='G/OTrainingPopup'
+        Width: =Parent.Width
+        ZIndex: =9
+
+        ACPopupBackground_13 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_13 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_20 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_13.Width
+            X: =ACPopupRectangle_13.X
+            Y: =ACPopupRectangle_13.Y
+            ZIndex: =3
+
+        Label10_31 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_20.Width
+            X: =Rectangle8_20.X
+            Y: =Rectangle8_20.Y
+            ZIndex: =4
+
+        Button1_19 As button:
+            OnSelect: |
+                =UpdateContext({'G/OTrainingPopup':false});
+            Text: ="Close"
+            X: =(ACPopupRectangle_13.Width-Self.Width)/2 +ACPopupRectangle_13.X
+            Y: =ACPopupRectangle_13.Height-Self.Height
+            ZIndex: =9
+
+        Label18_50 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank('G/OTrainingLocationIDDropDown'.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank('G/OTrainingLocationIDDropDown'.Selected.Name),"Location Missing", "Location OK")
+            Width: =ACPopupRectangle_13.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_20.Y+Rectangle8_20.Height+15
+            ZIndex: =11
+
+        Label18_51 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim('G/OTrainingTitleInput'.Text))=0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim('G/OTrainingTitleInput'.Text))=0, "Training Title Blank","Training Title OK")
+            Width: =ACPopupRectangle_13.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_50.Y+Label18_50.Height+10
+            ZIndex: =12
+
+        Label18_52 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(GeneralTrainingTraineeInput.Text))=0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(GeneralTrainingTraineeInput.Text))=0, "Trainee Blank","Trainee OK")
+            Width: =ACPopupRectangle_13.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_51.Y+Label18_51.Height+10
+            ZIndex: =13
+
+        Label18_53 As label:
+            Align: =Align.Center
+            Color: =If((!IsBlank('G/OStartDatePicker'.SelectedDate) And !IsBlank('G/OEndDatePicker'.SelectedDate)),Color.Green, Color.Red)
+            Size: =20
+            Text: =If((!IsBlank('G/OStartDatePicker'.SelectedDate) And !IsBlank('G/OEndDatePicker'.SelectedDate)), "Dates OK","Dates Wrong")
+            Width: =ACPopupRectangle_13.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_52.Y+Label18_52.Height+10
+            ZIndex: =14
+
+        Label18_54 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(GeneralTrainingInfoInput.Text))=0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(GeneralTrainingInfoInput.Text))=0, "Training Details Blank","Training Details OK")
+            Width: =ACPopupRectangle_13.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_53.Y+Label18_53.Height+10
+            ZIndex: =15
+
+    FeedbackBugReportGO As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='G/O Training TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =10
+
+    AddMedia_13 As AddMedia:
+        AMSize: ='G/O Training TT'.Size
+        AttachCameraOff: =Set(AttachCamera,false);
+        AttachCameraOn: =Set(AttachCamera,true);
+        DisablePickMedia: =Set(AttachFiles,false)
+        EnablePickMedia: =Set(AttachFiles,true)
+        InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+        OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+        PhotoModeDisable: =Set(AttachPhoto,false)
+        PhotoModeEnable: =Set(AttachPhoto,true)
+        Visible: =varOpenMedia
+        ZIndex: =11
+

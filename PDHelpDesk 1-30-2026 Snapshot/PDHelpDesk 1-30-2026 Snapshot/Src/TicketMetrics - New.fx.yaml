@@ -1,0 +1,17 @@
+"'TicketMetrics - New' As screen":
+
+    PowerBI1 As powerbi:
+        Height: =Parent.Height
+        TileUrl: |-
+            ="https://app.powerbigov.us/reportEmbed?reportId=8b248a8c-0731-4fbc-a83f-3a8d128cb98e&autoAuth=true&ctid=e64b3773-9890-4a2f-87cd-23725df35ace"
+        Width: =Parent.Width
+        ZIndex: =1
+
+    Button28 As button:
+        Height: =35
+        OnSelect: =Navigate('Admin Manager',ScreenTransition.UnCover)
+        Text: ="Return"
+        X: =Parent.Width-Self.Width
+        Y: =Parent.Height-Self.Height
+        ZIndex: =2
+

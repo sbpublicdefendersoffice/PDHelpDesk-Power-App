@@ -1,0 +1,133 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+EditorState:
+  ScreensOrder:
+    - Splash Screen
+    - Home
+    - Category Select
+    - Sub Category Select
+    - Specific Issue Select
+    - '--- SECTION: TICKET TYPES ---'
+    - Create A Ticket
+    - eDefender Access/Security Request TT
+    - eDefender Adding/Coding Items TT
+    - eDefender Broken File Paths TT
+    - eDefender Delete Items TT
+    - eDefender Document Generation/Templates TT
+    - eDefender Errors TT
+    - eDefender General Requests TT
+    - eDefender Name Record Merges TT
+    - eDefender Reassignments TT
+    - eDefender Reports/Searches TT
+    - eDefender Charges and Statutes TT
+    - eDefender Training Requests TT
+    - eDefender Upgrade/Improvement Suggestions TT
+    - eDefender Zoom Links TT
+    - eDefender Filing Cabinet/Box Integration TT
+    - G/O Training TT
+    - G/O Network/Wifi Connection TT
+    - Internal IT Server Outage TT
+    - Hardware BitLocker Lockout TT
+    - Hardware Account Lockout TT
+    - Hardware Office Equipment TT
+    - Hardware Printers/Copiers TT
+    - Hardware County Mobile Phone TT
+    - HR Office/Desk Setup TT
+    - HR Account On-Hold TT
+    - HR Employee Offboarding TT
+    - HR County Mobile Phone TT
+    - HR Schedule New  Hire Training TT
+    - HR Employee Onboarding TT
+    - Software/Applications VLC TT
+    - Software/Applications ESS/Timesheet TT
+    - Software/Applications CEB TT
+    - Software/Applications ThriveSBC TT
+    - Software/Applications Box TT
+    - Software/Applications Microsoft TT
+    - Software/Applications Kofax TT
+    - Software/Applications Odyssey TT
+    - Software/Applications SecureAccess TT
+    - Software/Applications Zoom TT
+    - Software/Applications Westlaw TT
+    - Software/Applications Loco TT
+    - Software/Applications PowerApp TT
+    - Case Support Forensic Analysis TT
+    - Case Support Video/Audio Editing TT
+    - Case Support Audio/Image/Video Enhancements TT
+    - Case Support Disc Burning TT
+    - Case Support Court Tech-Check TT
+    - Case Support Audio or Video Redactions TT
+    - Case Support Evidence Support TT
+    - Case Support Transcript Requests TT
+    - Emergency TT
+    - Box Link Request Form TT
+    - Raw Data Pull TT
+    - Dashboard Request TT
+    - Existing Dashboard TT
+    - Other Data Request TT
+    - RJA Data Pull TT
+    - Success
+    - Single Ticket Info
+    - MyTickets
+    - '--- SECTION: ADMIN TOOLS ---'
+    - Admin Manager
+    - All Tickets
+    - Knowledge Base
+    - TicketMetrics - New
+    - Assign Role - Admin
+    - Create Alert
+    - Alert Manager
+    - Tag Manager
+    - Automation Rules
+    - Services Status
+    - '--- SECTION: ASSET MANAGMENT ---'
+    - Asset Manager Menu
+    - Assets
+    - NewAsset
+    - AssetDetails
+    - AssetMetrics
+    - '--- SECTION: PURCHASE REQUESTS ---'
+    - Purchase Request List
+    - Purchase Request TT
+    - Purchase Request Live Tracker
+    - Purchase Request Item Review
+    - '--- SECTION: MISCELLANEOUS ---'
+    - Template Screen
+    - WelcomeUserScreen
+    - User Not Valid
+    - Approvals Screen
+    - Announcements
+    - '--- SECTION: UNUSED ---'
+    - Dynamic Form Screen
+    - Time Scheduler
+    - DataRequestForm
+    - Request For Time Off Form
+    - Ticket Metrics - Admin Tech
+  ComponentDefinitionsOrder:
+    - SuccessSigns
+    - compFilterTicketsMenu
+    - compMobileMenu
+    - compPageTextSizeFormatter
+    - compSearchTickets
+    - compWebHeader
+    - compWebMenu
+    - compWebHeader_1
+    - compMobileMenu_1
+    - compWebMenu_1
+    - compWebHeader_2
+    - compMobileMenu_2
+    - compWebMenu_2
+    - compWebHeader_3
+    - compMobileMenu_3
+    - compWebMenu_3
+    - compWebHeader_5
+    - compMobileMenu_4
+    - compWebMenu_4
+    - FeedbackBugReport
+    - AddMedia

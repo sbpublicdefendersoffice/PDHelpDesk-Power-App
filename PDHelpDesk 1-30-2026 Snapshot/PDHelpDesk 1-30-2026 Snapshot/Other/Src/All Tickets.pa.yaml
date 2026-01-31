@@ -1,0 +1,1037 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  All Tickets:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |+
+        =//If(IsEmpty(Filter(colAllTickets,Status = "open" And AssignedTo = 0)), Set(AssignmentChoice,false),Set(AssignmentChoice,true));
+        Reset(ShowAll);
+        Reset(AlllTicketsGallery);
+        Reset(AllTicketsFilterMenu);
+        Reset(AllTicketsSearchBar);
+        UpdateContext({varPageNumber:1});
+    Children:
+      - AllTicketsBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: |-
+              =AllTicketsLabel.Height/1.05
+              //If('All Tickets'.Size = 1, TagName_2.Height/1.2 ,TagName_2.Height/1.05)
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Width: =49
+            X: =Self.Width/5
+            Y: |-
+              =//SingleTicketInfo_Title.Y
+              //Self.Height
+              (AllTicketsHeaderContainer.Height-AllTicketsLabel.Height)/1.05
+      - AllTicketsMainContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - AllTicketsVerticalLayoutContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Height: =Parent.Height
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutOverflowY: =LayoutOverflow.Scroll
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - AllTicketsHeaderContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: |-
+                          =130
+                          //Parent.Height/11
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =Parent.Width
+                      Children:
+                        - AllTicketsHeaderElements:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - HomeBackgroundGradient_62:
+                                  Control: HtmlViewer@2.1.0
+                                  Properties:
+                                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =130
+                                    HtmlText: =Home_Background_Gradient.HtmlText
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =11
+                                    Width: =Parent.Width
+                              - AllTicketsLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =Color.Transparent
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height-AllTicketsWebHeader.Height
+                                    Size: =If('All Tickets'.Size= 1 , titleText.mobileSize, titleText.desktopSize)
+                                    Text: ="All Tickets"
+                                    Width: =Parent.Width
+                                    X: =(Parent.Width - Self.Width)/2
+                                    Y: =AllTicketsWebHeader.Height
+                              - AllTicketsWebHeader:
+                                  Control: CanvasComponent
+                                  ComponentName: compWebHeader
+                                  Properties:
+                                    BackgroundColor: =Color.Transparent
+                                    CompScreenSize: ='All Tickets'.Size
+                                    EnableFeedback: =Set(varFeedback,true)
+                                    FeedbackBool: =varFeedback
+                                    Height: =82
+                                    Width: =App.Width
+                  - AllTicketsMainContentContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutOverflowY: =LayoutOverflow.Scroll
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - SearchTickets_1:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorScheme.secondaryPressedColor
+                              FillPortions: =0
+                              Height: |-
+                                =
+                                If('All Tickets'.Size = 1, Parent.Height/9, Parent.Height/11)
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinHeight: =//compWebHeader_28.Height
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Parent.Width
+                            Children:
+                              - AllTicketsSearchBar:
+                                  Control: CanvasComponent
+                                  ComponentName: compSearchTickets
+                                  Properties:
+                                    BackgroundColor: =ColorScheme.backgroundDark
+                                    CloseSearch: =Set(varSearchVisible, false)
+                                    Height: =40
+                                    IconSearchOpenNewX: =
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    NewHintText: =
+                                    OffColor: =ColorScheme.offColor
+                                    OpenSearch: =Set(varSearchVisible, true)
+                                    PrimaryColor: =ColorScheme.primary
+                                    SearchVisible: =varSearchVisible
+                                    SecondaryColor: =ColorScheme.secondary
+                                    Width: =If(App.Width > 1200, 800, App.Width > 900, 600, App.Width > 600, App.Width * 0.65, App.Width - 40)
+                        - AllTicketsMainTicketLayout:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Parent.Width/1.06
+                            Children:
+                              - AllTicketHeader:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    BorderColor: =ColorScheme.primary
+                                    BorderThickness: =2
+                                    DropShadow: =DropShadow.None
+                                    FillPortions: =0
+                                    Height: |-
+                                      =//If('All Tickets'.Size =1,Parent.Height/8,Parent.Height/10)
+                                      Parent.Height/10
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinWidth: =0
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Visible: |+
+                                      =If('All Tickets'.Size = 1, false,If(AlllTicketsGallery.Visible||AllTicketsGalleryMobile_2.Visible, true,false))
+                                    Width: =Parent.Width
+                                    Y: |+
+                                      =0
+                                  Children:
+                                    - AllTicketsTicketId:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =ColorScheme.screenBackground
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =If('All Tickets'.Size = 1 , 50, 40)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: ="ID"
+                                          Width: =Parent.Width/6
+                                          X: =608
+                                    - AllTicketsStatus:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =ColorScheme.screenBackground
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: ="Status"
+                                          Width: =Parent.Width/6
+                                          X: =608
+                                    - AllTicketsTitle:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =ColorScheme.screenBackground
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: ="Title"
+                                          Width: =Parent.Width/6
+                                          X: =608
+                                    - AllTicketsDateCreated:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =ColorScheme.screenBackground
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: ="Date Created"
+                                          Width: =Parent.Width/6
+                                          X: =608
+                                    - AllTicketsMainCategory:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =ColorScheme.screenBackground
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: ="Main Category"
+                                          Width: =Parent.Width/6
+                                          X: =608
+                                    - AllTicketsAssignee:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =ColorScheme.screenBackground
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: ="Assignee"
+                                          Width: =Parent.Width/6
+                              - AlllTicketsGallery:
+                                  Control: Gallery@2.15.0
+                                  Variant: Vertical
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    FillPortions: =0
+                                    Height: =Parent.Height/1.26
+                                    Items: |-
+                                      =//Tickets
+                                      //Sort(Filter(colTickets,Status = "open"),DateCreated,SortOrder.Descending)
+                                      //Sort(colAllTickets, DateCreated, SortOrder.Descending)
+                                      /*If(varPageNumber=1, FirstN(Sort(Tickets,dateCreated,SortOrder.Descending),10*varPageNumber), LastN(FirstN(Sort(Tickets,dateCreated,SortOrder.Descending),10*varPageNumber),10*1))*/
+                                      If(varPageNumber=1, FirstN(Sort(colAllTickets,DateCreated,SortOrder.Descending),10*varPageNumber), LastN(FirstN(Sort(colAllTickets,DateCreated,SortOrder.Descending),10*varPageNumber),10*1))
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinWidth: =0
+                                    TemplatePadding: =0
+                                    TemplateSize: |-
+                                      =//If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(280, Self.Height - 60))
+                                      Parent.Height/10
+                                    Visible: |+
+                                      =If('All Tickets'.Size = 1, false,If(!IsEmpty(AlllTicketsGallery.AllItems),true,false))
+                                    Width: =Parent.Width
+                                  Children:
+                                    - AllTicketsAssignedToValue:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          OnSelect: =Select(Parent)
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: =If(ThisItem.AssignedTo = 0 || IsBlank(ThisItem.AssignedTo), "Unassigned", LookUp(Users, ID = ThisItem.AssignedTo, fullName))
+                                          Width: =AllTicketsAssignee.Width
+                                          X: =AllTicketsAssignee.X
+                                    - AllTicketsMainCategoryValue:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          OnSelect: =Select(Parent)
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: |-
+                                            =//LookUp(Category_1, ID= ThisItem.mainCategory, name)
+                                            If(ThisItem.MainCategory = 0 || IsBlank(ThisItem.MainCategory), "No Main Category", LookUp(Category, ID = ThisItem.MainCategory, Name))
+                                          Width: =AllTicketsMainCategory.Width
+                                          X: =AllTicketsMainCategory.X
+                                    - AllTicketsDateCreatedValue:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          OnSelect: =Select(Parent)
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: |-
+                                            =DateValue(ThisItem.DateCreated)
+                                            //ThisItem.DateCreated
+                                          Width: =AllTicketsDateCreated.Width
+                                          X: =AllTicketsDateCreated.X
+                                    - AllTicketsTitleValue:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          OnSelect: =Select(Parent)
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: |-
+                                            =//ThisItem.Title
+                                            If(Len(ThisItem.Title)>60, Concatenate(Left(ThisItem.Title,60),"..."),ThisItem.Title)
+                                          Width: =AllTicketsTitle.Width
+                                          X: =AllTicketsTitle.X
+                                    - AllTicketStatusValue:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =ColorScheme.screenBackground
+                                          Fill: |-
+                                            =//Switch(Label40_1.Text,"open", ColorScheme.offColor, "closed", ColorScheme.orange,ColorScheme.screenBackground)
+                                            ColorScheme.secondary
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          OnSelect: =Select(Parent)
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: =ThisItem.Status
+                                          Width: =AllTicketsStatus.Width
+                                          X: =AllTicketsStatus.X
+                                    - AllTicketIdValue:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          OnSelect: =Select(Parent)
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: =ThisItem.ID
+                                          Width: =AllTicketsTicketId.Width
+                                          X: =AllTicketsTicketId.X
+                                    - hoverTicket_2:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =Color.Transparent
+                                          Fill: =Color.Transparent
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          HoverBorderColor: =RGBA(53, 89, 137, 0)
+                                          HoverFill: =RGBA(53,89,137, 0.35)
+                                          OnSelect: |-
+                                            =//Select(Parent)
+                                            /*Navigate('Single Ticket Info', ScreenTransition.Fade, {ticketInfo: {Title: ThisItem.title,Description:ThisItem.description,ID:ThisItem.ID,CreatorId:ThisItem.creatorId,DateCreated: ThisItem.dateCreated,MainCategory: ThisItem.mainCategory,AddAssignees:ThisItem.addAssignees,Status: ThisItem.status}})*/
+
+                                            Navigate('Single Ticket Info', ScreenTransition.Fade, {ticketInfo:ThisItem})
+                                          Size: |-
+                                            =//If('All Tickets'.Size = 1,8 ,13)
+                                            13
+                                          Text: =""
+                                          Width: =Parent.TemplateWidth
+                                          X: |+
+                                            =0
+                                    - AllTicketsGalleryOverlapButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =RGBA(0, 0, 0, 0)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          HoverBorderColor: =RGBA(53, 89, 137, 0)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =RGBA(53,89,137, 0.35)
+                                          OnSelect: =Navigate('Single Ticket Info', ScreenTransition.Fade, {ticketInfo:ThisItem})
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =RGBA(53,89,137, 0.50)
+                                          Text: =""
+                                          Width: =Parent.TemplateWidth
+                              - AllTicketsGalleryMobile_2:
+                                  Control: Gallery@2.15.0
+                                  Variant: Vertical
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DelayItemLoading: |-
+                                      =//false
+                                      true
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Parent.Height
+                                    Items: |+
+                                      =If(varPageNumber=1, FirstN(Sort(colAllTickets,DateCreated,SortOrder.Descending),10*varPageNumber), LastN(FirstN(Sort(colAllTickets,DateCreated,SortOrder.Descending),10*varPageNumber),10*1))
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinHeight: =
+                                    LoadingSpinner: =LoadingSpinner.Controls
+                                    TemplatePadding: =10
+                                    TemplateSize: =If(MyTickets.Size > 1, 250, 240)
+                                    Transition: =Transition.Push
+                                    Visible: |-
+                                      =//!IsEmpty(AllTicketsGalleryMobile_2.AllItems)
+                                      If('All Tickets'.Size = 1, If(!IsEmpty(AllTicketsGalleryMobile_2.AllItems),true,false), false)
+                                    Width: =1366
+                                    WrapCount: =RoundDown((Parent.Width / Self.LayoutMinWidth), 0)
+                                    Y: =224
+                                  Children:
+                                    - Rectangle6_1:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 0)
+                                          BorderThickness: =25
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =Image6_3.Height
+                                          OnSelect: =Select(Parent)
+                                          Width: =Image6_3.Width
+                                    - Image6_3:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: |-
+                                            =//250
+                                            Parent.TemplateHeight
+                                          Image: "=\"data:image/svg+xml,\" & EncodeUrl(\r\n    \"<?xml version='1.0' encoding='UTF-8' standalone='no'?>\r\n<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>\r\n<svg version='1.1'\r\n    xmlns='http://www.w3.org/2000/svg'\r\n    xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 \" & Self.Width & \" \" & Self.Height & \"' width='\" & Self.Width & \"' height='\" & Self.Height & \"'>\r\n    <defs>\" &\r\n    // ----- Box for fill\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0,0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='box' stroke='\" & \"#ff0000\" & \"' stroke-width='\" & 0 & \"'></path>\r\n    </defs>\r\n    <g>\r\n        <g>\r\n            <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>\r\n                <feFlood></feFlood>\r\n                <feComposite in2='SourceAlpha' operator='in'></feComposite>\r\n                <feGaussianBlur stdDeviation='\" & 5 & \"'></feGaussianBlur>\r\n                <feOffset dx='\" & 0 & \"' dy='\" & 0 & \"' result='afterOffset'></feOffset>\r\n                <feFlood flood-color='\" & \"#000000\" & \"' flood-opacity='\" & Substitute(Text(0.5), \",\", \".\") & \"'></feFlood>\r\n                <feComposite in2='afterOffset' operator='in'></feComposite>\r\n                <feMorphology operator='dilate' radius='1'></feMorphology>\r\n                <feComposite in2='SourceAlpha' operator='out'></feComposite>\r\n            </filter>\" &\r\n            // ----- Box for shadow\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='Component1' filter='url(#shadow)'></path>\r\n        </g>\r\n        <use xlink:href='#box' opacity='1' fill='\" & \"#ffffff\" & \"' fill-opacity='\" & Substitute(Text(0), \",\", \".\") & \"'></use>\r\n    </g>\r\n    <g>\r\n        \" &\r\n        // ----- Edge\r\n If(\r\n        true,\r\n        Switch(\r\n            \"left\",\r\n            \"left\",// -- Position: left\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\",\r\n             \"right\",// -- Position: right\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\"\r\n           \r\n        )\r\n    ) & \"\r\n    </g>\r\n</svg>\"\r\n)"
+                                          OnSelect: =Select(Parent)
+                                          Width: |-
+                                            =//329
+                                            Parent.TemplateWidth
+                                    - btnBkg_3:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =Self.Fill
+                                          OnSelect: =Select(Parent)
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Fill
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Text: =""
+                                          Visible: =false
+                                          Width: =Parent.TemplateWidth
+                                    - TitleLabel_2:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =54
+                                          OnSelect: =Select(Parent)
+                                          Size: =12
+                                          Text: |-
+                                            =//ThisItem.Title
+                                            If(Len(ThisItem.Title)>60, Concatenate(Left(ThisItem.Title,60),"..."),ThisItem.Title)
+                                          Width: =Parent.TemplateWidth - IdLabel_2.Width - 47
+                                          X: =24
+                                          Y: =27
+                                    - IdLabel_2:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =Color.Black
+                                          Fill: =RGBA(241, 244, 249, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          OnSelect: =Select(Parent)
+                                          Text: =ThisItem.ID
+                                          Width: =74
+                                          X: =Parent.TemplateWidth - Self.Width - 23
+                                          Y: =27
+                                    - DateCreatedLabel_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          OnSelect: =Select(Parent)
+                                          PaddingLeft: =If(Len(DateCreatedLabel_1.Text) <= 9, 5,0)
+                                          PaddingRight: =If(Len(DateCreatedLabel_1.Text) <= 9, 5,0)
+                                          Size: =10
+                                          Text: =DateValue(ThisItem.DateCreated)
+                                          Width: =75
+                                          X: =Parent.TemplateWidth - Self.Width - 23
+                                          Y: =((Parent.TemplateHeight - Self.Height) / 2) + 30
+                                    - Image7_4:
+                                        Control: Image@2.2.3
+                                        Group: Assignee Group_1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =40
+                                          Image: |-
+                                            =// Get assignee's profile pic if they have one
+                                            // Sharepoint
+                                            If(!IsBlank(LookUp(Users, ID = ThisItem.AssignedTo, email)) && Office365Users.UserPhotoMetadata(LookUp(Users, ID = ThisItem.AssignedTo, email)).HasPhoto, Office365Users.UserPhotoV2(LookUp(Users, ID = ThisItem.AssignedTo, email)), 'blank-profile-pic')
+                                          ImagePosition: =ImagePosition.Fill
+                                          RadiusBottomLeft: =256
+                                          RadiusBottomRight: =256
+                                          RadiusTopLeft: =256
+                                          RadiusTopRight: =256
+                                          Visible: =userData.role = "admin" || userData.role = "tech" || (userData.role = "staff" && !(IsBlank(ThisItem.AssignedTo) || ThisItem.AssignedTo = 0))
+                                          Width: =40
+                                          X: =24
+                                          Y: =Parent.TemplateHeight - Self.Height - 27
+                                    - AssigneeLabel_1:
+                                        Control: Label@2.5.1
+                                        Group: Assignee Group_1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =41
+                                          OnSelect: =Select(Parent)
+                                          Text: |-
+                                            =// Sharepoint
+                                            If(ThisItem.AssignedTo = 0 || IsBlank(ThisItem.AssignedTo), "Unassigned", LookUp(Users, ID = ThisItem.AssignedTo, fullName))
+                                          Visible: =userData.role = "admin" || userData.role = "tech" || (userData.role = "staff" && !(IsBlank(ThisItem.AssignedTo) || ThisItem.AssignedTo = 0))
+                                          Width: =Parent.TemplateWidth - Image7_4.Width - StatusLabel_2.Width - StatusColor_2.Width - 47
+                                          X: =Image7_4.X+ Image7_4.Width
+                                          Y: =Parent.TemplateHeight - Self.Height - 27
+                                    - StatusColor_2:
+                                        Control: Rectangle@2.3.0
+                                        Group: Status Group_2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status,
+                                                "open", RGBA(0, 127, 187, 1),
+                                                "closed", RGBA(221, 79, 14, 1)
+                                            )
+                                          Height: =41
+                                          OnSelect: =Select(Parent)
+                                          Width: =9
+                                          X: =StatusLabel_2.X - Self.Width
+                                          Y: =Parent.TemplateHeight - Self.Height - 27
+                                    - StatusLabel_2:
+                                        Control: Label@2.5.1
+                                        Group: Status Group_2
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: |-
+                                            =Switch(
+                                                ThisItem.Status,
+                                                "open", RGBA(0, 127, 187, 1),
+                                                "closed", RGBA(221, 79, 14, 1)
+                                            )
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: =RGBA(241, 244, 249, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =41
+                                          OnSelect: =Select(Parent)
+                                          Text: |-
+                                            =// Sharepoint
+                                            ThisItem.Status
+                                          Width: =65
+                                          X: =Parent.TemplateWidth - Self.Width - 23
+                                          Y: =Parent.TemplateHeight - Self.Height - 27
+                                    - CategoryLabelText_2:
+                                        Control: Label@2.5.1
+                                        Group: Category Group_1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          OnSelect: =Select(Parent)
+                                          Size: =10
+                                          Text: ="Category"
+                                          Width: =67
+                                          X: =24
+                                          Y: |+
+                                            =((Parent.TemplateHeight - Self.Height) / 2) + 30
+                                    - CategoryLabelText_3:
+                                        Control: Label@2.5.1
+                                        Group: Category Group_1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          OnSelect: =Select(Parent)
+                                          Size: =10
+                                          Text: |-
+                                            =// Sharepoint
+                                            If(ThisItem.MainCategory = 0 || IsBlank(ThisItem.MainCategory), "No Main Category", LookUp(Category, ID = ThisItem.MainCategory, Name))
+                                          Width: =Parent.TemplateWidth - CategoryLabelText_2.Width - DateCreatedLabel_1.Width-55
+                                          Wrap: =false
+                                          X: =CategoryLabelText.X + CategoryLabelText.Width
+                                          Y: |+
+                                            =((Parent.TemplateHeight - Self.Height) / 2) + 30
+                                    - hoverButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          BorderThickness: =0
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =Color.Transparent
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =Self.Fill
+                                          OnSelect: |-
+                                            =// Sharepoint List
+                                            Navigate('Single Ticket Info', ScreenTransition.Fade, {ticketInfo: ThisItem})
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Fill
+                                          Text: =""
+                                          Width: =Parent.TemplateWidth
+                                          X: =(Parent.TemplateWidth - Self.Width) / 2
+                                          Y: =(Parent.TemplateHeight - Self.Height) / 2
+                              - AllTicketsPagination_1:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    DropShadow: =DropShadow.None
+                                    FillPortions: =0
+                                    Height: |-
+                                      =//Parent.Height/10
+                                      Parent.Height - (AllTicketHeader.Height + AlllTicketsGallery.Height)
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinHeight: |+
+                                      =0
+
+                                    LayoutOverflowY: =LayoutOverflow.Scroll
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Visible: =If(AlllTicketsGallery.Visible||AllTicketsGalleryMobile_2.Visible,true,false)
+                                    Width: =Parent.Width
+                                  Children:
+                                    - AllTicketsPaginationContent_1:
+                                        Control: GroupContainer@1.4.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.SetByContainer
+                                          DropShadow: =DropShadow.None
+                                          FillPortions: =0
+                                          Height: =Parent.Height
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: |+
+                                            =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Width: =Parent.Width
+                                        Children:
+                                          - AllTicketsPaginationRightArrow_1:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(0, 18, 107, 1)
+                                                DisplayMode: =If(10*varPageNumber<CountRows(colAllTickets), DisplayMode.Edit,DisplayMode.Disabled)
+                                                Height: =AllTicketsPaginationPageSum_1.Height
+                                                Icon: =Icon.ArrowRight
+                                                OnSelect: =UpdateContext({varPageNumber:varPageNumber+1})
+                                                X: =(AllTicketsPaginationPageSum_1.X+AllTicketsPaginationPageSum_1.Width)
+                                                Y: =Parent.Height/4
+                                          - AllTicketsPaginationPageSum_1:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Text: =If(RoundUp(CountRows(colAllTickets)/10,0) = 1,1 & " of " & RoundUp(CountRows(colAllTickets)/10,0),varPageNumber & " of " & RoundUp(CountRows(colAllTickets)/10,0))
+                                                X: =(Parent.Width/2)-Self.Width/2
+                                                Y: =Parent.Height/4
+                                          - AllTicketsPaginationLeftArrow_1:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(0, 18, 107, 1)
+                                                DisplayMode: |+
+                                                  =//If(varPageNumber<=1,DisplayMode.Disabled,DisplayMode.Edit)
+                                                  //If(varPageNumber = 1,DisplayMode.Disabled,If(varPageNumber>1,DisplayMode.Edit)
+                                                  //If(RoundUp(CountRows(colAllTickets)/10,0) = 1,
+                                                  //If(RoundUp(CountRows(colAllTickets)/10,0) = 1,DisplayMode.Disabled,DisplayMode.Edit)
+                                                  //If(RoundUp(CountRows(colAllTickets)/10,0) = 1,DisplayMode.Disabled,DisplayMode.Edit)
+
+                                                  //If(RoundUp(CountRows(colAllTickets)/10,0) = 1,1 & " of " & RoundUp(CountRows(colAllTickets)/10,0),varPageNumber & " of " & RoundUp(CountRows(colAllTickets)/10,0))
+
+                                                  If(RoundUp(CountRows(colAllTickets)/10,0) = 1,DisplayMode.Disabled,If(varPageNumber<=1,DisplayMode.Disabled,DisplayMode.Edit))
+
+                                                Height: =AllTicketsPaginationPageSum_1.Height
+                                                Icon: =Icon.ArrowLeft
+                                                OnSelect: =UpdateContext({varPageNumber:varPageNumber-1})
+                                                X: =AllTicketsPaginationPageSum_1.X - Self.Width
+                                                Y: =Parent.Height/4
+                              - NoTicketsFoundContainer:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Visible: =If(AlllTicketsGallery.Visible||AllTicketsGalleryMobile_2.Visible ,false,true)
+                                  Children:
+                                    - NoTicketsFoundLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Bold
+                                          Size: =If('All Tickets'.Size>1, 20,13)
+                                          Text: ="No tickets found, try changing the filter settings or searching."
+                                          Width: =Parent.Width
+                                          Y: =(Parent.Height-Self.Height)/2
+                  - AllTicketsFooter:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(255,255,255, 1)
+                        FillPortions: =0
+                        Height: =60
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |+
+                          =If('All Tickets'.Size = 1,true,false)
+                        Width: =Parent.Width
+                      Children:
+                        - compMobileMenu_7:
+                            Control: CanvasComponent
+                            ComponentName: compMobileMenu
+                            Properties:
+                              BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                              ForegroundColor: |-
+                                =//RGBA(70, 130, 180, 1)
+                                ColorScheme.primary
+                              Height: =Parent.Height
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NavigationItems: |-
+                                =// IF adimn or tech show this table, if not show Staff table
+                                gblNavItems
+                              SelectedItemBackground: =Color.LightGray
+                              Width: =Parent.Width
+      - ShowAll:
+          Control: Classic/CheckBox@2.1.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            CheckboxBorderColor: =RGBA(0, 18, 107, 1)
+            CheckmarkFill: =RGBA(0, 0, 0, 1)
+            Font: =Font.'Open Sans'
+            HoverColor: =RGBA(0, 18, 107, 1)
+            OnCheck: =
+            OnSelect: |-
+              =Reset(AlllTicketsGallery);
+              Reset(AllTicketsFilterMenu);
+              Reset(AllTicketsSearchBar);
+              UpdateContext({varPageNumber:1});
+            OnUncheck: =
+            Size: =10
+            Text: ="Last 12 Months"
+            Visible: =AllTicketsFilterMenu.Visible
+            X: =9
+            Y: =130
+      - AllTicketsWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, App.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='All Tickets'.Size > 1
+            Width: =If(showMenu, App.Width, 80)
+      - AllTicketsFilterMenu:
+          Control: CanvasComponent
+          ComponentName: compFilterTicketsMenu
+          Properties:
+            BackgroundColor: =ColorScheme.backgroundDark
+            CheckAdmin: =!(App.ActiveScreen.Name = "All Tickets") || (App.ActiveScreen.Name = "All Tickets" && (userData.role = "admin" || userData.role = "tech"))
+            CloseFilter: =Set(varFilterVisible, false)
+            ColorOrange: =ColorScheme.orange
+            FilterIconSize: |+
+              =//If('All Tickets'.Size =1, Parent.Size * 30, Parent.Size * 12)
+              If(App.Width > 600, 50, 40)
+
+            FilterVisible: =varFilterVisible
+            FontSize: |+
+              =//If(App.Height - compFilterMenu_1.HeightOffset > 560, 40, 30)
+              If(App.Height - MyTicketsFilterMenu.HeightOffset > 340, 16, 13)
+            Height: |+
+              =If(AllTicketsFilterMenu.FilterVisible, AllTicketsFilterMenu.NewHeight, AllTicketsFilterMenu.FilterIconSize)
+            HeightOffset: |+
+              =AllTicketsHeaderContainer.Height + ((AllTicketsSearchBar.Height - AllTicketsFilterMenu.FilterIconSize) / 2)
+            IconSize: |+
+              =If(App.Height - AllTicketsFilterMenu.HeightOffset > 560, 40, 30)
+              //If(App.Height - compFilterTicketsMenu_1.HeightOffset > 560, 40, 30)
+            NewHeight: |-
+              =//If(compFilterMenu.CheckAdmin&&App.ActiveScreen.Name="MyTickets",If(App.Height>560,400,320),!compFilterMenu.CheckAdmin&&App.ActiveScreen.Name="MyTickets",150,If(App.Height>560,420,320))
+
+              /*If(
+                  compFilterTicketsMenu_1.CheckAdmin && App.ActiveScreen.Name = "All Tickets",
+                  If(
+                      App.Height - compFilterTicketsMenu_1.HeightOffset > 560,
+                      250,
+                      190
+                  ),
+                  !compFilterTicketsMenu_1.CheckAdmin && App.ActiveScreen.Name = "All Tickets",
+                  If(
+                      App.Height - compFilterTicketsMenu_1.HeightOffset > 560,
+                      150,
+                      120
+                  ),
+                  If(
+                      App.Height-compFilterTicketsMenu_1.HeightOffset > 560,
+                      250,
+                      190
+                  )
+              )*/
+
+              If(
+                  AllTicketsFilterMenu.CheckAdmin && App.ActiveScreen.Name = "All Tickets",
+                  If(
+                      App.Height - AllTicketsFilterMenu.HeightOffset > 560,
+                      250,
+                      190
+                  )
+              )
+            OffColor: =ColorScheme.offColor
+            OpenFilter: =Set(varFilterVisible, true)
+            PrimaryColor: =ColorScheme.primary
+            SecondaryColor: =ColorScheme.secondary
+            SelectMonths: =If(ShowAll.Value,If(Month(Now())=1,12,12),1)
+            Visible: =App.Width > 600 || (App.Width <= 600 && !AllTicketsSearchBar.SearchVisible)
+            Width: =If(AllTicketsFilterMenu.FilterVisible, If(App.Width > 600 && App.Height - AllTicketsFilterMenu.HeightOffset > 400, 220, 185), AllTicketsFilterMenu.FilterIconSize)
+            X: |+
+              =//Parent.Width/1.2
+              //If('All Tickets'.Size > 1, Parent.Width - compSearchTickets_3.X/1.2, Parent.Width - Self.Width - 10)
+              Parent.Width - Self.Width - If(App.Width > 500, 30, 10)
+            Y: |+
+              =//Parent.Height/5.7
+              //AllTicketsHeaderContainer.Height + ((compSearchTickets_3.Height - compFilterTicketsMenu_1.FilterIconSize))
+              AllTicketsHeaderContainer.Height + ((SearchTickets_1.Height - AllTicketsFilterMenu.FilterIconSize)/2)
+
+      - SearchBlockerTop_1:
+          Control: Rectangle@2.3.0
+          Group: SearchBlocker_1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: |-
+              =//Color.Transparent
+              RGBA(0, 0, 0, 0.25)
+            Height: =AllTicketsHeaderContainer.Height
+            OnSelect: =Set(varSearchVisible, false)
+            Visible: =App.Width <= 600 && AllTicketsSearchBar.SearchVisible
+            Width: =Parent.Width
+      - SearchBlockerBottom_1:
+          Control: Rectangle@2.3.0
+          Group: SearchBlocker_1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: |-
+              =//Color.Transparent
+              RGBA(0, 0, 0, 0.25)
+            Height: =Parent.Height - (AllTicketsHeaderContainer.Height + SearchTickets_1.Height)
+            OnSelect: =Set(varSearchVisible, false)
+            Visible: =App.Width <= 600 && AllTicketsSearchBar.SearchVisible
+            Width: =Parent.Width
+            Y: =AllTicketsHeaderContainer.Height + SearchTickets_1.Height
+      - FeedbackBugReportAllT:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

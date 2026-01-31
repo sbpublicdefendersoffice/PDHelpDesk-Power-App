@@ -1,0 +1,23 @@
+Users
+Alerts
+ATemplates
+Category
+Comments
+KB Tags
+Locations
+Services Active
+Tags
+Ticket Automation Rules
+Ticket Attachments - Document library - ticketID - Name
+KBArticles - Document library - Name - Tags - Article Blurb
+Misc - Document Library - Name
+Feedback/Bugs
+Feedback/Bugs Attachments - Document library - FeedbackID - Name
+Approvals
+Approvers
+Purchase Request Items
+Purchase Requests
+PubDef Computer Inventory_ Asset List_Computers
+PubDef Computer Inventory_ Asset List_Equipment
+
+#Note all csv files provided have had the data cleaned for ethical reasons

@@ -1,0 +1,86 @@
+"WelcomeUserScreen As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    Fill: =ColorScheme.screenBackground
+    OnVisible: =
+
+    WelcomeUserContainer As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        WelcomeUserMainContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =3
+
+            WelcomeUserElements As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =2
+
+                HomeBackgroundGradient_25 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =Parent.Height
+                    HtmlText: =Splash_Gradient_Background.HtmlText
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                Label62 As label:
+                    Align: =Align.Center
+                    Color: =RGBA(0, 0, 0, (Timer2.Value/Timer2.Duration))
+                    FontWeight: =FontWeight.Semibold
+                    Height: =Parent.Height/4
+                    Size: =20
+                    Text: ="Welcome "&User().FullName
+                    Width: =Parent.Width/2
+                    X: =(Parent.Width-Self.Width)/2
+                    Y: =(Parent.Height-Self.Height)/2 + PersonImage_1.Y
+                    ZIndex: =2
+
+                PersonImage_1 As image:
+                    Height: =Self.Width
+                    Image: |-
+                        =// Get assignee's profile pic if they have one
+                        // Sharepoint
+                        If(!IsBlank(LookUp(Users, ID = userData.id, email)) && Office365Users.UserPhotoMetadata(LookUp(Users, ID = userData.id, email)).HasPhoto, Office365Users.UserPhotoV2(LookUp(Users, ID = userData.id, email)), 'blank-profile-pic')
+                    ImagePosition: =ImagePosition.Fill
+                    RadiusBottomLeft: =256
+                    RadiusBottomRight: =256
+                    RadiusTopLeft: =256
+                    RadiusTopRight: =256
+                    Transparency: =1-(Timer2.Value/Timer2.Duration)
+                    Width: =If(WelcomeUserScreen.Size=1,Parent.Width/2,Parent.Width/8)
+                    X: =(Parent.Width-Self.Width)/2
+                    Y: =(Parent.Height-Self.Height)/4
+                    ZIndex: =3
+
+    Timer2 As timer:
+        AutoPause: =false
+        AutoStart: =true
+        Duration: =3500
+        OnSelect: =Self.Start
+        OnTimerEnd: =Navigate(Home,ScreenTransition.Fade);
+        Visible: =false
+        X: =40
+        Y: =40
+        ZIndex: =2
+

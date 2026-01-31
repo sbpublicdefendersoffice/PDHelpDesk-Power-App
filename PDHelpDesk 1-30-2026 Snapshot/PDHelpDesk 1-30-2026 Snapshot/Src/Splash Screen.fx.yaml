@@ -1,0 +1,1151 @@
+"'Splash Screen' As screen":
+    BackgroundImage: =
+    Fill: =RGBA(53,89,137, 1)
+    ImagePosition: =ImagePosition.Center
+    OnVisible: |-
+        =//UpdateContext will update a variable on this screen, contextLoading status is the text at the bottom
+        UpdateContext({contextLoadingStatus: "Processing Records..."});
+        
+        //Check if the user loggin on is an admin
+        If(
+            LookUp(
+                Users,       
+                email = User().Email,
+                userRole
+            ) = "admin" || LookUp(
+                Users,       
+                email = User().Email,
+                userRole
+            ) = "tech",
+        
+            //if so set global admin variable to true otherwise false
+            Set(
+                is_admin,
+                true
+            ),
+            Set(
+                is_admin,
+                false
+            )
+        );
+        
+        //create current user data profile
+        Set(
+            userData,
+            {
+                fullName: LookUp(
+                    Users,
+                    email = User().Email,
+                    fullName
+                ),
+                email: User().Email,
+                role: LookUp(
+                    Users,
+                    email = User().Email,
+                    userRole
+                ),
+                id: LookUp(
+                    Users,
+                    email = User().Email,
+                    ID
+                )
+            }
+        );
+        //Enable for non timer based navigation for Splash Screen
+        //Set(splashNavigate,true)
+        
+        //Create a collection called colstatus with 2 records with a field called Result
+        ClearCollect(
+            colStatus,
+            {Result: "open"},
+            {Result: "pending"},
+            {Result: "void"},
+            {Result: "closed"}
+        );
+        //split admin tech later
+        // Create the home screen navigation collection
+        ClearCollect(
+            navCol,
+            {
+                ID: 2,
+                NavName: "Create Ticket",
+                NavIcon: Icon.AddDocument,
+                ScreenToGoTo: 'Category Select',
+                AdminTech: true,
+                Staff: true
+            },
+            {
+                ID: 3,
+                NavName: "My Tickets",
+                NavIcon: Icon.Folder,
+                ScreenToGoTo: MyTickets,
+                AdminTech: true,
+                Staff: true
+            },
+            {
+                ID: 5,
+                NavName: "Admin Tools",
+                NavIcon: Icon.ComputerDesktop,
+                ScreenToGoTo: 'Admin Manager',
+                AdminTech: true,
+                Staff: false
+            },
+            {
+                ID: 6,
+                NavName: "Services",
+                NavIcon: Icon.Signal,
+                ScreenToGoTo: 'Services Status',
+                AdminTech: false,
+                Staff: true
+            }
+            ,
+            {
+                ID: 7,
+                NavName: "Knowledge Base",
+                NavIcon: Icon.QuestionMark,
+                ScreenToGoTo: 'Knowledge Base',
+                AdminTech: true,
+                Staff: true
+            },
+            {
+                ID: 8,
+                NavName: "Emergency",
+                NavIcon: Icon.Warning,
+                ScreenToGoTo: 'Emergency TT',
+                AdminTech: true,
+                Staff: true
+            },
+            {
+                ID:9,
+                NavName:"Asset Management",
+                NavIcon: Icon.AddLibrary,
+                ScreenToGoTo:'Asset Manager Menu',
+                AdminTech: true,
+                Staff: false
+            },
+        
+            // Features available to a few users for testing, Features that may not be available yet
+            // Follow the structure before to enable these features accordingly
+            If(!IsBlank(LookUp(Approvers,userData.id = UserId)),{ID:10 , NavName:"Approvals",NavIcon:Icon.CheckBadge,ScreenToGoTo:'Approvals Screen',AdminTech:true,Staff:true},{}),
+            If(User().Email = "bmodell@countyofsb.org"||User().Email="mperez@countyofsb.org",{ID:11, NavName:"Purchase Requests", NavIcon:Icon.Money,ScreenToGoTo:'Purchase Request List',AdminTech:true,Staff:false},{} )
+        );
+        
+        //set global variables
+        Set(
+            NDrop,
+            false
+        );
+        Set(
+            MGallery,
+            false
+        );
+        Set(
+            HambIconChange,
+            false
+        );
+        Set(
+            CloseAlertRibbon,
+            false
+        );
+        
+        // Create a ticket variables
+        Set(TicketCategoryID,
+        1
+        );
+        Set(TicketSubCategoryID,
+        9
+        );
+        Set(TicketSpecificIssue,
+        1
+        );
+        
+        Set(CopierVar, true);
+        Set(CopierCounty,"None");
+        
+        //Check if user is an admin or tech
+        
+        If(
+            userData.role = "admin" || userData.role = "tech",
+        
+            //if they are give them all the nav items
+        
+            Set(
+                gblNavItems,
+                Table(
+                    {
+                        MenuText: "Home",
+                        MenuIcon: Icon.Home,
+                        ScreenToGoTo: Home
+                    },
+                    {
+                        MenuText: "Create Ticket",
+                        MenuIcon: Icon.AddDocument,
+                        ScreenToGoTo: 'Category Select'
+                    },
+                    {
+                        MenuText: "My Tickets",
+                        MenuIcon: Icon.Folder,
+                        ScreenToGoTo: MyTickets
+                    },
+                    {
+                        MenuText: "Manager",
+                        MenuIcon: Icon.Settings,
+                        ScreenToGoTo: 'Admin Manager'
+                    },
+                    {
+                        MenuText: "Knowledge",
+                        MenuIcon: Icon.QuestionMark,
+                        ScreenToGoTo: 'Knowledge Base'
+                    }
+                )
+            );
+            
+        );
+        
+        // if they are neither remove the admin option
+        
+        If(
+            userData.role = "staff",
+            Set(
+                gblNavItems,
+                Table(
+                    {
+                        MenuText: "Home",
+                        MenuIcon: Icon.Home,
+                        ScreenToGoTo: Home
+                    },
+                    {
+                        MenuText: "Create Ticket",
+                        MenuIcon: Icon.AddDocument,
+                        ScreenToGoTo: 'Category Select'
+                    },
+                    {
+                        MenuText: "My Tickets",
+                        MenuIcon: Icon.Folder,
+                        ScreenToGoTo: MyTickets
+                    },
+                    {
+                        MenuText: "Services",
+                        MenuIcon: Icon.Signal,
+                        ScreenToGoTo: 'Services Status'
+                    }
+                    ,
+                    {
+                        MenuText: "Knowledge",
+                        MenuIcon: Icon.QuestionMark,
+                        ScreenToGoTo: 'Knowledge Base'
+                    }
+                )
+            );
+            
+        );
+        
+        // Color Pallette
+        Set(
+            ColorScheme,
+            {
+                primary: RGBA(
+                    53,
+                    89,
+                    137,
+                    1
+                ),
+                secondary: RGBA(
+                    126,
+                    149,
+                    180,
+                    1
+                ),
+                backgroundDark: RGBA(
+                    124,
+                    134,
+                    137,
+                    1
+                ),
+                offColor: RGBA(
+                    219,
+                    199,
+                    175,
+                    1
+                ),
+                orange: RGBA(
+                    246,
+                    149,
+                    43,
+                    1
+                ),
+                screenBackground: RGBA(
+                    227,
+                    234,
+                    243,
+                    1
+                ),
+                screenBackgroundSeeThroughLight:RGBA(
+                    227,
+                    234,
+                    243,
+                    .2
+                ),
+                screenBackgroundSeeThroughMid:RGBA(
+                    227,
+                    234,
+                    243,
+                    .6
+                ),
+                screenBackgroundSeeThroughDark:RGBA(
+                    227,
+                    234,
+                    243,
+                    .95
+                ),
+                secondaryPressedColor: RGBA(
+                    126,
+                    149,
+                    180,
+                    .35
+                )
+            }
+        );
+        
+        //Create global variable main category
+        Set(
+            MainCategory,
+            Filter(
+                Category,
+                parentId = Blank()
+            )
+        );
+        //only main categories. those that dont rely on a parent
+        // Passed to filter component to check if filter is visible
+        Set(
+            varFilterVisible,
+            false
+        );
+        //Feedback/Bug report popup variable
+        Set(
+            varFeedback,
+            false
+        );
+        //Create collections of tags
+        ClearCollect(
+            colTags,
+            {Value: "None"}
+        );
+        //populate the collection
+        Collect(
+            colTags,
+            ForAll(
+                Sort(
+                    Tags,
+                Name,
+                    SortOrder.Ascending
+                ),
+                {Value: ThisRecord.Name}
+            )
+        );
+        // Passed variable to check if search bar should be visible
+        Set(
+            varSearchVisible,
+            false
+        );
+        // Variables used for searching and filtering in the 'SearchFilterTicketsSPList' power automate flows
+        Set(
+            TicketsChoice,
+            If(
+                userData.role = "admin" || userData.role = "tech",
+                "My Assigned",
+                "My Tickets"
+            )
+        );
+        Set(
+            StatusChoice,
+            "open"
+        );
+        Set(
+            TagChoice,
+            "None"
+        );
+        Set(
+            SearchQuery,
+            ""
+        );
+        // Set date to start pulling tickets for My Tickets from
+        // Sets the number of days, months, or years to subtract from today's date
+        // TODO create a flow that will read a tech's configuration file to set the date or months,
+        // or a general configuration file to more easily edit the value outside the application
+        Set(
+            varSubtractDate,
+            6
+        );
+        // Sets the time units subtracting by
+        Set(
+            varTimeUnits,
+            TimeUnit.Months
+        );
+        // Variables used for searching and filtering in the 'RecentTicketsSPList' power automate flows
+        Set(
+            AssignmentChoice,
+            true
+        );
+        Set(
+            SearchAllTicketsQuery,
+            ""
+        );
+        
+        //Create Title text variable
+        Set(
+            titleText,
+            {
+                desktopSize: 20,
+                mobileSize: 13,
+                boldness: FontWeight.Normal
+            }
+        );
+        
+        Set(
+            inputSize,
+            {
+                desktop:35,
+                mobile:100,
+                deskSingle: TextMode.SingleLine,
+                mobileMulti:TextMode.MultiLine
+            });
+        //Put variables and other code to initialize here
+        Set(
+            buttonText,
+            ""
+        );
+        UpdateContext({buttonText: ""});
+        
+        //Create variable for user validation
+        Set(
+            InvalidUser,
+            false
+        );
+        //Change the text on screen
+        UpdateContext({contextLoadingStatus: "Validating User..."});
+        
+        //Check the user's role, if they are a valid user, then they will have navigation options on home screen
+        Switch(
+            userData.role,
+            "tech",
+            ClearCollect(
+                userNav,
+                Filter(
+                    navCol,
+                    AdminTech = true
+                )
+            ),
+            "admin",
+            ClearCollect(
+                userNav,
+                Filter(
+                    navCol,
+                    AdminTech = true
+                )
+            ),
+            "staff",
+            ClearCollect(
+                userNav,
+                Filter(
+                    navCol,
+                    Staff = true
+                )
+            ),
+        
+            //if they can open the app but have not been given the proper positions then they are an invalid user
+            Set(
+                InvalidUser,
+                true
+            )
+        );
+        
+        
+        // Check if the user exists in the Users Table
+        If(
+            IsEmpty(
+                Filter(
+                    Users,
+                    email = User().Email
+                )
+            ),
+            Set(
+                InvalidUser,
+                true
+            )
+        );
+        
+        If(LookUp(Users,ID = userData.id).Active,Set(InvalidUser,false),Set(InvalidUser,true));
+        
+        //Create all tickets collection
+        ClearCollect(
+            AllTickets,
+            ForAll(
+                Tickets,
+                {
+                    ID: ID,
+                    Title: Title,
+                    Description: description,
+                    MainCategory: mainCategory,
+                    Category: category,
+                    SubCategory: subCategory,
+                    DateCreated: dateCreated,
+                    DateClosed: dateClosed,
+                    CreatorId: creatorId,
+                    Status: status,
+                    AssignedTo: assignedTo,
+                    LastUpdated: lastUpdated,
+                    UpdatedBy: updatedBy,
+                    LocationId: locationId,
+                    Tags: tags,
+                    AddAssignees: addAssignees
+                }
+            )
+        );
+        //Can use a button to navigate to another screen if needed
+        //enable if initialization takes place on this screen, and timer is disabled
+        //Set(userID, LookUp(userInfo, email = User().Email, id));
+        UpdateContext(
+            {
+                NDrop: false,
+                MGallery: false,
+                HambIconChange: false,
+                CloseAlertRibbon: false
+            }
+        );
+        
+        
+        // manager options for Admin Manger Screen
+        If(
+            userData.role = "admin" || userData.role = "tech",
+            Set(
+                managerOptions,
+                Table(
+                    {
+                        MenuText: "All Tickets",
+                        MenuIcon: Icon.DocumentWithContent,
+                        ScreenToGoTo: 'All Tickets'
+                    },
+                    {
+                        MenuText: "Tag Manager",
+                        MenuIcon: Icon.Tag,
+                        ScreenToGoTo: 'Tag Manager'
+                    },
+                    {
+                        MenuText: "Alert Manager",
+                        MenuIcon: Icon.Bell,
+                        ScreenToGoTo: 'Alert Manager'
+                    },
+                    {
+                        MenuText: "Ticket Metrics",
+                        MenuIcon: Icon.Trending,
+                        ScreenToGoTo: 'TicketMetrics - New'
+                    },
+                    {
+                        MenuText: "Assign Role",
+                        MenuIcon: Icon.People,
+                        ScreenToGoTo: 'Assign Role - Admin'
+                    },
+                    {
+                        MenuText: "Automation Rules",
+                        MenuIcon: Icon.LightningBolt,
+                        ScreenToGoTo: 'Automation Rules'
+                    },
+                    {
+                        MenuText: "Services",
+                        MenuIcon: Icon.Signal,
+                        ScreenToGoTo: 'Services Status'
+                    },
+                    {
+                        MenuText: "Announcements",
+                        MenuIcon: Icon.Newspaper,
+                        ScreenToGoTo: Announcements
+                    }
+                )
+            );
+            
+        );
+        
+        /*
+        If(
+            userData.role = "tech",
+            Set(
+                managerOptions,
+                Table(
+                    {
+                        MenuText: "All Tickets",
+                        MenuIcon: Icon.DocumentWithContent,
+                        ScreenToGoTo: 'All Tickets'
+                    },
+                    {
+                        MenuText: "Tag Manager",
+                        MenuIcon: Icon.Tag,
+                        ScreenToGoTo: 'Tag Manager'
+                    },
+                    {
+                        MenuText: "Alert Manager",
+                        MenuIcon: Icon.Bell,
+                        ScreenToGoTo: 'Alert Manager'
+                    },
+                    {
+                        MenuText: "Ticket Metrics",
+                        MenuIcon: Icon.Trending,
+                        ScreenToGoTo: 'Ticket Metrics - Admin Tech'
+                    }
+                )
+            );
+            
+        );*/
+        // Change the values of the create a ticket variables
+        UpdateContext({TicketCategoryID:1, TicketSubCategoryID:9});
+        
+        
+        //Screen Mapper, enables navigation to other screens
+        ClearCollect(
+            ticketTemplateScreens,
+        {
+            CategoryID:1,
+            NavID:9,
+            ScreenTemplate:'eDefender Access/Security Request TT'
+            
+        },
+        {
+            CategoryID:1,
+            NavID:10,
+            ScreenTemplate:'eDefender Adding/Coding Items TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:11,
+            ScreenTemplate:'eDefender Broken File Paths TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:12,
+            ScreenTemplate:'eDefender Delete Items TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:13,
+            ScreenTemplate:'eDefender Document Generation/Templates TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:14,
+            ScreenTemplate:'eDefender Errors TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:15,
+            ScreenTemplate:'eDefender General Requests TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:16,
+            ScreenTemplate:'eDefender Name Record Merges TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:17,
+            ScreenTemplate:'eDefender Reassignments TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:18,
+            ScreenTemplate:'eDefender Reports/Searches TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:19,
+            ScreenTemplate:'eDefender Charges and Statutes TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:20,
+            ScreenTemplate:'eDefender Training Requests TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:21,
+            ScreenTemplate:'eDefender Upgrade/Improvement Suggestions TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:22,
+            ScreenTemplate:'eDefender Zoom Links TT'
+        }
+        ,
+        {
+            CategoryID:1,
+            NavID:23,
+            ScreenTemplate:'eDefender Filing Cabinet/Box Integration TT'
+        }
+        ,
+        { 
+            CategoryID:0,
+            NavID:80,
+            ScreenTemplate:'Request For Time Off Form'
+        }
+        ,
+        {
+            CategoryID:2,
+            NavID:31,
+            ScreenTemplate:'G/O Network/Wifi Connection TT'
+        }
+        ,
+        {
+            CategoryID:2,
+            NavID:32,
+            ScreenTemplate:'G/O Training TT'
+        }
+        ,
+        {
+            CategoryID:2,
+            NavID:88,
+            ScreenTemplate:DataRequestForm
+        },
+        {
+            CategoryID:3,
+            NavID:33,
+            ScreenTemplate:'Hardware Account Lockout TT'
+        }
+        ,
+        {
+            CategoryID:3,
+            NavID:34,
+            ScreenTemplate:'Hardware BitLocker Lockout TT'
+        }
+        ,
+        {
+            CategoryID:3,
+            NavID:35,
+            ScreenTemplate:'Hardware County Mobile Phone TT'
+        }
+        ,
+        {
+            CategoryID:3,
+            NavID:36,
+            ScreenTemplate:'HR Office/Desk Setup TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:85,
+            ScreenTemplate:'Software/Applications Loco TT'
+        }
+        ,
+        {
+            CategoryID:3,
+            NavID:38,
+            ScreenTemplate:'Hardware Printers/Copiers TT'
+        }
+        ,
+        {
+            CategoryID:3,
+            NavID:39,
+            ScreenTemplate:'Hardware Office Equipment TT'
+        }
+        ,
+        {
+            CategoryID:4,
+            NavID:44,
+            ScreenTemplate:'HR Account On-Hold TT'
+        }
+        ,
+        {
+            CategoryID:4,
+            NavID:45,
+            ScreenTemplate:'HR County Mobile Phone TT'
+        }
+        ,
+        {
+            CategoryID:4,
+            NavID:46,
+            ScreenTemplate:'HR Employee Offboarding TT'
+        }
+        ,
+        {
+            CategoryID:4,
+            NavID:47,
+            ScreenTemplate:'HR Employee Onboarding TT'
+        }
+        ,
+        {
+            CategoryID:4,
+            NavID:48,
+            ScreenTemplate:'HR Schedule New  Hire Training TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:54,
+            ScreenTemplate:'Software/Applications Box TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:55,
+            ScreenTemplate:'Software/Applications CEB TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:56,
+            ScreenTemplate:'Software/Applications ESS/Timesheet TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:57,
+            ScreenTemplate:'Software/Applications Kofax TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:58,
+            ScreenTemplate:'Software/Applications SecureAccess TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:59,
+            ScreenTemplate:'Software/Applications Odyssey TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:60,
+            ScreenTemplate:'Software/Applications Microsoft TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:61,
+            ScreenTemplate:'Software/Applications ThriveSBC TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:62,
+            ScreenTemplate:'Software/Applications VLC TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:63,
+            ScreenTemplate:'Software/Applications Westlaw TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:64,
+            ScreenTemplate:'Software/Applications Zoom TT'
+        }
+        ,
+        {
+            CategoryID:6,
+            NavID:87,
+            ScreenTemplate:'Software/Applications PowerApp TT'
+        }
+        ,
+        {
+            CategoryID:0,
+            NavID:89,
+            ScreenTemplate:'Dynamic Form Screen'
+        },   
+        {   CategoryID:7,
+            NavID:65,
+            ScreenTemplate:'Case Support Video/Audio Editing TT'
+        }
+        , 
+        {  
+            CategoryID:7,
+            NavID:66,
+            ScreenTemplate:'Case Support Forensic Analysis TT'
+        }
+        , 
+        {  
+            CategoryID:7,
+            NavID:67,
+            ScreenTemplate:'Case Support Disc Burning TT'
+        }
+        , 
+        {  
+            CategoryID:7,
+            NavID:68,
+            ScreenTemplate:'Case Support Audio or Video Redactions TT'
+        }
+        ,
+        {   CategoryID:7,
+            NavID:69,
+            ScreenTemplate:'Case Support Audio/Image/Video Enhancements TT'
+        }
+        , 
+        {  
+            CategoryID:7,
+            NavID:70,
+            ScreenTemplate:'Case Support Evidence Support TT'
+        }
+        , 
+        {  
+            CategoryID:7,
+            NavID:71,
+            ScreenTemplate:'Case Support Transcript Requests TT'
+        }, 
+        {  
+            CategoryID:7,
+            NavID:72,
+            ScreenTemplate:'Case Support Court Tech-Check TT'
+        }
+        ,  
+        {  
+            CategoryID:8,
+            NavID:75,
+            ScreenTemplate:'Internal IT Server Outage TT'
+        }
+        ,  
+        {  
+            CategoryID:90,
+            NavID:90,
+            ScreenTemplate:'Box Link Request Form TT'
+        },  
+        {  
+            CategoryID:91,
+            NavID:92,
+            ScreenTemplate:'Raw Data Pull TT'
+        },  
+        {  
+            CategoryID:91,
+            NavID:93,
+            ScreenTemplate:'Dashboard Request TT'
+        },  
+        {  
+            CategoryID:91,
+            NavID:94,
+            ScreenTemplate:'Existing Dashboard TT'
+        },  
+        {  
+            CategoryID:91,
+            NavID:95,
+            ScreenTemplate:'RJA Data Pull TT'
+        },  
+        {  
+            CategoryID:91,
+            NavID:96,
+            ScreenTemplate:'Other Data Request TT'
+        }
+        );
+        
+        //RTEImages collection, needed to obtain screenshots or other images users may submit
+        ClearCollect(RTEImages,
+        {
+            copyName:"test",
+            base64Image:""
+        });
+        
+        Clear(RTEImages);
+        
+        //Global Variables for the feedback/bugreport screen
+        Set(FeedbackPhoto,false);
+        Set(FeedbackCamera,false);
+        Set(PickMedia,false);
+        
+        //Like RTEImages this is to collect images from users 
+        ClearCollect(FeedbackImages,
+        {
+            copyName:"test",
+            base64Image:""
+        });
+        Clear(FeedbackImages);
+        
+        //Used for a workaround involving adding images
+        ClearCollect(JointAttachments,{Name:"",Value:""});
+        Clear(JointAttachments);
+        ClearCollect(DeviceAttach,Blank());
+        Clear(DeviceAttach);
+        
+        //Variables for adding media
+        Set(AttachPhoto,false);
+        Set(AttachCamera,false);
+        Set(PickDeviceMedia,false);
+        Set(varOpenMedia,false);
+        Set(mediaDelay,false);
+        
+        
+        //Gradient object to change the look of the backgrounds in the app
+        Set(gradientLeft,{red: 53, blue: 89, green:137});
+        Set(gradientMiddle,{red:127,blue:148,green:179});
+        Set(gradientRight,{red: 0, blue:18, green:107});
+        Set(appVersion,"0.2");
+        
+        //Deep link, when this app is published make sure to add the link here in double quotes with &TickID= at the end to create a paramatized link
+        Set(playLink,"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=");
+        
+        
+        
+        // run the onSelect code of SplashNavigate
+        Select(Splash_Navigate);
+
+    Splash_Main_Container As groupContainer.horizontalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutJustifyContent: =LayoutJustifyContent.Center
+        LayoutMode: =LayoutMode.Auto
+        LayoutOverflowX: =LayoutOverflow.Scroll
+        LayoutOverflowY: =LayoutOverflow.Scroll
+        Width: =Parent.Width
+        ZIndex: =6
+
+        Splash_Main_Content As groupContainer.manualLayoutContainer:
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            ZIndex: =5
+
+            Splash_Gradient_Background As htmlViewer:
+                DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                Height: =Parent.Height
+                HtmlText: |-
+                    ="<div style='
+                    height:"&Self.Height-1&"px;
+                    width:100%;
+                    bbackground: rgb(53,89,137);
+                    background: linear-gradient(90deg, rgb("&gradientLeft.red&","&gradientLeft.blue&","&gradientLeft.green&") 0%, rgb("&gradientRight.red&","&gradientRight.blue&","&gradientRight.green&") 100%);' ></div>"
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Width: =Parent.Width
+                ZIndex: =1
+
+            Splash_Spinner As image:
+                Image: |-
+                    ="data:image/svg+xml;utf8, "&EncodeUrl("
+                    <svg
+                      width='200'
+                      height='200'
+                      viewBox='0 0 200 200'
+                      color='#000000'
+                      fill='none'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <defs>
+                        <linearGradient id='spinner-secondHalf'>
+                          <stop offset='0%' stop-opacity='0' stop-color='currentColor' />
+                          <stop offset='100%' stop-opacity='0.5' stop-color='currentColor' />
+                        </linearGradient>
+                        <linearGradient id='spinner-firstHalf'>
+                          <stop offset='0%' stop-opacity='1' stop-color='currentColor' />
+                          <stop offset='100%' stop-opacity='0.5' stop-color='currentColor' />
+                        </linearGradient>
+                      </defs>
+                    
+                      <g stroke-width='8'>
+                        <path stroke='url(#spinner-secondHalf)' d='M 4 100 A 96 96 0 0 1 196 100' />
+                        <path stroke='url(#spinner-firstHalf)' d='M 196 100 A 96 96 0 0 1 4 100' />
+                    
+                        <!-- 1deg extra path to have the round end cap -->
+                        <path
+                          stroke='currentColor'
+                          stroke-linecap='round'
+                          d='M 4 100 A 96 96 0 0 1 4 98'
+                        />
+                      </g>
+                    
+                      <animateTransform
+                        from='0 0 0'
+                        to='360 0 0'
+                        attributeName='transform'
+                        type='rotate'
+                        repeatCount='indefinite'
+                        dur='600ms'
+                      />
+                    </svg>
+                    ")
+                X: =(Parent.Width-Self.Width)/2
+                Y: =Splash_Logo.Height+Splash_Logo.Y
+                ZIndex: =2
+
+            Splash_Screen_Label As label:
+                Align: =Align.Center
+                AutoHeight: =true
+                FontWeight: =FontWeight.Semibold
+                Italic: =true
+                PaddingTop: =10
+                Size: =20
+                Text: =contextLoadingStatus
+                X: =(Parent.Width-Self.Width)/2
+                Y: =Splash_Spinner.Height+Splash_Spinner.Y
+                ZIndex: =4
+
+            Splash_Navigate As button:
+                OnSelect: |
+                    =//If(InvalidUser,Navigate('User Not Valid',ScreenTransition.Fade),Navigate(Home,ScreenTransition.Fade));
+                    
+                    //Get the parameter for TickID and create a variable if there is none then it is blank or zero
+                    Set(
+                        varTickID,
+                        Value(Param("TickID"))
+                    );
+                    
+                    //First check if the user is valid
+                    If(
+                        // if not take them to the error and no permission screen
+                        InvalidUser,
+                        Navigate(
+                            'User Not Valid',
+                            ScreenTransition.Fade
+                        ),
+                        //check if we took in a parameter when opening the app
+                        UpdateContext({contextLoadingStatus:"Checking ticket data..."});
+                        If(
+                            //we have an id parameter and it is valid
+                            varTickID <> 0 && !IsBlank(varTickID),
+                            Set(
+                                ticketRec,
+                                LookUp(
+                                    AllTickets,
+                                    ID = varTickID
+                                )
+                            );
+                            //we have an id parameter, but its blank, send them to the home page otherwise send them to the ticket info screen
+                            If (IsBlank(ticketRec),
+                                Navigate(WelcomeUserScreen,ScreenTransition.Fade),
+                                Navigate('Single Ticket Info', ScreenTransition.CoverRight, {ticketInfo: ticketRec})
+                    
+                                )
+                            ),Navigate('Single Ticket Info', ScreenTransition.CoverRight, {ticketInfo: ticketRec}),
+                            Navigate(WelcomeUserScreen,ScreenTransition.Fade)
+                        );
+                        
+                Text: ="Button"
+                Visible: =false
+                X: =80
+                ZIndex: =5
+
+            Splash_Logo As image:
+                Height: =Parent.Height/2
+                Image: =unnamed
+                Width: =300
+                X: =(Parent.Width-Self.Width)/2
+                Y: =(Parent.Height-Self.Height)/4
+                ZIndex: =6
+

@@ -1,0 +1,981 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Dynamic Form Screen:
+    Properties:
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+    Children:
+      - DynamicFormContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - DynamicFormHeaderContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.primary
+                  FillPortions: =0
+                  Height: =130
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - DynamicFormHeaderGroup:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - HeaderBackgroundGradient_1:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =130
+                              HtmlText: |-
+                                ="<div style='
+                                height:"&Self.Height-1&"px;
+                                width:100%;
+                                background: rgb(53,89,137);
+                                background: linear-gradient(90deg, rgba(53,89,137,1) 0%, rgba(0,18,107,1) 100%);' ></div>"
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =Parent.Width
+                        - DynamicFormLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =48
+                              Size: =If('Dynamic Form Screen'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                              Text: ="Dynamic Software Form"
+                              Width: =Parent.Width
+                              Y: =DynamicFormWebHeader.Height
+                        - DynamicFormWebHeader:
+                            Control: CanvasComponent
+                            ComponentName: compWebHeader
+                            Properties:
+                              BackgroundColor: =Color.Transparent
+                              CompScreenSize: ='Dynamic Form Screen'.Size
+                              EnableFeedback: =Set(varFeedback,true)
+                              FeedbackBool: =varFeedback
+                              Fill: =Color.Transparent
+                              Height: =82
+                              Width: =App.Width
+            - DynamicFormMainSectionContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - Software/ApplicationsDynamicForm:
+                      Control: Form@2.4.4
+                      Variant: Classic
+                      Layout: Vertical
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        DataSource: =Tickets
+                        DefaultMode: =FormMode.New
+                        Height: =Parent.Height/1.21
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NumberOfColumns: =1
+                        Width: =Parent.Width
+                        Y: =Parent.Height/5.7
+                      Children:
+                        - S/ADynamicFormSubCategory_DataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicNumberEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="category"
+                              Default: =ThisItem.category
+                              DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                              Height: =100
+                              Required: =true
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =0
+                            Children:
+                              - S/ADynamicFormSubCategoryLabel:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(9, 33, 98, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Sub Category"
+                                    Width: =120
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =10
+                              - S/ADynamicFormSubcategoryError:
+                                  Control: Label@2.5.1
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(168, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =10
+                                    Live: =Live.Assertive
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =Parent.Error
+                                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                    Width: =Parent.Width - 60
+                                    X: =30
+                                    Y: ='S/ADynamicFormSubCategoryDropdown'.Y + 'S/ADynamicFormSubCategoryDropdown'.Height
+                              - S/ADynamicFormSubcategoryStarVisible:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: ='S/ADynamicFormSubCategoryLabel'.Height
+                                    Text: ="*"
+                                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =30
+                                    Wrap: =false
+                                    Y: ='S/ADynamicFormSubCategoryLabel'.Y
+                              - S/ADynamicFormSubCategoryDropdown:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =ColorScheme.primary
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                                    Font: =Font.'Open Sans'
+                                    Height: ='S/ADynamicFormPDInput'.Height
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =Filter(Category, parentId = 'S/AVLCMainCategoryDropdown_1'.Selected.ID)
+                                    Items.Value: =Title
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: =If('Dynamic Form Screen'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                                    X: =30
+                                    Y: =44
+                        - S/ADynamicFormTitle_DataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicTextualEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="title"
+                              Default: =ThisItem.Title
+                              DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                              Height: =130
+                              MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                              Required: =false
+                              Visible: =Switch('S/ADynamicFormSubCategoryDropdown'.Selected.ID,60,true,62,true,87,true,false)
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =1
+                            Children:
+                              - S/AVLCTitleError_1:
+                                  Control: Label@2.5.1
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(168, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =10
+                                    Live: =Live.Assertive
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =Parent.Error
+                                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                    Width: =Parent.Width - 60
+                                    X: =30
+                                    Y: =73
+                              - S/ADynamicFormTitleStarVisible:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: ='S/ADynamicFormVLCPDLabel'.Color
+                                    Font: =Font.'Open Sans'
+                                    Height: ='S/ADynamicFormVLCPDLabel'.Height
+                                    Text: ="*"
+                                    Width: =30
+                                    Wrap: =false
+                                    Y: ='S/ADynamicFormVLCPDLabel'.Y
+                              - S/ADynamicFormPDInput:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =""
+                                    Font: =Font.'Open Sans'
+                                    Height: =35
+                                    HintText: ="Enter PD Number"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Visible: ='S/ADynamicFormSubCategoryDropdown'.Selected.ID = 62
+                                    Width: ='S/ADynamicFormSubCategoryDropdown'.Width
+                                    X: =30
+                                    Y: ='S/ADynamicFormVLCPDLabel'.Y+'S/ADynamicFormVLCPDLabel'.Height
+                              - S/ADynamicFormVLCPDLabel:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="PD Number"
+                                    Visible: ='S/ADynamicFormSubCategoryDropdown'.Selected.ID = 62
+                                    Width: =110
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =20
+                              - S/ADynamicFormMSRectangle:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: ='S/ADynamicFormMSLabel'.Height+'S/ADynamicFormMSRadio'.Height
+                                    Visible: ='S/ADynamicFormSubCategoryDropdown'.Selected.ID = 60
+                                    Width: ='S/ADynamicFormSubCategoryDropdown'.Width
+                                    X: ='S/ADynamicFormMSLabel'.X
+                                    Y: ='S/ADynamicFormMSLabel'.Y
+                              - S/ADynamicFormMSRadio:
+                                  Control: Classic/Radio@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 0, 0, 0)
+                                    Font: =Font.'Open Sans'
+                                    Height: =If('Software/Applications Microsoft TT'.Size=1,250,70)
+                                    HoverColor: =RGBA(0, 18, 107, 1)
+                                    Items: |-
+                                      =Table(
+                                      {
+                                          Option:"Outlook"
+                                      },
+                                      {
+                                          Option:"Word"
+                                      },
+                                      {
+                                          Option:"Excel"
+                                      },
+                                      {
+                                          Option:"Power Point"
+                                      },
+                                      {
+                                          Option:"Teams"
+                                      })
+                                    Items.Value: =Option
+                                    Layout: =If('Software/Applications Microsoft TT'.Size=1,Layout.Vertical,Layout.Horizontal)
+                                    RadioBorderColor: =RGBA(0, 18, 107, 1)
+                                    RadioSelectionFill: =RGBA(0, 0, 0, 1)
+                                    Visible: ='S/ADynamicFormSubCategoryDropdown'.Selected.ID = 60
+                                    Width: =If('Software/Applications Microsoft TT'.Size=1,300,675)
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: ='S/ADynamicFormMSLabel'.Height+'S/ADynamicFormMSLabel'.Y
+                              - S/ADynamicFormMSLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: |+
+                                      =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Text: ="Select Product"
+                                    Visible: ='S/ADynamicFormSubCategoryDropdown'.Selected.ID = 60
+                                    X: =30
+                              - S/ADynamicFormPowerAppLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Select App"
+                                    Visible: ='S/ADynamicFormSubCategoryDropdown'.Selected.ID = 87
+                                    Width: =100
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =20
+                              - S/ADynamicFormPowerAppDropdown:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    AllowEmptySelection: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =ColorScheme.primary
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =Blank()
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Lighter
+                                    Height: =35
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: |-
+                                      =Table({App: "PDHelpdesk"},{App:"PDGo"})
+                                    Items.Value: =App
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Visible: ='S/ADynamicFormSubCategoryDropdown'.Selected.ID = 87
+                                    Width: ='S/ADynamicFormSubCategoryDropdown'.Width
+                                    X: =30
+                                    Y: ='S/ADynamicFormPowerAppLabel'.Height+'S/ADynamicFormPowerAppLabel'.Y
+                        - S/ADynamicFormMainCategory_DataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicNumberEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="mainCategory"
+                              Default: =ThisItem.mainCategory
+                              DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                              Height: =If( 'Software/Applications VLC TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                              Required: =true
+                              Visible: =false
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =2
+                            Children:
+                              - S/AVLCMainCategoryLabel_1:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Category"
+                                    Width: =Parent.Width - 60
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =10
+                              - S/AVLCMainCategoryError_1:
+                                  Control: Label@2.5.1
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(168, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =10
+                                    Live: =Live.Assertive
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =Parent.Error
+                                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                    Width: =Parent.Width - 60
+                                    X: =30
+                                    Y: ='S/AVLCMainCategoryDropdown_1'.Y + 'S/AVLCMainCategoryDropdown_1'.Height
+                              - S/AVLCMainCategoryStarVisible_1:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: ='S/AVLCMainCategoryLabel_1'.Height
+                                    Text: ="*"
+                                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =30
+                                    Wrap: =false
+                                    Y: ='S/AVLCMainCategoryLabel_1'.Y
+                              - S/AVLCMainCategoryDropdown_1:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =RGBA(56, 96, 178, 1)
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height/3.5
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                                    Items.Value: =Title
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: =Parent.Width/1.05
+                                    X: =30
+                                    Y: =44
+                        - S/ADynamicFormFields:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =130
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =3
+                            Children:
+                              - S/ADynamicFormDescriptionLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Text: ="Describe Problem"
+                                    Width: =160
+                                    X: ='S/ADynamicFormDescription'.X
+                                    Y: ='S/ADynamicFormDescription'.Y-Self.Height
+                              - S/ADynamicFormDescription:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =""
+                                    Font: =Font.'Open Sans'
+                                    Height: =80
+                                    HintText: =Switch('S/ADynamicFormSubCategoryDropdown'.Selected.ID,60,"What is the Problem with "&If(IsBlank('S/ADynamicFormMSRadio'.Selected.Option),"Microsoft Product",'S/ADynamicFormMSRadio'.Selected.Option),"What is the problem with "&'S/ADynamicFormSubCategoryDropdown'.Selected.Name)
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Mode: =TextMode.MultiLine
+                                    Width: ='S/ADynamicFormSubCategoryDropdown'.Width
+                                    X: =30
+                                    Y: |-
+                                      =//ExFieldInput1_31.Y+ExFieldInput1_31.Height+50
+
+                                      40
+                        - S/ADynamicFormSpecificIssue_DataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicNumberEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="subCategory"
+                              Default: =ThisItem.subCategory
+                              DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                              Height: =100
+                              Required: =false
+                              Visible: |+
+                                =If(IsBlank('S/ADynamicFormSpecificIssueDropdown'.Selected.Name), false, true)
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =4
+                            Children:
+                              - S/ADynamicFormSpecificIssueDropdown:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =RGBA(56, 96, 178, 1)
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height/3.5
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =Filter(Category, parentId = 'S/ADynamicFormSubCategoryDropdown'.Selected.ID)
+                                    Items.Value: =Title
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: ='S/ADynamicFormPDInput'.Width
+                                    X: =30
+                                    Y: =44
+                        - S/ADynamicFormLocationID_DataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicNumberEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="locationId"
+                              Default: =ThisItem.locationId
+                              DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                              Height: =100
+                              Required: =false
+                              Update: =//Value(DataCardValue6.Text)
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =5
+                            Children:
+                              - S/ADynamicFormLocationIDLabel:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Requesting From"
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =10
+                              - S/ADynamicFormLocationIDDropdown:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    AllowEmptySelection: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =ColorScheme.primary
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =Blank()
+                                    Font: =Font.'Open Sans'
+                                    Height: =35
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =Locations
+                                    Items.Value: =Title
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: ='S/ADynamicFormPDInput'.Width
+                                    X: =30
+                                    Y: =44
+                        - S/ADynamicFormAttachments_DataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =If( 'Software/Applications VLC TT'.Size = 1, Parent.Height/2, Parent.Height/3.5)
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =6
+                            Children:
+                              - S/ADynamicFormAttachmentControl:
+                                  Control: Attachments@2.3.0
+                                  Properties:
+                                    BorderColor: =Color.Black
+                                    Font: =Font.'Open Sans'
+                                    Height: =If( 'Software/Applications VLC TT'.Size = 1, Parent.Height/1.5, Parent.Height/1.5)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    ItemColor: =RGBA(255, 255, 255, 1)
+                                    ItemFill: =RGBA(56, 96, 178, 1)
+                                    ItemHoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =RTEImages
+                                    Items.Name: =copyName
+                                    Items.Value: =copyName
+                                    MaxAttachments: =10
+                                    PaddingBottom: =5
+                                    PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                                    PaddingRight: =5
+                                    PaddingTop: =5
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    Width: =If('Software/Applications VLC TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: =36
+                              - Button25_170:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =64
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: =
+                                    Width: =64
+                                    X: =Icon11_44.X-8
+                                    Y: =Icon11_44.Y-8
+                              - Icon11_44:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Height: =48
+                                    Icon: =Icon.Camera
+                                    OnSelect: =UpdateContext({altImagePopUp:true,usingCamera:true})
+                                    Width: =48
+                                    X: =If('Software/Applications VLC TT'.Size=1,('S/ADynamicFormAttachmentControl'.Width-Self.Width)/2+Self.Width,'S/ADynamicFormAttachmentControl'.X+'S/ADynamicFormAttachmentControl'.Width+Self.Width)
+                                    Y: =If('Software/Applications VLC TT'.Size=1,('S/ADynamicFormAttachmentControl'.Y+'S/ADynamicFormAttachmentControl'.Height+20),(Parent.Height-Self.Height)/2)
+                              - Button25_171:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Font: =Font.'Open Sans'
+                                    Height: =64
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                                    OnSelect: =Select(Icon11_44)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+                                    Text: =
+                                    Width: =64
+                                    X: =Icon11_44.X-8
+                                    Y: =Icon11_44.Y-8
+                              - Button25_168:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =64
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: =
+                                    Width: =64
+                                    X: =Icon12_44.X-8
+                                    Y: =Icon12_44.Y-8
+                              - Icon12_44:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Height: =48
+                                    Icon: =Icon.Paste
+                                    OnSelect: =UpdateContext({altImagePopUp:true,usingCamera:false})
+                                    Width: =48
+                                    X: =If('Software/Applications VLC TT'.Size=1,('S/ADynamicFormAttachmentControl'.Width-Self.Width)/2-Self.Width,('S/ADynamicFormAttachmentControl'.X-Self.Width)/2)
+                                    Y: =If('Software/Applications VLC TT'.Size=1,('S/ADynamicFormAttachmentControl'.Y+'S/ADynamicFormAttachmentControl'.Height+20),(Parent.Height-Self.Height)/2)
+                              - Button25_169:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Font: =Font.'Open Sans'
+                                    Height: =64
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                                    OnSelect: =Select(Icon12_44)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+                                    Text: =
+                                    Width: =64
+                                    X: =Icon12_44.X-8
+                                    Y: =Icon12_44.Y-8
+                        - S/ADynamicFormButtons_DataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =If( 'Software/Applications VLC TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =7
+                            Children:
+                              - S/ADynamicFormSubmitButton:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    DisplayMode: |-
+                                      =
+                                      //could use this to enable/disable button behaviour
+                                      //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+
+                                      DisplayMode.Edit
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: ='S/ADynamicFormCancelButton'.Height
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: "=//Check if the title or Description are empty, if they are the form will not be submitted\nIf(\n    !IsBlank('S/ADynamicFormLocationIDDropdown'.Selected.Name) And Len(Trim('S/ADynamicFormDescription'.Text))>0 And Switch('S/ADynamicFormSubCategoryDropdown'.Selected.ID,60,If(!IsBlank('S/ADynamicFormMSRadio'.Selected),true,false),62,If(Len('S/ADynamicFormPDInput'.Text)>0,true,false),87,If(!IsBlank('S/ADynamicFormPowerAppDropdown'.Selected.App),true,false),true),\n    UpdateContext({DataCardKey1_1: \"Title\"});\n    UpdateContext({DataCardKey5: \"Description\"});\n    //Set(DataCardKey5: \"Description\");\nSet(\n        //Temporary record\n        rec,\n        //DB operation, from Ticket table, new record, change these columns\n        Patch(\n            Tickets,\n            Defaults(Tickets),\n            {\n                Title: 'S/ADynamicFormPDInput'.Text,\n                description: Switch('S/ADynamicFormSubCategoryDropdown'.Selected.ID,60,\"MSProduct: \"&'S/ADynamicFormMSRadio'.Selected.Option&Char(13)&Char(13),62,\"PDNumber: \"&'S/ADynamicFormPDInput'.Text&Char(13)&Char(13),87,\"Power App: \"&'S/ADynamicFormPowerAppDropdown'.Selected.App&Char(13)&Char(13),\"\")&\"Details: \"&Trim('S/ADynamicFormDescription'.Text),\n                creatorId: userData.id,\n                mainCategory: 'S/AVLCMainCategoryDropdown_1'.Selected.ID,\n                category: 'S/ADynamicFormSubCategoryDropdown'.Selected.ID,\n                subCategory: 'S/ADynamicFormSpecificIssueDropdown'.Selected.ID,\n                locationId: 'S/ADynamicFormLocationIDDropdown'.Selected.ID,\n                status: \"open\",\n                metricDate: Concatenate(\n                    Month(Today()),\n                    \"/\",\n                    Year(Today())\n                ),\n                hasAttachment: If(\n                    IsEmpty('S/ADynamicFormAttachmentControl'.Attachments),\n                    0,\n                    1\n                ),\n                //Automation rules table is used to assign tickets\n                assignedTo: If(\n                    IsEmpty(\n                        Filter(\n                            'Ticket Automation Rules',\n                            categoryId = 'S/AVLCMainCategoryDropdown_1'.Selected.ID && locationId = 'S/ADynamicFormLocationIDDropdown'.Selected.ID\n                        )\n                    ),\n                    0,\n                    LookUp(\n                        'Ticket Automation Rules',\n                        categoryId = 'S/AVLCMainCategoryDropdown_1'.Selected.ID && locationId = 'S/ADynamicFormLocationIDDropdown'.Selected.ID,\n                        userID\n                    )\n                )\n            }\n        )\n    );\n\nPatch(\n    Tickets, \n    LookUp(Tickets,ID = rec.ID),\n    {\n        Title: \"#\"&rec.ID&\" \"&'S/ADynamicFormSubCategoryDropdown'.Selected.Name&\" Support Request\"\n    });\nSet(rec,Patch(rec,{Title: \"#\"&rec.ID&\" \"&'S/ADynamicFormSubCategoryDropdown'.Selected.Name&\" Support Request\"}));\n// for the attachments, run power automate flow for each attached file\n    ForAll(\n        'S/ADynamicFormAttachmentControl'.Attachments As Attachment,\n               /*AttachFiles.Run(\n            rec.ID,\n            {\n                file: {\n                    contentBytes: Value,\n                    name: Name\n                }\n            }\n        )*/\n        If(Left(Attachment.Value,6) = \"appres\", \n        AttachFiles.Run(\n            rec.ID,\n            {\n                file:{\n                    contentBytes: Attachment.Value,\n                    name: Attachment.Name\n                }\n            }\n        ) ;,\n\n\nWith({varHTMLTable: Split(Attachment.Name , \"<img\")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find(\"<img\",Attachment.Name)+32},With({varB64End:Find(\"\"\"\",Mid(Attachment.Name,varB64Start))-1},CopyPasteTest.Run(Mid(Attachment.Name,varB64Start,varB64End),Attachment.Value & Text(Now(),DateTimeFormat.UTC) &\".png\", rec.ID)\n))))\n        ) \n    );\n    \n    /*SMTP.SendEmailV3(\n        {\n            From: \"sbpdhelpdesk@outlook.com\",\n            To: userData.email,\n            Subject: \"Help Desk Ticket Received\",\n            Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=\"https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a>.</div>\"\n        }\n    );*/\n    /*If(\n        rec.assignedTo > 0,\n        SMTP.SendEmailV3(\n            {\n                From: \"sbpdhelpdesk@outlook.com\",\n                To: LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n                Subject: \"Help Desk Ticket Assigned\",\n                Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a> to view more details for the ticket.</div>\"\n            }\n        );\n    );*/\n//Power automate flow, sends email to ticket creator \nSendEmail.Run(\n        Concatenate(\n            \"'\",\n            userData.email,\n            \"'\"\n        ),\n        \"Help Desk Ticket Recieved\",\n        //Email Message body\n        TicketCreatorMessageRTE_53.HtmlText,\n        Text(Blank())\n    );\n    // If the ticket it assigned to someone, send them an email\n    If(\n        rec.assignedTo > 0,\n        SendEmail.Run(\n            Concatenate(\n                \"'\",\n                LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n                \"'\"\n            ),\n            \"Help Desk Ticket Assigned\",\n            //Email message body\n            TechAssignMessageRTE_53.HtmlText,\n            Text(Blank())\n        );\nTicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,\"Ticket #\"&rec.ID&\" has been created. Touch this notification for more information.\"),    TicketCreatedUser.Run(userData.email,rec.ID,\"Ticket #\"&rec.ID&\" has been created on your behalf. Touch this notification for more information.\")\n    );\n    //Reset the form upon completion\n    ResetForm('Software/ApplicationsDynamicForm');\n    Navigate(Success);\n\n);\n// variables that control color elements\n    UpdateContext({CreateTicketTitle: \"Title is Required\"});\n    UpdateContext({CreateTicketDescription: \"Description is Required\"});\n    UpdateContext({SAVLCPopup:true});\n"
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Submit"
+                                    Width: ='S/ADynamicFormCancelButton'.Width
+                                    X: ='S/ADynamicFormCancelButton'.X + (Self.Width*1.3)
+                                    Y: ='S/ADynamicFormCancelButton'.Y
+                              - S/ADynamicFormCancelButton:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorScheme.orange
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                                    OnSelect: |-
+                                      =ResetForm('Software/ApplicationsDynamicForm');
+                                      Navigate(Home);
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Cancel"
+                                    Width: =Parent.Width/3
+                                    X: =If('Software/Applications VLC TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                                    Y: =Parent.Height - (Self.Height *2)
+            - DynamicFormFooter:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(255,255,255, 1)
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    ='Dynamic Form Screen'.Size=1
+                  Width: =Parent.Width
+                Children:
+                  - DynamicFormWebMobileMenu:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Width: =Parent.Width
+      - DynamicFormBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =DynamicFormLabel.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(DynamicFormHeaderContainer.Height-DynamicFormLabel.Height)/1.05
+      - DynamicFormWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, Parent.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Dynamic Form Screen'.Size > 1
+            Width: =If(showMenu, Parent.Width, 80)
+      - TechAssignMessageRTE_53:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: |-
+              =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+              //Combine string as html body
+              /*
+              Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+              , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")*/
+
+              "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                  <tr>
+                  <td>
+                      <Table style="&Char(34)&"width:100% "&Char(34)&">
+                      <tr>
+                      <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+              	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+              	</div>
+              	<br>
+              	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+              	A ticket has been asssigned to you, to check additional ticket details: 
+                  <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+              	</div>
+                      </th>
+                      </tr>
+              	<br>
+                      <tr>
+                      <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+              	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                  <br>
+                  Ticket "&rec.Title&"
+                  <br>
+                  Status: "&rec.status&"
+                  <br>
+                  <br>
+                  "&rec.description&"
+              	</div>
+                      </td>
+                      </tr>
+                  </td>
+                  </tr>
+                  </Table>
+              </table>"
+            Height: =9
+            Visible: =false
+            Width: =0
+            X: =851
+            Y: =759
+      - TicketCreatorMessageRTE_53:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: |-
+              =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+              /*
+              Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.</div>")*/
+
+              "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                  <tr>
+                  <td>
+                      <Table style="&Char(34)&"width:100% "&Char(34)&">
+                      <tr>
+                      <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+              	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+              	</div>
+              	<br>
+              	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+              	Your ticket has been created, a technician will be assigned to your case, if you would like to see additional details about your ticket: 
+                  <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+              	</div>
+                      </th>
+                      </tr>
+              	<br>
+                      <tr>
+                      <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+              	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                  <br>
+                  Ticket "&rec.Title&"
+                  <br>
+                  Status: "&rec.status&"
+                  <br>
+                  <br>
+                  "&rec.description&"
+              	</div>
+                      </td>
+                      </tr>
+                  </td>
+                  </tr>
+                  </Table>
+              </table>"
+            Height: =99
+            Visible: =false
+            Width: =293
+            X: =947
+            Y: =15
+      - FeedbackBugReportDSF:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

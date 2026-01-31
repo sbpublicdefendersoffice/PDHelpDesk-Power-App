@@ -1,0 +1,802 @@
+"'Create Alert' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |-
+        =UpdateContext({TitleReq:"Title"});
+    OnVisible: |
+        =Set(allEmails, Concat(Users, "'" & email & "'",","));
+        UpdateContext({TitleReq:"Title"});
+        UpdateContext({templateMode:false});
+        ClearCollect(tempTemplates,
+        {
+            alertName:"",
+            alertSubject:"",
+            alertHTMLText: "<div></div>"
+        });
+        Clear(tempTemplates);
+        ForAll(ATemplates As t,
+        
+            Patch(tempTemplates,Defaults(tempTemplates),
+            {
+                alertName:t.Title,
+                alertSubject:t.alertSubject,
+                alertHTMLText:t.alertHTMLText
+            });
+        
+        );
+        UpdateContext({newTemplate:false});
+
+    CreateAlertContainer As groupContainer.verticalAutoLayoutContainer:
+        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        CreateAlertHeader As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            FillPortions: =0
+            Height: |-
+                =130
+                //Parent.Height/5.7
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            CreateAlertHeaderElements As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =4
+
+                HomeBackgroundGradient_64 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =130
+                    HtmlText: =Home_Background_Gradient.HtmlText
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                CreateAlertLabel As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =Parent.Height-CreateAlertWebHeader.Height
+                    Size: =If('Create Alert'.Size = 1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Create Alert"
+                    Width: =Parent.Width
+                    Y: =CreateAlertWebHeader.Height
+                    ZIndex: =2
+
+                CreateAlertWebHeader As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: ='Create Alert'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    ZIndex: =3
+
+        CreateAlertMain As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =Color.Transparent
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            PaddingTop: =If('Create Alert'.Size=1,100, 80)
+            Width: =Parent.Width
+            ZIndex: =3
+
+            CreateAlertForm As form:
+                DataSource: =Alerts
+                DefaultMode: =FormMode.New
+                Item: =recordVar
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =250
+                LayoutMinWidth: =400
+                NumberOfColumns: =1
+                Width: =Parent.Width
+                ZIndex: =2
+
+                TemplateGallery_DataCard As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =200
+                    Visible: =templateMode
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =0
+                    ZIndex: =1
+
+                    Gallery5 As gallery.galleryHorizontal:
+                        '#CopilotOverlayLabel': ="Filtered"
+                        BorderThickness: =2
+                        Default: ={}
+                        DelayItemLoading: =true
+                        DisplayMode: =If(newTemplate,DisplayMode.Disabled,DisplayMode.Edit)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =100
+                        Items: =tempTemplates
+                        LoadingSpinner: =LoadingSpinner.Data
+                        ShowScrollbar: =false
+                        TemplateSize: =161
+                        Width: =Parent.Width-80
+                        WrapCount: =2
+                        X: =30
+                        Y: =44
+                        ZIndex: =1
+
+                        Button3 As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: =Select(Parent)
+                            Size: =If('Create Alert'.Size=1,12, 15)
+                            Text: =ThisItem.alertName
+                            Width: =Parent.TemplateWidth
+                            ZIndex: =1
+
+                    CreateAlertTitleLabel_2 As label:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =2
+                        Color: |-
+                            =//If(CreateAlertTitleLabel_2.Text = "Title Required",Color.Red,RGBA(0, 18, 107, 1))
+                            Color.White
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: |-
+                            ="Templates
+                            "
+                        Width: =90
+                        Wrap: =false
+                        X: =30
+                        Y: =Gallery5.Y-Self.Height
+                        ZIndex: =2
+
+                Subject_DataCard As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =100
+                    Width: =Parent.Width
+                    WidthFit: =true
+                    X: =0
+                    Y: =1
+                    ZIndex: =1
+
+                    TextInput1 As text:
+                        Default: ="Service Outage"
+                        DisplayMode: =If(templateMode && !newTemplate,DisplayMode.View,DisplayMode.Edit)
+                        HintText: ="Service Outage if left Blank"
+                        Width: =If('Create Alert'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                        X: =30
+                        Y: =44
+                        ZIndex: =1
+
+                    CreateAlertTitleLabel_1 As label:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =2
+                        Color: |-
+                            =//If(CreateAlertTitleLabel_1.Text = "Title Required",Color.Red,RGBA(0, 18, 107, 1))
+                            Color.White
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: |-
+                            ="Subject
+                            "
+                        Width: =100
+                        Wrap: =false
+                        X: =30
+                        Y: =TextInput1.Y-Self.Height
+                        ZIndex: =2
+
+                Html_DataCard As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =500
+                    Visible: =templateMode
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =3
+                    ZIndex: =1
+
+                    RichTextEditor1 As richTextEditor:
+                        Default: |-
+                            =If(templateMode && !IsBlank(Gallery5.Selected.alertHTMLText),Gallery5.Selected.alertHTMLText,
+                            "<div>Please be advised, Service " & CreateAlertTitleValue.Text & " is down. IT is responding and will notify all users when full functionality is restored. Thank you for your patience.</div> <br> <div> Do NOT email or respond to this automated message. This is an automated message created by our notification system. </div>")
+                        DisplayMode: =If(templateMode && !newTemplate,DisplayMode.View, DisplayMode.Edit)
+                        Height: =400
+                        Width: =Parent.Width-80
+                        X: =30
+                        Y: =CreateAlertTitleLabel_3.Y+CreateAlertTitleLabel_3.Height
+                        ZIndex: =1
+
+                    CreateAlertTitleLabel_3 As label:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =2
+                        Color: |-
+                            =//If(CreateAlertTitleLabel_3.Text = "Title Required",Color.Red,RGBA(0, 18, 107, 1))
+                            Color.White
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: |-
+                            ="Preview
+                            "
+                        Width: =80
+                        Wrap: =false
+                        X: =30
+                        Y: =TextInput1.Y-Self.Height
+                        ZIndex: =2
+
+                DescriptionDataCard As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="Description"
+                    Default: =ThisItem.messageText
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Alerts],DataSourceInfo.DisplayName,Create_A_Ticket_Title_Label)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =Parent.Height/3
+                    MaxLength: =//DataSourceInfo([@Alerts], DataSourceInfo.MaxLength, "messageText")
+                    Required: =false
+                    Update: =CreateAlertDescriptionTextAreaInput.Text
+                    Visible: =!templateMode
+                    Width: =Parent.Width
+                    X: =0
+                    Y: =4
+                    ZIndex: =1
+
+                    CreateAlertDescriptionLabel As label:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Description"
+                        Width: =120
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    CreateAlertDescriptionTextAreaInput As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =ThisItem.messageText
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Height: =Parent.Height/1.5
+                        HintText: ="Please Describe Your Issue"
+                        MaxLength: =Parent.MaxLength
+                        Mode: =TextMode.MultiLine
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =TextInput1.Width
+                        X: =30
+                        Y: =CreateAlertDescriptionLabel.Y + CreateAlertDescriptionLabel.Height 
+                        ZIndex: =2
+
+                    ErrorMessage46_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =CreateAlertDescriptionTextAreaInput.Y + CreateAlertDescriptionTextAreaInput.Height
+                        ZIndex: =3
+
+                DataCard3 As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =200
+                    Width: =Parent.Width
+                    X: =0
+                    Y: =6
+                    ZIndex: =1
+
+                    UpdateAlertBtn As button:
+                        FontWeight: =FontWeight.Bold
+                        Height: =CreateAlertBtn.Height
+                        OnSelect: |
+                            =//update the record with the new edited fields
+                            
+                            Patch (
+                                Alerts,
+                                AlertsGallery.Selected,
+                                {
+                                    Title: CreateAlertTitleValue.Text,
+                                    messageText: CreateAlertDescriptionTextAreaInput.Text,
+                                    dateExpired: DateTimeValue(DateValue14_1.SelectedDate & " " & HourValue14_1.SelectedText.Value & ":" & MinuteValue14_1.SelectedText.Value)
+                                }
+                            );
+                            ResetForm(CreateAlertForm);
+                            Set(
+                                Editing,
+                                false
+                            );
+                            Navigate('Alert Manager');
+                        Text: ="Update Alert"
+                        Visible: =If(Editing, true, false)
+                        Width: =CreateAlertBtn.Width
+                        X: =CreateAlertBtn.X
+                        Y: =CreateAlertBtn.Y
+                        ZIndex: =1
+
+                    CancelBtn As button:
+                        Fill: =RGBA(184,0,0,1)
+                        Height: =CreateAlertBtn.Height
+                        HoverFill: =ColorFade(RGBA(184,0,0,1), -20%)
+                        OnSelect: |-
+                            =ResetForm(CreateAlertForm);
+                            Set(Editing, false);
+                            Navigate('Alert Manager',ScreenTransition.None);
+                            UpdateContext({TitleReq:"Title"});
+                        Text: ="Cancel"
+                        Visible: =!(CreateAlertForm.Mode = FormMode.View)
+                        Width: =CreateAlertBtn.Width
+                        X: =3*(Parent.Width-Self.Width)/4 +20
+                        Y: =CreateAlertBtn.Y
+                        ZIndex: =2
+
+                    CreateAlertBtn As button:
+                        Fill: =ColorScheme.primary
+                        Height: =60
+                        OnSelect: |-
+                            =
+                            If(!templateMode && !newTemplate,//Check if the title is blank if it is then update screen variable to state that a required field is empty
+                            If(!IsBlank(Trim(CreateAlertTitleValue.Text)),
+                            //otherwise make a new alert variable
+                            Set(
+                                newAlert,
+                                Patch(
+                                    Alerts,
+                                    Defaults(Alerts),
+                                    {
+                                        Title: CreateAlertTitleValue.Text,
+                                        messageText: CreateAlertDescriptionTextAreaInput.Text,
+                                        dateCreated: Now(),
+                                        dateExpired: If(
+                                            !IsBlank(DateValue14_1.SelectedDate),
+                                            DateTimeValue(DateValue14_1.SelectedDate & " " & HourValue14_1.SelectedText.Value & ":" & MinuteValue14_1.SelectedText.Value),
+                                            Blank()
+                                        ),
+                                        creatorId: userData.id
+                                    }
+                                ));
+                                Set(
+                                    galleryVisible,
+                                    true
+                                );
+                                Notify(
+                                    "Alert Successfully created!",
+                                    NotificationType.Success
+                                );
+                            
+                                //send a mass email to all users stat that the created alert is down.
+                                SendEmail.Run(
+                                    Concatenate(
+                                        "pdhelpdesk@countyofsb.org" 
+                                    ),
+                                        TextInput1.Text,
+                                        RichTextEditor1.HtmlText,
+                                        //allEmails 
+                                        "mperez@countyofsb.org"
+                                );
+                            /*SMTP.SendEmailV3(
+                                {
+                                    From: "sbpdhelpdesk@outlook.com",
+                                    To: "<Do Not Reply> sbpdhelpdesk@outlook.com",
+                                    Bcc: allEmails,
+                                    Subject: "Service Outage",
+                                    Body: "<div>Please be advised, " & DataCardValue23_1.Text & " is down. IT is responding and will notify all users when full functionality is restored. Thank you for your patience.</div> <br> <div> Do NOT email or respond to this automated message. This is an automated message created by our notification system. </div>"
+                                }
+                            );*/
+                            //go to alert manager
+                                Navigate('Alert Manager');
+                                ResetForm(CreateAlertForm);
+                            , 
+                            UpdateContext({TitleReq:"Title Required"})),
+                            If(!IsBlank(Trim(TextInput1.Text)) &&!IsBlank(Trim(CreateAlertTitleValue.Text))&&!IsBlank(Trim(RichTextEditor1.HtmlText)),Patch(tempTemplates,Defaults(tempTemplates),
+                            {
+                                alertName:CreateAlertTitleValue.Text,
+                                alertSubject:TextInput1.Text,
+                                alertHTMLText:RichTextEditor1.HtmlText
+                            });
+                            Patch(ATemplates,Defaults(ATemplates),
+                            {
+                                Title:CreateAlertTitleValue.Text,
+                                alertSubject:TextInput1.Text,
+                                alertHTMLText:RichTextEditor1.HtmlText
+                            });
+                            UpdateContext({newTemplate:!newTemplate});,Notify("Subject, Title,or Email message is missing!"))
+                            
+                            )
+                        Text: =If(!templateMode && !newTemplate ,"Create Alert", "Create Template")
+                        Visible: =If(Editing, false, true)
+                        Width: =Parent.Width/3 // If( 'Create Alert'.Size =1 || 'Create Alert'.Size =2,  Parent.Width/3 ,Parent.Width/7)
+                        X: =(Parent.Width-Self.Width)/If('Alert Manager'.Size=1,8,4)
+                        Y: =Parent.Height/3
+                        ZIndex: =3
+
+                TitleDataCard As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="Title"
+                    Default: =ThisItem.messageText
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Alerts],DataSourceInfo.DisplayName,messageText)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =Parent.Height/6
+                    MaxLength: =DataSourceInfo([@Alerts], DataSourceInfo.MaxLength, Create_A_Ticket_Title_Label)
+                    Required: =true
+                    Update: =CreateAlertTitleValue.Text
+                    Width: =Parent.Width
+                    X: =0
+                    Y: =2
+                    ZIndex: =4
+
+                    CreateAlertTitleLabel As label:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =2
+                        Color: |-
+                            =//If(CreateAlertTitleLabel.Text = "Title Required",Color.Red,RGBA(0, 18, 107, 1))
+                            Color.White
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: =TitleReq
+                        Width: =50
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    CreateAlertTitleValue As text:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =If(templateMode, Gallery5.Selected.alertName ,ThisItem.Title)
+                        DelayOutput: =true
+                        DisplayMode: =If(templateMode && !newTemplate,DisplayMode.View,Parent.DisplayMode)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =TextInput1.Width
+                        X: =30
+                        Y: =CreateAlertTitleLabel.Y + CreateAlertTitleLabel.Height +1
+                        ZIndex: =2
+
+                    ErrorMessage39_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =CreateAlertTitleValue.Y + CreateAlertTitleValue.Height
+                        ZIndex: =3
+
+                    CreateAlertTitleStarVisible As label:
+                        Align: =Align.Center
+                        Color: =If(CreateAlertTitleLabel.Text = "Title Required",Color.Red,RGBA(0, 18, 107, 1))
+                        Height: =CreateAlertTitleLabel.Height
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =CreateAlertTitleLabel.Y
+                        ZIndex: =4
+
+                ExpirationDateDataCard As typedDataCard.dateTimeEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="field_7"
+                    Default: =ThisItem.dateExpired
+                    DisplayMode: =If(!templateMode && !newTemplate, DisplayMode.Edit, DisplayMode.View)
+                    DisplayName: =//DataSourceInfo([@Alerts],DataSourceInfo.DisplayName,"field_7")
+                    Fill: =Color.Transparent
+                    Height: =Parent.Height/6
+                    Required: =false
+                    Update: =DateValue14_1.SelectedDate + Time(Value(HourValue14_1.Selected.Value), Value(MinuteValue14_1.Selected.Value), 0)
+                    Visible: =true
+                    Width: =Parent.Width
+                    X: =0
+                    Y: =5
+                    ZIndex: =4
+
+                    ExpirationDateLabel As label:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Expiration Date"
+                        Width: =160
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    DateValue14_1 As datepicker:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DefaultDate: |-
+                            =// check if we are trying to update a record, if so then the default date would be the date it would expire.
+                            // if not then there should be no date
+                            
+                            If(Editing, ThisItem.dateExpired, Today())
+                        DisplayMode: =Parent.DisplayMode
+                        EndYear: =Year(Today())+100
+                        IconBackground: =ColorScheme.primary
+                        InputTextPlaceholder: =If(IsBlank(Self.SelectedDate), Text(Date(Year(Now()),01,01), Self.Format, Self.Language))
+                        IsEditable: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =5
+                        PaddingRight: =0
+                        StartYear: =2022
+                        Tooltip: =Parent.DisplayName
+                        Width: =(TextInput1.Width) / 2
+                        X: =30
+                        Y: =ExpirationDateLabel.Y + ExpirationDateLabel.Height 
+                        ZIndex: =2
+
+                    HourValue14_1 As dropdown:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        ChevronBackground: =ColorScheme.primary
+                        Default: =If(Editing, Text(Hour(Parent.Default),"00"), Blank())
+                        DisplayMode: =Parent.DisplayMode
+                        Height: =DateValue14_1.Height
+                        Items: =ForAll(Sequence(26), If(Value > 13, Text(Value-14,"[$-en-US]00"), Text(Value-1,"[$-en-US]00")))
+                        PaddingBottom: =0
+                        PaddingLeft: =5
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =DateValue14_1.Width / 2 - 10
+                        X: =DateValue14_1.X + DateValue14_1.Width + 10
+                        Y: =DateValue14_1.Y
+                        ZIndex: =3
+
+                    Separator15_1 As label:
+                        Align: =Align.Center
+                        FontWeight: =FontWeight.Bold
+                        Height: =HourValue14_1.Height
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: |-
+                            =":"
+                        Width: =10
+                        Wrap: =false
+                        X: =HourValue14_1.X + HourValue14_1.Width
+                        Y: =HourValue14_1.Y
+                        ZIndex: =4
+
+                    MinuteValue14_1 As dropdown:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        ChevronBackground: =ColorScheme.primary
+                        Default: =If(Editing, Text(Minute(Parent.Default),"00"), Blank())
+                        DisplayMode: =Parent.DisplayMode
+                        Height: =HourValue14_1.Height
+                        Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                        PaddingBottom: =0
+                        PaddingLeft: =5
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =HourValue14_1.Width
+                        X: =HourValue14_1.X + HourValue14_1.Width + Separator15_1.Width
+                        Y: =HourValue14_1.Y
+                        ZIndex: =5
+
+                    ErrorMessage42_1 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =HourValue14_1.Y + HourValue14_1.Height
+                        ZIndex: =6
+
+        CreateAlertFooter As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            FillPortions: =0
+            Height: =60
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: =If('Create Alert'.Size > 1, false, true)
+            Width: =Parent.Width
+            ZIndex: =4
+
+            CreateAlertMobileMenu As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Visible: =Home.Size=1
+                Width: =Parent.Width
+                Y: =Parent.Height-Self.Height
+
+    CreateAlertBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =CreateAlertLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(CreateAlertHeader.Height-CreateAlertLabel.Height)/1.05
+        ZIndex: =2
+
+    Rectangle30 As rectangle:
+        BorderThickness: =2
+        Fill: =ColorScheme.secondary
+        Height: =CreateAlertMain.PaddingTop
+        Width: =Parent.Width
+        Y: =CreateAlertHeader.Height
+        ZIndex: =3
+
+    CreateAlertWebMenu As compWebMenu:
+        Visible: ='Create Alert'.Size > 1
+        ZIndex: =4
+
+    UseAlertTemplateButton As button:
+        Fill: =ColorScheme.primary
+        OnSelect: |-
+            =UpdateContext({templateMode:true});
+        Text: ="Select a Template"
+        Visible: =!templateMode&& !Editing
+        Width: =220
+        X: =(Parent.Width-Self.Width)/2
+        Y: =(Rectangle30.Height-Self.Height)/2 +Rectangle30.Y
+        ZIndex: =5
+
+    RichTextEditor2_1 As richTextEditor:
+        Default: =    "<div>Please be advised, " & CreateAlertTitleValue.Text & " is down. IT is responding and will notify all users when full functionality is restored. Thank you for your patience.</div> <br> <div> Do NOT email or respond to this automated message. This is an automated message created by our notification system. </div>"
+        Height: =209
+        Visible: =false
+        Width: =677
+        X: =224
+        Y: =216
+        ZIndex: =6
+
+    UseAlertTemplateButton_1 As button:
+        Fill: =ColorScheme.primary
+        OnSelect: |-
+            =UpdateContext({templateMode:false, newTemplate:false});
+        Text: ="Create New Alert"
+        Visible: =templateMode
+        Width: =UseAlertTemplateButton.Width
+        X: =If('Create Alert'.Size=1,(Parent.Width-Self.Width)/2,UseAlertTemplateButton.X - Self.Width/2 -5)
+        Y: =UseAlertTemplateButton.Y
+        ZIndex: =7
+
+    UseAlertTemplateButton_2 As button:
+        Fill: =ColorScheme.primary
+        OnSelect: |
+            =UpdateContext({newTemplate:!newTemplate});
+        Size: =14
+        Text: =If(!newTemplate,"Create New Template","Select Template")
+        Visible: =templateMode
+        Width: =UseAlertTemplateButton.Width
+        X: =If('Create Alert'.Size=1,(Parent.Width - Self.Width)/2 ,UseAlertTemplateButton.X+Self.Width/2 +5)
+        Y: =If('Create Alert'.Size=1,UseAlertTemplateButton_1.Y+UseAlertTemplateButton_1.Height+10, UseAlertTemplateButton.Y)
+        ZIndex: =8
+
+    FeedbackBugReportCA As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =9
+
+    HtmlText10 As htmlViewer:
+        Height: =26
+        HtmlText: |-
+            ="<table style='border-style: double ; width:100% '>
+                <tr>
+                <td>
+                    <Table style='width:100%'>
+                    <tr>
+                    <th style='border-bottom-style: solid;'>
+            	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style='text-align:center;'>
+            	</div>
+                    </th>
+                    </tr>
+                    <tr>
+                    <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>
+            	<div>
+            	"&CreateAlertTitleValue.Text&"
+                    </tr>
+                    </td>
+                    <tr>
+                    <td style='font-family: monospace; font-size: 20px '>
+                    "&CreateAlertDescriptionTextAreaInput.Text&" 
+                    </tr>
+                    </td>
+                <tr>
+                <td style='font-family: monospace; font-size: 20px; border-bottom-style: solid '>
+                </td>
+                </tr>
+                
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Visible: =false
+        Width: =36
+        X: =1302
+        Y: =130
+        ZIndex: =10
+

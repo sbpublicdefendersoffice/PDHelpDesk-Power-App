@@ -1,0 +1,494 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Approvals Screen:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =//Clear the collections
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({TemplateErrorPopup:false,approveInfo:false,approveRecord:Blank(),approveTimeOut:false});
+    Children:
+      - TemplateContainer_5:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - TemplateHeaderContainer_5:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.primary
+                  FillPortions: =0
+                  Height: =130
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - TemplateHeaderGroup_3:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - HeaderBackgroundGradient_4:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =130
+                              HtmlText: |-
+                                ="<div style='
+                                height:"&Self.Height-1&"px;
+                                width:100%;
+                                background: rgb(53,89,137);
+                                background: linear-gradient(90deg, rgba(53,89,137,1) 0%, rgba(0,18,107,1) 100%);' ></div>"
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =Parent.Width
+                        - TemplateLabel_4:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =48
+                              Size: =If('Approvals Screen'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                              Text: ="Approvals"
+                              Width: =Parent.Width
+                              Y: =TemplateWebHeader_5.Height
+                        - TemplateWebHeader_5:
+                            Control: CanvasComponent
+                            ComponentName: compWebHeader
+                            Properties:
+                              BackgroundColor: =Color.Transparent
+                              CompScreenSize: ='Approvals Screen'.Size
+                              EnableFeedback: =Set(varFeedback,true)
+                              FeedbackBool: =varFeedback
+                              Fill: =Color.Transparent
+                              Height: =82
+                              Width: =App.Width
+            - MainSectionTemplateContainer_5:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - Container21:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - Gallery12:
+                            Control: Gallery@2.15.0
+                            Variant: VariableHeight
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =Parent.Height
+                              Items: =Filter(Approvals,SID = userData.id And Resolved = false)
+                              TemplatePadding: =0
+                              TemplateSize: =100
+                              Width: =Parent.Width
+                            Children:
+                              - Button44:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(204, 208, 225, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =100
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: =UpdateContext({approveRecord:LookUp(Tickets,ID = ThisItem.TID),approveInfo:true})
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: =
+                                    Width: =1366
+                              - Label71:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =31
+                                    OnSelect: =Select(Parent)
+                                    Text: =ThisItem.ID
+                                    Width: =30
+                                    X: =40
+                                    Y: =40
+                              - Label74:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    OnSelect: =Select(Parent)
+                                    Text: =ThisItem.Title
+                                    X: =(Parent.TemplateWidth - Self.Width)/2
+                                    Y: =(Parent.TemplateHeight-Self.Height)/2
+                              - Icon11:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(184, 0, 0, 1)
+                                    Icon: =Icon.CancelBadge
+                                    OnSelect: |-
+                                      =UpdateContext({approveRecord:LookUp(Tickets,ID= ThisItem.TID)});
+                                      Patch(Tickets,approveRecord,{status:"null",lastUpdated:Now(),description:approveRecord.description&Char(13)&"Ticket has been denied, please close this ticket."&Char(13)&"Approver: "&userData.fullName});
+                                      Patch(Approvals,LookUp(Approvals,ThisItem.ID = ID),{Approved:false,Resolved:true});
+                                      UpdateContext({approveRecord:Blank(),approveTimeOut:true});
+                                    X: =Icon12.X-Self.Width*1.5
+                                    Y: =18
+                              - Icon12:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(127, 178, 57, 1)
+                                    Icon: =Icon.CheckBadge
+                                    OnSelect: |-
+                                      =
+                                      UpdateContext({approveRecord:LookUp(Tickets,ID= ThisItem.TID)});
+                                      Patch(Tickets,approveRecord,{status:"open",lastUpdated:Now(),description:approveRecord.description&Char(13)&"Approved By: "&userData.fullName});
+                                      Patch(Approvals,LookUp(Approvals,ThisItem.ID = ID),{Approved:true,Resolved:true});
+                                      UpdateContext({approveRecord:Blank(),approveTimeOut:true});
+                                      SendEmail.Run("'"&userData.email&"'","Ticket Approval Confirmed",HtmlText8.HtmlText,"");
+                                    X: =Parent.TemplateWidth-Self.Width
+                                    Y: =18
+                        - Container25:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Visible: =approveInfo
+                              Width: =Parent.Width
+                            Children:
+                              - Rectangle40:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Fill: =RGBA(56, 96, 178, .25)
+                                    Height: =638
+                                    Width: =1366
+                              - Rectangle41:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Fill: =RGBA(241, 244, 249, 1)
+                                    Height: =557
+                                    Width: =1216
+                                    X: =76
+                                    Y: =36
+                              - Label75:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =1
+                                    Font: =Font.'Open Sans'
+                                    Height: =Rectangle41.Height/1.5
+                                    Overflow: =Overflow.Scroll
+                                    Text: =PlainText(approveRecord.description)
+                                    Width: =Rectangle41.Width/1.1
+                                    X: =Rectangle41.X+(Rectangle41.Width-Self.Width)/2
+                                    Y: =Label73.Height+Label73.Y
+                              - Button25:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(127, 178, 57, 1)
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =RGBA(99, 139, 44, 1)
+                                    OnSelect: |-
+                                      =Patch(Tickets,approveRecord,{status:"open",dateCreated:Now(),lastUpdated:Now(),description:approveRecord.description&Char(13)&"Approved By: "&userData.fullName,addAssignees:approveRecord.addAssignees&userData.fullName&","});
+                                      Patch(Approvals,LookUp(Approvals,Gallery12.Selected.ID = ID),{Approved:true,Resolved:true});
+                                      UpdateContext({approveRecord:Blank(),approveTimeOut:true});
+                                      SendEmail.Run("'"&userData.email&"'","Ticket Approval Confirmed",HtmlText8.HtmlText,"");
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Approve"
+                                    X: =Button25_1.X+Button25_1.Width+ Self.Width/2
+                                    Y: =496
+                              - Button25_1:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(184, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =RGBA(118, 0, 0, 1)
+                                    OnSelect: |-
+                                      =Patch(Tickets,approveRecord,{status:"null",lastUpdated:Now(),description:approveRecord.description&Char(13)&"Approval for this ticket has been denied, please close this ticket."&Char(13)&"Approver: "&userData.fullName});
+                                      Patch(Approvals,LookUp(Approvals,Gallery12.Selected.ID = ID),{Approved:false,Resolved:true});
+                                      UpdateContext({approveRecord:Blank(),approveTimeOut:true});
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Deny"
+                                    X: =Rectangle41.X+(Rectangle41.Width-Self.Width)/2 - Self.Width
+                                    Y: =496
+                              - Label73:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =50
+                                    Size: =16
+                                    Text: =approveRecord.Title
+                                    Width: =Rectangle41.Width
+                                    X: =76
+                                    Y: =Rectangle41.Y
+                              - Icon13_1:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(255, 0, 0, 1)
+                                    Height: =32
+                                    Icon: =Icon.Cancel
+                                    OnSelect: =UpdateContext({approveInfo:false})
+                                    Width: =32
+                                    X: =Rectangle41.Width+Rectangle41.X-Self.Width
+                                    Y: =Rectangle41.Y
+                        - Container25_1:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Visible: =approveTimeOut
+                              Width: =Parent.Width
+                            Children:
+                              - Rectangle40_1:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Fill: =RGBA(56, 96, 178, .25)
+                                    Height: =Parent.Height
+                                    Width: =Parent.Width
+                              - Rectangle41_1:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Fill: =RGBA(241, 244, 249, 1)
+                                    Width: =Parent.Width/1.1
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: =(Parent.Height-Self.Height)/2
+                              - Label75_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =Rectangle41_1.Height/2
+                                    Overflow: =Overflow.Scroll
+                                    PaddingTop: =10
+                                    Size: =15
+                                    Text: ="Process successful!"
+                                    Width: =Rectangle41_1.Width
+                                    X: =Rectangle41_1.X
+                                    Y: =Rectangle41_1.Y+Self.Height/2
+            - TemplateFooter_5:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(255,255,255, 1)
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    ='Approvals Screen'.Size=1
+                  Width: =Parent.Width
+                Children:
+                  - TemplateWebMobileMenu_5:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Width: =Parent.Width
+      - TemplateWebMenu_5:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, Parent.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Approvals Screen'.Size > 1
+            Width: =If(showMenu, Parent.Width, 80)
+      - TemplateBackButton_6:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =TemplateLabel_4.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(TemplateHeaderContainer_5.Height-TemplateLabel_4.Height)/1.05
+      - FeedbackBugReportTemp_2:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width
+      - HtmlText8:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =10
+            HtmlText: "=\"<table style='border-style: double ; width:100% '>\r\n    <tr>\r\n    <td>\r\n        <Table style='width:100%'>\r\n        <tr>\r\n        <th style='border-bottom-style: solid;'>\r\n	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>\r\n	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!\r\n	</div>\r\n	<br>\r\n	<div style='text-align:center;'>\r\n	You have approved a ticket proccess. To see the details and progress of this ticket:  \r\n    <a style='text-decoration: none;' href='https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=\"&approveRecord.ID&\"'> Click here</a>\r\n	</div>\r\n        </th>\r\n        </tr>\r\n        <tr>\r\n        <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>\r\n	<div>\r\n	\"&approveRecord.Title&\"\r\n        </tr>\r\n        </td>\r\n        <tr>\r\n        <td style='font-family: monospace; font-size: 20px '>\r\n        Status: \"&approveRecord.status&\" \r\n        </tr>\r\n        </td>\r\n        <tr>\r\n        <td style='font-family: monospace; font-size: 20px '>\r\n        Created By: \"&LookUp(Users,approveRecord.creatorId = ID).fullName&\"\r\n        </tr>\r\n        </td>\r\n        <tr>\r\n        <td style='font-family: monospace; font-size: 20px '>\r\n        Information:\r\n    	<br> \r\n    	\"&approveRecord.description&\"\r\n        </tr>\r\n        </td>\r\n    \r\n    <tr>\r\n    <td style='font-family: monospace; font-size: 20px; border-bottom-style: solid '>\r\n    \r\n    </td>\r\n    </tr>\r\n    \r\n	</div>\r\n        </td>\r\n        </tr>\r\n    </td>\r\n    </tr>\r\n    </Table>\r\n</table>\""
+            Width: =43
+            Y: =758
+      - Timer3:
+          Control: Timer@2.1.0
+          Properties:
+            AutoPause: =false
+            AutoStart: =approveTimeOut
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Duration: =1000
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: =UpdateContext({approveTimeOut:false})
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Visible: =false
+            X: =40
+            Y: =40
+      - Button30:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: =UpdateContext({approveTimeOut:true})
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Visible: =false
+            X: =213
+            Y: =38

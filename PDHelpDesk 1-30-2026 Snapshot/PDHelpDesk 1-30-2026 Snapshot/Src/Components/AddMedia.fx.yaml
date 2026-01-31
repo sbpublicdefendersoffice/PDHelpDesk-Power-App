@@ -1,0 +1,419 @@
+AddMedia As CanvasComponent:
+    AttachCameraOff():
+        ThisProperty:
+            Default: =Set(AttachCamera,false);
+    AttachCameraOn():
+        ThisProperty:
+            Default: =Set(AttachCamera,true);
+    DisablePickMedia():
+        ThisProperty:
+            Default: =Set(AttachFiles,false)
+    EnablePickMedia():
+        ThisProperty:
+            Default: =Set(AttachFiles,true)
+    InitiateMediaDelay():
+        ThisProperty:
+            Default: =Set(mediaDelay,!mediaDelay)
+    OpenMedia():
+        ThisProperty:
+            Default: =Set(varOpenMedia,!varOpenMedia)
+    PhotoModeDisable():
+        ThisProperty:
+            Default: =Set(AttachPhoto,false)
+    PhotoModeEnable():
+        ThisProperty:
+            Default: =Set(AttachPhoto,true)
+    AMSize: =100
+    Fill: =RGBA(0, 0, 0, 0)
+    ForSTITickID: =0
+    Height: =App.Height
+    Width: =App.Width
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    AlternativeAddImageContainer_46 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =varOpenMedia
+        Width: =Parent.Width
+        ZIndex: =7
+
+        AddMediaBackgroundTint As rectangle:
+            Fill: =RGBA(56, 96, 178, .35)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        AddMediaBackground As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(227, 234, 243, 1)
+            Height: =Parent.Height/1.10
+            Width: =Parent.Width/1.10
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        AddMediaBackgroundHeader As rectangle:
+            BorderThickness: =2
+            Height: =80
+            Width: =AddMediaBackground.Width
+            X: =AddMediaBackground.X
+            Y: =AddMediaBackground.Y
+            ZIndex: =3
+
+        AddMediaBackgroundHeaderLabel As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =AddMediaBackgroundHeader.Height
+            Size: =18
+            Text: ="Using "&If(AttachCamera, "Camera","Copy Paste")
+            Width: =AddMediaBackgroundHeader.Width
+            X: =AddMediaBackgroundHeader.X
+            Y: =AddMediaBackgroundHeader.Y
+            ZIndex: =4
+
+        Rectangle36_1 As rectangle:
+            Fill: =RGBA(241, 244, 249, 1)
+            Height: =AddMediaBackground.Height
+            Visible: =!AttachFiles
+            Width: =AddMediaBackground.Width
+            X: =AddMediaBackground.X
+            Y: =AddMediaBackground.Y
+            ZIndex: =5
+
+        ClosePanelButton_45 As icon.Cancel:
+            BorderThickness: =2
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(203, 102, 102, 1)
+            Height: =40
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =Reset(CopyPasteRTE_46);
+                AddMedia.AttachCameraOff();
+                AddMedia.DisablePickMedia();
+                AddMedia.PhotoModeDisable();
+            Width: =40
+            X: =AddMediaBackgroundHeader.Width+AddMediaBackgroundHeader.X-Self.Width
+            Y: =AddMediaBackgroundHeader.Y
+            ZIndex: =6
+
+        CopyPasteRTE_46 As richTextEditor:
+            Default: =
+            Height: =AddMediaBackground.Height/1.5
+            Visible: =AttachPhoto
+            Width: =AddMediaBackground.Width
+            X: =AddMediaBackground.X
+            Y: =AddMediaBackground.Y+AddMediaBackgroundHeader.Height
+            ZIndex: =7
+
+        Camera_45 As camera:
+            Camera: |-
+                =//Checks if there are anyback cameras, if there are none then default the camera to the first one otherwise use the first back camera
+                If(IsBlank(LookUp(Camera_45.AvailableDevices, "back" in Name|| "Back" in Name).Id),0,LookUp(Camera_45.AvailableDevices, "back" in Name || "Back" in Name).Id)
+            Height: =AddMediaBackground.Height/1.5
+            OnSelect: |-
+                =Collect(RTEImages,{copyName:App.ActiveScreen.Name&" Photo "&Text(Now(),DateTimeFormat.UTC),base64Image: "<img src="&JSON(Camera_45.Photo,JSONFormat.IncludeBinaryData)&" />"});
+                Collect(JointAttachments,{Name:App.ActiveScreen.Name&" Photo "&Text(Now(),DateTimeFormat.UTC),Value: "<img src="&JSON(Camera_45.Photo,JSONFormat.IncludeBinaryData)&" />"});
+                AddMedia.InitiateMediaDelay();
+            Visible: =AttachCamera
+            Width: =AddMediaBackground.Width
+            X: =AddMediaBackground.X
+            Y: =AddMediaBackground.Y+AddMediaBackgroundHeader.Height
+            ZIndex: =8
+
+        Button25_178 As button:
+            Fill: =ColorScheme.primary
+            Height: =Self.Width
+            Text: =
+            Visible: =!AttachFiles
+            Width: =Icon11_48.Width+16
+            X: =Icon11_48.X-8
+            Y: =Icon11_48.Y-8
+            ZIndex: =9
+
+        Icon11_48 As icon.Camera:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =Self.Width
+            Icon: =Icon.Camera
+            OnSelect: |
+                =AddMedia.AttachCameraOn();
+                AddMedia.EnablePickMedia();
+            Visible: =!AttachFiles
+            Width: =If(AddMedia.AMSize = 1, 32,48)
+            X: =AddMediaAttachmentControl.X-Self.Width-16
+            Y: =AddMediaAttachmentControl.Y+5
+            ZIndex: =10
+
+        Button25_179 As button:
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =Self.Width
+            HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+            OnSelect: =Select(Icon11_48)
+            PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+            Text: =
+            Visible: =!AttachFiles
+            Width: =Icon11_48.Width+16
+            X: =Icon11_48.X-8
+            Y: =Icon11_48.Y-8
+            ZIndex: =11
+
+        Button25_180 As button:
+            Fill: =ColorScheme.primary
+            Height: =Self.Width
+            Text: =
+            Visible: =!AttachFiles
+            Width: =Icon11_48.Width+16
+            X: =Icon11_49.X-8
+            Y: =Icon11_49.Y-8
+            ZIndex: =12
+
+        Icon11_49 As icon.Camera:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =Self.Width
+            Icon: =Icon.Paste
+            OnSelect: |-
+                =AddMedia.AttachCameraOff();
+                AddMedia.EnablePickMedia();
+                AddMedia.PhotoModeEnable();
+            Visible: =!AttachFiles
+            Width: =Icon11_48.Width
+            X: =AddMediaAttachmentControl.X+AddMediaAttachmentControl.Width+16
+            Y: =AddMediaAttachmentControl.Y+5
+            ZIndex: =13
+
+        Button25_181 As button:
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =Self.Width
+            HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+            OnSelect: =Select(Icon11_49)
+            PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+            Text: =
+            Visible: =!AttachFiles
+            Width: =Icon11_48.Width+16
+            X: =Icon11_49.X-8
+            Y: =Icon11_49.Y-8
+            ZIndex: =14
+
+        CameraInfoLabel_45 As label:
+            Align: =Align.Center
+            Height: =50
+            Size: =10
+            Text: |-
+                =//"Tap or Click the camera to take a picture"
+                Concat(Camera_45.AvailableDevices, Name&" "&Id)
+            Visible: =AttachCamera
+            Width: =Camera_45.Width
+            X: =(AddMediaBackground.Width-Self.Width)/2 +AddMediaBackground.X
+            Y: =AddMediaBackground.Height-Self.Height-7
+            ZIndex: =15
+
+        AddScreenshotButton_45 As button:
+            OnSelect: |-
+                =If( "<img" in CopyPasteRTE_46.HtmlText, Collect(RTEImages,{copyName:App.ActiveScreen.Name&" ScreenShot "&Text(Now(),DateTimeFormat.UTC), base64Image:CopyPasteRTE_46.HtmlText});Collect(JointAttachments,{Name:App.ActiveScreen.Name&" ScreenShot "&Text(Now(),DateTimeFormat.UTC), Value:CopyPasteRTE_42.HtmlText});
+                Reset(CopyPasteRTE_46);
+                , Notify("No Valid Image"));
+                 
+            Text: =If(AttachCamera,"Take Picture","Add ScreenShot")
+            Visible: =AttachPhoto
+            Width: =250
+            X: =(AddMediaBackground.Width-Self.Width)/2 +AddMediaBackground.X
+            Y: =AddMediaBackground.Height-Self.Height-7
+            ZIndex: =16
+
+        AddMediaAttachmentControl As attachments:
+            BorderColor: =Color.Transparent
+            Height: =66
+            HoverFill: =RGBA(0,0,0,.11)
+            IsInDataCard: =true
+            Items: =
+            MaxAttachments: =10
+            MaxAttachmentsText: =
+            NoAttachmentsText: =
+            OnAddFile: |+
+                =ForAll
+                (
+                    Self.Attachments As Attachment,
+                    If(Not(Attachment in JointAttachments),Collect(JointAttachments,{Name:Attachment.Name,Value:Attachment.Value}))
+                );
+                ClearCollect(attItems,Self.Attachments);
+                Reset(AddMediaAttachmentControl);
+                
+            OnRemoveFile: =
+            PressedFill: =RGBA(0, 0, 0, 0)
+            Size: =10
+            Visible: =!AttachFiles
+            Width: =If(AddMedia.AMSize>1,Rectangle36_1.Width/1.2,Rectangle36_1.Width/1.6)
+            X: =(Rectangle36_1.X+Rectangle36_1.Width-Self.Width)/2 +Rectangle36_1.X/2
+            Y: =AttachmentGalleryView.Y+AttachmentGalleryView.Height+10
+            ZIndex: =17
+
+        SelectionBannerLabel As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(39, 113, 194, 1)
+            Height: =80
+            Size: =21
+            Text: |-
+                =//If(CountRows(FeedbackImages)>0,CountRows(FeedbackImages)&" Screenshot(s) or Photos Added","No Media Attached")
+                "Add Media"
+            Visible: =!AttachFiles
+            Width: =AddMediaBackground.Width
+            X: =AddMediaBackground.X
+            Y: =34
+            ZIndex: =18
+
+        AttachmentGalleryView As gallery.variableTemplateHeightGallery:
+            BorderThickness: =2
+            DelayItemLoading: =true
+            Height: =AddMediaBackground.Height-SelectionBannerLabel.Height-128
+            Items: =JointAttachments
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            TemplatePadding: =
+            TemplateSize: =64
+            Visible: =!AttachFiles
+            Width: =AddMediaBackground.Width/1.1
+            X: =(AddMediaBackground.Width-Self.Width)/2 +AddMediaBackground.X
+            Y: =SelectionBannerLabel.Y+SelectionBannerLabel.Height
+            ZIndex: =19
+
+            Label69_1 As label:
+                Height: =Parent.TemplateHeight
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.Name
+                Width: =Parent.TemplateWidth*.8
+                X: =Icon26.Width+Icon26.X
+                ZIndex: =1
+
+            Icon26 As icon.Document:
+                Height: =Self.Width
+                Icon: =Icon.Document
+                OnSelect: =Select(Parent)
+                Width: =If(AddMedia.AMSize = 1, 32,48)
+                Y: =5
+                ZIndex: =4
+
+            Icon27 As icon.Cancel:
+                Color: =RGBA(255, 255, 255, 1)
+                Fill: =RGBA(39, 113, 194, 1)
+                Height: =Self.Width
+                Icon: =Icon.Cancel
+                OnSelect: |-
+                    =Set(workerVar,{copyName:ThisItem.Name,base64Image:ThisItem.Value});
+                    If(workerVar in RTEImages,Remove(RTEImages,LookUp(RTEImages, ThisItem.Value = base64Image)));
+                    Remove(attItems,LookUp(attItems,ThisItem.Value = Value));
+                    Remove(JointAttachments,ThisItem)
+                Width: =If(AddMedia.AMSize = 1, 32,48)
+                X: =Parent.TemplateWidth-Self.Width
+                Y: =5
+                ZIndex: =5
+
+        ClosePanelButton_46 As icon.Cancel:
+            BorderThickness: =2
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(203, 102, 102, 1)
+            Height: =40
+            Icon: =Icon.Cancel
+            OnSelect: =AddMedia.OpenMedia()
+            Visible: =!AttachFiles
+            Width: =40
+            X: =SelectionBannerLabel.X+SelectionBannerLabel.Width-Self.Width
+            Y: =SelectionBannerLabel.Y
+            ZIndex: =20
+
+        Button29 As button:
+            OnSelect: |
+                =ForAll(
+                    attItems As Attachment,
+                            AttachFiles.Run(
+                            AddMedia.ForSTITickID,
+                            {
+                                file:{
+                                    contentBytes: Attachment.Value,
+                                    name: Attachment.Name
+                                }
+                            }
+                        ) 
+                );
+                ForAll(
+                    RTEImages As RTEI,
+                    With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", AddMedia.ForSTITickID)
+                ))))
+                        );
+                Clear(RTEImages);
+                Clear(JointAttachments);
+                Clear(attItems);
+                AddMedia.OpenMedia();
+            Text: ="Submit"
+            Visible: =App.ActiveScreen.Name = "Single Ticket Info"
+            X: =(Rectangle36_1.X+Rectangle36_1.Width-Self.Width)/2 
+            Y: =Rectangle36_1.Y+Rectangle36_1.Height-Self.Height-10
+            ZIndex: =21
+
+        Rectangle36_2 As rectangle:
+            Fill: =RGBA(241, 244, 249, 1)
+            Height: =AddMediaBackground.Height
+            Visible: =mediaDelay
+            Width: =AddMediaBackground.Width
+            X: =AddMediaBackground.X
+            Y: =AddMediaBackground.Y
+            ZIndex: =22
+
+        SelectionBannerLabel_1 As label:
+            Align: =Align.Center
+            Height: =80
+            Italic: =true
+            Size: =21
+            Text: ="Processing Media..."
+            Visible: =mediaDelay
+            Width: =AddMediaBackground.Width
+            X: =Rectangle36_2.X
+            Y: =Rectangle36_2.Y+Rectangle36_2.Height/2 -Self.Height
+            ZIndex: =23
+
+    Button25_182 As button:
+        Fill: =ColorScheme.primary
+        Height: =64
+        Text: =
+        Visible: =!varOpenMedia
+        Width: =64
+        X: =Icon11_50.X-8
+        Y: =Icon11_50.Y-8
+        ZIndex: =8
+
+    Icon11_50 As icon.Camera:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =Self.Width
+        Icon: =Icon.AddLibrary
+        OnSelect: |-
+            =AddMedia.OpenMedia();
+            AddMedia.DisablePickMedia();
+        Visible: =!varOpenMedia
+        Width: =48
+        ZIndex: =9
+
+    Button25_183 As button:
+        Fill: =RGBA(0, 0, 0, 0)
+        Height: =64
+        HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+        OnSelect: =Select(Icon11_50)
+        PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+        Text: =
+        Visible: =!varOpenMedia
+        Width: =64
+        X: =Icon11_50.X-8
+        Y: =Icon11_50.Y-8
+        ZIndex: =10
+
+    "'Media Timer' As timer":
+        AutoPause: =false
+        AutoStart: =mediaDelay
+        Duration: =300
+        OnTimerEnd: =AddMedia.InitiateMediaDelay()
+        Visible: =false
+        X: =40
+        Y: =40
+        ZIndex: =11
+

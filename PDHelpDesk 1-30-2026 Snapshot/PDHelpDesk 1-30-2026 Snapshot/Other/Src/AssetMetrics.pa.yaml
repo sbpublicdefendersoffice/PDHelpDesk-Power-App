@@ -1,0 +1,167 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  AssetMetrics:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: =UpdateContext({refreshVisual:false,refreshVisualTimer:false});
+    Children:
+      - Button28_1:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =35
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: =Navigate('Asset Manager Menu',ScreenTransition.UnCover)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: ="Return"
+            X: =Parent.Width-Self.Width
+            Y: =Parent.Height-Self.Height
+      - Button28_2:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(99, 139, 44, 1)
+            Font: =Font.'Open Sans'
+            Height: =35
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: |-
+              =AssetReportRefresh.Run();
+              UpdateContext({refreshVisualTimer:true})
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: ="Refresh"
+            X: =Parent.Width-Self.Width*2 -5
+            Y: =Parent.Height-Self.Height
+      - Timer4:
+          Control: Timer@2.1.0
+          Properties:
+            AutoPause: =false
+            AutoStart: =refreshVisualTimer
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Duration: =2000
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: |-
+              =UpdateContext({refreshVisual:true});
+              UpdateContext({refreshVisual:false,refreshVisualTimer:false})
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Visible: =false
+            X: =40
+            Y: =40
+      - Container36:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height-35
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            PaddingBottom: =8
+            PaddingLeft: =8
+            PaddingRight: =8
+            PaddingTop: =8
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - EquipmentPowerBIVisual:
+                Control: PowerBI@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =Parent.Height
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+                  TileUrl: ="https://app.powerbigov.us/reportEmbed?reportId=74627263-a8b4-48f6-a626-27cc224493fb&autoAuth=true&ctid=e64b3773-9890-4a2f-87cd-23725df35ace"
+                  Visible: =amSelection="Equipment Assets"
+                  Width: =Parent.Width
+                  WorkspaceId: ="f9fd4e91-cd95-4672-a454-dfbcdcd825db"
+            - AssetPowerBIVisual:
+                Control: PowerBI@2.4.0
+                Properties:
+                  AllowNewAPI: =true
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =Parent.Height
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LoadPowerBIContent: =!refreshVisual
+                  TileUrl: ="https://app.powerbigov.us/reportEmbed?reportId=e97c68a9-2277-448e-bdf8-a7c30d4744d4&autoAuth=true&ctid=e64b3773-9890-4a2f-87cd-23725df35ace"
+                  Visible: =amSelection="Computer Assets"
+                  Width: =Parent.Width
+            - AssetPowerBIVisualMobile:
+                Control: PowerBI@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DashboardId: ="58a9a05c-0a19-4015-982f-f35d93be0176"
+                  Height: =1440
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LoadPowerBIContent: =!refreshVisual
+                  TileUrl: ="https://app.powerbigov.us/reportEmbed?reportId=8945b5bd-b780-4c87-830f-4b7002dcc372&autoAuth=true&ctid=e64b3773-9890-4a2f-87cd-23725df35ace"
+                  Visible: =App.ActiveScreen.Size = 1
+                  Width: =Parent.Width
+                  WorkspaceId: ="f9fd4e91-cd95-4672-a454-dfbcdcd825db"
+      - Container34:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =refreshVisualTimer
+            Width: =Parent.Width
+          Children:
+            - Button46:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.Black
+                  Color: =RGBA(0, 0, 0, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(241, 244, 249, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =Parent.Height/1.1
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: ="Content is refreshing please wait..."
+                  Width: =Parent.Width/1.1
+                  X: =(Parent.Width - Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2

@@ -1,0 +1,51 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  compPageTextSizeFormatter:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      FinalTextSize:
+        PropertyKind: Output
+        DisplayName: FinalTextSize
+        Description: Size of text after switch case evaluation
+        DataType: Number
+      PageSizeVariable:
+        PropertyKind: Input
+        DisplayName: PageSizeVariable
+        Description: A custom property
+        DataType: Number
+        Default: =100
+      TextSize1:
+        PropertyKind: Input
+        DisplayName: TextSize1
+        Description: TextSize at page size 1
+        DataType: Number
+        Default: =8
+      TextSize2:
+        PropertyKind: Input
+        DisplayName: TextSize2
+        Description: TextSize at page size 2
+        DataType: Number
+        Default: =10
+      TextSize3:
+        PropertyKind: Input
+        DisplayName: TextSize3
+        Description: TextSize at page size  3
+        DataType: Number
+        Default: =13
+      TextSize4:
+        PropertyKind: Input
+        DisplayName: TextSize4
+        Description: TextSize at page size 4
+        DataType: Number
+        Default: =15
+    Properties:
+      FinalTextSize: =Switch(compPageTextSizeFormatter.PageSizeVariable, 4,compPageTextSizeFormatter.TextSize4,3,compPageTextSizeFormatter.TextSize3,2,compPageTextSizeFormatter.TextSize2,1,compPageTextSizeFormatter.TextSize1)
+      Height: =0
+      Width: =0

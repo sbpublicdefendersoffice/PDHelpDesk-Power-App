@@ -1,0 +1,545 @@
+compSearchTickets As CanvasComponent:
+    BackgroundColor: =ColorScheme.backgroundDark
+    CloseSearch: =Set(varSearchVisible, false)
+    Fill: =RGBA(0, 0, 0, 0)
+    GetIconSearchOpenWidth: =IconSearchOpen.Width
+    Height: =40
+    IconSearchOpenNewX: =
+    NewHintText: =
+    OffColor: =ColorScheme.offColor
+    OnReset: |-
+        =Set(
+            SearchQuery,
+            ""
+        );
+        Set(
+            SearchAllTicketsQuery,
+            ""
+        );
+        Reset(searchBox_1);
+        Set(
+            varSearchText,
+            ""
+        );
+        compSearchTickets.CloseSearch();
+        
+        If(
+            App.ActiveScreen.Name = "MyTickets",
+        // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+            ClearCollect(
+                colTickets,
+                ForAll(
+                    Table(
+                        ParseJSON(
+                            SearchFilterTicketsSPListV2.Run(
+                                If(
+                                    IsBlank(SearchQuery),
+                                    "___",
+                                    SearchQuery
+                                ),
+                                StatusChoice,
+                                TagChoice,
+                                userData.id,
+                                TicketsChoice,
+                                DateAdd(
+                                    Today(),
+                                    -varSubtractDate,
+                                    varTimeUnits
+                                )
+                            ).searchresults
+                        )
+                    ),
+                    {
+                        ID: Value(Value.ID),
+                        Title: Text(Value.title),
+                        Description: Text(Value.description),
+                        MainCategory: Value(Value.mainCategory),
+                        Category: Value(Value.category),
+                        SubCategory: Value(Value.subCategory),
+                        DateCreated: DateTimeValue(Value.dateCreated),
+                        DateClosed: DateTimeValue(Value.dateClosed),
+                        CreatorId: Value(Value.creatorId),
+                        Status: Text(Value.status),
+                        AssignedTo: Value(Value.assignedTo),
+                        LastUpdated: DateTimeValue(Value.lastUpdated),
+                        UpdatedBy: Value(Value.updatedBy),
+                        ParentId: Value(Value.parentId),
+                        LocationId: Value(Value.locationId),
+                        Tags: Text(Value.tags),
+                        AddAssignees: Text(Value.addAssignees)
+                    }
+                )
+            ),
+        // Used with RecentTicketsSPListV2
+            ClearCollect(
+                colAllTickets,
+                ForAll(
+                    Table(
+                        ParseJSON(
+                            RecentTicketsSPListV2.Run(
+                                DateAdd(
+                                    Today(),
+                                    -1,
+                                    TimeUnit.Months
+                                ),
+                                If(
+                                    IsBlank(SearchAllTicketsQuery),
+                                    "___",
+                                    SearchAllTicketsQuery
+                                ),
+                                StatusChoice,
+                                AssignmentChoice
+                            ).searchresults
+                        )
+                    ),
+                    {
+                        ID: Value(Value.ID),
+                        Title: Text(Value.title),
+                        Description: Text(Value.description),
+                        MainCategory: Value(Value.mainCategory),
+                        Category: Value(Value.category),
+                        SubCategory: Value(Value.subCategory),
+                        DateCreated: DateTimeValue(Value.dateCreated),
+                        DateClosed: DateTimeValue(Value.dateClosed),
+                        CreatorId: Value(Value.creatorId),
+                        Status: Text(Value.status),
+                        AssignedTo: Value(Value.assignedTo),
+                        LastUpdated: DateTimeValue(Value.lastUpdated),
+                        UpdatedBy: Value(Value.updatedBy),
+                        ParentId: Value(Value.parentId),
+                        LocationId: Value(Value.locationId),
+                        Tags: Text(Value.tags),
+                        AddAssignees: Text(Value.addAssignees)
+                    }
+                )
+            )
+        )
+    OpenSearch: =Set(varSearchVisible, true)
+    PrimaryColor: =ColorScheme.primary
+    SearchVisible: =varSearchVisible
+    SecondaryColor: =ColorScheme.secondary
+    Width: =If(App.Width > 1200, 800, App.Width > 900, 600, App.Width > 600, App.Width * 0.65, App.Width - 40)
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    TextInputSlider As slider:
+        AccessibleLabel: ="Ticket Search Bar Component"
+        Default: =Len(searchBox_1.Text)
+        OnChange: |-
+            =Set(varSearchText, searchBox_1.Text);
+            
+            // Check if Enter was pressed.
+            If(Find(Char(10), varSearchText)>0,
+            
+                // Remove newline character
+                Set(varSearchText, Left(varSearchText, Len(varSearchText)-1));
+            
+                // Select search button
+                Select(searchIcon_1);
+            )
+        Visible: =false
+        X: =40
+        ZIndex: =1
+
+    IconSearchOpen As icon.Search:
+        Color: =compSearchTickets.SecondaryColor
+        Height: =Parent.Height
+        HoverColor: =RGBA(0, 18, 107, 1)
+        Icon: =Icon.Search
+        OnSelect: =compSearchTickets.OpenSearch(); SetFocus(searchBox_1)
+        Rotation: =90
+        Tooltip: ="Open Search Bar"
+        Visible: =App.Width <= 600
+        Width: =40
+        X: =If(IsBlank(compSearchTickets.IconSearchOpenNewX), If(App.Width < 500, searchBox_1.Width - Self.Width * 2, searchBox_1.Width - Self.Width * 2.5), compSearchTickets.IconSearchOpenNewX)
+        Y: =(Parent.Height - Self.Height) / 2
+        ZIndex: =2
+
+    searchBox_1 As text:
+        AccessibleLabel: ="Search Tickets Text Input"
+        Default: =varSearchText
+        Height: =Parent.Height
+        HintText: =If(IsBlank(compSearchTickets.NewHintText), If(searchBox_1.Width < 450, "Search", "Search by ticket title or exact ticket id"), compSearchTickets.NewHintText)
+        Mode: =TextMode.MultiLine
+        PaddingLeft: =45
+        PaddingRight: =80
+        PaddingTop: =10
+        Tooltip: ="Search"
+        Visible: =If(App.Width > 600, true, compSearchTickets.SearchVisible)
+        Width: =Parent.Width
+        X: =(Parent.Width - Self.Width) / 2
+        Y: =(Parent.Height - Self.Height) / 2
+        ZIndex: =3
+
+    bgSearch As button:
+        Fill: =compSearchTickets.SecondaryColor
+        Height: =38
+        OnSelect: |-
+            =If(
+                App.ActiveScreen.Name = "MyTickets",
+                Set(
+                    SearchQuery,
+                    searchBox_1.Text
+                );
+                ,
+                Set(
+                    SearchAllTicketsQuery,
+                    searchBox_1.Text
+                )
+            );
+            compSearchTickets.CloseSearch();
+            If(
+                App.ActiveScreen.Name = "MyTickets",
+            // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+                ClearCollect(
+                    colTickets,
+                    ForAll(
+                        Table(
+                            ParseJSON(
+                                SearchFilterTicketsSPListV2.Run(
+                                    If(
+                                        IsBlank(SearchQuery),
+                                        "___",
+                                        SearchQuery
+                                    ),
+                                    StatusChoice,
+                                    TagChoice,
+                                    userData.id,
+                                    TicketsChoice,
+                                    DateAdd(
+                                        Today(),
+                                        -varSubtractDate,
+                                        varTimeUnits
+                                    )
+                                ).searchresults
+                            )
+                        ),
+                        {
+                            ID: Value(Value.ID),
+                            Title: Text(Value.Title),
+                            Description: Text(Value.description),
+                            MainCategory: Value(Value.mainCategory),
+                            Category: Value(Value.category),
+                            SubCategory: Value(Value.subCategory),
+                            DateCreated: DateTimeValue(Value.dateCreated),
+                            DateClosed: DateTimeValue(Value.dateClosed),
+                            CreatorId: Value(Value.creatorId),
+                            Status: Text(Value.status),
+                            AssignedTo: Value(Value.assignedTo),
+                            LastUpdated: DateTimeValue(Value.lastUpdated),
+                            UpdatedBy: Value(Value.updatedBy),
+                            ParentId: Value(Value.parentId),
+                            LocationId: Value(Value.locationId),
+                            Tags: Text(Value.tags),
+                            AddAssignees: Text(Value.addAssignees)
+                        }
+                    )
+                ),
+            // Used with RecentTicketsSPListV2
+                ClearCollect(
+                    colAllTickets,
+                    ForAll(
+                        Table(
+                            ParseJSON(
+                                RecentTicketsSPListV2.Run(
+                                    DateAdd(
+                                        Today(),
+                                        -1,
+                                        TimeUnit.Months
+                                    ),
+                                    If(
+                                        IsBlank(SearchAllTicketsQuery),
+                                        "___",
+                                        SearchAllTicketsQuery
+                                    ),
+                                    StatusChoice,
+                                    AssignmentChoice
+                                ).searchresults
+                            )
+                        ),
+                        {
+                            ID: Value(Value.ID),
+                            Title: Text(Value.Title),
+                            Description: Text(Value.description),
+                            MainCategory: Value(Value.mainCategory),
+                            Category: Value(Value.category),
+                            SubCategory: Value(Value.subCategory),
+                            DateCreated: DateTimeValue(Value.dateCreated),
+                            DateClosed: DateTimeValue(Value.dateClosed),
+                            CreatorId: Value(Value.creatorId),
+                            Status: Text(Value.status),
+                            AssignedTo: Value(Value.assignedTo),
+                            LastUpdated: DateTimeValue(Value.lastUpdated),
+                            UpdatedBy: Value(Value.updatedBy),
+                            ParentId: Value(Value.parentId),
+                            LocationId: Value(Value.locationId),
+                            Tags: Text(Value.tags),
+                            AddAssignees: Text(Value.addAssignees)
+                        }
+                    )
+                )
+            )
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =5
+        RadiusTopLeft: =0
+        RadiusTopRight: =5
+        Text: =
+        Tooltip: ="Search"
+        Visible: =!IsBlank(searchBox_1.Text) && (App.Width > 600 || compSearchTickets.SearchVisible)
+        Width: =38
+        X: =searchBox_1.X + searchBox_1.Width - Self.Width
+        Y: =(Parent.Height - Self.Height) / 2
+        ZIndex: =4
+
+    searchIcon_1 As icon.Search:
+        Color: =RGBA(255, 255, 255, 1)
+        Fill: =Color.Transparent
+        Height: =Parent.Height
+        HoverFill: =ColorFade(ColorScheme.secondary, 30%)
+        Icon: =Icon.ArrowRight
+        OnSelect: |-
+            =If(
+                App.ActiveScreen.Name = "MyTickets",
+                Set(
+                    SearchQuery,
+                    searchBox_1.Text
+                );
+                ,
+                Set(
+                    SearchAllTicketsQuery,
+                    searchBox_1.Text
+                )
+            );
+            compSearchTickets.CloseSearch();
+            If(
+                App.ActiveScreen.Name = "MyTickets",
+            // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+                ClearCollect(
+                    colTickets,
+                    ForAll(
+                        Table(
+                            ParseJSON(
+                                SearchFilterTicketsSPListV2.Run(
+                                    If(
+                                        IsBlank(SearchQuery),
+                                        "___",
+                                        SearchQuery
+                                    ),
+                                    StatusChoice,
+                                    TagChoice,
+                                    userData.id,
+                                    TicketsChoice,
+                                    DateAdd(
+                                        Today(),
+                                        -varSubtractDate,
+                                        varTimeUnits
+                                    )
+                                ).searchresults
+                            )
+                        ),
+                        {
+                            ID: Value(Value.ID),
+                            Title: Text(Value.Title),
+                            Description: Text(Value.description),
+                            MainCategory: Value(Value.mainCategory),
+                            Category: Value(Value.category),
+                            SubCategory: Value(Value.subCategory),
+                            DateCreated: DateTimeValue(Value.dateCreated),
+                            DateClosed: DateTimeValue(Value.dateClosed),
+                            CreatorId: Value(Value.creatorId),
+                            Status: Text(Value.status),
+                            AssignedTo: Value(Value.assignedTo),
+                            LastUpdated: DateTimeValue(Value.lastUpdated),
+                            UpdatedBy: Value(Value.updatedBy),
+                            ParentId: Value(Value.parentId),
+                            LocationId: Value(Value.locationId),
+                            Tags: Text(Value.tags),
+                            AddAssignees: Text(Value.addAssignees)
+                        }
+                    )
+                ),
+            // Used with RecentTicketsSPListV2
+                ClearCollect(
+                    colAllTickets,
+                    ForAll(
+                        Table(
+                            ParseJSON(
+                                RecentTicketsSPListV2.Run(
+                                    DateAdd(
+                                        Today(),
+                                        -1,
+                                        TimeUnit.Months
+                                    ),
+                                    If(
+                                        IsBlank(SearchAllTicketsQuery),
+                                        "___",
+                                        SearchAllTicketsQuery
+                                    ),
+                                    StatusChoice,
+                                    AssignmentChoice
+                                ).searchresults
+                            )
+                        ),
+                        {
+                            ID: Value(Value.ID),
+                            Title: Text(Value.title),
+                            Description: Text(Value.description),
+                            MainCategory: Value(Value.mainCategory),
+                            Category: Value(Value.category),
+                            SubCategory: Value(Value.subCategory),
+                            DateCreated: DateTimeValue(Value.dateCreated),
+                            DateClosed: DateTimeValue(Value.dateClosed),
+                            CreatorId: Value(Value.creatorId),
+                            Status: Text(Value.status),
+                            AssignedTo: Value(Value.assignedTo),
+                            LastUpdated: DateTimeValue(Value.lastUpdated),
+                            UpdatedBy: Value(Value.updatedBy),
+                            ParentId: Value(Value.parentId),
+                            LocationId: Value(Value.locationId),
+                            Tags: Text(Value.tags),
+                            AddAssignees: Text(Value.addAssignees)
+                        }
+                    )
+                )
+            )
+        PaddingLeft: =5
+        PaddingRight: =5
+        Tooltip: ="Search"
+        Visible: =!IsBlank(searchBox_1.Text) && (App.Width > 600 || compSearchTickets.SearchVisible)
+        Width: =38
+        X: =searchBox_1.X + searchBox_1.Width - Self.Width
+        Y: =(Parent.Height - Self.Height) / 2
+        ZIndex: =5
+
+    cancelIcon_1 As icon.Cancel:
+        Color: =RGBA(116, 116, 116, 1)
+        Height: =36
+        HoverColor: =ColorScheme.secondaryPressedColor
+        Icon: =Icon.Cancel
+        OnSelect: |-
+            =Set(
+                SearchQuery,
+                ""
+            );
+            Set(
+                SearchAllTicketsQuery,
+                ""
+            );
+            Reset(searchBox_1);
+            Set(
+                varSearchText,
+                ""
+            );
+            SetFocus(searchBox_1);
+            
+            If(
+                App.ActiveScreen.Name = "MyTickets",
+            // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+                ClearCollect(
+                    colTickets,
+                    ForAll(
+                        Table(
+                            ParseJSON(
+                                SearchFilterTicketsSPListV2.Run(
+                                    If(
+                                        IsBlank(SearchQuery),
+                                        "___",
+                                        SearchQuery
+                                    ),
+                                    StatusChoice,
+                                    TagChoice,
+                                    userData.id,
+                                    TicketsChoice,
+                                    DateAdd(
+                                        Today(),
+                                        -varSubtractDate,
+                                        varTimeUnits
+                                    )
+                                ).searchresults
+                            )
+                        ),
+                        {
+                            ID: Value(Value.ID),
+                            Title: Text(Value.Title),
+                            Description: Text(Value.description),
+                            MainCategory: Value(Value.mainCategory),
+                            Category: Value(Value.category),
+                            SubCategory: Value(Value.subCategory),
+                            DateCreated: DateTimeValue(Value.dateCreated),
+                            DateClosed: DateTimeValue(Value.dateClosed),
+                            CreatorId: Value(Value.creatorId),
+                            Status: Text(Value.status),
+                            AssignedTo: Value(Value.assignedTo),
+                            LastUpdated: DateTimeValue(Value.lastUpdated),
+                            UpdatedBy: Value(Value.updatedBy),
+                            ParentId: Value(Value.parentId),
+                            LocationId: Value(Value.locationId),
+                            Tags: Text(Value.tags),
+                            AddAssignees: Text(Value.addAssignees)
+                        }
+                    )
+                ),
+            // Used with RecentTicketsSPListV2
+                ClearCollect(
+                    colAllTickets,
+                    ForAll(
+                        Table(
+                            ParseJSON(
+                                RecentTicketsSPListV2.Run(
+                                    DateAdd(
+                                        Today(),
+                                        -1,
+                                        TimeUnit.Months
+                                    ),
+                                    If(
+                                        IsBlank(SearchAllTicketsQuery),
+                                        "___",
+                                        SearchAllTicketsQuery
+                                    ),
+                                    StatusChoice,
+                                    AssignmentChoice
+                                ).searchresults
+                            )
+                        ),
+                        {
+                            ID: Value(Value.ID),
+                            Title: Text(Value.Title),
+                            Description: Text(Value.description),
+                            MainCategory: Value(Value.mainCategory),
+                            Category: Value(Value.category),
+                            SubCategory: Value(Value.subCategory),
+                            DateCreated: DateTimeValue(Value.dateCreated),
+                            DateClosed: DateTimeValue(Value.dateClosed),
+                            CreatorId: Value(Value.creatorId),
+                            Status: Text(Value.status),
+                            AssignedTo: Value(Value.assignedTo),
+                            LastUpdated: DateTimeValue(Value.lastUpdated),
+                            UpdatedBy: Value(Value.updatedBy),
+                            ParentId: Value(Value.parentId),
+                            LocationId: Value(Value.locationId),
+                            Tags: Text(Value.tags),
+                            AddAssignees: Text(Value.addAssignees)
+                        }
+                    )
+                )
+            )
+        Tooltip: ="Cancel"
+        Visible: =!IsBlank(searchBox_1.Text) && (App.Width > 600 || compSearchTickets.SearchVisible)
+        Width: =38
+        X: =If(searchIcon_1.Visible, searchBox_1.X + searchBox_1.Width - searchIcon_1.Width - Self.Width, searchBox_1.X + searchBox_1.Width - Self.Width)
+        Y: =(Parent.Height - Self.Height) / 2
+        ZIndex: =6
+
+    IconSearch As icon.Search:
+        Color: =compSearchTickets.PrimaryColor
+        DisplayMode: =DisplayMode.View
+        Height: =36
+        Icon: =Icon.Search
+        Rotation: =90
+        Visible: =App.Width > 600 || compSearchTickets.SearchVisible
+        Width: =38
+        X: =searchBox_1.X + 5
+        Y: =(Parent.Height - Self.Height) / 2
+        ZIndex: =7
+

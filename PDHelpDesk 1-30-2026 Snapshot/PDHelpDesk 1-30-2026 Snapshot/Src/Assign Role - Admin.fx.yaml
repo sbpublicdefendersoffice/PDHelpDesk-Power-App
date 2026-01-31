@@ -1,0 +1,729 @@
+"'Assign Role - Admin' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnVisible: |-
+        =UpdateContext({PopUpTable:false});
+        UpdateContext({roleRecord:Blank()});
+
+    AssignRoleMainContainer As groupContainer.horizontalAutoLayoutContainer:
+        Fill: =ColorScheme.screenBackgroundSeeThroughDark
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutJustifyContent: =LayoutJustifyContent.Center
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =2
+
+        AssigneRoleVerticalLayoutContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            Width: =Parent.Width
+            ZIndex: =1
+
+            HeaderContainer1_2 As groupContainer.horizontalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                FillPortions: =0
+                Height: =130
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Width: =250
+                ZIndex: =1
+
+                AssignRoleHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =4
+
+                    HomeBackgroundGradient_63 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =130
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    AssignRoleLabel As label:
+                        Align: =Align.Center
+                        Color: =Color.White
+                        Fill: =Color.Transparent
+                        FontWeight: =FontWeight.Lighter
+                        Height: =Parent.Height-AssignRoleWebHeader.Height
+                        Size: =If('Assign Role - Admin'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Assign a Role"
+                        Width: =Parent.Width
+                        Y: =AssignRoleWebHeader.Height
+                        ZIndex: =2
+
+                    AssignRoleWebHeader As compWebHeader:
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='Assign Role - Admin'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        ZIndex: =3
+
+            AssignRoleMainContentContainer As groupContainer.verticalAutoLayoutContainer:
+                Fill: =Color.Transparent
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGap: =30
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                ZIndex: =3
+
+                Container1 As groupContainer.manualLayoutContainer:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    Height: =Parent.Height
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    Width: =Parent.Width
+                    ZIndex: =6
+
+                    ShowAssignedRoleTable As button:
+                        Fill: =RGBA(149, 149, 149, 1)
+                        Height: =If('Assign Role - Admin'.Size=1, 50, 70)
+                        OnSelect: |-
+                            =UpdateContext({PopUpTable:true});
+                        Size: |
+                            =15
+                        Text: ="Show Table"
+                        Width: =If('Assign Role - Admin'.Size=1, 180, 200) 
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =AssignRoleButton_1.Y+AssignRoleButton_1.Height*1.5
+                        ZIndex: =1
+
+                    AssignRoleButton_1 As button:
+                        Fill: =ColorScheme.primary
+                        Height: =If('Assign Role - Admin'.Size=1, 50, 70)
+                        OnSelect: |-
+                            =//first update the user selected role, next check if they are an admin, if they are set the admin variable to true
+                            //refresh the users table
+                            
+                            Patch(Users, LookUp(Users, email = UserDropdown_1.Selected.email), {userRole: RoleDropdown_1.Selected.Value});
+                            If(
+                                LookUp(
+                                    Users,
+                                    email = User().Email,
+                                    userRole
+                                ) = "admin",
+                                Set(
+                                    is_admin,
+                                    true
+                                ),
+                                Set(
+                                    is_admin,
+                                    false
+                                )
+                            );
+                            Refresh(Users);
+                            UpdateContext({roleRecord:Blank()});
+                            
+                            Navigate('Splash Screen', ScreenTransition.Fade)
+                        Size: |
+                            =15
+                        Text: ="Assign Role"
+                        Width: =If('Assign Role - Admin'.Size=1, 180, 200) 
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =RoleDropdown_1.Y+RoleDropdown_1.Height*2
+                        ZIndex: =2
+
+                    RoleDropdown_1 As dropdown:
+                        AllowEmptySelection: =true
+                        ChevronBackground: =ColorScheme.primary
+                        Default: =LookUp(Users, ID = UserDropdown_1.Selected.ID, userRole)
+                        Height: =59
+                        Items: =["admin", "tech", "staff","undefined"]
+                        Width: =If('Assign Role - Admin'.Size=1, 320, 340)
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =RoleLabel_1.Y+RoleLabel_1.Height
+                        ZIndex: =3
+
+                    RoleLabel_1 As label:
+                        Align: =Align.Center
+                        FontWeight: =FontWeight.Bold
+                        Height: =91
+                        Size: =If('Assign Role - Admin'.Size=1, 20, 25)
+                        Text: ="Role"
+                        Width: =328
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =UserDropdown_1.Y+UserDropdown_1.Height
+                        ZIndex: =4
+
+                    UserDropdown_1 As dropdown:
+                        AllowEmptySelection: =true
+                        ChevronBackground: =ColorScheme.primary
+                        Default: =If(IsBlank(roleRecord), userData.fullName, roleRecord.fullName)
+                        Height: =59
+                        Items: =Users
+                        Width: =If('Assign Role - Admin'.Size=1, 320, 340)
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =UserLabel_1.Height
+                        ZIndex: =5
+
+                    UserLabel_1 As label:
+                        Align: =Align.Center
+                        FontWeight: =FontWeight.Bold
+                        Height: =91
+                        Size: =If('Assign Role - Admin'.Size=1, 20, 25)
+                        Text: ="User"
+                        Width: =328
+                        X: =(Parent.Width-Self.Width)/2
+                        ZIndex: =6
+
+                    PopUpTableAssignRoleContainer As groupContainer.manualLayoutContainer:
+                        Height: =    Parent.Height
+                        LayoutGridColumns: =6
+                        LayoutGridRows: =6
+                        Visible: =PopUpTable
+                        Width: =Parent.Width
+                        ZIndex: =7
+
+                        TableBackground_1 As rectangle:
+                            BorderThickness: =2
+                            Fill: =ColorScheme.screenBackground
+                            Height: =Parent.Height*.9
+                            Width: =Parent.Width*.9
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =(Parent.Height-Self.Height)/2
+                            ZIndex: =1
+
+                        Rectangle2_3 As rectangle:
+                            BorderThickness: =2
+                            Fill: =ColorScheme.primary
+                            Height: =50
+                            Visible: =If('Assign Role - Admin'.Size=1,false,true)
+                            Width: =TableBackground_1.Width
+                            X: =TableBackground_1.X
+                            Y: =TableBackground_1.Y
+                            ZIndex: =2
+
+                        Label1_6 As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =51
+                            PaddingLeft: =3
+                            Text: ="UserID"
+                            Visible: =If('Assign Role - Admin'.Size=1,false,true)
+                            Width: =Rectangle2_3.Width/3 -4
+                            X: =Rectangle2_3.X
+                            Y: =Rectangle2_3.Y
+                            ZIndex: =3
+
+                        Label1_7 As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =51
+                            PaddingLeft: =3
+                            Text: ="Name"
+                            Visible: =If('Assign Role - Admin'.Size=1,false,true)
+                            Width: =Rectangle2_3.Width/3 -4
+                            X: =Label1_6.Width+Label1_6.X
+                            Y: =Label1_6.Y
+                            ZIndex: =4
+
+                        Label1_8 As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =51
+                            PaddingLeft: =3
+                            Text: ="Role"
+                            Visible: =If('Assign Role - Admin'.Size=1,false,true)
+                            Width: =Rectangle2_3.Width/3 -4
+                            X: =Label1_7.X+Self.Width
+                            Y: =Label1_6.Y
+                            ZIndex: =5
+
+                        UserRoleGallery As gallery.variableTemplateHeightGallery:
+                            '#CopilotOverlayLabel': ="Filtered"
+                            BorderThickness: =2
+                            DelayItemLoading: =true
+                            Fill: =Color.White
+                            Height: =TableBackground_1.Height - 50
+                            Items: =Users
+                            Layout: =Layout.Vertical
+                            LoadingSpinner: =LoadingSpinner.Data
+                            TemplatePadding: =0
+                            TemplateSize: =50
+                            Visible: ='Assign Role - Admin'.Size>1
+                            Width: =TableBackground_1.Width
+                            X: =TableBackground_1.X
+                            Y: =Rectangle2_3.Y+Rectangle2_3.Height
+                            ZIndex: =8
+
+                            TableRowContainer_1 As groupContainer.verticalAutoLayoutContainer:
+                                Height: =50
+                                LayoutDirection: =LayoutDirection.Vertical
+                                LayoutGridColumns: =6
+                                LayoutGridRows: =6
+                                LayoutMode: =LayoutMode.Auto
+                                Width: =Parent.Width-12
+                                ZIndex: =6
+
+                                TableColumnContainer_1 As groupContainer.horizontalAutoLayoutContainer:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    FillPortions: =0
+                                    Height: =Parent.Height
+                                    LayoutGridColumns: =6
+                                    LayoutGridRows: =6
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinHeight: =100
+                                    LayoutMinWidth: =250
+                                    LayoutMode: =LayoutMode.Auto
+                                    Width: =Parent.Width
+                                    ZIndex: =1
+
+                                    RuleNumberLabel_1 As label:
+                                        Align: =Align.Center
+                                        BorderThickness: =2
+                                        FillPortions: =1
+                                        Height: =50
+                                        LayoutMaxHeight: =
+                                        LayoutMaxWidth: =
+                                        LayoutMinWidth: =50
+                                        Text: =ThisItem.ID
+                                        Width: =Parent.Width/5
+                                        Y: =50
+                                        ZIndex: =1
+
+                                    RuleOwnerLabel_1 As label:
+                                        Align: =Align.Center
+                                        BorderThickness: =2
+                                        FillPortions: =1
+                                        Height: =50
+                                        LayoutMaxHeight: =
+                                        LayoutMaxWidth: =
+                                        LayoutMinWidth: =50
+                                        Text: =ThisItem.fullName
+                                        Width: =Parent.Width/5
+                                        X: =246
+                                        Y: =50
+                                        ZIndex: =2
+
+                                    RuleOwnerLabel_2 As label:
+                                        Align: =Align.Center
+                                        BorderThickness: =2
+                                        FillPortions: =1
+                                        Height: =50
+                                        LayoutMaxHeight: =
+                                        LayoutMaxWidth: =
+                                        LayoutMinWidth: =50
+                                        Text: =ThisItem.userRole
+                                        Width: =Parent.Width/5
+                                        X: =246
+                                        Y: =50
+                                        ZIndex: =3
+
+                            EditRuleButton_1 As button:
+                                Color: =RGBA(0, 0, 0, 0)
+                                Fill: =RGBA(0, 0, 0, 0)
+                                Height: =50
+                                HoverFill: =ColorScheme.secondary
+                                OnSelect: |-
+                                    =UpdateContext({PopUpTable:false});
+                                    UpdateContext({roleRecord:ThisItem});
+                                Text: ="Edit Role"
+                                Width: =Parent.TemplateWidth
+                                ZIndex: =7
+
+                        "'Video/AudioEditingMobileGallery_9' As gallery.galleryVertical":
+                            '#CopilotOverlayLabel': ="Filtered"
+                            BorderThickness: =1
+                            Default: |-
+                                =//First(MyTicketsGallery.AllItems)
+                                {}
+                            DelayItemLoading: |-
+                                =//false
+                                true
+                            Fill: =ColorScheme.screenBackground
+                            Height: =Parent.Height
+                            Items: =Users
+                            Layout: =Layout.Vertical
+                            LoadingSpinner: |-
+                                =//LoadingSpinner.None
+                                LoadingSpinner.Controls
+                            TemplatePadding: =10
+                            TemplateSize: |-
+                                =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+                                
+                                If(MyTickets.Size > 1, 250, 240)
+                            Transition: =Transition.Push
+                            Visible: ='Assign Role - Admin'.Size=1
+                            Width: =Parent.Width
+                            WrapCount: =RoundDown((Parent.Width / 320), 0)
+                            ZIndex: =9
+
+                            Rectangle6_14 As rectangle:
+                                BorderColor: =RGBA(0, 0, 0, 0)
+                                BorderThickness: =25
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =Image6_14.Height
+                                OnSelect: =Select(Parent)
+                                Width: =Image6_14.Width
+                                ZIndex: =1
+
+                            Image6_14 As image:
+                                Height: |-
+                                    =//250
+                                    Parent.TemplateHeight
+                                Image: |-
+                                    ="data:image/svg+xml," & EncodeUrl(
+                                        "<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+                                    <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+                                    <svg version='1.1'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                        xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 " & Self.Width & " " & Self.Height & "' width='" & Self.Width & "' height='" & Self.Height & "'>
+                                        <defs>" &
+                                        // ----- Box for fill
+                                     "<path d='" &
+                                     // Upper left
+                                     "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0,0) &
+                                        // Upper right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                        // Lower right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                        // Lower left
+                                     "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                     "Z' id='box' stroke='" & "#ff0000" & "' stroke-width='" & 0 & "'></path>
+                                        </defs>
+                                        <g>
+                                            <g>
+                                                <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>
+                                                    <feFlood></feFlood>
+                                                    <feComposite in2='SourceAlpha' operator='in'></feComposite>
+                                                    <feGaussianBlur stdDeviation='" & 5 & "'></feGaussianBlur>
+                                                    <feOffset dx='" & 0 & "' dy='" & 0 & "' result='afterOffset'></feOffset>
+                                                    <feFlood flood-color='" & "#000000" & "' flood-opacity='" & Substitute(Text(0.5), ",", ".") & "'></feFlood>
+                                                    <feComposite in2='afterOffset' operator='in'></feComposite>
+                                                    <feMorphology operator='dilate' radius='1'></feMorphology>
+                                                    <feComposite in2='SourceAlpha' operator='out'></feComposite>
+                                                </filter>" &
+                                                // ----- Box for shadow
+                                     "<path d='" &
+                                     // Upper left
+                                     "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                        // Upper right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                        // Lower right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                        // Lower left
+                                     "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                     "Z' id='Component1' filter='url(#shadow)'></path>
+                                            </g>
+                                            <use xlink:href='#box' opacity='1' fill='" & "#ffffff" & "' fill-opacity='" & Substitute(Text(0), ",", ".") & "'></use>
+                                        </g>
+                                        <g>
+                                            " &
+                                            // ----- Edge
+                                     If(
+                                            true,
+                                            Switch(
+                                                "left",
+                                                "left",// -- Position: left
+                                                "<path d='" &
+                                            // Upper left
+                                     "M" & Max(5 * 3 - 0, 0) + 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                            // Upper right
+                                     "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                            // Lower right
+                                     "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                            // Lower left
+                                     "L" & Max(5 * 3 - 0, 0) + 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                     "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>",
+                                                 "right",// -- Position: right
+                                                "<path d='" &
+                                            // Upper left
+                                     "M" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                            // Upper right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                            // Lower right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                            // Lower left
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                     "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>"
+                                               
+                                            )
+                                        ) & "
+                                        </g>
+                                    </svg>"
+                                    )
+                                OnSelect: =Select(Parent)
+                                Width: |-
+                                    =//329
+                                    Parent.TemplateWidth
+                                ZIndex: =2
+
+                            btnBkg_14 As button:
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =Parent.TemplateHeight
+                                HoverFill: =Self.Fill
+                                OnSelect: =Select(Parent)
+                                PressedFill: =Self.Fill
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Text: =""
+                                Visible: =false
+                                Width: =Parent.TemplateWidth
+                                ZIndex: =3
+
+                            TitleLabel_14 As label:
+                                FontWeight: =FontWeight.Semibold
+                                Height: =54
+                                OnSelect: =Select(Parent)
+                                Size: =12
+                                Text: |-
+                                    ="User ID: "&ThisItem.ID
+                                Width: |-
+                                    =//208
+                                    Parent.TemplateWidth - Icon18_13.Width - 47
+                                X: =24
+                                Y: =27
+                                ZIndex: =4
+
+                            DateExpiredLabel_12 As label:
+                                Align: =Align.Center
+                                Height: |-
+                                    =//25
+                                    34
+                                OnSelect: =Select(Parent)
+                                Size: =11
+                                Text: =ThisItem.userRole
+                                Width: =StartedLabelTextValue_12.Width
+                                X: =ExpiresLabelText_11.X
+                                Y: =ExpiresLabelText_11.Y+ExpiresLabelText_11.Height
+                                ZIndex: =5
+
+                            ExpiresLabelText_11 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Color: =RGBA(255, 255, 255, 1)
+                                Fill: =ColorScheme.orange
+                                Height: =25
+                                OnSelect: =Select(Parent)
+                                Size: =10
+                                Text: ="Role"
+                                Visible: |-
+                                    =//is_admin
+                                    true
+                                Width: =60
+                                X: |-
+                                    =//67
+                                    StaratedLabelText_12.X
+                                Y: |-
+                                    =//180
+                                    //Parent.TemplateHeight - Self.Height - 27
+                                    Rectangle19_10.Y+Rectangle19_10.Height+10
+                                ZIndex: =6
+
+                            Icon18_13 As icon.CancelBadge:
+                                Height: =32
+                                Icon: =Icon.CancelBadge
+                                OnSelect: =
+                                Visible: =false
+                                Width: =32
+                                X: =Parent.TemplateWidth - Self.Width - 23
+                                Y: =27
+                                ZIndex: =9
+
+                            OverlapButton_12 As button:
+                                BorderThickness: =0
+                                Fill: =Color.Transparent
+                                Height: |-
+                                    =//220
+                                    Parent.TemplateHeight
+                                HoverFill: =Self.Fill
+                                OnSelect: |-
+                                    =
+                                    
+                                    // Sharepoint List
+                                    UpdateContext({PopUpTable:false});
+                                    UpdateContext({roleRecord:ThisItem});
+                                PressedFill: =Self.Fill
+                                Text: =""
+                                Width: |-
+                                    =//303
+                                    Parent.TemplateWidth
+                                X: |-
+                                    =//24
+                                    (Parent.TemplateWidth - Self.Width) / 2
+                                Y: |-
+                                    =//15
+                                    (Parent.TemplateHeight - Self.Height) / 2
+                                ZIndex: =11
+
+                            Rectangle20_9 As rectangle:
+                                BorderThickness: =1
+                                Fill: =RGBA(0, 0, 0, 0)
+                                Height: =ExpiresLabelText_11.Height+DateExpiredLabel_12.Height
+                                OnSelect: =Select(Parent)
+                                Width: =Parent.TemplateWidth/1.5
+                                X: =ExpiresLabelText_11.X
+                                Y: =ExpiresLabelText_11.Y
+                                ZIndex: =12
+
+                            Group11_10 As group:
+                                Height: =5
+                                Width: =5
+                                X: =60
+                                Y: =60
+                                ZIndex: =16
+
+                                StartedLabelTextValue_12 As label:
+                                    Align: =Align.Center
+                                    Height: |-
+                                        =//25
+                                        34
+                                    OnSelect: =Select(Parent)
+                                    Size: =11
+                                    Text: =ThisItem.fullName
+                                    Width: |-
+                                        =//143
+                                        Parent.TemplateWidth - StaratedLabelText_12.Width - 47
+                                    Wrap: =false
+                                    X: |-
+                                        =//89
+                                        StaratedLabelText_12.X
+                                    Y: |
+                                        =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                        //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                        //((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                        StaratedLabelText_12.Y+StaratedLabelText_12.Height
+                                    ZIndex: =7
+
+                                StaratedLabelText_12 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Height: =25
+                                    OnSelect: =Select(Parent)
+                                    Size: =10
+                                    Text: ="Name"
+                                    Width: =60
+                                    X: =(Parent.TemplateWidth-Self.Width)/4
+                                    Y: |
+                                        =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                        //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                        ((Parent.TemplateHeight - Self.Height) / 2.8) 
+                                    ZIndex: =8
+
+                                Rectangle19_10 As rectangle:
+                                    BorderThickness: =1
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Height: =StaratedLabelText_12.Height+StartedLabelTextValue_12.Height
+                                    OnSelect: =Select(Parent)
+                                    Width: =Parent.TemplateWidth/1.5
+                                    X: =StaratedLabelText_12.X
+                                    Y: =StaratedLabelText_12.Y
+                                    ZIndex: =10
+
+                        Icon25 As icon.CancelBadge:
+                            Height: =48
+                            Icon: =Icon.CancelBadge
+                            OnSelect: |-
+                                =UpdateContext({PopUpTable:!PopUpTable});
+                            Width: =48
+                            X: =Parent.Width-Self.Width
+                            ZIndex: =10
+
+            AssignRoleFooter As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: ='Assign Role - Admin'.Size = 1
+                Width: =Parent.Width
+                ZIndex: =4
+
+                AssignRoleMobileMenu As compMobileMenu:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    AssignRoleBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =AssignRoleLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(HeaderContainer1_2.Height-AssignRoleLabel.Height)/1.05
+        ZIndex: =3
+
+    AssignRoleWebMenu As compWebMenu:
+        Visible: ='Assign Role - Admin'.Size > 1
+        ZIndex: =4
+
+    buttonTest As label:
+        Text: =is_admin
+        Visible: =false
+        X: =111
+        Y: =351
+        ZIndex: =5
+
+    FeedbackBugReportAR As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =6
+

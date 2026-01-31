@@ -1,0 +1,1605 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Dashboard Request TT:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =ResetForm(eDefenderBFPForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({usingCamera:false,altImagePopUp:false});
+        UpdateContext({DRFPopup:false});
+    Children:
+      - DRFContainer_2:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - DRFHeaderContainer_2:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.primary
+                  FillPortions: =0
+                  Height: =130
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - DRFHeaderGroup_2:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =Parent.Width
+                      Children:
+                        - HomeBackgroundGradient_74:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =130
+                              HtmlText: =Home_Background_Gradient.HtmlText
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =Parent.Width
+                        - DRFWebHeader_2:
+                            Control: CanvasComponent
+                            ComponentName: compWebHeader
+                            Properties:
+                              BackgroundColor: =Color.Transparent
+                              CompScreenSize: ='Dashboard Request TT'.Size
+                              EnableFeedback: =Set(varFeedback,true)
+                              FeedbackBool: =varFeedback
+                              Fill: =Color.Transparent
+                              Height: =82
+                              Width: =App.Width
+                        - DRFLabel_2:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =48
+                              Size: =If('Dashboard Request TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                              Text: ="Dashboard Request"
+                              Width: =Parent.Width
+                              Y: =DRFWebHeader_2.Height
+            - DRFFooter_2:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(255,255,255, 1)
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    ='Dashboard Request TT'.Size=1
+                  Width: =Parent.Width
+                Children:
+                  - DRFWebMobileMenu_2:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Width: =Parent.Width
+            - DRFMainSectionContainer_2:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinWidth: =Parent.Width
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - DRFForm_2:
+                      Control: Form@2.4.4
+                      Variant: Classic
+                      Layout: Vertical
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        DataSource: =Tickets
+                        DefaultMode: =FormMode.New
+                        Height: =Parent.Height/1.21
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NumberOfColumns: =1
+                        Width: =Parent.Width
+                        Y: =Parent.Height/5.7
+                      Children:
+                        - DRFTitleDataCard_2:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicTextualEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="title"
+                              Default: =ThisItem.Title
+                              DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                              Height: =90
+                              MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                              Required: =false
+                              Width: =500
+                              WidthFit: =true
+                              X: =0
+                              Y: =0
+                            Children:
+                              - DRFTitleStarVisible_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =ColorScheme.primary
+                                    Fill: =Color.Transparent
+                                    Font: =Font.'Open Sans'
+                                    Height: =DRFTitleLabel_2.Height
+                                    Text: ="*"
+                                    Visible: =false
+                                    Width: =30
+                                    Wrap: =false
+                                    Y: =DRFTitleLabel_2.Y
+                              - DRFTitleLabel_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =30
+                                    Text: ="Requesting Department"
+                                    Width: =220
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =10
+                              - Dropdown15:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    AllowEmptySelection: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =ColorScheme.primary
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =
+                                    Fill: =Color.White
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: |-
+                                      =Table(
+                                          {
+                                              Department:"Leadership"
+                                          }
+                                          ,
+                                          {
+                                              Department:"Attorney"
+                                          },
+                                          {
+                                              Department:"LOP"
+                                          }
+                                          ,
+                                          {
+                                              Department:"Investigator"
+                                          }
+                                          ,
+                                          {
+                                              Department:"CDD"
+                                          },
+                                          {
+                                              Department:"IT"
+                                          },
+                                          {
+                                              Department:"HR"
+                                          }
+                                      )
+                                    Items.Value: =Department
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: =If('Dashboard Request TT'.Size =1, Parent.Width/1.2, Parent.Width/1.1)
+                                    X: =30
+                                    Y: =DRFTitleLabel_2.Y+DRFTitleLabel_2.Height
+                        - DRFMainCategory_DataCard_2:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicNumberEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="mainCategory"
+                              Default: =ThisItem.mainCategory
+                              DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                              Height: =If( 'eDefender Broken File Paths TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                              Required: =true
+                              Visible: =false
+                              Width: =500
+                              WidthFit: =true
+                              X: =0
+                              Y: =1
+                            Children:
+                              - DRFMainCategoryStarVisible_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =DRFMainCategoryLabel_2.Height
+                                    Text: ="*"
+                                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =30
+                                    Wrap: =false
+                                    Y: =DRFMainCategoryLabel_2.Y
+                              - DRFMainCategoryLabel_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Category"
+                                    Width: =Parent.Width - 60
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =10
+                              - DRFMainCategoryDropdown_2:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =RGBA(56, 96, 178, 1)
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height/3.5
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                                    Items.Value: =Title
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: =Parent.Width/1.05
+                                    X: =30
+                                    Y: =44
+                              - DRFMainCategoryError_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(168, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =10
+                                    Live: =Live.Assertive
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =Parent.Error
+                                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                    Width: =Parent.Width - 60
+                                    X: =30
+                                    Y: =DRFMainCategoryDropdown_2.Y + DRFMainCategoryDropdown_2.Height
+                        - DRFSubCategory_DataCard_2:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicNumberEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="category"
+                              Default: =ThisItem.category
+                              DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                              Height: =If( 'eDefender Broken File Paths TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                              Required: =true
+                              Visible: =false
+                              Width: =500
+                              WidthFit: =true
+                              X: =0
+                              Y: =1
+                            Children:
+                              - eDefenderBFPSubcategoryStarVisible_3:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =eDefenderBFPSubCategoryLabel_3.Height
+                                    Text: ="*"
+                                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =30
+                                    Wrap: =false
+                                    Y: =eDefenderBFPSubCategoryLabel_3.Y
+                              - eDefenderBFPSubCategoryLabel_3:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Sub Category"
+                                    Width: =Parent.Width - 60
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =10
+                              - eDefenderBFPSubCategoryDropdown_3:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =RGBA(56, 96, 178, 1)
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height/3.5
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =Filter(Category, parentId = DRFMainCategoryDropdown_2.Selected.ID)
+                                    Items.Value: =Title
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: =Parent.Width/1.05
+                                    X: =30
+                                    Y: =44
+                              - eDefenderBFPSubcategoryError_3:
+                                  Control: Label@2.5.1
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(168, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =10
+                                    Live: =Live.Assertive
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =Parent.Error
+                                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                    Width: =Parent.Width - 60
+                                    X: =30
+                                    Y: =eDefenderBFPSubCategoryDropdown_3.Y + eDefenderBFPSubCategoryDropdown_3.Height
+                        - ProjectOverviewDataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =539
+                              Width: =
+                              WidthFit: =true
+                              X: =0
+                              Y: =1
+                            Children:
+                              - DRFSelectLabel_2:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Dashboard Name"
+                                    Width: =160
+                                    X: =30
+                                    Y: =DRFSelectLabel_10.Height+25
+                              - TextInput7_2:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    EnableSpellCheck: =true
+                                    Font: =Font.'Open Sans'
+                                    HintText: ="Suggested name or title for the dashboard "
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_2.X
+                                    Y: =DRFSelectLabel_2.Y+DRFSelectLabel_2.Height
+                              - DRFSelectLabel_10:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =34
+                                    Text: ="Project Overview"
+                                    Width: =Parent.Width
+                              - DRFSelectLabel_11:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Purpose of Dashboard"
+                                    Width: =190
+                                    X: =30
+                                    Y: =TextInput7_2.Y+TextInput7_2.Height+25
+                              - TextInput7_8:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    EnableSpellCheck: =true
+                                    Font: =Font.'Open Sans'
+                                    HintText: ="Please describe why the dashboard is needed (caseload monitoring, performance analysis, statistical reporting, etc.)"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_2.X
+                                    Y: =DRFSelectLabel_11.Y+DRFSelectLabel_11.Height
+                              - DRFSelectLabel_12:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Intended Outcome"
+                                    Width: =190
+                                    X: =30
+                                    Y: =TextInput7_8.Y+TextInput7_8.Height+25
+                              - TextInput7_9:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    EnableSpellCheck: =true
+                                    Font: =Font.'Open Sans'
+                                    Height: =100
+                                    HintText: ="What specific decisions or insights the dashboard will help with (identifying trends, resource allocation, measure staff performance, analyze client demographics, etc.)"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Mode: =TextMode.MultiLine
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_2.X
+                                    Y: =DRFSelectLabel_12.Y+DRFSelectLabel_12.Height
+                              - DRFSelectLabel_13:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Primary Stakeholders"
+                                    Width: =190
+                                    X: =30
+                                    Y: =TextInput7_9.Y+TextInput7_9.Height+25
+                              - TextInput7_10:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    EnableSpellCheck: =true
+                                    Font: =Font.'Open Sans'
+                                    HintText: ="The individuals or teams who will be using or reviewing the dashboard (leadership team, attorneys, County Executive Office, etc.)"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_2.X
+                                    Y: =DRFSelectLabel_13.Y+DRFSelectLabel_13.Height
+                              - DRFSelectLabel_14:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Users"
+                                    Width: =190
+                                    X: =30
+                                    Y: =TextInput7_10.Y+TextInput7_10.Height+25
+                              - TextInput7_11:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    EnableSpellCheck: =true
+                                    Font: =Font.'Open Sans'
+                                    HintText: ="Specify which staff members or departments need to have access to the dashboard"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_2.X
+                                    Y: =DRFSelectLabel_14.Y+DRFSelectLabel_14.Height
+                        - DataSourcesDataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =242
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =2
+                            Children:
+                              - DRFSelectLabel_15:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =34
+                                    Text: ="Data Sources"
+                                    Width: =Parent.Width
+                              - DRFSelectLabel_16:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Primary Data Source"
+                                    Width: =200
+                                    X: =30
+                                    Y: =DRFSelectLabel_15.Height+25
+                              - TextInput7_12:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    EnableSpellCheck: =true
+                                    Font: =Font.'Open Sans'
+                                    HintText: ="Specify where the data will be pulled from (eDefender, DA discovery request, Excel file, etc.)"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_16.X
+                                    Y: =DRFSelectLabel_16.Y+DRFSelectLabel_16.Height
+                              - DRFSelectLabel_17:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Data Frequency"
+                                    Width: =200
+                                    X: =30
+                                    Y: =TextInput7_12.Y+TextInput7_12.Height+25
+                              - TextInput7_13:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    EnableSpellCheck: =true
+                                    Font: =Font.'Open Sans'
+                                    HintText: ="how often should the Data be refreshed (daily, weekly, monthly, etc.)?"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_17.X
+                                    Y: =DRFSelectLabel_17.Y+DRFSelectLabel_17.Height
+                        - DataFieldsAndMetricsDataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =242
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =3
+                            Children:
+                              - DRFSelectLabel_18:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Key Metrics"
+                                    Width: =200
+                                    X: =30
+                                    Y: =DRFSelectLabel_19.Height+25
+                              - TextInput7_14:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    EnableSpellCheck: =true
+                                    Font: =Font.'Open Sans'
+                                    Height: =100
+                                    HintText: ="What specific metrics should be included in the dashboard (number of cases, number of clients, average days from open to closed, number of services provided, etc.) "
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Mode: =TextMode.MultiLine
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_18.X
+                                    Y: =DRFSelectLabel_18.Y+DRFSelectLabel_18.Height
+                              - DRFSelectLabel_19:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =34
+                                    Text: ="Data Fields and Metrics"
+                                    Width: =Parent.Width
+                              - DRFSelectLabel_20:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Page Filters"
+                                    Width: =200
+                                    X: =30
+                                    Y: =TextInput7_14.Y+TextInput7_14.Height+25
+                              - TextInput7_15:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    EnableSpellCheck: =true
+                                    Font: =Font.'Open Sans'
+                                    HintText: ="What attributes should the dashboard allow users to filter by (case type, case status, event type, original filed date, attorney name, etc.) "
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_20.X
+                                    Y: =DRFSelectLabel_20.Y+DRFSelectLabel_20.Height
+                        - DataCard12:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =341
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =4
+                            Children:
+                              - DRFSelectLabel_21:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =34
+                                    Text: ="Dashboard Features"
+                                    Width: =Parent.Width
+                              - DRFSelectLabel_22:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Visualization Types"
+                                    Width: =200
+                                    X: =30
+                                    Y: =DRFSelectLabel_21.Height+25
+                              - TextInput7_16:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    Font: =Font.'Open Sans'
+                                    HintText: ="What types of charts or visuals are preferred (bar charts, pie charts, line graphs, tables, etc.)"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_22.X
+                                    Y: =DRFSelectLabel_22.Y+DRFSelectLabel_22.Height
+                              - DRFSelectLabel_23:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Navigation and Layout"
+                                    Width: =200
+                                    X: =30
+                                    Y: =TextInput7_16.Y+TextInput7_16.Height+25
+                              - TextInput7_17:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    Font: =Font.'Open Sans'
+                                    HintText: ="Describe any preference for the layout or page structure (one main dashboard page, multiple pages with different focuses, etc.) "
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_23.X
+                                    Y: =DRFSelectLabel_23.Y+DRFSelectLabel_23.Height
+                              - DRFSelectLabel_24:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Dashboard Style"
+                                    Width: =200
+                                    X: =30
+                                    Y: =TextInput7_17.Y+TextInput7_17.Height+25
+                              - TextInput7_18:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    Font: =Font.'Open Sans'
+                                    HintText: ="Please describe any specific color preferences or design elements"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Visible: |+
+                                      =true
+                                    Width: =Dropdown15.Width
+                                    X: =DRFSelectLabel_24.X
+                                    Y: =DRFSelectLabel_24.Y+DRFSelectLabel_24.Height
+                        - DataCard13:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =5
+                            Children:
+                              - DRFSelectLabel_25:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =34
+                                    Text: ="Timeline"
+                                    Width: =Parent.Width
+                              - DRFSelectLabel_26:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Priority Level"
+                                    Width: =130
+                                    X: =30
+                                    Y: =DRFSelectLabel_21.Height+25
+                              - Dropdown14_4:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    AllowEmptySelection: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =ColorScheme.primary
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =0
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =Table({Priority:"High"},{Priority:"Medium"},{Priority:"Low"})
+                                    Items.Value: =Priority
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: =Dropdown15.Width
+                                    X: =30
+                                    Y: =DRFSelectLabel_26.Y+DRFSelectLabel_26.Height
+                              - DRFDescriptionLabel_7:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(255, 0, 0, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 0, 0, 1)
+                                    Fill: =Color.White
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Data requests may take days to complete"
+                                    Visible: =false
+                                    Width: =Parent.Width
+                                    Wrap: =false
+                                    Y: =Dropdown14_4.Height+Dropdown14_4.Y+10
+                              - DRFDescriptionLabel_8:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(9, 33, 98, 1)
+                                    BorderThickness: =2
+                                    Color: =Color.White
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Requested Deadline"
+                                    Width: =170
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =DRFDescriptionLabel_7.Y+DRFDescriptionLabel_7.Height+10
+                              - DatePicker6_2:
+                                  Control: Classic/DatePicker@2.6.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    IconBackground: =ColorScheme.primary
+                                    IconFill: =RGBA(255, 255, 255, 1)
+                                    X: =30
+                                    Y: =DRFDescriptionLabel_8.Y+DRFDescriptionLabel_8.Height
+                        - DRFSpecificIssueDataCard_2:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicNumberEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="subCategory"
+                              Default: =ThisItem.subCategory
+                              DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                              Height: =127
+                              Required: =false
+                              Visible: |-
+                                =//If(IsBlank(eDefenderBFPSpecificIssueDropdown.Selected.Name), false, true)
+                                false
+                              Width: =500
+                              WidthFit: =true
+                              X: =0
+                              Y: =6
+                            Children:
+                              - DRFSpecificIssueStarVisible_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =DRFSpecificIssueLabel_2.Height
+                                    Text: ="*"
+                                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =30
+                                    Wrap: =false
+                                    Y: =DRFSpecificIssueLabel_2.Y
+                              - DRFSpecificIssueLabel_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Specific Issue"
+                                    Width: =Parent.Width - 60
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =10
+                              - DRFSpecificIssueDropdown_2:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =RGBA(56, 96, 178, 1)
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height/3.5
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =Filter(Category, parentId = eDefenderBFPSubCategoryDropdown_3.Selected.ID)
+                                    Items.Value: =Title
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: =Dropdown15.Width
+                                    X: =30
+                                    Y: =44
+                              - DRFSpecificIssueError_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(168, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =10
+                                    Live: =Live.Assertive
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =Parent.Error
+                                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                    Width: =Parent.Width - 60
+                                    X: =30
+                                    Y: =DRFSpecificIssueDropdown_2.Y + DRFSpecificIssueDropdown_2.Height
+                        - DRFDescription_DataCard_2:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicTextualEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="description"
+                              Default: =ThisItem.description
+                              DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                              Height: =200
+                              MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                              Required: =false
+                              Width: =500
+                              WidthFit: =true
+                              X: =0
+                              Y: =6
+                            Children:
+                              - DRFDescriptionStarVisible_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =Color.Transparent
+                                    Font: =Font.'Open Sans'
+                                    Height: =DRFDescriptionLabel_6.Height
+                                    Text: ="*"
+                                    Width: =30
+                                    Wrap: =false
+                                    Y: =DRFDescriptionLabel_6.Y
+                              - DRFLocationIDStarVisible_4:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =DRFLocationIDLabel_2.Height
+                                    Text: ="*"
+                                    Visible: =false
+                                    Width: =30
+                                    Wrap: =false
+                                    Y: =10
+                              - DRFDescriptionLabel_6:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(9, 33, 98, 1)
+                                    BorderThickness: =2
+                                    Color: =Color.White
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Additional Details"
+                                    Width: =170
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =10
+                              - DRFDescriptionTextInputArea_2:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    Font: =Font.'Open Sans'
+                                    Height: =150
+                                    HintText: ="Any other relevant information or special instructions"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Mode: =TextMode.MultiLine
+                                    Size: =15
+                                    Visible: =DRFDescription_DataCard_2.Visible
+                                    Width: =Dropdown15.Width
+                                    X: =30
+                                    Y: =DRFDescriptionLabel_6.Y+DRFDescriptionLabel_6.Height
+                              - DRFDescriptionErrorMessage_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(168, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =10
+                                    Live: =Live.Assertive
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =Parent.Error
+                                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                    Width: =Parent.Width - 60
+                                    X: =30
+                                    Y: =DRFDescriptionTextInputArea_2.Y + DRFDescriptionTextInputArea_2.Height
+                        - DRFLocationID_DataCard_2:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicNumberEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="locationId"
+                              Default: =ThisItem.locationId
+                              DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                              Height: =127
+                              Required: =false
+                              Update: =//Value(DataCardValue6.Text)
+                              Width: =500
+                              WidthFit: =true
+                              X: =0
+                              Y: =7
+                            Children:
+                              - DRFLocationIDStarVisible_5:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =DRFLocationIDLabel_2.Height
+                                    Text: ="*"
+                                    Width: =30
+                                    Wrap: =false
+                                    Y: =DRFLocationIDLabel_2.Y
+                              - DRFLocationIDLabel_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Requesting From"
+                                    Width: =170
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =20
+                              - DRFLocationIDDropDown_2:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    AllowEmptySelection: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =ColorScheme.primary
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =Blank()
+                                    Font: =Font.'Open Sans'
+                                    Height: =35
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =Locations
+                                    Items.Value: =Title
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: =Dropdown15.Width
+                                    X: =30
+                                    Y: =DRFLocationIDLabel_2.Y+DRFLocationIDLabel_2.Height
+                              - DRFLocationIDErrorMessage_2:
+                                  Control: Label@2.5.1
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(168, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =10
+                                    Live: =Live.Assertive
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =Parent.Error
+                                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                    Width: =Parent.Width - 60
+                                    X: =30
+                                    Y: =DRFLocationIDDropDown_2.Y + DRFLocationIDDropDown_2.Height
+                        - DRFAttatchments_DataCard_2:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =40
+                              Width: =500
+                              WidthFit: =true
+                              X: =0
+                              Y: =8
+                            Children:
+                              - AddMediaButton_44:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Add Media"
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: =(Parent.Height-Self.Height)/2
+                        - DRFButtons_DataCard_2:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: |-
+                                =//If( 'eDefender Broken File Paths TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                                125
+                              Width: =500
+                              WidthFit: =true
+                              X: =0
+                              Y: =9
+                            Children:
+                              - DRFCancelButton_2:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorScheme.orange
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                                    OnSelect: |-
+                                      =ResetForm(DRFForm_2);
+                                      Navigate(Home);
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Cancel"
+                                    Width: =Parent.Width/3
+                                    X: =If('eDefender Broken File Paths TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                                    Y: =Parent.Height - (Self.Height *2)
+                              - DRFSubmitButton_2:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =DRFCancelButton_2.Height
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: "=//\nIf(DRFDescriptionTextInputArea_2.Visible,\nUpdateContext({TicketDescText:Concatenate(\"Requesting Department: \"&Dropdown15.Selected.Department&Char(13)&Char(13),\n\"Dashboard Name: \"&TextInput7_2.Text&Char(13)&Char(13),\n\"Purpose of Dashboard: \"&TextInput7_8.Text&Char(13)&Char(13),\n\"Intended Outcome: \"&TextInput7_9.Text&Char(13)&Char(13),\n\"Primary Stakeholders: \"&TextInput7_10.Text&Char(13)&Char(13),\n\"Users: \"&TextInput7_11.Text&Char(13)&Char(13),\n\"Primary Data Source: \"&TextInput7_12.Text&Char(13)&Char(13),\n\"Data Frequency: \"&TextInput7_13.Text&Char(13)&Char(13),\n\"Key Metrics: \"&TextInput7_14.Text&Char(13)&Char(13),\n\"Page Filters: \"&TextInput7_15.Text&Char(13)&Char(13),\n\"Visulization Types: \"&TextInput7_16.Text&Char(13)&Char(13),\n\"Navigation and Layout: \"&TextInput7_17.Text&Char(13)&Char(13),\n\"Dashboard Style: \"&TextInput7_18.Text&Char(13)&Char(13),\n\"Priority Level: \"&Dropdown14_4.Selected.Priority&Char(13)&Char(13),\n\"Requested Deadline: \"&DatePicker6_2.SelectedDate&Char(13)&Char(13),\n\"Additional Details: \"&DRFDescriptionTextInputArea_2.Text)}), Notify(\"Description is Blank\"));\n\n//Check if the title or Description are empty, if they are the form will not be submitted\nIf( //add logic here for required fields\n    true,\n    UpdateContext({DataCardKey1_1: \"Title\"});\n    UpdateContext({DataCardKey5: \"Description\"});\n    //Set(DataCardKey5: \"Description\");\nSet(\n        //Temporary record\n        rec,\n        //DB operation, from Ticket table, new record, change these columns\n        Patch(\n            Tickets,\n            Defaults(Tickets),\n            {\n                Title: \"Dashboard Data Request\",\n                description: Trim(TicketDescText),\n                creatorId: userData.id,\n                mainCategory: DRFMainCategoryDropdown_2.Selected.ID,\n                category: eDefenderBFPSubCategoryDropdown_3.Selected.ID,\n                subCategory: DRFSpecificIssueDropdown_2.Selected.ID,\n                locationId: DRFLocationIDDropDown_2.Selected.ID,\n                status: \"pending\",\n                metricDate: Concatenate(\n                    Month(Today()),\n                    \"/\",\n                    Year(Today())\n                ),\n                hasAttachment: If(\n                    IsEmpty(attItems),\n                    0,\n                    1\n                ),\n                //Automation rules table is used to assign tickets\n                assignedTo: If(\n                    IsEmpty(\n                        Filter(\n                            'Ticket Automation Rules',\n                            categoryId = DRFMainCategoryDropdown_2.Selected.ID && locationId = DRFLocationIDDropDown_2.Selected.ID\n                        )\n                    ),\n                    0,\n                    LookUp(\n                        'Ticket Automation Rules',\n                        categoryId = DRFMainCategoryDropdown_2.Selected.ID && locationId = DRFLocationIDDropDown_2.Selected.ID,\n                        userID\n                    )\n                )\n            }\n        )\n    );\n\nPatch(\n    Tickets, \n    LookUp(Tickets,ID = rec.ID),\n    {\n        Title: \"#\"&rec.ID&\" Dashboard Data Request\"\n    });\n// for the attachments, run power automate flow for each attached file\nForAll(\n    attItems As Attachment,\n            AttachFiles.Run(\n            rec.ID,\n            {\n                file:{\n                    contentBytes: Attachment.Value,\n                    name: Attachment.Name\n                }\n            }\n        ) \n);\n//Now do it for the camera and screenshots\nForAll(\n    RTEImages As RTEI,\n    With({varHTMLTable: Split(RTEI.base64Image , \"<img\")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find(\"<img\",RTEI.base64Image)+32},With({varB64End:Find(\"\"\"\",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &\".png\", rec.ID)\n))))\n        );\n    \n    /*SMTP.SendEmailV3(\n        {\n            From: \"sbpdhelpdesk@outlook.com\",\n            To: userData.email,\n            Subject: \"Help Desk Ticket Received\",\n            Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=\"https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a>.</div>\"\n        }\n    );*/\n    /*If(\n        rec.assignedTo > 0,\n        SMTP.SendEmailV3(\n            {\n                From: \"sbpdhelpdesk@outlook.com\",\n                To: LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n                Subject: \"Help Desk Ticket Assigned\",\n                Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a> to view more details for the ticket.</div>\"\n            }\n        );\n    );*/\nSet(rec,Patch(rec,{description:Substitute(rec.description,Char(13),\"<br>\")}));\n//Power automate flow, sends email to ticket creator \nSendEmail.Run(\n            userData.email,\n        \"Help Desk Ticket Recieved\",\n        //Email Message body\n        TicketCreatorMessageRTE_1.HtmlText,\n        Text(Blank())\n    );\n    // If the ticket it assigned to someone, send them an email\n    If(\n        rec.assignedTo > 0,\n        SendEmail.Run(\n                LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n            \"Help Desk Ticket Assigned\",\n            //Email message body\n            TechAssignMessageRTE_1.HtmlText,\n            Text(Blank())\n        );\nTicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,\"Ticket #\"&rec.ID&\" has been created. Touch this notification for more information.\"),    TicketCreatedUser.Run(userData.email,rec.ID,\"Ticket #\"&rec.ID&\" has been created on your behalf. Touch this notification for more information.\")\n    );\n    //Reset the form upon completion\n    ResetForm(DRFForm_2);\n    Navigate(Success);\n\n);\n// variables that control color elements\n    UpdateContext({CreateTicketTitle: \"Title is Required\"});\n    UpdateContext({CreateTicketDescription: \"Description is Required\"});\n    UpdateContext({BFPPopup:true})\n"
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Submit"
+                                    Width: =DRFCancelButton_2.Width
+                                    X: =DRFCancelButton_2.X + (Self.Width*1.3)
+                                    Y: =DRFCancelButton_2.Y
+      - DRFErrorPopUp_2:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =DRFPopup
+            Width: =Parent.Width
+          Children:
+            - ACPopupBackground_50:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, .25)
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - ACPopupRectangle_50:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height/1.125
+                  Width: =Parent.Width/1.125
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - Rectangle8_57:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Width: =ACPopupRectangle_50.Width
+                  X: =ACPopupRectangle_50.X
+                  Y: =ACPopupRectangle_50.Y
+            - Label10_68:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =100
+                  Size: =30
+                  Text: ="Form Error"
+                  Width: =Rectangle8_57.Width
+                  X: =Rectangle8_57.X
+                  Y: =Rectangle8_57.Y
+            - Label18_170:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(IsBlank(eDefenderBFPLocationIDDropDown.Selected.Name),Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: |+
+                    =If(IsBlank(eDefenderBFPLocationIDDropDown.Selected.Name),"Location Missing", "Location OK")
+
+                  Width: =ACPopupRectangle_50.Width
+                  X: =ACPopupRectangle_50.X
+                  Y: =Rectangle8_57.Y+Rectangle8_57.Height+15
+            - Label18_171:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(Len(Trim(eDefenderBFPTitleInput.Text)) = 0,Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(Len(Trim(eDefenderBFPTitleInput.Text)) = 0,"Case Number Blank", "Case Number OK")
+                  Width: =ACPopupRectangle_50.Width
+                  X: =ACPopupRectangle_50.X
+                  Y: =Label18_170.Y+Label18_170.Height+10
+            - Label18_172:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(Len(Trim(FilePathinput.Text))=0,Color.Red,Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(Len(Trim(FilePathinput.Text))=0,"File Path Blank","File Path OK")
+                  Width: =ACPopupRectangle_50.Width
+                  X: =ACPopupRectangle_50.X
+                  Y: =Label18_171.Y+Label18_171.Height+10
+            - Button1_56:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: =UpdateContext({BFPPopup:false})
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: ="Close"
+                  X: =(ACPopupRectangle_50.Width-Self.Width)/2 +ACPopupRectangle_50.X
+                  Y: =ACPopupRectangle_50.Height-Self.Height
+      - DRFWebMenu_2:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, Parent.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Dashboard Request TT'.Size > 1
+            Width: =If(showMenu, Parent.Width, 80)
+      - TicketCreatorMessageRTE_55:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: |-
+              =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+              /*
+              Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35aceace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.</div>")*/
+
+              "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                  <tr>
+                  <td>
+                      <Table style="&Char(34)&"width:100% "&Char(34)&">
+                      <tr>
+                      <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+              	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+              	</div>
+              	<br>
+              	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+              	Your ticket has been created, a technician will be assigned to your case, if you would like to see additional details about your ticket: 
+                  <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+              	</div>
+                      </th>
+                      </tr>
+              	<br>
+                      <tr>
+                      <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+              	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                  <br>
+                  Ticket # "&rec.ID&"
+                  <br>
+                  Status: "&rec.status&"
+                  <br>
+                  <br>
+                  "&rec.description&"
+              	</div>
+                      </td>
+                      </tr>
+                  </td>
+                  </tr>
+                  </Table>
+              </table>"
+            Height: =99
+            Visible: =false
+            Width: =293
+            X: =948
+      - DRFBackButton_2:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =DRFLabel_2.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(DRFHeaderContainer_2.Height-DRFLabel_2.Height)/1.05
+      - Label2_13:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            Height: =172
+            Text: =Concatenate("File Path Link:",Char(13),FilePathinput.Text,Char(13),Char(13),"Last Known Access Date:",Char(13),LastKnownDatepicker.SelectedDate,Char(13),Char(13), "Date of Attempted Access:",Char(13),DateAccessedDatepicker.SelectedDate)
+            Visible: =false
+            Width: =260
+            Y: =594
+      - TechAssignMessageRTE_55:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: |-
+              =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+              //Combine string as html body
+              /*
+              Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+              , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")
+              */
+
+              "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                  <tr>
+                  <td>
+                      <Table style="&Char(34)&"width:100% "&Char(34)&">
+                      <tr>
+                      <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+              	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+              	</div>
+              	<br>
+              	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+              	A ticket has been asssigned to you, to check additional ticket details: 
+                  <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+              	</div>
+                      </th>
+                      </tr>
+              	<br>
+                      <tr>
+                      <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+              	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                  <br>
+                  Ticket # "&rec.ID&"
+                  <br>
+                  Status: "&rec.status&"
+                  <br>
+                  <br>
+                  "&rec.description&"
+              	</div>
+                      </td>
+                      </tr>
+                  </td>
+                  </tr>
+                  </Table>
+              </table>"
+            Height: =9
+            Visible: =false
+            Width: =0
+            X: =852
+            Y: =744
+      - AddMedia_44:
+          Control: CanvasComponent
+          ComponentName: AddMedia
+          Properties:
+            AMSize: ='Dashboard Request TT'.Size
+            AttachCameraOff: =Set(AttachCamera,false);
+            AttachCameraOn: =Set(AttachCamera,true);
+            DisablePickMedia: =Set(AttachFiles,false)
+            EnablePickMedia: =Set(AttachFiles,true)
+            ForSTITickID: =0
+            Height: =App.Height
+            InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+            OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+            PhotoModeDisable: =Set(AttachPhoto,false)
+            PhotoModeEnable: =Set(AttachPhoto,true)
+            Visible: =varOpenMedia
+            Width: =App.Width
+      - FeedbackBugReport_5:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: ='Dashboard Request TT'.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

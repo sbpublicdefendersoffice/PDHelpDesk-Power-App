@@ -1,0 +1,68 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  compWebHeader_5:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      BackgroundColor:
+        PropertyKind: Input
+        DisplayName: Background Color
+        Description: A custom property
+        DataType: Color
+        Default: =ColorScheme.primary
+      CompScreenSize:
+        PropertyKind: Input
+        DisplayName: CompScreenSize
+        Description: Pass in the Screen Size here
+        DataType: Number
+        Default: =1
+    Properties:
+      Height: =82
+      Width: =App.Width
+    Children:
+      - Rectangle3_4:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =compWebHeader_5.BackgroundColor
+            Height: =Parent.Height
+            Width: =App.Width
+      - Label9_6:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =77
+            OnSelect: =
+            Size: =If(compWebHeader_5.CompScreenSize=1, 13, 18)
+            Text: |-
+              ="COUNTY of SANTA BARBARA
+              PUBLIC DEFENDER"
+            Width: =332
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height - Self.Height) / 2
+      - Image3_5:
+          Control: Image@2.2.3
+          Properties:
+            AccessibleLabel: ="County of Santa Barbara Public Defender Header Logo"
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =If(compWebHeader_5.CompScreenSize>1,Parent.Height * 0.85,Parent.Height * 0.75)
+            Image: =PUBDEF_IT__LOGO_Vector
+            OnSelect: =//Select(Parent)
+            PaddingBottom: =2
+            PaddingLeft: =3
+            PaddingRight: =2
+            PaddingTop: =2
+            Width: =Self.Height
+            X: |-
+              =//Parent.Width - Self.Width
+              Parent.Width - Self.Width - If(App.Width > 500, 10, 0)
+            Y: =(Parent.Height - Self.Height) / 2

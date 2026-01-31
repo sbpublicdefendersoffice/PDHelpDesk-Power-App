@@ -1,0 +1,1293 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Case Support Court Tech-Check TT:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: |+
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+      OnVisible: |-
+        =ResetForm(CSCTCForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    Children:
+      - CSCTCMainContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: ='Case Support Court Tech-Check TT'.Height
+            LayoutDirection: =LayoutDirection.Horizontal
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: ='Case Support Court Tech-Check TT'.Width
+          Children:
+            - CSCTCVerticalLayoutContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Height: =Parent.Height
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - CSCTCHeaderContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.primary
+                        FillPortions: =0
+                        Height: |-
+                          =130
+                          //Parent.Height/11
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =//Home.Size<>1
+                          //This is the top most header container that houses the navbar links
+                          true
+                        Width: =Parent.Width
+                      Children:
+                        - CourtTechCheckHeaderElements:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - HomeBackgroundGradient_53:
+                                  Control: HtmlViewer@2.1.0
+                                  Properties:
+                                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height
+                                    HtmlText: =Home_Background_Gradient.HtmlText
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =11
+                                    Width: =Parent.Width
+                              - CSCTCBurningHeaderLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =Color.Transparent
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height-CSCTCWebHeader.Height
+                                    Size: =If('Case Support Court Tech-Check TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                                    Text: ="Court Tech-Check Request Form"
+                                    Width: =Parent.Width
+                                    Y: =CSCTCWebHeader.Height
+                              - CSCTCWebHeader:
+                                  Control: CanvasComponent
+                                  ComponentName: compWebHeader
+                                  Properties:
+                                    BackgroundColor: =Color.Transparent
+                                    CompScreenSize: ='Case Support Court Tech-Check TT'.Size
+                                    EnableFeedback: =Set(varFeedback,true)
+                                    FeedbackBool: =varFeedback
+                                    Height: =82
+                                    Width: =App.Width
+                  - CSCTCMainContentContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                        Height: =Parent.Height/1.21
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutOverflowY: =LayoutOverflow.Scroll
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =true
+                          //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                        Width: =Parent.Width
+                      Children:
+                        - CSCTCForm:
+                            Control: Form@2.4.4
+                            Variant: Classic
+                            Layout: Vertical
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataSource: =Tickets
+                              DefaultMode: =FormMode.New
+                              Height: =Parent.Height/1.21
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NumberOfColumns: =1
+                              Width: =Parent.Width
+                              Y: =Parent.Height/5.7
+                            Children:
+                              - CSCTCTitle_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="title"
+                                    Default: =ThisItem.Title
+                                    DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                                    Height: =80
+                                    MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                                    Required: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =0
+                                  Children:
+                                    - CSCTCTitleLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Case Number"
+                                          Width: =130
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =20
+                                    - CSCTCTitleError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =65
+                                    - CSCTCTitleStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =CSCTCTitleLabel.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSCTCTitleLabel.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =CSCTCTitleLabel.Y
+                                    - CSCTCTitleInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HintText: ="Enter case number"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Width: =If('Case Support Court Tech-Check TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                                          X: =30
+                                          Y: =CSCTCTitleLabel.Y+CSCTCTitleLabel.Height
+                              - CSCTCMainCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="mainCategory"
+                                    Default: =ThisItem.mainCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: =If( 'Case Support Court Tech-Check TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =1
+                                  Children:
+                                    - CSCTCMainCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSCTCMainCategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =CSCTCMainCategoryDropdown.Y + CSCTCMainCategoryDropdown.Height
+                                    - CSCTCMainCategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSCTCMainCategoryLabel.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =10
+                                    - CSCTCMainCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - CSCTCSubCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="category"
+                                    Default: =ThisItem.category
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =If( 'Case Support Court Tech-Check TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =2
+                                  Children:
+                                    - CSCTCSubCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Sub Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSCTCSubcategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =73
+                                    - CSCTCSubcategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSCTCSubCategoryLabel.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =CSCTCSubCategoryLabel.Y
+                                    - CSCTCSubCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = CSCTCMainCategoryDropdown.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - CSCTCFields:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =460
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =3
+                                  Children:
+                                    - CourtLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Court"
+                                          Width: =70
+                                          X: =30
+                                          Y: =If('Case Support Court Tech-Check TT'.Size=1,Dropdown5_2.Y+Dropdown5_2.Height+20,DatePicker2.Y+DatePicker2.Height+20)
+                                    - ExFieldInput1_46:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Lighter
+                                          Height: =35
+                                          HintText: ="Which Court"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Width: =If('Case Support Court Tech-Check TT'.Size=1,CSCTCTitleInput.Width,CSCTCTitleInput.Width/2 )
+                                          X: =30
+                                          Y: =CourtLabel.Y+CourtLabel.Height
+                                    - CSCTCCourtRoomLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Text: ="CourtRoom"
+                                          Width: =110
+                                          X: =ExFieldInput2_45.X
+                                          Y: =If('Case Support Court Tech-Check TT'.Size=1,ExFieldInput1_46.Height+ExFieldInput1_46.Y+20,CourtLabel.Y)
+                                    - ExFieldInput2_45:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HintText: ="Which courtroom"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Width: =If('Case Support Court Tech-Check TT'.Size=1,CSCTCTitleInput.Width,ExFieldInput1_46.Width-10)
+                                          X: =If('Case Support Court Tech-Check TT'.Size=1,DatePicker2.X,ExFieldInput1_46.X+ExFieldInput1_46.Width+10)
+                                          Y: =CSCTCCourtRoomLabel.Y+CSCTCCourtRoomLabel.Height
+                                    - TextInput8:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          Font: =Font.'Open Sans'
+                                          Height: =245
+                                          HintText: ="Additional Details"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Mode: =TextMode.MultiLine
+                                          Width: =CSCTCTitleInput.Width
+                                          X: =30
+                                          Y: =ExField2_46.Y+ExField2_46.Height
+                                    - DatePicker2:
+                                        Control: Classic/DatePicker@2.6.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DefaultDate: =Blank()
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          IconBackground: =ColorScheme.primary
+                                          IconFill: =RGBA(255, 255, 255, 1)
+                                          InputTextPlaceholder: ="Select a Date"
+                                          Width: =If('Case Support Court Tech-Check TT'.Size=1,CSCTCTitleInput.Width,CSCTCTitleInput.Width/4 -10)
+                                          X: =30
+                                          Y: =CSCTCDateTimeLabel.Height+CSCTCDateTimeLabel.Y
+                                    - Dropdown5:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          AllowEmptySelection: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =ColorScheme.primary
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Blank()
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Sequence(12,1)
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =DatePicker2.Width
+                                          X: =If('Case Support Court Tech-Check TT'.Size=1,DatePicker2.X,DatePicker2.X+DatePicker2.Width+15)
+                                          Y: =Label50_1.Y+Label50_1.Height
+                                    - Dropdown5_1:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          AllowEmptySelection: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =ColorScheme.primary
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Blank()
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =DatePicker2.Width
+                                          X: =If('Case Support Court Tech-Check TT'.Size=1,DatePicker2.X,Dropdown5.X+Dropdown5.Width+15)
+                                          Y: =Label50_2.Y+Label50_2.Height
+                                    - Dropdown5_2:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          AllowEmptySelection: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =ColorScheme.primary
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Blank()
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Lighter
+                                          Height: =35
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: |+
+                                            =Table(
+                                            {
+                                                Value:"AM"
+                                            },
+                                            {
+                                                Value:"PM"
+                                            }
+                                                  )
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =DatePicker2.Width
+                                          X: =If('Case Support Court Tech-Check TT'.Size=1,DatePicker2.X,Dropdown5_1.X+Dropdown5_1.Width+10)
+                                          Y: =Label50_3.Y+Label50_3.Height
+                                    - CSCTCDateTimeLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          Text: ="Select Date and Time"
+                                          Width: =220
+                                          X: =30
+                                          Y: =20
+                                    - Label50_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          Text: ="Hour"
+                                          Width: =60
+                                          X: =Dropdown5.X
+                                          Y: =If('Case Support Court Tech-Check TT'.Size=1,DatePicker2.Y+DatePicker2.Height+20,CSCTCDateTimeLabel.Y)
+                                    - Label50_2:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          Text: ="Minute"
+                                          Width: =70
+                                          X: =Dropdown5_1.X
+                                          Y: =If('Case Support Court Tech-Check TT'.Size=1,Dropdown5.Y+Dropdown5.Height+20,CSCTCDateTimeLabel.Y)
+                                    - Label50_3:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          Text: ="am/pm"
+                                          Width: =70
+                                          X: =Dropdown5_2.X
+                                          Y: =If('Case Support Court Tech-Check TT'.Size=1,Dropdown5_1.Y+Dropdown5_1.Height+20,CSCTCDateTimeLabel.Y)
+                                    - ExField2_46:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Tech Check Details"
+                                          Width: =200
+                                          X: =30
+                                          Y: =ExFieldInput2_45.Y+ExFieldInput2_45.Height+20
+                              - CSCTCSpecificIssue_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="subCategory"
+                                    Default: =ThisItem.subCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =127
+                                    Required: =false
+                                    Visible: |+
+                                      =If(IsBlank(CSCTCSpecificIssueDropdown.Selected.Name), false, true)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =4
+                                  Children:
+                                    - CSCTCSpecificIssueLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Specific Issue"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSCTCSpecificIssueError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =80
+                                    - CSCTCSpecificIssueStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSCTCSpecificIssueLabel.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =CSCTCSpecificIssueLabel.Y
+                                    - CSCTCSpecificIssueDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = CSCTCSubCategoryDropdown.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =CSCTCTitleInput.Width
+                                          X: =30
+                                          Y: =44
+                              - CSCTCDescription_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="description"
+                                    Default: =ThisItem.description
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: =If( 'Case Support Court Tech-Check TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                                    Required: =false
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =5
+                                  Children:
+                                    - CSCTCDescriptionLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: =CreateTicketDescription
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSCTCDescriptionErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =CSCTCDescriptionTextInputArea.Y + CSCTCDescriptionTextInputArea.Height
+                                    - CSCTCDescriptionStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =CSCTCDescriptionLabel.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSCTCDescriptionLabel.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =CSCTCDescriptionLabel.Y
+                                    - CSCTCDescriptionTextInputArea:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =TicketDescText
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/1.5
+                                          HintText: ="Please Describe Your Issue"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Mode: =TextMode.MultiLine
+                                          Size: =15
+                                          Visible: =CSCTCDescription_DataCard.Visible
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =40
+                              - CSCTCLocationID_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="locationId"
+                                    Default: =ThisItem.locationId
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =80
+                                    Required: =false
+                                    Update: =//Value(DataCardValue6.Text)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =6
+                                  Children:
+                                    - CSCTCLocationIDLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Requesting From"
+                                          Width: =170
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSCTCLocationIDErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =CSCTCLocationIDDropdown.Y + CSCTCLocationIDDropdown.Height
+                                    - CSCTCLocationIDStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSCTCLocationIDLabel.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =CSCTCLocationIDLabel.Y
+                                    - CSCTCLocationIDDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          AllowEmptySelection: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =ColorScheme.primary
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Blank()
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Lighter
+                                          Height: =35
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Locations
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =CSCTCTitleInput.Width
+                                          X: =30
+                                          Y: =44
+                              - CSCTCAttatchments_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =If( 'Case Support Court Tech-Check TT'.Size = 1, Parent.Height/2, Parent.Height/3.5)
+                                    Visible: =false
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =7
+                                  Children:
+                                    - CSCTCAttachmentControl:
+                                        Control: Attachments@2.3.0
+                                        Properties:
+                                          BorderColor: =Color.Black
+                                          Font: =Font.'Open Sans'
+                                          Height: =If( 'Case Support Court Tech-Check TT'.Size = 1, Parent.Height/1.5, Parent.Height/1.5)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          ItemColor: =RGBA(255, 255, 255, 1)
+                                          ItemFill: =RGBA(56, 96, 178, 1)
+                                          ItemHoverFill: =RGBA(186, 202, 226, 1)
+                                          MaxAttachments: =10
+                                          PaddingBottom: =5
+                                          PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                                          PaddingRight: =5
+                                          PaddingTop: =5
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          Width: =If('Case Support Court Tech-Check TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                                          X: =(Parent.Width-Self.Width)/2
+                                          Y: =28
+                              - CSCTCButtons_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: |-
+                                      =//If( 'Case Support Court Tech-Check TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                                      125
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =8
+                                  Children:
+                                    - CSCTCSubmitButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          DisplayMode: |-
+                                            =
+                                            //could use this to enable/disable button behaviour
+                                            //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+
+                                            DisplayMode.Edit
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSCTCCancelButton.Height
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: "=\nIf(!CSCTCDescriptionTextInputArea.Visible,\nUpdateContext({TicketDescText:Concatenate(\"Date: \"&DateValue(DatePicker2.SelectedDate)&Char(13),\"Time: \"&Dropdown5.Selected.Value&\":\"&Dropdown5_1.Selected.Value&\" \"&Dropdown5_2.Selected.Value&Char(13)&Char(13),\"Court: \"&ExFieldInput1_46.Text&Char(13),\"Court Room: \"&ExFieldInput2_45.Text&Char(13)&Char(13), \"Tech Check Details:\"&Char(13)&TextInput8.Text)}), Notify(\"Description is Blank\"));\n\n//Check if the title or Description are empty, if they are the form will not be submitted\nIf(\n    Len(Trim(CSCTCTitleInput.Text))>0 And !IsBlank(DatePicker2.SelectedDate) And (!IsBlank(Dropdown5.Selected.Value) And !IsBlank(Dropdown5_1.Selected.Value) And \n    !IsBlank(Dropdown5_2.Selected.Value)) And Len(Trim(ExFieldInput1_46.Text))>0 And\n    Len(Trim(ExFieldInput2_45.Text))>0 And !IsBlank(CSCTCLocationIDDropdown.Selected.Name),\n    UpdateContext({DataCardKey1_1: \"Title\"});\n    UpdateContext({DataCardKey5: \"Description\"});\n    //Set(DataCardKey5: \"Description\");\nSet(\n        //Temporary record\n        rec,\n        //DB operation, from Ticket table, new record, change these columns\n        Patch(\n            Tickets,\n            Defaults(Tickets),\n            {\n                Title: CSCTCTitleInput.Text,\n                description: Trim(CSCTCDescriptionTextInputArea.Text),\n                creatorId: userData.id,\n                mainCategory: CSCTCMainCategoryDropdown.Selected.ID,\n                category: CSCTCSubCategoryDropdown.Selected.ID,\n                subCategory: CSCTCSpecificIssueDropdown.Selected.ID,\n                locationId: CSCTCLocationIDDropdown.Selected.ID,\n                status: \"open\",\n                metricDate: Concatenate(\n                    Month(Today()),\n                    \"/\",\n                    Year(Today())\n                ),\n                hasAttachment: If(\n                    IsEmpty(CSCTCAttachmentControl.Attachments),\n                    0,\n                    1\n                ),\n                //Automation rules table is used to assign tickets\n                assignedTo: If(\n                    IsEmpty(\n                        Filter(\n                            'Ticket Automation Rules',\n                            categoryId = CSCTCMainCategoryDropdown.Selected.ID && locationId = CSCTCLocationIDDropdown.Selected.ID\n                        )\n                    ),\n                    0,\n                    LookUp(\n                        'Ticket Automation Rules',\n                        categoryId = CSCTCMainCategoryDropdown.Selected.ID && locationId = CSCTCLocationIDDropdown.Selected.ID,\n                        userID\n                    )\n                )\n            }\n        )\n    );\n\nPatch(\n    Tickets, \n    LookUp(Tickets,ID = rec.ID),\n    {\n        Title: \"# \"&rec.ID&\" Court Tech Check Request\"\n    });\n// for the attachments, run power automate flow for each attached file\n    ForAll(\n        CSCTCAttachmentControl.Attachments As Attachment,\n               /*AttachFiles.Run(\n            rec.ID,\n            {\n                file: {\n                    contentBytes: Value,\n                    name: Name\n                }\n            }\n        )*/\n        If(Left(Attachment.Value,6) = \"appres\", \n        AttachFiles.Run(\n            rec.ID,\n            {\n                file:{\n                    contentBytes: Attachment.Value,\n                    name: Attachment.Name\n                }\n            }\n        ) ;,\n\n\nWith({varHTMLTable: Split(Attachment.Name , \"<img\")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find(\"<img\",Attachment.Name)+32},With({varB64End:Find(\"\"\"\",Mid(Attachment.Name,varB64Start))-1},CopyPasteTest.Run(Mid(Attachment.Name,varB64Start,varB64End),Attachment.Value & Text(Now(),DateTimeFormat.UTC) &\".png\", rec.ID)\n))))\n        )\n    );\n    \n    /*SMTP.SendEmailV3(\n        {\n            From: \"sbpdhelpdesk@outlook.com\",\n            To: userData.email,\n            Subject: \"Help Desk Ticket Received\",\n            Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=\"https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a>.</div>\"\n        }\n    );*/\n    /*If(\n        rec.assignedTo > 0,\n        SMTP.SendEmailV3(\n            {\n                From: \"sbpdhelpdesk@outlook.com\",\n                To: LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n                Subject: \"Help Desk Ticket Assigned\",\n                Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a> to view more details for the ticket.</div>\"\n            }\n        );\n    );*/\nSet(rec,Patch(rec,{description:Substitute(rec.description,Char(13),\"<br>\")}));\n//Power automate flow, sends email to ticket creator \nSendEmail.Run(\n            userData.email,\n        \"Help Desk Ticket Recieved\",\n        //Email Message body\n        TicketCreatorMessageRTE_1.HtmlText,\n        Text(Blank())\n    );\n    // If the ticket it assigned to someone, send them an email\n    If(\n        rec.assignedTo > 0,\n        SendEmail.Run(\n                LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n            \"Help Desk Ticket Assigned\",\n            //Email message body\n            TechAssignMessageRTE_1.HtmlText,\n            Text(Blank())\n        );\nTicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,\"Ticket #\"&rec.ID&\" has been created. Touch this notification for more information.\"),    TicketCreatedUser.Run(userData.email,rec.ID,\"Ticket #\"&rec.ID&\" has been created on your behalf. Touch this notification for more information.\")\n    );\n    //Reset the form upon completion\n    ResetForm(CSCTCForm);\n    Navigate(Success);\n\n);\n// variables that control color elements\n    UpdateContext({CreateTicketTitle: \"Title is Required\"});\n    UpdateContext({CreateTicketDescription: \"Description is Required\"});\n    UpdateContext({CSTechCheckPopup:true});\n"
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Submit"
+                                          Width: =CSCTCCancelButton.Width
+                                          X: =CSCTCCancelButton.X + (Self.Width*1.3)
+                                          Y: =CSCTCCancelButton.Y
+                                    - CSCTCCancelButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.orange
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                                          OnSelect: |-
+                                            =ResetForm(CSCTCForm);
+                                            Navigate(Home);
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Cancel"
+                                          Width: =Parent.Width/3
+                                          X: =If('Case Support Court Tech-Check TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                                          Y: =Parent.Height - (Self.Height *2)
+                  - CSCTCFooter:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(255,255,255, 1)
+                        FillPortions: =0
+                        Height: =60
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |+
+                          ='Case Support Court Tech-Check TT'.Size =1
+                        Width: =Parent.Width
+                      Children:
+                        - CSCTCMobileMenu:
+                            Control: CanvasComponent
+                            ComponentName: compMobileMenu_4
+                            Properties:
+                              BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                              ForegroundColor: |-
+                                =//RGBA(70, 130, 180, 1)
+                                ColorScheme.primary
+                              Height: =Parent.Height
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NavigationItems: |-
+                                =// IF adimn or tech show this table, if not show Staff table
+                                gblNavItems
+                              SelectedItemBackground: =Color.LightGray
+                              Width: =Parent.Width
+      - CSCTCBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =CSCTCBurningHeaderLabel.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =ResetForm(CSCTCForm); Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(CSCTCHeaderContainer.Height-CSCTCBurningHeaderLabel.Height)/1.05
+      - CSCTCWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu_4
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, App.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Case Support Court Tech-Check TT'.Size > 1
+            Width: =If(showMenu, App.Width, 80)
+      - TechAssignMessageRTE_47:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: |-
+              =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+              //Combine string as html body
+              /*
+              Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+              , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")*/
+
+              "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                  <tr>
+                  <td>
+                      <Table style="&Char(34)&"width:100% "&Char(34)&">
+                      <tr>
+                      <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+              	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+              	</div>
+              	<br>
+              	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+              	A ticket has been asssigned to you, to check additional ticket details: 
+                  <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+              	</div>
+                      </th>
+                      </tr>
+              	<br>
+                      <tr>
+                      <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+              	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                  <br>
+                  Ticket # "&rec.ID&"
+                  <br>
+                  Status: "&rec.status&"
+                  <br>
+                  <br>
+                  "&rec.description&"
+              	</div>
+                      </td>
+                      </tr>
+                  </td>
+                  </tr>
+                  </Table>
+              </table>"
+            Height: =9
+            Visible: =false
+            Width: =0
+            X: =892
+            Y: =759
+      - TicketCreatorMessageRTE_47:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: |-
+              =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+              /*
+              Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.</div>")*/
+
+              "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                  <tr>
+                  <td>
+                      <Table style="&Char(34)&"width:100% "&Char(34)&">
+                      <tr>
+                      <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+              	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+              	</div>
+              	<br>
+              	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+              	Your ticket has been created, a technician will be assigned to your case, if you would like to see additional details about your ticket: 
+                  <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+              	</div>
+                      </th>
+                      </tr>
+              	<br>
+                      <tr>
+                      <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+              	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                  <br>
+                  Ticket # "&rec.ID&"
+                  <br>
+                  Status: "&rec.status&"
+                  <br>
+                  <br>
+                  "&rec.description&"
+              	</div>
+                      </td>
+                      </tr>
+                  </td>
+                  </tr>
+                  </Table>
+              </table>"
+            Height: =99
+            Visible: =false
+            Width: =293
+            X: =988
+            Y: =40
+      - RichTextEditor2_46:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: =
+            Height: =20
+            Visible: =false
+            Width: =208
+            X: =40
+            Y: =40
+      - CSTechCheckPopup:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =CSTechCheckPopup
+            Width: =Parent.Width
+          Children:
+            - ACPopupBackground_44:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, .25)
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - ACPopupRectangle_44:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height/1.125
+                  Width: =Parent.Width/1.125
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - Rectangle8_51:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Width: =ACPopupRectangle_44.Width
+                  X: =ACPopupRectangle_44.X
+                  Y: =ACPopupRectangle_44.Y
+            - Label10_62:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =100
+                  Size: =30
+                  Text: ="Form Error"
+                  Width: =Rectangle8_51.Width
+                  X: =Rectangle8_51.X
+                  Y: =Rectangle8_51.Y
+            - Button1_50:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: =UpdateContext({CSTechCheckPopup:false});
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: ="Close"
+                  X: =(ACPopupRectangle_44.Width-Self.Width)/2 +ACPopupRectangle_44.X
+                  Y: =ACPopupRectangle_44.Height-Self.Height
+            - Label18_146:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(IsBlank(CSCTCLocationIDDropdown.Selected.Name),Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(IsBlank(CSCTCLocationIDDropdown.Selected.Name),"Location Missing", "Location OK")
+                  Width: =ACPopupRectangle_44.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Rectangle8_51.Y+Rectangle8_51.Height+15
+            - Label18_147:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(Len(Trim(CSCTCTitleInput.Text))=0,Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(Len(Trim(CSCTCTitleInput.Text))=0, "Case Number Blank","Case Number OK" )
+                  Width: =ACPopupRectangle_44.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Label18_146.Y+Label18_146.Height+10
+            - Label18_148:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(IsBlank(DatePicker2.SelectedDate),Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(IsBlank(DatePicker2.SelectedDate),"Date Blank or Invalid", "Date OK")
+                  Width: =ACPopupRectangle_44.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Label18_147.Y+Label18_147.Height+10
+            - Label18_149:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(Self.Text="Hour OK Minutes OK AM/PM OK",Color.Green, Color.Red)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(IsBlank(Dropdown5.Selected.Value),"Hour Blank","Hour OK") & If(IsBlank(Dropdown5_1.Selected.Value)," Minutes Blank"," Minutes OK") & If(IsBlank(Dropdown5_2.Selected.Value)," AM/PM Blank"," AM/PM OK")
+                  Width: =ACPopupRectangle_44.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Label18_148.Y+Label18_148.Height+10
+      - FeedbackBugReportCourtTC:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

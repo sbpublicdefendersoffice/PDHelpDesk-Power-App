@@ -1,0 +1,46 @@
+compWebHeader_3 As CanvasComponent:
+    BackgroundColor: =ColorScheme.primary
+    CompScreenSize: =1
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =82
+    Width: =App.Width
+    X: =0
+    Y: =0
+    ZIndex: =2
+
+    Rectangle3_3 As rectangle:
+        Fill: =compWebHeader_3.BackgroundColor
+        Height: =Parent.Height
+        Width: =App.Width
+        ZIndex: =1
+
+    Label9_5 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =77
+        OnSelect: =
+        Size: =If(compWebHeader_3.CompScreenSize=1, 13, 18)
+        Text: |-
+            ="COUNTY of SANTA BARBARA
+            PUBLIC DEFENDER"
+        Width: =332
+        X: =(Parent.Width-Self.Width)/2
+        Y: =(Parent.Height - Self.Height) / 2
+        ZIndex: =2
+
+    Image3_4 As image:
+        AccessibleLabel: ="County of Santa Barbara Public Defender Header Logo"
+        Height: =If(compWebHeader_3.CompScreenSize>1,Parent.Height * 0.85,Parent.Height * 0.75)
+        Image: =PUBDEF_IT__LOGO_Vector
+        OnSelect: =//Select(Parent)
+        PaddingBottom: =2
+        PaddingLeft: =3
+        PaddingRight: =2
+        PaddingTop: =2
+        Width: =Self.Height
+        X: |-
+            =//Parent.Width - Self.Width
+            Parent.Width - Self.Width - If(App.Width > 500, 10, 0)
+        Y: =(Parent.Height - Self.Height) / 2
+        ZIndex: =3
+

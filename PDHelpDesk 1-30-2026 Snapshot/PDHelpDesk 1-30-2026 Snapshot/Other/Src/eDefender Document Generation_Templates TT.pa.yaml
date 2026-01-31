@@ -1,0 +1,1030 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  eDefender Document Generation/Templates TT:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: |+
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+      OnVisible: |-
+        =ResetForm(eDefenderDGTForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({usingCamera:false,altImagePopUp:false});
+        UpdateContext({DGTPopup:false});
+    Children:
+      - eDefenderDGTMainContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: ='eDefender Document Generation/Templates TT'.Height
+            LayoutDirection: =LayoutDirection.Horizontal
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: ='eDefender Document Generation/Templates TT'.Width
+          Children:
+            - eDefenderDGTVerticalLayoutContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Height: =Parent.Height
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - eDefenderDGTHeaderContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.primary
+                        FillPortions: =0
+                        Height: |-
+                          =130
+                          //Parent.Height/11
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =//Home.Size<>1
+                          //This is the top most header container that houses the navbar links
+                          true
+                        Width: =Parent.Width
+                      Children:
+                        - DocumentGenerationTemplatesHeaderElements:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - HomeBackgroundGradient_9:
+                                  Control: HtmlViewer@2.1.0
+                                  Properties:
+                                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height
+                                    HtmlText: =Home_Background_Gradient.HtmlText
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =11
+                                    Width: =Parent.Width
+                              - eDefenderDGTHeaderLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =Color.Transparent
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height-eDefenderDGTWebHeader.Height
+                                    Size: =If('eDefender Document Generation/Templates TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                                    Text: =If('eDefender Document Generation/Templates TT'.Size=1,"Document Gen/Temp Request","Document Generation/Template Form Request")
+                                    Width: =Parent.Width
+                                    Y: =eDefenderDGTWebHeader.Height
+                              - eDefenderDGTWebHeader:
+                                  Control: CanvasComponent
+                                  ComponentName: compWebHeader
+                                  Properties:
+                                    BackgroundColor: =Color.Transparent
+                                    CompScreenSize: ='eDefender Document Generation/Templates TT'.Size
+                                    EnableFeedback: =Set(varFeedback,true)
+                                    FeedbackBool: =varFeedback
+                                    Height: |-
+                                      =82
+                                      //Parent.Height
+                                    Width: =App.Width
+                  - eDefenderDGTMainContentContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                        Height: =Parent.Height/1.21
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutOverflowY: =LayoutOverflow.Scroll
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =true
+                          //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                        Width: =Parent.Width
+                      Children:
+                        - eDefenderDGTForm:
+                            Control: Form@2.4.4
+                            Variant: Classic
+                            Layout: Vertical
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataSource: =Tickets
+                              DefaultMode: =FormMode.New
+                              Height: =Parent.Height/1.21
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NumberOfColumns: =1
+                              Width: =Parent.Width
+                              Y: =Parent.Height/5.7
+                            Children:
+                              - eDefenderDGTSpecificIssue_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="subCategory"
+                                    Default: =ThisItem.subCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =80
+                                    Required: =false
+                                    Visible: |+
+                                      =If(IsBlank(eDefenderDGTSpecificIssueDropdown.Selected.Name), false, true)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =0
+                                  Children:
+                                    - eDefenderDGTSpecificIssueLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Specific Issue"
+                                          Width: =125
+                                          Wrap: =false
+                                          X: =eDefenderDGTSpecificIssueDropdown.X
+                                          Y: ='eDefenderA/SDisclaimerLabel_5'.Y+'eDefenderA/SDisclaimerLabel_5'.Height+25
+                                    - eDefenderDGTSpecificIssueError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =eDefenderDGTSpecificIssueDropdown.Y + eDefenderDGTSpecificIssueDropdown.Height
+                                    - eDefenderDGTSpecificIssueStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =eDefenderDGTSpecificIssueLabel.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =eDefenderDGTSpecificIssueLabel.Y
+                                    - eDefenderDGTSpecificIssueDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                                          DisplayMode: =DisplayMode.View
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = eDefenderDGTSubCategoryDropdown.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =If('eDefender Document Generation/Templates TT'.Size=1, Parent.Width/1.2,Parent.Width/1.1)
+                                          X: |-
+                                            =//(Parent.Width-Self.Width)/2
+                                            30
+                                          Y: =eDefenderDGTSpecificIssueLabel.Y+eDefenderDGTSpecificIssueLabel.Height
+                                    - eDefenderA/SDisclaimerLabel_5:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(221, 79, 14, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(221, 79, 14, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =If(App.ActiveScreen.Size =1,100,50)
+                                          Size: =If('eDefender Broken File Paths TT'.Size =1,13,16)
+                                          Text: ='eDefender_A/S_Disclaimer_Label'.Text
+                                          Width: =Parent.Width
+                                          Y: =
+                              - eDefenderDGTTitle_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="title"
+                                    Default: =ThisItem.Title
+                                    DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                                    Height: =80
+                                    MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                                    Required: =false
+                                    Visible: =eDefenderDGTSpecificIssueDropdown.Selected.Name = "Template Updates"
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =1
+                                  Children:
+                                    - eDefenderDGTTitleLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          Text: ="Document/Template Name"
+                                          Width: =235
+                                          Wrap: =false
+                                          X: =eDefenderDGTSpecificIssueDropdown.X
+                                    - eDefenderDGTTitleError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =eDefenderDGTTitleInput.Y + eDefenderDGTTitleInput.Height
+                                    - eDefenderDGTTitleStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =eDefenderDGTTitleLabel.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: =eDefenderDGTTitleLabel.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          X: =eDefenderDGTTitleInput.X-Self.Width
+                                          Y: =eDefenderDGTTitleLabel.Y
+                                    - eDefenderDGTTitleInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HintText: ="Enter doc/template name"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Width: =eDefenderDGTSpecificIssueDropdown.Width
+                                          X: =eDefenderDGTSpecificIssueDropdown.X
+                                          Y: =eDefenderDGTTitleLabel.Height
+                              - eDefenderDGTMainCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="mainCategory"
+                                    Default: =ThisItem.mainCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: =If( 'eDefender Document Generation/Templates TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =2
+                                  Children:
+                                    - eDefenderDGTMainCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - eDefenderDGTMainCategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =eDefenderDGTMainCategoryDropdown.Y + eDefenderDGTMainCategoryDropdown.Height
+                                    - eDefenderDGTMainCategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =eDefenderDGTMainCategoryLabel.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =eDefenderDGTMainCategoryLabel.Y
+                                    - eDefenderDGTMainCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - eDefenderDGTSubCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="category"
+                                    Default: =ThisItem.category
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =If( 'eDefender Document Generation/Templates TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =3
+                                  Children:
+                                    - eDefenderDGTSubCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Sub Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - eDefenderDGTSubcategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =eDefenderDGTSubCategoryDropdown.Y + eDefenderDGTSubCategoryDropdown.Height
+                                    - eDefenderDGTSubcategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =eDefenderDGTSubCategoryLabel.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =eDefenderDGTSubCategoryLabel.Y
+                                    - eDefenderDGTSubCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = eDefenderDGTMainCategoryDropdown.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - eDefenderDGTFields:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =250
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =4
+                                  Children:
+                                    - Doc/TemplateDetailsLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Details for doc/template"
+                                          Width: =250
+                                          X: =eDefenderDGTSpecificIssueDropdown.X
+                                          Y: =4
+                                    - DocDetailsInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          EnableSpellCheck: =true
+                                          Font: =Font.'Open Sans'
+                                          Height: =200
+                                          HintText: =If(eDefenderDGTSpecificIssueDropdown.Selected.Name= "Template Updates", "What are some of your changes to the document.","Describe your document, also submit your template.")
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Mode: =TextMode.MultiLine
+                                          Width: =eDefenderDGTSpecificIssueDropdown.Width
+                                          X: =eDefenderDGTSpecificIssueDropdown.X
+                                          Y: ='Doc/TemplateDetailsLabel'.Y+'Doc/TemplateDetailsLabel'.Height
+                              - eDefenderDGTDescription_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="description"
+                                    Default: =ThisItem.description
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: =If( 'eDefender Document Generation/Templates TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                                    Required: =false
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =5
+                                  Children:
+                                    - eDefenderDGTDescriptionLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: =CreateTicketDescription
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - eDefenderDGTDescriptionErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =eDefenderDGTDescriptionTextInputArea.Y + eDefenderDGTDescriptionTextInputArea.Height
+                                    - eDefenderDGTDescriptionStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =eDefenderDGTDescriptionLabel.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: =eDefenderDGTDescriptionLabel.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =eDefenderDGTDescriptionLabel.Y
+                                    - eDefenderDGTDescriptionTextInputArea:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =TicketDescText
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/1.5
+                                          HintText: ="Please Describe Your Issue"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Mode: =TextMode.MultiLine
+                                          Size: =15
+                                          Visible: =eDefenderDGTDescription_DataCard.Visible
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =40
+                              - eDefenderDGTAttatchments_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Visible: =eDefenderDGTSpecificIssueDropdown.Selected.Name="New Templates"
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =6
+                                  Children:
+                                    - eDefenderDGTAttachmentControl:
+                                        Control: Attachments@2.3.0
+                                        Properties:
+                                          BorderColor: =Color.Black
+                                          Font: =Font.'Open Sans'
+                                          Height: =100
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          ItemColor: =RGBA(255, 255, 255, 1)
+                                          ItemFill: =RGBA(56, 96, 178, 1)
+                                          ItemHoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =RTEImages
+                                          Items.Name: =copyName
+                                          Items.Value: =copyName
+                                          MaxAttachments: =10
+                                          PaddingBottom: =5
+                                          PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                                          PaddingRight: =5
+                                          PaddingTop: =5
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          Width: =If('eDefender Document Generation/Templates TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                                          X: =If('eDefender Document Generation/Templates TT'.Size=1,30,(Parent.Width-Self.Width)/2)
+                                          Y: =Label35.Height+10
+                                    - Label35:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =If('eDefender Document Generation/Templates TT'.Size=1,Align.Left,Align.Center)
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =60
+                                          PaddingLeft: =0
+                                          Size: =If('eDefender Document Generation/Templates TT'.Size=1,18,30)
+                                          Text: ="* Submit your Template"
+                                          Width: |-
+                                            =//If('eDefender Document Generation/Templates TT'.Size=1,eDefenderDGTAttachmentControl.Width,500)
+                                            Parent.Width
+                                          X: |+
+                                            =If('eDefender Document Generation/Templates TT'.Size=1, 30 ,(Parent.Width-Self.Width)/2)
+                              - eDefenderDGTLocationID_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="locationId"
+                                    Default: =ThisItem.locationId
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =127
+                                    Required: =false
+                                    Update: =//Value(DataCardValue6.Text)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =7
+                                  Children:
+                                    - eDefenderDGTLocationIDLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Requesting From"
+                                          Width: =180
+                                          Wrap: =false
+                                          X: =eDefenderDGTSpecificIssueDropdown.X
+                                          Y: =10
+                                    - eDefenderDGTLocationIDErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =eDefenderDGTLocationIDDropDown.Y + eDefenderDGTLocationIDDropDown.Height
+                                    - eDefenderDGTLocationIDStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =eDefenderDGTLocationIDLabel.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          X: =eDefenderDGTLocationIDDropDown.X-Self.Width
+                                          Y: =eDefenderDGTLocationIDLabel.Y
+                                    - eDefenderDGTLocationIDDropDown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          AllowEmptySelection: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =ColorScheme.primary
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Blank()
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Locations
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =eDefenderDGTSpecificIssueDropdown.Width
+                                          X: =eDefenderDGTSpecificIssueDropdown.X
+                                          Y: =44
+                              - eDefenderDGTButtons_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: |-
+                                      =//If( 'eDefender Document Generation/Templates TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                                      125
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =8
+                                  Children:
+                                    - eDefenderDGTSubmitButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          DisplayMode: |-
+                                            =
+                                            //could use this to enable/disable button behaviour
+                                            //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+
+                                            DisplayMode.Edit
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =eDefenderDGTCancelButton.Height
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: "=\nIf(!eDefenderDGTDescriptionTextInputArea.Visible,\nUpdateContext({TicketDescText:Concatenate(If(eDefenderDGTSpecificIssueDropdown.Selected.Name = \"New Templates\",\"New Document/Template Details:\",\"Document/Template Update Details:\")&Char(13),DocDetailsInput.Text)}), Notify(\"Description is Blank\"));\n\n//Check if the title or Description are empty, if they are the form will not be submitted\nIf(\n    (Len(Trim(DocDetailsInput.Text))>0 And !IsBlank(eDefenderDGTLocationIDDropDown.Selected.Name)) And If(eDefenderDGTSpecificIssueDropdown.Selected.Name=\"New Templates\",!IsEmpty(eDefenderDGTAttachmentControl.Attachments), IsBlank(Trim(eDefenderDGTTitleInput.Text))) ,\n    UpdateContext({DataCardKey1_1: \"Title\"});\n    UpdateContext({DataCardKey5: \"Description\"});\n    //Set(DataCardKey5: \"Description\");\nSet(\n        //Temporary record\n        rec,\n        //DB operation, from Ticket table, new record, change these columns\n        Patch(\n            Tickets,\n            Defaults(Tickets),\n            {\n                Title: eDefenderDGTTitleInput.Text,\n                description: Trim(eDefenderDGTDescriptionTextInputArea.Text),\n                creatorId: userData.id,\n                mainCategory: eDefenderDGTMainCategoryDropdown.Selected.ID,\n                category: eDefenderDGTSubCategoryDropdown.Selected.ID,\n                subCategory: eDefenderDGTSpecificIssueDropdown.Selected.ID,\n                locationId: eDefenderDGTLocationIDDropDown.Selected.ID,\n                status: \"open\",\n                metricDate: Concatenate(\n                    Month(Today()),\n                    \"/\",\n                    Year(Today())\n                ),\n                hasAttachment: If(\n                    IsEmpty(eDefenderDGTAttachmentControl.Attachments),\n                    0,\n                    1\n                ),\n                //Automation rules table is used to assign tickets\n                assignedTo: If(\n                    IsEmpty(\n                        Filter(\n                            'Ticket Automation Rules',\n                            categoryId = eDefenderDGTMainCategoryDropdown.Selected.ID && locationId = eDefenderDGTLocationIDDropDown.Selected.ID\n                        )\n                    ),\n                    0,\n                    LookUp(\n                        'Ticket Automation Rules',\n                        categoryId = eDefenderDGTMainCategoryDropdown.Selected.ID && locationId = eDefenderDGTLocationIDDropDown.Selected.ID,\n                        userID\n                    )\n                )\n            }\n        )\n    );\n\nPatch(\n    Tickets, \n    LookUp(Tickets,ID = rec.ID),\n    {\n        Title: \"# \"&rec.ID&\" \"&If(eDefenderDGTSpecificIssueDropdown.Selected.Name=\"New Templates\",\"New Doc/Template Request -\",\"Doc/Template Update Request -\")&eDefenderDGTTitleInput.Text\n    });\n// for the attachments, run power automate flow for each attached file\n    ForAll(\n        eDefenderDGTAttachmentControl.Attachments As Attachment,\n               /*AttachFiles.Run(\n            rec.ID,\n            {\n                file: {\n                    contentBytes: Value,\n                    name: Name\n                }\n            }\n        )*/\nIf(Left(Attachment.Value,6) = \"appres\", \n        AttachFiles.Run(\n            rec.ID,\n            {\n                file:{\n                    contentBytes: Attachment.Value,\n                    name: Attachment.Name\n                }\n            }\n        ) ;,\n\n\nWith({varHTMLTable: Split(Attachment.Name , \"<img\")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find(\"<img\",Attachment.Name)+32},With({varB64End:Find(\"\"\"\",Mid(Attachment.Name,varB64Start))-1},CopyPasteTest.Run(Mid(Attachment.Name,varB64Start,varB64End),Attachment.Value & Text(Now(),DateTimeFormat.UTC) &\".png\", rec.ID)\n))))\n        )\n    );\n    \n    /*SMTP.SendEmailV3(\n        {\n            From: \"sbpdhelpdesk@outlook.com\",\n            To: userData.email,\n            Subject: \"Help Desk Ticket Received\",\n            Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=\"https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a>.</div>\"\n        }\n    );*/\n    /*If(\n        rec.assignedTo > 0,\n        SMTP.SendEmailV3(\n            {\n                From: \"sbpdhelpdesk@outlook.com\",\n                To: LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n                Subject: \"Help Desk Ticket Assigned\",\n                Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a> to view more details for the ticket.</div>\"\n            }\n        );\n    );*/\nSet(rec,Patch(rec,{description:Substitute(rec.description,Char(13),\"<br>\")}));\n//Power automate flow, sends email to ticket creator \nSendEmail.Run(\n            userData.email,\n        \"Help Desk Ticket Recieved\",\n        //Email Message body\n        TicketCreatorMessageRTE_1.HtmlText,\n        Text(Blank())\n    );\n    // If the ticket it assigned to someone, send them an email\n    If(\n        rec.assignedTo > 0,\n        SendEmail.Run(\n                LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n            \"Help Desk Ticket Assigned\",\n            //Email message body\n            TechAssignMessageRTE_1.HtmlText,\n            Text(Blank())\n        );\nTicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,\"Ticket #\"&rec.ID&\" has been created. Touch this notification for more information.\"),    TicketCreatedUser.Run(userData.email,rec.ID,\"Ticket #\"&rec.ID&\" has been created on your behalf. Touch this notification for more information.\")\n    );\n    //Reset the form upon completion\n    ResetForm(eDefenderDGTForm);\n    Navigate(Success);\n\n);\n// variables that control color elements\n    UpdateContext({CreateTicketTitle: \"Title is Required\"});\n    UpdateContext({CreateTicketDescription: \"Description is Required\"});\n    UpdateContext({DGTPopup:true});\n"
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Submit"
+                                          Width: =eDefenderDGTCancelButton.Width
+                                          X: =eDefenderDGTCancelButton.X + (Self.Width*1.3)
+                                          Y: =eDefenderDGTCancelButton.Y
+                                    - eDefenderDGTCancelButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.orange
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                                          OnSelect: |-
+                                            =ResetForm(eDefenderDGTForm);
+                                            Navigate(Home);
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Cancel"
+                                          Width: =Parent.Width/3
+                                          X: =If('eDefender Document Generation/Templates TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                                          Y: =Parent.Height - (Self.Height *2)
+                  - eDefenderDGTFooter:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(255,255,255, 1)
+                        FillPortions: =0
+                        Height: =60
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |+
+                          ='eDefender Document Generation/Templates TT'.Size =1
+                        Width: =Parent.Width
+                      Children:
+                        - eDefenderDGTMobileMenu:
+                            Control: CanvasComponent
+                            ComponentName: compMobileMenu
+                            Properties:
+                              BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                              ForegroundColor: |-
+                                =//RGBA(70, 130, 180, 1)
+                                ColorScheme.primary
+                              Height: =Parent.Height
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NavigationItems: |-
+                                =// IF adimn or tech show this table, if not show Staff table
+                                gblNavItems
+                              SelectedItemBackground: =Color.LightGray
+                              Width: =Parent.Width
+      - eDefenderDGTBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =eDefenderDGTHeaderLabel.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =ResetForm(eDefenderDGTForm); Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(eDefenderDGTHeaderContainer.Height-eDefenderDGTHeaderLabel.Height)/1.05
+      - eDefenderDGTWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, App.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='eDefender Document Generation/Templates TT'.Size > 1
+            Width: =If(showMenu, App.Width, 80)
+      - DGTPopup:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =DGTPopup
+            Width: =Parent.Width
+          Children:
+            - ACPopupBackground_3:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, .25)
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - ACPopupRectangle_3:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height/1.125
+                  Width: =Parent.Width/1.125
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - Rectangle8_10:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Width: =ACPopupRectangle_3.Width
+                  X: =ACPopupRectangle_3.X
+                  Y: =ACPopupRectangle_3.Y
+            - Label10_21:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =100
+                  Size: =30
+                  Text: ="Form Error"
+                  Width: =Rectangle8_10.Width
+                  X: =Rectangle8_10.X
+                  Y: =Rectangle8_10.Y
+            - Button1_9:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: =UpdateContext({DGTPopup:false})
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: ="Close"
+                  X: =(ACPopupRectangle_3.Width-Self.Width)/2 +ACPopupRectangle_3.X
+                  Y: =ACPopupRectangle_3.Height-Self.Height
+            - Label18_18:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(IsBlank(eDefenderDGTLocationIDDropDown.Selected.Name),Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: |+
+                    =If(IsBlank(eDefenderDGTLocationIDDropDown.Selected.Name),"Location Missing", "Location OK")
+
+                  Width: =ACPopupRectangle_3.Width
+                  X: =ACPopupRectangle_3.X
+                  Y: =Rectangle8_10.Y+Rectangle8_10.Height+15
+            - Label18_19:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(Len(Trim(DocDetailsInput.Text))=0,Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If( Len(Trim(DocDetailsInput.Text))=0 ,If(eDefenderDGTSpecificIssueDropdown.Selected.Name = "New Templates","Doc Details Blank","Doc Title Blank"), If(eDefenderDGTSpecificIssueDropdown.Selected.Name = "New Templates","Doc Details OK","Doc Title OK"))
+                  Width: =ACPopupRectangle_3.Width
+                  X: =ACPopupRectangle_3.X
+                  Y: =Label18_18.Y+Label18_18.Height+10
+            - Label18_20:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: '=If(eDefenderDGTSpecificIssueDropdown.Selected.Name="New Templates",If(IsEmpty(eDefenderDGTAttachmentControl.Attachments),Color.Red,Color.Green), If(IsBlank(Trim(eDefenderDGTTitleInput.Text)),Color.Red,Color.Green)) '
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: '=If(eDefenderDGTSpecificIssueDropdown.Selected.Name="New Templates",If(IsEmpty(eDefenderDGTAttachmentControl.Attachments),"Template Missing","Template OK"), If(IsBlank(Trim(eDefenderDGTTitleInput.Text)),"Changes/Comments Blank","Changes/Comments OK")) '
+                  Width: =ACPopupRectangle_3.Width
+                  X: =ACPopupRectangle_3.X
+                  Y: =Label18_19.Y+Label18_19.Height+10
+      - FeedbackBugReportDocGen:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: ='eDefender Document Generation/Templates TT'.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

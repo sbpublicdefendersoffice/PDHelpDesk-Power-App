@@ -1,0 +1,1759 @@
+"'Case Support Disc Burning TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm(CSDiscBurningForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        UpdateContext({cdCount:0});
+        
+        ClearCollect(cdItems,
+        {
+            fileName:"SpongebobEp1.mp4",
+            filePath:"V:/Pubdef/TV/SpongebobSquarepantsSeason1"
+        });
+        
+        ClearCollect(CDsToBurn,
+        {
+            number:cdCount,
+            cdContents: cdItems,
+            copies:1
+        });
+        
+        Clear(CDsToBurn);
+
+    CSDiscBurningMainContainer As groupContainer.horizontalAutoLayoutContainer:
+        Height: ='Case Support Disc Burning TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='Case Support Disc Burning TT'.Width
+        ZIndex: =1
+
+        CSDiscBurningVerticalLayoutContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            CSDiscBurningHeaderContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                DiscBurningHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =4
+
+                    HomeBackgroundGradient_52 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    CSDiscBurningHeaderLabel As label:
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-CSDiscBurningWebHeader.Height
+                        Size: =If('Case Support Disc Burning TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Disc Burning Request Form"
+                        Width: =Parent.Width
+                        Y: =CSDiscBurningWebHeader.Height
+                        ZIndex: =2
+
+                    CSDiscBurningWebHeader As compWebHeader:
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='Case Support Disc Burning TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        ZIndex: =3
+
+            CSDiscBurningMainContentContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                CSDiscBurningForm As form:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    CSDiscBurningTitle_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        CSDiscBurningTitleLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Case Number"
+                            Width: =130
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSDiscBurningTitleError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =65
+                            ZIndex: =3
+
+                        CSDiscBurningTitleStarVisible As label:
+                            Align: =Align.Center
+                            Color: =CSDiscBurningTitleLabel.Color
+                            Height: =CSDiscBurningTitleLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSDiscBurningTitleLabel.Y
+                            ZIndex: =4
+
+                        CSDiscBurningTitleInput As text:
+                            Default: =""
+                            Height: =35
+                            HintText: ="Please Enter Case Number"
+                            Width: =If('Case Support Disc Burning TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSDiscBurningMainCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Disc Burning TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        CSDiscBurningMainCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSDiscBurningMainCategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =CSDiscBurningMainCategoryDropdown.Y + CSDiscBurningMainCategoryDropdown.Height
+                            ZIndex: =3
+
+                        CSDiscBurningMainCategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSDiscBurningMainCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =10
+                            ZIndex: =4
+
+                        CSDiscBurningMainCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSDiscBurningSubCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Disc Burning TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        CSDiscBurningSubCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSDiscBurningSubcategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =73
+                            ZIndex: =3
+
+                        CSDiscBurningSubcategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSDiscBurningSubCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSDiscBurningSubCategoryLabel.Y
+                            ZIndex: =4
+
+                        CSDiscBurningSubCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = CSDiscBurningMainCategoryDropdown.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSDiscBurningFields As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =Container10.Height+Container11.Height
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        Container11 As groupContainer.manualLayoutContainer:
+                            Height: =Label25.Y+50
+                            LayoutGridColumns: =6
+                            LayoutGridRows: =6
+                            Visible: =!IsBlank(Gallery9.Selected)
+                            Width: =Parent.Width
+                            Y: =Container10.Height
+                            ZIndex: =1
+
+                            Group17 As group:
+                                Height: =5
+                                Width: =5
+                                X: =40
+                                Y: =40
+                                ZIndex: =18
+
+                                AddItemsToCDHeader As rectangle:
+                                    Fill: =ColorScheme.primary
+                                    Height: =50
+                                    Width: =CSDiscBurningTitleInput.Width
+                                    X: =30
+                                    Y: =20
+                                    ZIndex: =10
+
+                                AddItemsToCDHeaderTitle As label:
+                                    Align: =Align.Center
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Height: =50
+                                    Size: =Label19.Size
+                                    Text: |-
+                                        ="Enter Items for Request #"&Gallery9.Selected.number
+                                    Width: =AddItemsToCDHeader.Width
+                                    X: =30
+                                    Y: =AddItemsToCDHeader.Y
+                                    ZIndex: =11
+
+                                Rectangle6 As rectangle:
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =If('Case Support Disc Burning TT'.Size=1,150,50)
+                                    Width: =CSDiscBurningTitleInput.Width
+                                    X: =30
+                                    Y: =Label22.Y+Label22.Height
+                                    ZIndex: =12
+
+                                Label22 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Text: ="File Name"
+                                    Width: =If('Case Support Disc Burning TT'.Size=1,Rectangle6.Width,Rectangle6.Width/2)
+                                    X: =30
+                                    Y: =AddItemsToCDHeader.Y+AddItemsToCDHeader.Height
+                                    ZIndex: =13
+
+                                Label22_1 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Text: ="File Path"
+                                    Width: |
+                                        =Label22.Width
+                                    X: =If('Case Support Disc Burning TT'.Size=1,30,Label22.X+Label22.Width)
+                                    Y: =If('Case Support Disc Burning TT'.Size=1,TextInput4.Y+TextInput4.Height+5,AddItemsToCDHeader.Y+AddItemsToCDHeader.Height)
+                                    ZIndex: =14
+
+                                TextInput4_1 As text:
+                                    Default: =If(IsBlank(Gallery7.Selected),Blank(),Gallery7.Selected.filePath)
+                                    Width: =Label22.Width-10
+                                    X: =If('Case Support Disc Burning TT'.Size=1,35,TextInput4.X + TextInput4.Width+10)
+                                    Y: =Label22_1.Y+Label22_1.Height+5
+                                    ZIndex: =16
+
+                                TextInput4 As text:
+                                    Default: =If(IsBlank(Gallery7.Selected),Blank(),Gallery7.Selected.fileName)
+                                    Width: =Label22.Width-10
+                                    X: =35
+                                    Y: =If('Case Support Disc Burning TT'.Size=1,Label22.Y+Label22.Height+5,Rectangle6.Y+Rectangle6.Height-Self.Height-5)
+                                    ZIndex: =17
+
+                                Button1 As button:
+                                    Fill: =ColorScheme.primary
+                                    OnSelect: |-
+                                        =Clear(cdItems);
+                                        
+                                        ClearCollect(cdItems,LookUp(CDsToBurn, Gallery9.Selected.number = number).cdContents);
+                                        
+                                        If(IsBlank(Gallery7.Selected),
+                                        
+                                        Collect(cdItems, {fileName:TextInput4.Text,filePath:TextInput4_1.Text});,
+                                        
+                                        Patch(cdItems, LookUp(cdItems, Gallery7.Selected.fileName = fileName && Gallery7.Selected.filePath =filePath),
+                                        {
+                                            fileName:TextInput4.Text,
+                                            filePath:TextInput4_1.Text
+                                        
+                                        }););
+                                        
+                                        Patch(CDsToBurn, LookUp(CDsToBurn, Gallery9.Selected.number = number), 
+                                        {
+                                            cdContents:cdItems
+                                        });
+                                        
+                                        
+                                        Clear(cdItems);
+                                        Reset(Gallery7);
+                                        Reset(TextInput4);
+                                        Reset(TextInput4_1);
+                                    Text: =If(IsBlank(Gallery7.Selected),"Add to Disc", "Update item")
+                                    X: =If('Case Support Disc Burning TT'.Size=1,(Parent.Width-Self.Width)/2,(Parent.Width-Self.Width)/2 -Rectangle6.X)
+                                    Y: =Rectangle6.Y+Rectangle6.Height+30
+                                    ZIndex: =18
+
+                            Group16 As group:
+                                Height: =5
+                                Width: =5
+                                X: =40
+                                Y: =40
+                                ZIndex: =21
+
+                                ItemListHeader As rectangle:
+                                    Fill: =ColorScheme.primary
+                                    Height: =50
+                                    OnSelect: =
+                                    Visible: =!IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: =CSDiscBurningTitleInput.Width
+                                    X: =30
+                                    Y: =Button1.Y+Button1.Height+20
+                                    ZIndex: =1
+
+                                ItemListHeaderTitle As label:
+                                    Align: =Align.Center
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Height: =50
+                                    OnSelect: ='Case Support Disc Burning TT'.Size>1 && !IsEmpty(Gallery9.Selected.cdContents)
+                                    Size: =Label19.Size
+                                    Text: |-
+                                        ="Items to burn for Request #"&Gallery9.Selected.number
+                                    Visible: =!IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: =ItemListHeader.Width
+                                    X: =30
+                                    Y: =ItemListHeader.Y
+                                    ZIndex: =2
+
+                                Label22_2 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    OnSelect: ='Case Support Disc Burning TT'.Size>1 && !IsEmpty(Gallery9.Selected.cdContents)
+                                    Text: ="File Name"
+                                    Visible: ='Case Support Disc Burning TT'.Size>1 && !IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: |
+                                        =Rectangle6.Width/2
+                                    X: =30
+                                    Y: =ItemListHeader.Y+ItemListHeader.Height
+                                    ZIndex: =3
+
+                                Gallery7 As gallery.variableTemplateHeightGallery:
+                                    '#CopilotOverlayLabel': ="Filtered"
+                                    BorderThickness: =1
+                                    Default: ={}
+                                    DelayItemLoading: =true
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =200
+                                    Items: =Gallery9.Selected.cdContents
+                                    Layout: =Layout.Vertical
+                                    LoadingSpinner: =LoadingSpinner.Data
+                                    TemplatePadding: =0
+                                    TemplateSize: =50
+                                    Visible: ='Case Support Disc Burning TT'.Size>1 && !IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: =AddItemsToCDHeader.Width
+                                    X: =30
+                                    Y: |
+                                        =Label22_2.Y+Label22_2.Height
+                                    ZIndex: =4
+
+                                    Label24 As label:
+                                        Align: =Align.Center
+                                        BorderThickness: =1
+                                        Height: =50
+                                        OnSelect: =Select(Parent)
+                                        Text: =ThisItem.fileName
+                                        Width: =Parent.TemplateWidth/2
+                                        ZIndex: =1
+
+                                    Label24_1 As label:
+                                        Align: =Align.Center
+                                        BorderThickness: =1
+                                        Height: =50
+                                        OnSelect: =Select(Parent)
+                                        Text: =ThisItem.filePath
+                                        Width: =Parent.TemplateWidth/2
+                                        X: =Label24.X+Label24.Width
+                                        ZIndex: =2
+
+                                    Button15 As button:
+                                        Color: =RGBA(0, 0, 0, 0)
+                                        Fill: =RGBA(0, 0, 0, 0)
+                                        Height: =50
+                                        HoverFill: =RGBA(99, 139, 44, .35)
+                                        OnSelect: =Select(Parent)
+                                        PressedFill: =RGBA(99, 139, 44, .50)
+                                        Text: ="Edit Entry"
+                                        Width: =Parent.TemplateWidth/2
+                                        ZIndex: =3
+
+                                    Button15_1 As button:
+                                        Color: =RGBA(0, 0, 0, 0)
+                                        Fill: =RGBA(0, 0, 0, 0)
+                                        Height: =50
+                                        HoverFill: =RGBA(151, 0, 0, .35)
+                                        OnSelect: |-
+                                            =Clear(cdItems);
+                                            Collect(cdItems,LookUp(CDsToBurn,Gallery9.Selected.number = number).cdContents);
+                                            
+                                            Remove(cdItems,ThisItem);
+                                            
+                                            Patch(CDsToBurn,LookUp(CDsToBurn,Gallery9.Selected.number=number),
+                                            {
+                                                cdContents:cdItems
+                                            });
+                                            Clear(cdItems);
+                                        PressedFill: =RGBA(151, 0, 0, .50)
+                                        Text: ="Delete Entry"
+                                        Width: =Parent.TemplateWidth/2
+                                        X: =Button15.X+Button15.Width
+                                        ZIndex: =4
+
+                                Label22_3 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    OnSelect: ='Case Support Disc Burning TT'.Size>1 && !IsEmpty(Gallery9.Selected.cdContents)
+                                    Text: ="File Path"
+                                    Visible: ='Case Support Disc Burning TT'.Size>1 && !IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: |
+                                        =Rectangle6.Width/2
+                                    X: =Label22_2.X+Label22_2.Width
+                                    Y: =ItemListHeader.Y+ItemListHeader.Height
+                                    ZIndex: =5
+
+                                Label25 As label:
+                                    OnSelect: ='Case Support Disc Burning TT'.Size>1 && !IsEmpty(Gallery9.Selected.cdContents)
+                                    Text: |-
+                                        ="Copies:"
+                                    Visible: =!IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: =72
+                                    X: =(Parent.Width-Self.Width)/2-Self.Width
+                                    Y: =If('Case Support Disc Burning TT'.Size=1,'Video/AudioEditingMobileGallery_4'.Y+'Video/AudioEditingMobileGallery_4'.Height+10,Gallery7.Y+Gallery7.Height+10)
+                                    ZIndex: =6
+
+                                Label26 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =20
+                                    OnSelect: ='Case Support Disc Burning TT'.Size>1 && !IsEmpty(Gallery9.Selected.cdContents)
+                                    Text: =Gallery9.Selected.copies
+                                    Visible: =!IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: =40
+                                    X: =Icon6.X+Icon6.Width+10
+                                    Y: =Label25.Y+(Label25.Height)/4
+                                    ZIndex: =7
+
+                                "'Video/AudioEditingMobileGallery_4' As gallery.galleryVertical":
+                                    '#CopilotOverlayLabel': ="Filtered"
+                                    BorderThickness: =1
+                                    Default: |-
+                                        =//First(MyTicketsGallery.AllItems)
+                                        {}
+                                    DelayItemLoading: |-
+                                        =//false
+                                        true
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =300
+                                    Items: =Gallery9.Selected.cdContents
+                                    Layout: =Layout.Vertical
+                                    LoadingSpinner: |-
+                                        =//LoadingSpinner.None
+                                        LoadingSpinner.Controls
+                                    TemplatePadding: =10
+                                    TemplateSize: |-
+                                        =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                        //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+                                        
+                                        If(MyTickets.Size > 1, 250, 240)
+                                    Transition: =Transition.Push
+                                    Visible: ='Case Support Disc Burning TT'.Size=1 && !IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: =ItemListHeader.Width
+                                    WrapCount: =RoundDown((Parent.Width / 320), 0)
+                                    X: =Rectangle10_1.X
+                                    Y: =ItemListHeader.Y+ItemListHeader.Height
+                                    ZIndex: =8
+
+                                    Rectangle6_9 As rectangle:
+                                        BorderColor: =RGBA(0, 0, 0, 0)
+                                        BorderThickness: =25
+                                        Fill: =RGBA(255, 255, 255, 1)
+                                        Height: =Image6_9.Height
+                                        OnSelect: =Select(Parent)
+                                        Width: =Image6_9.Width
+                                        ZIndex: =1
+
+                                    Image6_9 As image:
+                                        Height: |-
+                                            =//250
+                                            Parent.TemplateHeight
+                                        Image: |-
+                                            ="data:image/svg+xml," & EncodeUrl(
+                                                "<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+                                            <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+                                            <svg version='1.1'
+                                                xmlns='http://www.w3.org/2000/svg'
+                                                xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 " & Self.Width & " " & Self.Height & "' width='" & Self.Width & "' height='" & Self.Height & "'>
+                                                <defs>" &
+                                                // ----- Box for fill
+                                             "<path d='" &
+                                             // Upper left
+                                             "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0,0) &
+                                                // Upper right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                                // Lower right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                                // Lower left
+                                             "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                             "Z' id='box' stroke='" & "#ff0000" & "' stroke-width='" & 0 & "'></path>
+                                                </defs>
+                                                <g>
+                                                    <g>
+                                                        <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>
+                                                            <feFlood></feFlood>
+                                                            <feComposite in2='SourceAlpha' operator='in'></feComposite>
+                                                            <feGaussianBlur stdDeviation='" & 5 & "'></feGaussianBlur>
+                                                            <feOffset dx='" & 0 & "' dy='" & 0 & "' result='afterOffset'></feOffset>
+                                                            <feFlood flood-color='" & "#000000" & "' flood-opacity='" & Substitute(Text(0.5), ",", ".") & "'></feFlood>
+                                                            <feComposite in2='afterOffset' operator='in'></feComposite>
+                                                            <feMorphology operator='dilate' radius='1'></feMorphology>
+                                                            <feComposite in2='SourceAlpha' operator='out'></feComposite>
+                                                        </filter>" &
+                                                        // ----- Box for shadow
+                                             "<path d='" &
+                                             // Upper left
+                                             "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                                // Upper right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                                // Lower right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                                // Lower left
+                                             "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                             "Z' id='Component1' filter='url(#shadow)'></path>
+                                                    </g>
+                                                    <use xlink:href='#box' opacity='1' fill='" & "#ffffff" & "' fill-opacity='" & Substitute(Text(0), ",", ".") & "'></use>
+                                                </g>
+                                                <g>
+                                                    " &
+                                                    // ----- Edge
+                                             If(
+                                                    true,
+                                                    Switch(
+                                                        "left",
+                                                        "left",// -- Position: left
+                                                        "<path d='" &
+                                                    // Upper left
+                                             "M" & Max(5 * 3 - 0, 0) + 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                    // Upper right
+                                             "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                    // Lower right
+                                             "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                    // Lower left
+                                             "L" & Max(5 * 3 - 0, 0) + 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                             "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>",
+                                                         "right",// -- Position: right
+                                                        "<path d='" &
+                                                    // Upper left
+                                             "M" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                    // Upper right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                    // Lower right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                    // Lower left
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                             "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>"
+                                                       
+                                                    )
+                                                ) & "
+                                                </g>
+                                            </svg>"
+                                            )
+                                        OnSelect: =Select(Parent)
+                                        Width: |-
+                                            =//329
+                                            Parent.TemplateWidth
+                                        ZIndex: =2
+
+                                    btnBkg_9 As button:
+                                        Fill: =RGBA(255, 255, 255, 1)
+                                        Height: =Parent.TemplateHeight
+                                        HoverFill: =Self.Fill
+                                        OnSelect: =Select(Parent)
+                                        PressedFill: =Self.Fill
+                                        RadiusBottomLeft: =0
+                                        RadiusBottomRight: =0
+                                        RadiusTopLeft: =0
+                                        RadiusTopRight: =0
+                                        Text: =""
+                                        Visible: =false
+                                        Width: =Parent.TemplateWidth
+                                        ZIndex: =3
+
+                                    TitleLabel_9 As label:
+                                        FontWeight: =FontWeight.Semibold
+                                        Height: =54
+                                        OnSelect: =Select(Parent)
+                                        Size: =12
+                                        Text: =If(ThisItem.IsSelected,"Selected","")
+                                        Width: |-
+                                            =//208
+                                            Parent.TemplateWidth - Icon18_8.Width - 47
+                                        X: =24
+                                        Y: =27
+                                        ZIndex: =4
+
+                                    DateExpiredLabel_8 As label:
+                                        Height: |-
+                                            =//25
+                                            34
+                                        OnSelect: =Select(Parent)
+                                        Size: =11
+                                        Text: =ThisItem.filePath
+                                        Width: =StartedLabelTextValue_7.Width
+                                        X: =ExpiresLabelText_7.X
+                                        Y: =ExpiresLabelText_7.Y+ExpiresLabelText_7.Height
+                                        ZIndex: =5
+
+                                    ExpiresLabelText_7 As label:
+                                        Align: =Align.Center
+                                        BorderThickness: =1
+                                        Height: =25
+                                        OnSelect: =Select(Parent)
+                                        Size: =10
+                                        Text: ="File Path"
+                                        Visible: |-
+                                            =//is_admin
+                                            true
+                                        Width: |-
+                                            =//154
+                                            80
+                                        X: |-
+                                            =//67
+                                            StaratedLabelText_7.X
+                                        Y: |-
+                                            =//180
+                                            //Parent.TemplateHeight - Self.Height - 27
+                                            Rectangle19_5.Y+Rectangle19_5.Height+10
+                                        ZIndex: =6
+
+                                    Rectangle20_5 As rectangle:
+                                        BorderThickness: =1
+                                        Fill: =RGBA(0, 0, 0, 0)
+                                        Height: =ExpiresLabelText_7.Height+DateExpiredLabel_8.Height
+                                        OnSelect: =Select(Parent)
+                                        Width: =Parent.TemplateWidth/1.25
+                                        X: =ExpiresLabelText_7.X
+                                        Y: =ExpiresLabelText_7.Y
+                                        ZIndex: =10
+
+                                    OverlapButton_7 As button:
+                                        BorderThickness: =0
+                                        Fill: =Color.Transparent
+                                        Height: |-
+                                            =//220
+                                            Parent.TemplateHeight
+                                        HoverFill: =Self.Fill
+                                        OnSelect: |-
+                                            =
+                                            
+                                            // Sharepoint List
+                                            UpdateContext({videoRecord:ThisItem})
+                                        PressedFill: =Self.Fill
+                                        Text: =""
+                                        Width: |-
+                                            =//303
+                                            Parent.TemplateWidth
+                                        X: |-
+                                            =//24
+                                            (Parent.TemplateWidth - Self.Width) / 2
+                                        Y: |-
+                                            =//15
+                                            (Parent.TemplateHeight - Self.Height) / 2
+                                        ZIndex: =11
+
+                                    Icon18_8 As icon.CancelBadge:
+                                        Height: =32
+                                        Icon: =Icon.CancelBadge
+                                        OnSelect: |-
+                                            =Clear(cdItems);
+                                            Collect(cdItems,LookUp(CDsToBurn,Gallery9.Selected.number = number).cdContents);
+                                            
+                                            Remove(cdItems,ThisItem);
+                                            
+                                            Patch(CDsToBurn,LookUp(CDsToBurn,Gallery9.Selected.number=number),
+                                            {
+                                                cdContents:cdItems
+                                            });
+                                            Clear(cdItems);
+                                        Width: =32
+                                        X: =Parent.TemplateWidth - Self.Width - 23
+                                        Y: =27
+                                        ZIndex: =12
+
+                                    Group11_5 As group:
+                                        Height: =5
+                                        Width: =5
+                                        X: =60
+                                        Y: =60
+                                        ZIndex: =16
+
+                                        StartedLabelTextValue_7 As label:
+                                            Height: |-
+                                                =//25
+                                                34
+                                            OnSelect: =Select(Parent)
+                                            Size: =11
+                                            Text: =ThisItem.fileName
+                                            Width: |-
+                                                =//143
+                                                Rectangle19_5.Width
+                                            Wrap: =false
+                                            X: |-
+                                                =//89
+                                                StaratedLabelText_7.X
+                                            Y: |
+                                                =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                //((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                                StaratedLabelText_7.Y+StaratedLabelText_7.Height
+                                            ZIndex: =7
+
+                                        StaratedLabelText_7 As label:
+                                            Align: =Align.Center
+                                            BorderThickness: =1
+                                            Height: =25
+                                            OnSelect: =Select(Parent)
+                                            Size: =10
+                                            Text: ="File Name"
+                                            Width: =80
+                                            X: =(Parent.TemplateWidth-Self.Width)/8
+                                            Y: |
+                                                =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                ((Parent.TemplateHeight - Self.Height) / 2.8) 
+                                            ZIndex: =8
+
+                                        Rectangle19_5 As rectangle:
+                                            BorderThickness: =1
+                                            Fill: =RGBA(0, 0, 0, 0)
+                                            Height: =StaratedLabelText_7.Height+StartedLabelTextValue_7.Height
+                                            OnSelect: =Select(Parent)
+                                            Width: =Parent.TemplateWidth/1.25
+                                            X: =StaratedLabelText_7.X
+                                            Y: =StaratedLabelText_7.Y
+                                            ZIndex: =9
+
+                                Button10 As button:
+                                    DisplayMode: =DisplayMode.View
+                                    Fill: =ColorScheme.primary
+                                    Height: =20
+                                    OnSelect: ='Case Support Disc Burning TT'.Size>1 && !IsEmpty(Gallery9.Selected.cdContents)
+                                    RadiusBottomLeft: =2
+                                    RadiusBottomRight: =2
+                                    RadiusTopLeft: =2
+                                    RadiusTopRight: =2
+                                    Text: =""
+                                    Visible: =!IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: =20
+                                    X: =Icon6.X-4
+                                    Y: =Icon6.Y-4
+                                    ZIndex: =9
+
+                                Button10_1 As button:
+                                    DisplayMode: =DisplayMode.View
+                                    Fill: =ColorScheme.primary
+                                    Height: =20
+                                    OnSelect: ='Case Support Disc Burning TT'.Size>1 && !IsEmpty(Gallery9.Selected.cdContents)
+                                    RadiusBottomLeft: =2
+                                    RadiusBottomRight: =2
+                                    RadiusTopLeft: =2
+                                    RadiusTopRight: =2
+                                    Text: =""
+                                    Visible: =!IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: =20
+                                    X: =Icon5.X-4
+                                    Y: =Icon5.Y-4
+                                    ZIndex: =15
+
+                                Icon6 As icon.HorizontalLine:
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =Color.Transparent
+                                    Height: =12
+                                    HoverFill: =
+                                    Icon: =Icon.HorizontalLine
+                                    OnSelect: |-
+                                        =If(Gallery9.Selected.copies>1,
+                                        Patch(CDsToBurn,LookUp(CDsToBurn,number = Gallery9.Selected.number),
+                                        {
+                                            copies:Gallery9.Selected.copies-1
+                                        }
+                                        )
+                                        )
+                                    Visible: =!IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: =12
+                                    X: =Label25.X+Label25.Width+5
+                                    Y: =Label25.Y+(Label25.Height)/3
+                                    ZIndex: =19
+
+                                Icon5 As icon.Add:
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Height: =12
+                                    HoverFill: =
+                                    Icon: =Icon.Add
+                                    OnSelect: |-
+                                        =If(Gallery9.Selected.copies<=99,
+                                        Patch(CDsToBurn,LookUp(CDsToBurn,number = Gallery9.Selected.number),
+                                        {
+                                            copies:Gallery9.Selected.copies+1
+                                        }
+                                        )
+                                        )
+                                    Visible: =!IsEmpty(Gallery9.Selected.cdContents)
+                                    Width: =12
+                                    X: =Label26.X+Label26.Width+10
+                                    Y: =Label25.Y+(Label25.Height)/3
+                                    ZIndex: =20
+
+                        Container10 As groupContainer.manualLayoutContainer:
+                            Height: =280
+                            LayoutGridColumns: =6
+                            LayoutGridRows: =6
+                            Width: =Parent.Width
+                            ZIndex: =2
+
+                            AddCDGalleryHeader As rectangle:
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Width: =CSDiscBurningTitleInput.Width
+                                X: =30
+                                Y: =20
+                                ZIndex: =1
+
+                            Label19 As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Size: =If('Case Support Disc Burning TT'.Size=1,15,20)
+                                Text: ="CD's"
+                                Width: =AddCDGalleryHeader.Width
+                                Y: =AddCDGalleryHeader.Y
+                                ZIndex: =2
+
+                            Gallery9 As gallery.galleryVertical:
+                                '#CopilotOverlayLabel': ="Filtered"
+                                BorderThickness: =1
+                                Default: ={}
+                                DelayItemLoading: =true
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =200
+                                Items: =CDsToBurn
+                                Layout: =Layout.Vertical
+                                LoadingSpinner: =LoadingSpinner.Data
+                                TemplatePadding: =0
+                                TemplateSize: =If('Case Support Disc Burning TT'.Size=1,Parent.Width/2,Parent.Width/8)
+                                Width: =AddCDGalleryHeader.Width
+                                WrapCount: =If('Case Support Disc Burning TT'.Size=1,2,4)
+                                X: =30
+                                Y: =AddCDGalleryHeader.Y+AddCDGalleryHeader.Height
+                                ZIndex: =3
+
+                                Button13 As button:
+                                    Fill: =ColorScheme.primary
+                                    Height: =Parent.TemplateHeight/1.25
+                                    OnSelect: =Select(Parent)
+                                    Text: =""
+                                    Width: =Parent.TemplateWidth/1.25
+                                    X: =(Parent.TemplateWidth-Self.Width)/2
+                                    Y: =(Parent.TemplateHeight-Self.Height)/2
+                                    ZIndex: =1
+
+                                Circle1 As circle:
+                                    Fill: =RGBA(237, 237, 237, 1)
+                                    OnSelect: =Select(Parent)
+                                    X: =(Button13.Width)/2 -25
+                                    Y: =Button13.Height-Self.Height
+                                    ZIndex: =2
+
+                                Circle2 As circle:
+                                    Height: =25
+                                    OnSelect: =Select(Parent)
+                                    Width: =25
+                                    X: =(Parent.TemplateWidth-Self.Width)/2
+                                    Y: =(Parent.TemplateHeight-Self.Height)/2
+                                    ZIndex: =3
+
+                                Label23 As label:
+                                    Align: =Align.Center
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    Text: |-
+                                        ="CD Request #"&ThisItem.number
+                                    X: =(Parent.TemplateWidth-Self.Width)/2
+                                    Y: =(Parent.TemplateHeight-Self.Height)/2
+                                    ZIndex: =4
+
+                                Icon7 As icon.ChevronUp:
+                                    Color: =RGBA(237, 237, 237, 1)
+                                    Fill: =RGBA(237, 237, 237, .25)
+                                    Height: =30
+                                    Icon: =Icon.ChevronUp
+                                    OnSelect: =Remove(CDsToBurn,ThisItem)
+                                    Visible: =false
+                                    Width: =30
+                                    X: =Button13.Width
+                                    Y: =15
+                                    ZIndex: =5
+
+                                Button13_1 As button:
+                                    Fill: =If(ThisItem.IsSelected,RGBA(0,225,255,.25),Color.Transparent)
+                                    Height: =Parent.TemplateHeight/1.25
+                                    HoverFill: =RGBA(56, 96, 178, .35)
+                                    OnSelect: =Select(Parent)
+                                    PressedFill: =RGBA(56, 96, 178, .80)
+                                    Text: =""
+                                    Width: =Parent.TemplateWidth/1.25
+                                    X: =(Parent.TemplateWidth-Self.Width)/2
+                                    Y: =(Parent.TemplateHeight-Self.Height)/2
+                                    ZIndex: =6
+
+                            Circle3 As circle:
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =40
+                                Width: =40
+                                X: =40
+                                Y: =25
+                                ZIndex: =4
+
+                            Icon2 As icon.Add:
+                                Color: =ColorScheme.primary
+                                Height: =40
+                                Icon: =Icon.Add
+                                OnSelect: |-
+                                    =Patch(CDsToBurn,Defaults(CDsToBurn),
+                                    {
+                                        number:cdCount+1,
+                                        copies:1
+                                    });
+                                    UpdateContext({cdCount:cdCount+1});
+                                Width: =40
+                                X: =40
+                                Y: =25
+                                ZIndex: =5
+
+                    CSDiscBurningSpecificIssue_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank(CSDiscBurningSpecificIssueDropdown.Selected.Name), false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        CSDiscBurningSpecificIssueLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSDiscBurningSpecificIssueError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =80
+                            ZIndex: =3
+
+                        CSDiscBurningSpecificIssueStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSDiscBurningSpecificIssueLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSDiscBurningSpecificIssueLabel.Y
+                            ZIndex: =4
+
+                        CSDiscBurningSpecificIssueDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =35
+                            Items: =Filter(Category, parentId = CSDiscBurningSubCategoryDropdown.Selected.ID)
+                            Width: =CSDiscBurningTitleInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSDiscBurningDescription_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Disc Burning TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        CSDiscBurningDescriptionLabel As label:
+                            AutoHeight: =true
+                            Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSDiscBurningDescriptionErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =CSDiscBurningDescriptionTextInputArea.Y + CSDiscBurningDescriptionTextInputArea.Height
+                            ZIndex: =3
+
+                        CSDiscBurningDescriptionStarVisible As label:
+                            Align: =Align.Center
+                            Color: =CSDiscBurningDescriptionLabel.Color
+                            Height: =CSDiscBurningDescriptionLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSDiscBurningDescriptionLabel.Y
+                            ZIndex: =4
+
+                        CSDiscBurningDescriptionTextInputArea As text:
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: ="Please Describe Your Issue"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: =CSDiscBurningDescription_DataCard.Visible
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    CSDiscBurningLocationID_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        CSDiscBurningLocationIDLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =1
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSDiscBurningLocationIDErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =CSDiscBurningLocationIDDropdown.Y + CSDiscBurningLocationIDDropdown.Height
+                            ZIndex: =3
+
+                        CSDiscBurningLocationIDStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSDiscBurningLocationIDLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSDiscBurningLocationIDLabel.Y
+                            ZIndex: =4
+
+                        CSDiscBurningLocationIDDropdown As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =35
+                            Items: =Locations
+                            Width: =CSDiscBurningTitleInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSDiscBurningAttatchments_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Disc Burning TT'.Size = 1, Parent.Height/2, Parent.Height/3.5)
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        CSDiscBurningAttachmentControl As attachments:
+                            BorderColor: =Color.Black
+                            Height: =If( 'Case Support Disc Burning TT'.Size = 1, Parent.Height/1.5, Parent.Height/1.5)
+                            IsInDataCard: =true
+                            Items: =
+                            MaxAttachments: =10
+                            PaddingBottom: =5
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            Width: =If('Case Support Disc Burning TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                            X: =228
+                            Y: =28
+                            ZIndex: =1
+
+                    CSDiscBurningButtons_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: |-
+                            =//If( 'Case Support Disc Burning TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                            125
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        CSDiscBurningSubmitButton As button:
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: =CSDiscBurningCancelButton.Height
+                            OnSelect: |
+                                =
+                                If(!CSDiscBurningDescriptionTextInputArea.Visible,
+                                UpdateContext({TicketDescText:Concatenate("Case Number: ",CSDiscBurningTitleInput.Text&Char(13)&Char(13),Concat(CDsToBurn,"Request #"&number&Char(13)&Concat(cdContents,"File Name: "&fileName&"   File Path: "&filePath,Char(13))&Char(13)&"Copies: "&copies,Char(13)&Char(13)))}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    !IsBlank(CSDiscBurningLocationIDDropdown.Selected.Name) And !IsEmpty(CDsToBurn) And IfError(!IsEmpty(Index(CDsToBurn,1).cdContents),false) And Len(Trim(CSDiscBurningTitleInput.Text))>0,
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: "CD Burn Request",
+                                                description: Substitute(CSDiscBurningDescriptionTextInputArea.Text,"\","\\"),
+                                                creatorId: userData.id,
+                                                mainCategory: CSDiscBurningMainCategoryDropdown.Selected.ID,
+                                                category: CSDiscBurningSubCategoryDropdown.Selected.ID,
+                                                subCategory: CSDiscBurningSpecificIssueDropdown.Selected.ID,
+                                                locationId: CSDiscBurningLocationIDDropdown.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(CSDiscBurningAttachmentControl.Attachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = CSDiscBurningMainCategoryDropdown.Selected.ID && locationId = CSDiscBurningLocationIDDropdown.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = CSDiscBurningMainCategoryDropdown.Selected.ID && locationId = CSDiscBurningLocationIDDropdown.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" CD Burn Request"
+                                    });
+                                    Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                // for the attachments, run power automate flow for each attached file
+                                    ForAll(
+                                        CSDiscBurningAttachmentControl.Attachments As Attachment,
+                                               /*AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file: {
+                                                    contentBytes: Value,
+                                                    name: Name
+                                                }
+                                            }
+                                        )*/
+                                        If(Left(Attachment.Value,6) = "appres", 
+                                        AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) ;,
+                                
+                                
+                                With({varHTMLTable: Split(Attachment.Name , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",Attachment.Name)+32},With({varB64End:Find("""",Mid(Attachment.Name,varB64Start))-1},CopyPasteTest.Run(Mid(Attachment.Name,varB64Start,varB64End),Attachment.Value & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        )
+                                    );
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm(CSDiscBurningForm);
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({CSDiscBurningPopup:true});
+                            Text: ="Submit"
+                            Width: =CSDiscBurningCancelButton.Width
+                            X: =CSDiscBurningCancelButton.X + (Self.Width*1.3)
+                            Y: =CSDiscBurningCancelButton.Y
+                            ZIndex: =1
+
+                        CSDiscBurningCancelButton As button:
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm(CSDiscBurningForm);
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('Case Support Disc Burning TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            CSDiscBurningFooter As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='Case Support Disc Burning TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                CSDiscBurningMobileMenu As compMobileMenu_3:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    CSDiscBurningBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =CSDiscBurningHeaderLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm(CSDiscBurningForm); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(CSDiscBurningHeaderContainer.Height-CSDiscBurningHeaderLabel.Height)/1.05
+        ZIndex: =2
+
+    CSDiscBurningWebMenu As compWebMenu_3:
+        Visible: ='Case Support Disc Burning TT'.Size > 1
+        ZIndex: =3
+
+    TechAssignMessageRTE_46 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            //Combine string as html body
+            /*
+            Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+            , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")*/
+            
+            "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                <tr>
+                <td>
+                    <Table style="&Char(34)&"width:100% "&Char(34)&">
+                    <tr>
+                    <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+            	A ticket has been asssigned to you, to check additional ticket details: 
+                <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+            	</div>
+                    </th>
+                    </tr>
+            	<br>
+                    <tr>
+                    <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+            	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                <br>
+                Ticket # "&rec.ID&"
+                <br>
+                Status: "&rec.status&"
+                <br>
+                <br>
+                "&rec.description&"
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Height: =9
+        Visible: =false
+        Width: =0
+        X: =892
+        Y: =759
+        ZIndex: =4
+
+    TicketCreatorMessageRTE_46 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            /*
+            Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.</div>")*/
+            
+            "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                <tr>
+                <td>
+                    <Table style="&Char(34)&"width:100% "&Char(34)&">
+                    <tr>
+                    <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+            	Your ticket has been created, a technician will be assigned to your case, if you would like to see additional details about your ticket: 
+                <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+            	</div>
+                    </th>
+                    </tr>
+            	<br>
+                    <tr>
+                    <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+            	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                <br>
+                Ticket # "&rec.ID&"
+                <br>
+                Status: "&rec.status&"
+                <br>
+                <br>
+                "&rec.description&"
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Height: =99
+        Visible: =false
+        Width: =293
+        X: =988
+        Y: =40
+        ZIndex: =5
+
+    RichTextEditor2_45 As richTextEditor:
+        Default: =
+        Height: =20
+        Visible: =false
+        Width: =208
+        X: =40
+        Y: =40
+        ZIndex: =6
+
+    Label27 As label:
+        Height: =99
+        Text: |-
+            =Concatenate("Case Number: ",CSDiscBurningTitleInput.Text&Char(13)&Char(13),Concat(CDsToBurn,"CD #"&number&Char(13)&Concat(cdContents,"File Name: "&fileName&"   File Path: "&filePath,Char(13))&Char(13)&"Copies: "&copies,Char(13)&Char(13)))
+        Visible: =false
+        Width: =1139
+        X: =40
+        Y: =40
+        ZIndex: =7
+
+    CSDiscBurningPopup As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =CSDiscBurningPopup
+        Width: =Parent.Width
+        ZIndex: =8
+
+        ACPopupBackground_43 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_43 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_50 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_43.Width
+            X: =ACPopupRectangle_43.X
+            Y: =ACPopupRectangle_43.Y
+            ZIndex: =3
+
+        Label10_61 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_50.Width
+            X: =Rectangle8_50.X
+            Y: =Rectangle8_50.Y
+            ZIndex: =4
+
+        Button1_49 As button:
+            OnSelect: |-
+                =UpdateContext({CSDiscBurningPopup:false});
+            Text: ="Close"
+            X: =(ACPopupRectangle_43.Width-Self.Width)/2 +ACPopupRectangle_43.X
+            Y: =ACPopupRectangle_43.Height-Self.Height
+            ZIndex: =9
+
+        Label18_143 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(CSDiscBurningLocationIDDropdown.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank(CSDiscBurningLocationIDDropdown.Selected.Name),"Location Missing", "Location OK")
+            Width: =ACPopupRectangle_43.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_50.Y+Rectangle8_50.Height+15
+            ZIndex: =11
+
+        Label18_144 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(CSDiscBurningTitleInput.Text))=0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(CSDiscBurningTitleInput.Text))=0, "Case Number Blank","Case Number OK" )
+            Width: =ACPopupRectangle_43.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_143.Y+Label18_143.Height+10
+            ZIndex: =12
+
+        Label18_145 As label:
+            Align: =Align.Center
+            Color: =If(!IsEmpty(CDsToBurn) And IfError(!IsEmpty(Index(CDsToBurn,1).cdContents),false),Color.Green, Color.Red)
+            Size: =20
+            Text: =If(!IsEmpty(CDsToBurn) And IfError(!IsEmpty(Index(CDsToBurn,1).cdContents),false), "List Ok","List Missing Entries" )
+            Width: =ACPopupRectangle_43.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_144.Y+Label18_144.Height+10
+            ZIndex: =13
+
+    FeedbackBugReportDiscB As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =9
+

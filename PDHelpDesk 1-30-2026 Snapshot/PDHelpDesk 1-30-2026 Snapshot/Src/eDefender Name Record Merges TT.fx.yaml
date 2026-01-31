@@ -1,0 +1,1038 @@
+"'eDefender Name Record Merges TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm(eDefenderRMForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        ClearCollect(nameRecCol,
+        {
+            recordNumber:123456789
+        });
+        
+        Clear(nameRecCol);
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({usingCamera:false,altImagePopUp:false});
+        UpdateContext({RMPopup:false});
+
+    eDefenderRMMainContainer As groupContainer.horizontalAutoLayoutContainer:
+        Height: ='eDefender Name Record Merges TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='eDefender Name Record Merges TT'.Width
+        ZIndex: =2
+
+        eDefenderRMVerticalLayoutContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            eDefenderRMHeaderContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                NameRecordMergeHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =11
+
+                    HomeBackgroundGradient_12 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    eDefenderRMHeaderLabel As label:
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-eDefenderRMWebHeader.Height
+                        Size: =If('eDefender Name Record Merges TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Name Records Merge Request Form"
+                        Width: =Parent.Width
+                        Y: =eDefenderRMWebHeader.Height
+                        ZIndex: =2
+
+                    eDefenderRMWebHeader As compWebHeader:
+                        BackgroundColor: =    Color.Transparent
+                        CompScreenSize: ='eDefender Name Record Merges TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        Height: |-
+                            =82
+                            //Parent.Height
+                        ZIndex: =3
+
+            eDefenderRMMainContentContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                eDefenderRMForm As form:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    eDefenderRMTitle_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =100
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        eDefenderRMTitleLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Name for Merge"
+                            Wrap: =false
+                            X: =30
+                            Y: ='eDefenderAdding/CodingDisclaimerLabel_1'.Y+'eDefenderAdding/CodingDisclaimerLabel_1'.Height+25
+                            ZIndex: =1
+
+                        eDefenderRMTitleError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderRMTitleInput.Y + eDefenderRMTitleInput.Height
+                            ZIndex: =3
+
+                        eDefenderRMTitleStarVisible As label:
+                            Align: =Align.Center
+                            Color: =eDefenderRMTitleLabel.Color
+                            Height: =eDefenderRMTitleLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderRMTitleLabel.Y
+                            ZIndex: =4
+
+                        eDefenderRMTitleInput As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =35
+                            HintText: ="Specify the name for the record merge, Full Name"
+                            Width: =If('eDefender Name Record Merges TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: =eDefenderRMTitleLabel.Y+eDefenderRMTitleLabel.Height
+                            ZIndex: =5
+
+                        "'eDefenderAdding/CodingDisclaimerLabel_1' As label":
+                            Align: =Align.Center
+                            BorderColor: =RGBA(221, 79, 14, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(221, 79, 14, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =If(App.ActiveScreen.Size =1,100,50)
+                            Size: =If('eDefender Adding/Coding Items TT'.Size =1,13,16)
+                            Text: ='eDefender_A/S_Disclaimer_Label'.Text
+                            Width: =Parent.Width
+                            ZIndex: =6
+
+                    eDefenderRMMainCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Name Record Merges TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        eDefenderRMMainCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderRMMainCategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderRMMainCategoryDropdown.Y + eDefenderRMMainCategoryDropdown.Height
+                            ZIndex: =3
+
+                        eDefenderRMMainCategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderRMMainCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderRMMainCategoryLabel.Y
+                            ZIndex: =4
+
+                        eDefenderRMMainCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderRMSubCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Name Record Merges TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        eDefenderRMSubCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderRMSubcategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderRMSubCategoryDropdown.Y + eDefenderRMSubCategoryDropdown.Height
+                            ZIndex: =3
+
+                        eDefenderRMSubcategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderRMSubCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderRMSubCategoryLabel.Y
+                            ZIndex: =4
+
+                        eDefenderRMSubCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = eDefenderRMMainCategoryDropdown.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderRMFields As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =300
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        NameRecordEntryHeader As rectangle:
+                            BorderThickness: =2
+                            Fill: =ColorScheme.primary
+                            Height: =50
+                            Width: =eDefenderRMTitleInput.Width
+                            X: =30
+                            Y: =NameIDKeep.Y+NameIDKeep.Height+25
+                            ZIndex: =1
+
+                        NameRecordEntryHeaderLabel As label:
+                            Align: =Align.Center
+                            Color: =RGBA(255, 255, 255, 1)
+                            Height: =50
+                            Size: =18
+                            Text: ="Name ID merge entry"
+                            Width: =NameRecordEntryHeader.Width
+                            X: =NameRecordEntryHeader.X
+                            Y: =NameRecordEntryHeader.Y
+                            ZIndex: =2
+
+                        NameRecordAddBackground As rectangle:
+                            BorderThickness: =2
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =60
+                            Width: =NameRecordEntryHeader.Width
+                            X: =NameRecordEntryHeader.X 
+                            Y: =NameRecordEntryHeader.Y+NameRecordEntryHeader.Height
+                            ZIndex: =3
+
+                        NameRecordInput As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            HintText: ="Enter Record Number Children ID(Name Ids to merge)"
+                            Width: =NameRecordAddBackground.Width/If('eDefender Name Record Merges TT'.Size=1,1.1,1.2)
+                            X: =40
+                            Y: =NameRecordEntryHeader.Y+NameRecordEntryHeader.Height+10
+                            ZIndex: =4
+
+                        NameRecordAddButton As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: |-
+                                =If(Value(NameRecordInput.Text),Patch(nameRecCol, Defaults(nameRecCol),
+                                {
+                                    recordNumber:Value(NameRecordInput.Text)
+                                });
+                                Reset(NameRecordInput);,Notify("Must be numbers only"))
+                            Text: ="Add"
+                            Width: =If('eDefender Name Record Merges TT'.Size=1,100,NameRecordEntryHeader.Width*.1)
+                            X: =If('eDefender Name Record Merges TT'.Size=1,(Parent.Width-Self.Width)/2,NameRecordAddBackground.Width-Self.Width)
+                            Y: =If('eDefender Name Record Merges TT'.Size=1,NameRecordAddBackground.Y+NameRecordAddBackground.Height+20,NameRecordInput.Y)
+                            ZIndex: =5
+
+                        NameRecordEntryHeader_1 As rectangle:
+                            BorderThickness: =2
+                            Fill: =ColorScheme.primary
+                            Height: =50
+                            Visible: =!IsEmpty(Gallery10.AllItems)
+                            Width: =eDefenderRMTitleInput.Width
+                            X: =30
+                            Y: =If('eDefender Name Record Merges TT'.Size=1,NameRecordAddButton.Y+NameRecordAddButton.Height+30,NameRecordAddBackground.Height+NameRecordAddBackground.Y+30)
+                            ZIndex: =6
+
+                        NameRecordEntries As label:
+                            Align: =Align.Center
+                            Color: =RGBA(255, 255, 255, 1)
+                            Height: =50
+                            Size: =18
+                            Text: ="Name ID's to Merge"
+                            Visible: =!IsEmpty(Gallery10.AllItems)
+                            Width: =NameRecordEntryHeader_1.Width
+                            X: =30
+                            Y: =NameRecordEntryHeader_1.Y
+                            ZIndex: =7
+
+                        Gallery10 As gallery.variableTemplateHeightGallery:
+                            '#CopilotOverlayLabel': ="Filtered"
+                            BorderThickness: =2
+                            DelayItemLoading: =true
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =If(CountRows(nameRecCol)*50>=250, 250, CountRows(nameRecCol)*50)
+                            Items: =nameRecCol
+                            Layout: =Layout.Vertical
+                            LoadingSpinner: =LoadingSpinner.Data
+                            TemplatePadding: =0
+                            TemplateSize: =50
+                            Visible: =!IsEmpty(Gallery10.AllItems)
+                            Width: =NameRecordEntryHeader_1.Width
+                            X: =NameRecordEntryHeader_1.X
+                            Y: =NameRecordEntryHeader_1.Y+NameRecordEntryHeader_1.Height
+                            ZIndex: =8
+
+                            Label28 As label:
+                                Align: =Align.Center
+                                Height: =Parent.TemplateHeight
+                                OnSelect: =Select(Parent)
+                                Size: =18
+                                Text: =ThisItem.recordNumber
+                                Width: =Parent.TemplateWidth
+                                ZIndex: =1
+
+                            Button16 As button:
+                                Color: =RGBA(0, 0, 0, 0)
+                                Fill: =RGBA(0, 0, 0, 0)
+                                Height: =Parent.TemplateHeight
+                                HoverFill: =RGBA(118, 0, 0, .25)
+                                OnSelect: =Remove(nameRecCol,ThisItem)
+                                PressedFill: =RGBA(118, 0, 0, .80)
+                                Text: ="Remove Entry"
+                                Visible: =If('eDefender Name Record Merges TT'.Size=1,false,true)
+                                Width: =Parent.TemplateWidth
+                                ZIndex: =2
+
+                            Icon16 As icon.CancelBadge:
+                                Height: =32
+                                Icon: =Icon.CancelBadge
+                                OnSelect: =Remove(nameRecCol,ThisItem)
+                                Visible: =!Button16.Visible
+                                Width: =32
+                                X: =Parent.TemplateWidth-Self.Width
+                                ZIndex: =3
+
+                        NameIDKeep As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            HintText: ="Enter the name id to keep, Parent ID(Name ID to Retain)"
+                            Width: =eDefenderRMTitleInput.Width
+                            X: =30
+                            Y: =40
+                            ZIndex: =9
+
+                        Label36 As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Name ID to Retain"
+                            Width: =190
+                            X: =NameIDKeep.X
+                            Y: =NameIDKeep.Y-Self.Height
+                            ZIndex: =10
+
+                    eDefenderRMSpecificIssue_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank(eDefenderRMSpecificIssueDropdown.Selected.Name), false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        eDefenderRMSpecificIssueLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderRMSpecificIssueError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderRMSpecificIssueDropdown.Y + eDefenderRMSpecificIssueDropdown.Height
+                            ZIndex: =3
+
+                        eDefenderRMSpecificIssueStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderRMSpecificIssueLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderRMSpecificIssueLabel.Y
+                            ZIndex: =4
+
+                        eDefenderRMSpecificIssueDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = eDefenderRMSubCategoryDropdown.Selected.ID)
+                            Width: =eDefenderRMTitleInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderRMDescription_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Name Record Merges TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        eDefenderRMDescriptionLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderRMDescriptionErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderRMDescriptionTextInputArea.Y + eDefenderRMDescriptionTextInputArea.Height
+                            ZIndex: =3
+
+                        eDefenderRMDescriptionStarVisible As label:
+                            Align: =Align.Center
+                            Color: =eDefenderRMDescriptionLabel.Color
+                            Height: =eDefenderRMDescriptionLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderRMDescriptionLabel.Y
+                            ZIndex: =4
+
+                        eDefenderRMDescriptionTextInputArea As text:
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: ="Please Describe Your Issue"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: =eDefenderRMDescription_DataCard.Visible
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    eDefenderRMLocationID_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        eDefenderRMLocationIDLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderRMLocationIDErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderRMLocationIDDropDown.Y + eDefenderRMLocationIDDropDown.Height
+                            ZIndex: =3
+
+                        eDefenderRMLocationIDStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderRMLocationIDLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderRMLocationIDLabel.Y
+                            ZIndex: =4
+
+                        eDefenderRMLocationIDDropDown As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =Parent.Height/3.5
+                            Items: =Locations
+                            Width: =eDefenderRMTitleInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderRMAttatchments_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        AddMediaButton_6 As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                            Text: ="Add Media"
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =(Parent.Height-Self.Height)/2
+                            ZIndex: =8
+
+                    eDefenderRMButtons_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Name Record Merges TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        eDefenderRMSubmitButton As button:
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: =eDefenderRMCancelButton.Height
+                            OnSelect: |
+                                =
+                                If(!eDefenderRMDescriptionTextInputArea.Visible,
+                                UpdateContext({TicketDescText:Concatenate("Records to Merge: "&Char(13),Concat(nameRecCol,recordNumber,Char(13)))}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    Len(eDefenderRMTitleInput.Text) > 0 And !IsEmpty(nameRecCol) And !IsBlank(eDefenderRMLocationIDDropDown.Selected.Name),
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: eDefenderRMTitleInput.Text,
+                                                description: Trim(eDefenderRMDescriptionTextInputArea.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: eDefenderRMMainCategoryDropdown.Selected.ID,
+                                                category: eDefenderRMSubCategoryDropdown.Selected.ID,
+                                                subCategory: eDefenderRMSpecificIssueDropdown.Selected.ID,
+                                                locationId: eDefenderRMLocationIDDropDown.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(JointAttachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = eDefenderRMMainCategoryDropdown.Selected.ID && locationId = eDefenderRMLocationIDDropDown.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = eDefenderRMMainCategoryDropdown.Selected.ID && locationId = eDefenderRMLocationIDDropDown.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" Record Merge for "&eDefenderRMTitleInput.Text
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                ForAll(
+                                    attItems As Attachment,
+                                            AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) 
+                                );
+                                ForAll(
+                                    RTEImages As RTEI,
+                                    With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        );
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm(eDefenderRMForm);
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({RMPopup:true});
+                            Text: ="Submit"
+                            Width: =eDefenderRMCancelButton.Width
+                            X: =eDefenderRMCancelButton.X + (Self.Width*1.3)
+                            Y: =eDefenderRMCancelButton.Y
+                            ZIndex: =1
+
+                        eDefenderRMCancelButton As button:
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm(eDefenderRMForm);
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('eDefender Name Record Merges TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            eDefenderRMFooter As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='eDefender Name Record Merges TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                eDefenderRMMobileMenu As compMobileMenu:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    eDefenderRMBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =eDefenderRMHeaderLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm(eDefenderRMForm); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(eDefenderRMHeaderContainer.Height-eDefenderRMHeaderLabel.Height)/1.05
+        ZIndex: =3
+
+    eDefenderRMWebMenu As compWebMenu:
+        Visible: ='eDefender Name Record Merges TT'.Size > 1
+        ZIndex: =4
+
+    RMPopup As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =RMPopup
+        Width: =Parent.Width
+        ZIndex: =9
+
+        ACPopupBackground_6 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_6 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_13 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_6.Width
+            X: =ACPopupRectangle_6.X
+            Y: =ACPopupRectangle_6.Y
+            ZIndex: =3
+
+        Label10_24 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_13.Width
+            X: =Rectangle8_13.X
+            Y: =Rectangle8_13.Y
+            ZIndex: =4
+
+        Button1_12 As button:
+            OnSelect: |-
+                =UpdateContext({RMPopup:false})
+            Text: ="Close"
+            X: =(ACPopupRectangle_6.Width-Self.Width)/2 +ACPopupRectangle_6.X
+            Y: =ACPopupRectangle_6.Height-Self.Height
+            ZIndex: =9
+
+        Label18_28 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(eDefenderRMLocationIDDropDown.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: |+
+                =If(IsBlank(eDefenderRMLocationIDDropDown.Selected.Name),"Location Missing", "Location OK")
+                
+            Width: =ACPopupRectangle_6.Width
+            X: =ACPopupRectangle_6.X
+            Y: =Rectangle8_13.Y+Rectangle8_13.Height+15
+            ZIndex: =11
+
+        Label18_29 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(eDefenderRMTitleInput.Text)) = 0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(eDefenderRMTitleInput.Text)) = 0,"Name Blank", "Name OK")
+            Width: =ACPopupRectangle_6.Width
+            X: =ACPopupRectangle_6.X
+            Y: =Label18_28.Y+Label18_28.Height+10
+            ZIndex: =12
+
+        Label18_30 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(NameIDKeep.Text))=0,Color.Red,Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(NameIDKeep.Text))=0,"NameID Blank","NameID  OK")
+            Width: =ACPopupRectangle_6.Width
+            X: =ACPopupRectangle_6.X
+            Y: =Label18_29.Y+Label18_29.Height+10
+            ZIndex: =13
+
+        Label18_31 As label:
+            Align: =Align.Center
+            Color: =If(IsEmpty(nameRecCol),Color.Red,Color.Green)
+            Size: =20
+            Text: =If(IsEmpty(nameRecCol),"No Records add a child record","Records OK at least 1 child record")
+            Width: =ACPopupRectangle_6.Width
+            X: =ACPopupRectangle_6.X
+            Y: =Label18_30.Y+Label18_30.Height+10
+            ZIndex: =14
+
+    FeedbackBugReportRM As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='eDefender Name Record Merges TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =10
+
+    AddMedia_7 As AddMedia:
+        AMSize: ='eDefender Name Record Merges TT'.Size
+        AttachCameraOff: =Set(AttachCamera,false);
+        AttachCameraOn: =Set(AttachCamera,true);
+        DisablePickMedia: =Set(AttachFiles,false)
+        EnablePickMedia: =Set(AttachFiles,true)
+        InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+        OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+        PhotoModeDisable: =Set(AttachPhoto,false)
+        PhotoModeEnable: =Set(AttachPhoto,true)
+        Visible: =varOpenMedia
+        ZIndex: =11
+

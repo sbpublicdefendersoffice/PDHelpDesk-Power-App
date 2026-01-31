@@ -1,0 +1,419 @@
+"'Approvals Screen' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnVisible: |-
+        =//Clear the collections
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({TemplateErrorPopup:false,approveInfo:false,approveRecord:Blank(),approveTimeOut:false});
+
+    TemplateContainer_5 As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        TemplateHeaderContainer_5 As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            TemplateHeaderGroup_3 As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =3
+
+                HeaderBackgroundGradient_4 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =130
+                    HtmlText: |-
+                        ="<div style='
+                        height:"&Self.Height-1&"px;
+                        width:100%;
+                        background: rgb(53,89,137);
+                        background: linear-gradient(90deg, rgba(53,89,137,1) 0%, rgba(0,18,107,1) 100%);' ></div>"
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                TemplateLabel_4 As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =48
+                    Size: =If('Approvals Screen'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Approvals"
+                    Width: =Parent.Width
+                    Y: =TemplateWebHeader_5.Height
+                    ZIndex: =2
+
+                TemplateWebHeader_5 As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: ='Approvals Screen'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    Fill: =Color.Transparent
+                    ZIndex: =3
+
+        MainSectionTemplateContainer_5 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =6
+
+            Container21 As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =2
+
+                Gallery12 As gallery.variableTemplateHeightGallery:
+                    DelayItemLoading: =true
+                    Height: =Parent.Height
+                    Items: =Filter(Approvals,SID = userData.id And Resolved = false)
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplatePadding: =0
+                    TemplateSize: =100
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                    Button44 As button:
+                        Fill: =RGBA(204, 208, 225, 1)
+                        Height: =100
+                        OnSelect: |-
+                            =UpdateContext({approveRecord:LookUp(Tickets,ID = ThisItem.TID),approveInfo:true})
+                        Text: =
+                        Width: =1366
+                        ZIndex: =1
+
+                    Label71 As label:
+                        Align: =Align.Center
+                        Height: =31
+                        OnSelect: =Select(Parent)
+                        Text: =ThisItem.ID
+                        Width: =30
+                        X: =40
+                        Y: =40
+                        ZIndex: =2
+
+                    Label74 As label:
+                        Align: =Align.Center
+                        OnSelect: =Select(Parent)
+                        Text: =ThisItem.Title
+                        X: =(Parent.TemplateWidth - Self.Width)/2
+                        Y: =(Parent.TemplateHeight-Self.Height)/2
+                        ZIndex: =3
+
+                    Icon11 As icon.CancelBadge:
+                        Color: =RGBA(184, 0, 0, 1)
+                        Icon: =Icon.CancelBadge
+                        OnSelect: |-
+                            =UpdateContext({approveRecord:LookUp(Tickets,ID= ThisItem.TID)});
+                            Patch(Tickets,approveRecord,{status:"null",lastUpdated:Now(),description:approveRecord.description&Char(13)&"Ticket has been denied, please close this ticket."&Char(13)&"Approver: "&userData.fullName});
+                            Patch(Approvals,LookUp(Approvals,ThisItem.ID = ID),{Approved:false,Resolved:true});
+                            UpdateContext({approveRecord:Blank(),approveTimeOut:true});
+                        X: =Icon12.X-Self.Width*1.5
+                        Y: =18
+                        ZIndex: =4
+
+                    Icon12 As icon.CheckBadge:
+                        Color: =RGBA(127, 178, 57, 1)
+                        Icon: =Icon.CheckBadge
+                        OnSelect: |-
+                            =
+                            UpdateContext({approveRecord:LookUp(Tickets,ID= ThisItem.TID)});
+                            Patch(Tickets,approveRecord,{status:"open",lastUpdated:Now(),description:approveRecord.description&Char(13)&"Approved By: "&userData.fullName});
+                            Patch(Approvals,LookUp(Approvals,ThisItem.ID = ID),{Approved:true,Resolved:true});
+                            UpdateContext({approveRecord:Blank(),approveTimeOut:true});
+                            SendEmail.Run("'"&userData.email&"'","Ticket Approval Confirmed",HtmlText8.HtmlText,"");
+                        X: =Parent.TemplateWidth-Self.Width
+                        Y: =18
+                        ZIndex: =5
+
+                Container25 As groupContainer.manualLayoutContainer:
+                    Height: =Parent.Height
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    Visible: =approveInfo
+                    Width: =Parent.Width
+                    ZIndex: =2
+
+                    Rectangle40 As rectangle:
+                        Fill: =RGBA(56, 96, 178, .25)
+                        Height: =638
+                        Width: =1366
+                        ZIndex: =1
+
+                    Rectangle41 As rectangle:
+                        BorderThickness: =2
+                        Fill: =RGBA(241, 244, 249, 1)
+                        Height: =557
+                        Width: =1216
+                        X: =76
+                        Y: =36
+                        ZIndex: =2
+
+                    Label75 As label:
+                        BorderThickness: =1
+                        Height: =Rectangle41.Height/1.5
+                        Overflow: =Overflow.Scroll
+                        Text: =PlainText(approveRecord.description)
+                        Width: =Rectangle41.Width/1.1
+                        X: =Rectangle41.X+(Rectangle41.Width-Self.Width)/2
+                        Y: =Label73.Height+Label73.Y
+                        ZIndex: =3
+
+                    Button25 As button:
+                        Fill: =RGBA(127, 178, 57, 1)
+                        HoverFill: =RGBA(99, 139, 44, 1)
+                        OnSelect: |-
+                            =Patch(Tickets,approveRecord,{status:"open",dateCreated:Now(),lastUpdated:Now(),description:approveRecord.description&Char(13)&"Approved By: "&userData.fullName,addAssignees:approveRecord.addAssignees&userData.fullName&","});
+                            Patch(Approvals,LookUp(Approvals,Gallery12.Selected.ID = ID),{Approved:true,Resolved:true});
+                            UpdateContext({approveRecord:Blank(),approveTimeOut:true});
+                            SendEmail.Run("'"&userData.email&"'","Ticket Approval Confirmed",HtmlText8.HtmlText,"");
+                        Text: ="Approve"
+                        X: =Button25_1.X+Button25_1.Width+ Self.Width/2
+                        Y: =496
+                        ZIndex: =4
+
+                    Button25_1 As button:
+                        Fill: =RGBA(184, 0, 0, 1)
+                        HoverFill: =RGBA(118, 0, 0, 1)
+                        OnSelect: |-
+                            =Patch(Tickets,approveRecord,{status:"null",lastUpdated:Now(),description:approveRecord.description&Char(13)&"Approval for this ticket has been denied, please close this ticket."&Char(13)&"Approver: "&userData.fullName});
+                            Patch(Approvals,LookUp(Approvals,Gallery12.Selected.ID = ID),{Approved:false,Resolved:true});
+                            UpdateContext({approveRecord:Blank(),approveTimeOut:true});
+                        Text: ="Deny"
+                        X: =Rectangle41.X+(Rectangle41.Width-Self.Width)/2 - Self.Width
+                        Y: =496
+                        ZIndex: =5
+
+                    Label73 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =50
+                        Size: =16
+                        Text: =approveRecord.Title
+                        Width: =Rectangle41.Width
+                        X: =76
+                        Y: =Rectangle41.Y
+                        ZIndex: =6
+
+                    Icon13_1 As icon.CancelBadge:
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =RGBA(255, 0, 0, 1)
+                        Height: =32
+                        Icon: =Icon.Cancel
+                        OnSelect: |-
+                            =UpdateContext({approveInfo:false})
+                        Width: =32
+                        X: =Rectangle41.Width+Rectangle41.X-Self.Width
+                        Y: =Rectangle41.Y
+                        ZIndex: =7
+
+                Container25_1 As groupContainer.manualLayoutContainer:
+                    Height: =Parent.Height
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    Visible: =approveTimeOut
+                    Width: =Parent.Width
+                    ZIndex: =3
+
+                    Rectangle40_1 As rectangle:
+                        Fill: =RGBA(56, 96, 178, .25)
+                        Height: =Parent.Height
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    Rectangle41_1 As rectangle:
+                        BorderThickness: =2
+                        Fill: =RGBA(241, 244, 249, 1)
+                        Width: =Parent.Width/1.1
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =(Parent.Height-Self.Height)/2
+                        ZIndex: =2
+
+                    Label75_1 As label:
+                        Align: =Align.Center
+                        FontWeight: =FontWeight.Semibold
+                        Height: =Rectangle41_1.Height/2
+                        Overflow: =Overflow.Scroll
+                        PaddingTop: =10
+                        Size: =15
+                        Text: ="Process successful!"
+                        Width: =Rectangle41_1.Width
+                        X: =Rectangle41_1.X
+                        Y: =Rectangle41_1.Y+Self.Height/2
+                        ZIndex: =3
+
+        TemplateFooter_5 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Approvals Screen'.Size=1
+            Width: =Parent.Width
+            ZIndex: =7
+
+            TemplateWebMobileMenu_5 As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    TemplateWebMenu_5 As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Approvals Screen'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    TemplateBackButton_6 As icon.BackArrow:
+        Color: =Color.White
+        Height: =TemplateLabel_4.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(TemplateHeaderContainer_5.Height-TemplateLabel_4.Height)/1.05
+        ZIndex: =3
+
+    FeedbackBugReportTemp_2 As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =4
+
+    HtmlText8 As htmlViewer:
+        Height: =10
+        HtmlText: |-
+            ="<table style='border-style: double ; width:100% '>
+                <tr>
+                <td>
+                    <Table style='width:100%'>
+                    <tr>
+                    <th style='border-bottom-style: solid;'>
+            	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style='text-align:center;'>
+            	You have approved a ticket proccess. To see the details and progress of this ticket:  
+                <a style='text-decoration: none;' href='https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&approveRecord.ID&"'> Click here</a>
+            	</div>
+                    </th>
+                    </tr>
+                    <tr>
+                    <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>
+            	<div>
+            	"&approveRecord.Title&"
+                    </tr>
+                    </td>
+                    <tr>
+                    <td style='font-family: monospace; font-size: 20px '>
+                    Status: "&approveRecord.status&" 
+                    </tr>
+                    </td>
+                    <tr>
+                    <td style='font-family: monospace; font-size: 20px '>
+                    Created By: "&LookUp(Users,approveRecord.creatorId = ID).fullName&"
+                    </tr>
+                    </td>
+                    <tr>
+                    <td style='font-family: monospace; font-size: 20px '>
+                    Information:
+                	<br> 
+                	"&approveRecord.description&"
+                    </tr>
+                    </td>
+                
+                <tr>
+                <td style='font-family: monospace; font-size: 20px; border-bottom-style: solid '>
+                
+                </td>
+                </tr>
+                
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Width: =43
+        Y: =758
+        ZIndex: =5
+
+    Timer3 As timer:
+        AutoPause: =false
+        AutoStart: =approveTimeOut
+        Duration: =1000
+        OnTimerEnd: |-
+            =UpdateContext({approveTimeOut:false})
+        Visible: =false
+        X: =40
+        Y: =40
+        ZIndex: =7
+
+    Button30 As button:
+        OnSelect: |-
+            =UpdateContext({approveTimeOut:true})
+        Text: ="Button"
+        Visible: =false
+        X: =213
+        Y: =38
+        ZIndex: =8
+

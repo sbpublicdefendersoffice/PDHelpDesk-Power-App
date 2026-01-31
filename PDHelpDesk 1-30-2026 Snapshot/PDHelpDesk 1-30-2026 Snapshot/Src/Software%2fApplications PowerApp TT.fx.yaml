@@ -1,0 +1,1153 @@
+"'Software/Applications PowerApp TT' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: =
+    OnVisible: |-
+        =//Set(entra,MicrosoftEntraID.GetMemberGroupsV2("mperez@countyofsb.org",false))
+        UpdateContext({altImagePopUp:false,usingCamera:false,attachRecord:Blank()});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+
+    "'S/APowerAppVerticalLayoutContainer' As groupContainer.verticalAutoLayoutContainer":
+        Height: =Parent.Height
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        "'S/APowerAppHeaderContainer' As groupContainer.verticalAutoLayoutContainer":
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: |-
+                =130
+                //Parent.Height/11
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |-
+                =//Home.Size<>1
+                //This is the top most header container that houses the navbar links
+                true
+            Width: =Parent.Width
+            ZIndex: =1
+
+            PowerAppHeaderElements As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =4
+
+                HomeBackgroundGradient_48 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =Parent.Height
+                    HtmlText: =Home_Background_Gradient.HtmlText
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                "'S/APowerAppHeaderLabel' As label":
+                    Align: =Align.Center
+                    Color: =RGBA(255, 255, 255, 1)
+                    Fill: =Color.Transparent
+                    Height: =Parent.Height-'S/APowerAppWebHeader'.Height
+                    Size: =If('Software/Applications Zoom TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="PowerApp "
+                    Width: =Parent.Width
+                    Y: ='S/APowerAppWebHeader'.Height
+                    ZIndex: =2
+
+                "'S/APowerAppWebHeader' As compWebHeader":
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: ='Software/Applications PowerApp TT'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    ZIndex: =3
+
+        "'S/APowerAppMainContentContainer' As groupContainer.verticalAutoLayoutContainer":
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            Height: =Parent.Height/1.21
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            Visible: |-
+                =true
+                //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+            Width: =Parent.Width
+            ZIndex: =3
+
+            "'S/APowerAppForm' As form":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                DataSource: =Tickets
+                DefaultMode: =FormMode.New
+                Height: =Parent.Height/1.21
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =250
+                LayoutMinWidth: =400
+                NumberOfColumns: =1
+                Width: =Parent.Width
+                Y: =Parent.Height/5.7
+                ZIndex: =2
+
+                "'S/AZoomTitle_DataCard_1' As typedDataCard.textualEditCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="title"
+                    Default: =ThisItem.Title
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =127
+                    MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                    Required: =false
+                    Update: =
+                    Visible: =false
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =0
+                    ZIndex: =1
+
+                    "'S/AZoomTitleLabel_1' As label":
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Name of File"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    "'S/AZoomTitleError_1' As label":
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =65
+                        ZIndex: =3
+
+                    "'S/AZoomTitleStarVisible_1' As label":
+                        Align: =Align.Center
+                        Color: ='S/AZoomTitleLabel_1'.Color
+                        Height: ='S/AZoomTitleLabel_1'.Height
+                        Text: ="*"
+                        Width: =30
+                        Wrap: =false
+                        Y: ='S/AZoomTitleLabel_1'.Y
+                        ZIndex: =4
+
+                    "'S/AZoomTitleInput_1' As text":
+                        Default: =""
+                        Height: =Parent.Height/3.5
+                        HintText: ="Please Enter A Title"
+                        Width: =Parent.Width/1.10
+                        X: =30
+                        Y: =44
+                        ZIndex: =5
+
+                "'S/AZoomMainCategory_DataCard_1' As typedDataCard.numberEditCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="mainCategory"
+                    Default: =ThisItem.mainCategory
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =If( 'Software/Applications Zoom TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                    Required: =true
+                    Update: =
+                    Visible: =false
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =1
+                    ZIndex: =1
+
+                    "'S/AZoomMainCategoryLabel_1' As label":
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Category"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    "'S/AZoomMainCategoryError_1' As label":
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: ='S/AZoomMainCategoryDropdown_1'.Y + 'S/AZoomMainCategoryDropdown_1'.Height
+                        ZIndex: =3
+
+                    "'S/AZoomMainCategoryStarVisible_1' As label":
+                        Align: =Align.Center
+                        Height: ='S/AZoomMainCategoryLabel_1'.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =10
+                        ZIndex: =4
+
+                    "'S/AZoomMainCategoryDropdown_1' As dropdown":
+                        Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                        Height: =Parent.Height/3.5
+                        Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                        Width: =Parent.Width/1.05
+                        X: =30
+                        Y: =44
+                        ZIndex: =5
+
+                "'S/AZoomSubCategory_DataCard_1' As typedDataCard.numberEditCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="category"
+                    Default: =ThisItem.category
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =If( 'Software/Applications Zoom TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                    Required: =true
+                    Update: =
+                    Visible: =false
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =2
+                    ZIndex: =1
+
+                    "'S/AZoomSubCategoryLabel_1' As label":
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Sub Category"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    "'S/AZoomSubcategoryError_1' As label":
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: ='S/AZoomSubCategoryDropdown_1'.Y + 'S/AZoomSubCategoryDropdown_1'.Height
+                        ZIndex: =3
+
+                    "'S/AZoomSubcategoryStarVisible_1' As label":
+                        Align: =Align.Center
+                        Height: ='S/AZoomSubCategoryLabel_1'.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: ='S/AZoomSubCategoryLabel_1'.Y
+                        ZIndex: =4
+
+                    "'S/AZoomSubCategoryDropdown_1' As dropdown":
+                        Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                        Height: =Parent.Height/3.5
+                        Items: =Filter(Category, parentId = 'S/AZoomMainCategoryDropdown_1'.Selected.ID)
+                        Width: =Parent.Width/1.05
+                        X: =30
+                        Y: =44
+                        ZIndex: =5
+
+                "'S/AZoomFields_1' As typedDataCard.blankCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =100
+                    Visible: =false
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =3
+                    ZIndex: =1
+
+                    ExField1_41 As label:
+                        Text: ="NewField1"
+                        X: =28
+                        Y: =4
+                        ZIndex: =1
+
+                    ExFieldInput1_42 As text:
+                        Default: =""
+                        Height: =28
+                        HintText: ="Enter Information"
+                        Width: ='S/AZoomTitleInput_1'.Width/3
+                        X: =28
+                        Y: =44
+                        ZIndex: =2
+
+                    ExField2_41 As label:
+                        Text: ="NewField2"
+                        X: =ExFieldInput2_41.X
+                        Y: =7
+                        ZIndex: =3
+
+                    ExFieldInput2_41 As text:
+                        Default: =""
+                        Height: =28
+                        HintText: ="Enter Information"
+                        Width: =ExFieldInput1_42.Width
+                        X: =ExFieldInput1_42.X+ExFieldInput1_42.Width
+                        Y: =44
+                        ZIndex: =4
+
+                    ExField3_41 As label:
+                        Text: ="NewField3"
+                        X: =ExFieldInput3_41.X
+                        Y: =7
+                        ZIndex: =5
+
+                    ExFieldInput3_41 As text:
+                        Default: =""
+                        Height: =28
+                        HintText: ="Enter Information"
+                        Width: =ExFieldInput1_42.Width
+                        X: =ExFieldInput2_41.X+ExFieldInput2_41.Width
+                        Y: =44
+                        ZIndex: =6
+
+                "'S/AZoomSpecificIssue_DataCard_1' As typedDataCard.numberEditCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="subCategory"
+                    Default: =ThisItem.subCategory
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =149
+                    Required: =false
+                    Update: =
+                    Visible: |
+                        =If(IsBlank('S/AZoomSpecificIssueDropdown_1'.Selected.Name), false, true)
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =4
+                    ZIndex: =1
+
+                    "'S/AZoomSpecificIssueLabel_1' As label":
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Specific Issue"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    "'S/AZoomSpecificIssueError_1' As label":
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: ='S/AZoomSpecificIssueDropdown_1'.Y + 'S/AZoomSpecificIssueDropdown_1'.Height
+                        ZIndex: =3
+
+                    "'S/AZoomSpecificIssueStarVisible_1' As label":
+                        Align: =Align.Center
+                        Height: ='S/AZoomSpecificIssueLabel_1'.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: ='S/AZoomSpecificIssueLabel_1'.Y
+                        ZIndex: =4
+
+                    "'S/AZoomSpecificIssueDropdown_1' As dropdown":
+                        Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                        Height: =Parent.Height/3.5
+                        Items: =Filter(Category, parentId = 'S/AZoomSubCategoryDropdown_1'.Selected.ID)
+                        Width: ='S/AZoomTitleInput_1'.Width
+                        X: =30
+                        Y: =44
+                        ZIndex: =5
+
+                "'S/AZoomDescription_DataCard_1' As typedDataCard.textualEditCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="description"
+                    Default: =ThisItem.description
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =400
+                    MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                    Required: =false
+                    Update: =
+                    Visible: =true
+                    Width: =Parent.Width
+                    WidthFit: =true
+                    X: =0
+                    Y: =5
+                    ZIndex: =1
+
+                    "'S/AZoomDescriptionLabel_1' As label":
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Describe the Problem"
+                        Width: =200
+                        Wrap: =false
+                        X: =30
+                        Y: ='S/APowerAppDropdown'.Y+'S/APowerAppDropdown'.Height+15
+                        ZIndex: =1
+
+                    "'S/AZoomDescriptionErrorMessage_1' As label":
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =390
+                        ZIndex: =3
+
+                    "'S/AZoomDescriptionStarVisible_1' As label":
+                        Align: =Align.Center
+                        Color: ='S/AZoomDescriptionLabel_1'.Color
+                        Height: ='S/AZoomDescriptionLabel_1'.Height
+                        Text: ="*"
+                        Width: =30
+                        Wrap: =false
+                        Y: ='S/AZoomDescriptionLabel_1'.Y
+                        ZIndex: =4
+
+                    "'S/APowerAppDescriptionTextInputArea' As text":
+                        Default: =TicketDescText
+                        FontWeight: =FontWeight.Lighter
+                        Height: |-
+                            =//Parent.Height/1.5
+                            200
+                        HintText: ="What Problems are you having with the application"
+                        Mode: =TextMode.MultiLine
+                        Size: =15
+                        Visible: ='S/AZoomDescription_DataCard_1'.Visible
+                        Width: ='S/APowerAppDropdown'.Width
+                        X: =30
+                        Y: ='S/AZoomDescriptionLabel_1'.Y+'S/AZoomDescriptionLabel_1'.Height
+                        ZIndex: =5
+
+                    "'S/AZoomDescriptionLabel_2' As label":
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Select App"
+                        Width: =100
+                        Wrap: =false
+                        X: =30
+                        Y: ='eDefenderAdding/CodingDisclaimerLabel_32'.Height+25
+                        ZIndex: =6
+
+                    "'S/APowerAppDropdown' As dropdown":
+                        AllowEmptySelection: =true
+                        ChevronBackground: =ColorScheme.primary
+                        Default: =Blank()
+                        FontWeight: =FontWeight.Lighter
+                        Height: =35
+                        Items: |-
+                            =Table({App: "PDHelpdesk"},{App:"PDGo"})
+                        Width: =If('Software/Applications PowerApp TT'.Size=1, Parent.Width/1.2, Parent.Width/1.1)
+                        X: =30
+                        Y: ='S/AZoomDescriptionLabel_2'.Height+'S/AZoomDescriptionLabel_2'.Y
+                        ZIndex: =7
+
+                    "'eDefenderAdding/CodingDisclaimerLabel_32' As label":
+                        Align: =Align.Center
+                        BorderColor: =RGBA(221, 79, 14, 1)
+                        BorderThickness: =2
+                        Color: =RGBA(221, 79, 14, 1)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FontWeight: =FontWeight.Semibold
+                        Height: =If('Software/Applications PowerApp TT'.Size=1,80,40)
+                        Size: =If('eDefender Adding/Coding Items TT'.Size =1,13,16)
+                        Text: ="When Submitting media, DO NOT SUBMIT SENSITIVE DOCUMENTS. In addition, Documents should be uploaded to Box"
+                        Width: =Parent.Width
+                        ZIndex: =8
+
+                "'S/AZoomLocationID_DataCard_1' As typedDataCard.numberEditCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="locationId"
+                    Default: =ThisItem.locationId
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =80
+                    Required: =false
+                    Update: =//Value(DataCardValue6.Text)
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =6
+                    ZIndex: =1
+
+                    "'S/AZoomLocationIDLabel_1' As label":
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Requesting From"
+                        Width: =170
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    "'S/AZoomLocationIDErrorMessage_1' As label":
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: ='S/APowerAppLocationIDDropdown'.Y + 'S/APowerAppLocationIDDropdown'.Height
+                        ZIndex: =3
+
+                    "'S/AZoomLocationIDStarVisible_1' As label":
+                        Align: =Align.Center
+                        Height: ='S/AZoomLocationIDLabel_1'.Height
+                        Text: ="*"
+                        Width: =30
+                        Wrap: =false
+                        Y: ='S/AZoomLocationIDLabel_1'.Y
+                        ZIndex: =4
+
+                    "'S/APowerAppLocationIDDropdown' As dropdown":
+                        AllowEmptySelection: =true
+                        ChevronBackground: =ColorScheme.primary
+                        Default: =Blank()
+                        FontWeight: =FontWeight.Lighter
+                        Height: =35
+                        Items: =Locations
+                        Width: ='S/APowerAppDescriptionTextInputArea'.Width
+                        X: =30
+                        Y: =44
+                        ZIndex: =5
+
+                "'S/AZoomAttatchments_DataCard_1' As typedDataCard.blankCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =50
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =7
+                    ZIndex: =1
+
+                    AddMediaButton As button:
+                        Fill: =ColorScheme.primary
+                        OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                        Text: ="Add Media"
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =(Parent.Height-Self.Height)/2
+                        ZIndex: =10
+
+                "'S/AZoomButtons_DataCard_1' As typedDataCard.blankCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =If( 'Software/Applications Zoom TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =8
+                    ZIndex: =1
+
+                    "'S/AZoomSubmitButton_1' As button":
+                        DisplayMode: |-
+                            =
+                            //could use this to enable/disable button behaviour
+                            //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                            
+                            DisplayMode.Edit
+                        Fill: =ColorScheme.primary
+                        Height: ='S/AZoomCancelButton_1'.Height
+                        OnSelect: |
+                            =
+                            If(!'S/APowerAppDescriptionTextInputArea'.Visible,
+                            UpdateContext({TicketDescText:Concatenate("")}); Notify("Description is Blank"));
+                            
+                            //Check if the title or Description are empty, if they are the form will not be submitted
+                            If(
+                                !IsBlank('S/APowerAppLocationIDDropdown'.Selected.Name) And !IsBlank('S/APowerAppDropdown'.Selected.App) And Len(Trim('S/APowerAppDescriptionTextInputArea'.Text))>0,
+                                UpdateContext({DataCardKey1_1: "Title"});
+                                UpdateContext({DataCardKey5: "Description"});
+                                //Set(DataCardKey5: "Description");
+                            Set(
+                                    //Temporary record
+                                    rec,
+                                    //DB operation, from Ticket table, new record, change these columns
+                                    Patch(
+                                        Tickets,
+                                        Defaults(Tickets),
+                                        {
+                                            Title: 'S/AZoomTitleInput_1'.Text,
+                                            description: "Application: "&'S/APowerAppDropdown'.Selected.App&Char(13)&"Details: "&'S/APowerAppDescriptionTextInputArea'.Text,
+                                            creatorId: userData.id,
+                                            mainCategory: 'S/AZoomMainCategoryDropdown_1'.Selected.ID,
+                                            category: 'S/AZoomSubCategoryDropdown_1'.Selected.ID,
+                                            subCategory: 'S/AZoomSpecificIssueDropdown_1'.Selected.ID,
+                                            locationId: 'S/APowerAppLocationIDDropdown'.Selected.ID,
+                                            status: "open",
+                                            metricDate: Concatenate(
+                                                Month(Today()),
+                                                "/",
+                                                Year(Today())
+                                            ),
+                                            hasAttachment: If(
+                                                IsEmpty(attItems),
+                                                0,
+                                                1
+                                            ),
+                                            //Automation rules table is used to assign tickets
+                                            assignedTo: If(
+                                                IsEmpty(
+                                                    Filter(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = 'S/AZoomMainCategoryDropdown_1'.Selected.ID && locationId = 'S/APowerAppLocationIDDropdown'.Selected.ID
+                                                    )
+                                                ),
+                                                0,
+                                                LookUp(
+                                                    'Ticket Automation Rules',
+                                                    categoryId = 'S/AZoomMainCategoryDropdown_1'.Selected.ID && locationId = 'S/APowerAppLocationIDDropdown'.Selected.ID,
+                                                    userID
+                                                )
+                                            )
+                                        }
+                                    )
+                                );
+                            
+                            Patch(
+                                Tickets, 
+                                LookUp(Tickets,ID = rec.ID),
+                                {
+                                    Title: "# "&rec.ID&" Power Apps Request"
+                                });
+                            // for the attachments, run power automate flow for each attached file in the regular attachment flow
+                            ForAll(
+                                attItems As Attachment,
+                                        AttachFiles.Run(
+                                        rec.ID,
+                                        {
+                                            file:{
+                                                contentBytes: Attachment.Value,
+                                                name: Attachment.Name
+                                            }
+                                        }
+                                    ) 
+                            );
+                            //Now do it for the camera and screenshots
+                            ForAll(
+                                RTEImages As RTEI,
+                                With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                            ))))
+                                    );
+                                
+                                /*SMTP.SendEmailV3(
+                                    {
+                                        From: "sbpdhelpdesk@outlook.com",
+                                        To: userData.email,
+                                        Subject: "Help Desk Ticket Received",
+                                        Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                    }
+                                );*/
+                                /*If(
+                                    rec.assignedTo > 0,
+                                    SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: LookUp(
+                                                Users,
+                                                ID = rec.assignedTo,
+                                                email
+                                            ),
+                                            Subject: "Help Desk Ticket Assigned",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                        }
+                                    );
+                                );*/
+                            Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                            //Power automate flow, sends email to ticket creator 
+                            SendEmail.Run(
+                                        userData.email,
+                                    "Help Desk Ticket Recieved",
+                                    //Email Message body
+                                    TicketCreatorMessageRTE_51.HtmlText,
+                                    Text(Blank())
+                                );
+                                // If the ticket it assigned to someone, send them an email
+                                If(
+                                    rec.assignedTo > 0,
+                                    SendEmail.Run(
+                                            LookUp(
+                                                Users,
+                                                ID = rec.assignedTo,
+                                                email
+                                            ),
+                                        "Help Desk Ticket Assigned",
+                                        //Email message body
+                                        TechAssignMessageRTE_51.HtmlText,
+                                        Text(Blank())
+                                    );
+                            TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                            
+                                );
+                                //Reset the form upon completion
+                                ResetForm('S/APowerAppForm');
+                                Navigate(Success);
+                            
+                            );
+                            // variables that control color elements
+                                UpdateContext({CreateTicketTitle: "Title is Required"});
+                                UpdateContext({CreateTicketDescription: "Description is Required"});
+                                UpdateContext({SAPowerAppPopup:true});
+                        Text: ="Submit"
+                        Width: ='S/AZoomCancelButton_1'.Width
+                        X: ='S/AZoomCancelButton_1'.X + (Self.Width*1.3)
+                        Y: ='S/AZoomCancelButton_1'.Y
+                        ZIndex: =1
+
+                    "'S/AZoomCancelButton_1' As button":
+                        Fill: =ColorScheme.orange
+                        HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                        OnSelect: |-
+                            =ResetForm('S/APowerAppForm');
+                            Navigate(Home);
+                        Text: ="Cancel"
+                        Width: =Parent.Width/3
+                        X: =If('Software/Applications Zoom TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                        Y: =Parent.Height - (Self.Height *2)
+                        ZIndex: =2
+
+        "'S/AZoomFooter_1' As groupContainer.verticalAutoLayoutContainer":
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Software/Applications Zoom TT'.Size =1
+            Width: =Parent.Width
+            ZIndex: =5
+
+            "'S/AZoomMobileMenu_1' As compMobileMenu_3":
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    TemplateBackButton_2 As icon.BackArrow:
+        Color: =Color.White
+        Height: ='S/APowerAppHeaderLabel'.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =('S/APowerAppHeaderContainer'.Height-'S/APowerAppHeaderLabel'.Height)/1.05
+        ZIndex: =2
+
+    TemplateWebMenu_2 As compWebMenu_3:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Software/Applications PowerApp TT'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    TechAssignMessageRTE_51 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            //Combine string as html body
+            /*
+            Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+            , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")*/
+            
+            "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                <tr>
+                <td>
+                    <Table style="&Char(34)&"width:100% "&Char(34)&">
+                    <tr>
+                    <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+            	A ticket has been asssigned to you, to check additional ticket details: 
+                <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+            	</div>
+                    </th>
+                    </tr>
+            	<br>
+                    <tr>
+                    <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+            	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                <br>
+                Ticket # "&rec.ID&"
+                <br>
+                Status: "&rec.status&"
+                <br>
+                <br>
+                "&rec.description&"
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Height: =9
+        Visible: =false
+        Width: =0
+        X: =892
+        Y: =759
+        ZIndex: =4
+
+    TicketCreatorMessageRTE_51 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            /*
+            Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.</div>")*/
+            
+            "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                <tr>
+                <td>
+                    <Table style="&Char(34)&"width:100% "&Char(34)&">
+                    <tr>
+                    <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+            	Your ticket has been created, a technician will be assigned to your case, if you would like to see additional details about your ticket: 
+                <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+            	</div>
+                    </th>
+                    </tr>
+            	<br>
+                    <tr>
+                    <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+            	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                <br>
+                Ticket # "&rec.ID&"
+                <br>
+                Status: "&rec.status&"
+                <br>
+                <br>
+                "&rec.description&"
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Height: =99
+        Visible: =false
+        Width: =293
+        X: =988
+        Y: =40
+        ZIndex: =5
+
+    RichTextEditor2_50 As richTextEditor:
+        Default: |-
+            ="<h1><strong>Statute Template</strong></h1><br><h2>Field 1:&nbsp; "&ExFieldInput1_42.Text&"<br><br>Field 2: "&ExFieldInput2_41.Text&"<br><br>Field 3: "&ExFieldInput3_41.Text&"<br><br></h2>"
+        Height: =20
+        Visible: =false
+        Width: =208
+        X: =40
+        Y: =40
+        ZIndex: =6
+
+    AlternativeAddImageContainer_42 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =altImagePopUp
+        Width: =Parent.Width
+        ZIndex: =7
+
+        AlternativeAddImageBackgroundTint_42 As rectangle:
+            Fill: =RGBA(56, 96, 178, .35)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        AlternativeAddImageBackground_42 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(227, 234, 243, 1)
+            Height: =Parent.Height/1.10
+            Width: =Parent.Width/1.10
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        AlternativeAddImageHeader_42 As rectangle:
+            BorderThickness: =2
+            Height: =80
+            Width: =AlternativeAddImageBackground_42.Width
+            X: =AlternativeAddImageBackground_42.X
+            Y: =AlternativeAddImageBackground_42.Y
+            ZIndex: =3
+
+        AlternativeAddImageHeaderLabel_42 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =AlternativeAddImageHeader_42.Height
+            Size: =18
+            Text: ="Using "&If(usingCamera, "Camera","Copy Paste")
+            Width: =AlternativeAddImageHeader_42.Width
+            X: =AlternativeAddImageHeader_42.X
+            Y: =AlternativeAddImageHeader_42.Y
+            ZIndex: =4
+
+        CopyPasteRTE_42 As richTextEditor:
+            Default: ="Erase this text and then you can paste your Screenshot here, then hit add at the bottom, you have to do this for every screenshot you add."
+            Height: =AlternativeAddImageBackground_42.Height/1.5
+            Visible: =!usingCamera
+            Width: =AlternativeAddImageBackground_42.Width
+            X: =AlternativeAddImageBackground_42.X
+            Y: =AlternativeAddImageBackground_42.Y+AlternativeAddImageHeader_42.Height
+            ZIndex: =5
+
+        Camera_41 As camera:
+            Camera: |-
+                =//Checks if there are anyback cameras, if there are none then default the camera to the first one otherwise use the first back camera
+                If(IsBlank(LookUp(Camera_41.AvailableDevices, "Back" in Name).Id),0,LookUp(Camera_41.AvailableDevices, "Back" in Name).Id)
+            Height: =AlternativeAddImageBackground_42.Height/1.5
+            OnSelect: |-
+                =UpdateContext({photoCounter:photoCounter+1});
+                Collect(RTEImages,{copyName:"Photo"&photoCounter,base64Image: "<img src="&JSON(Camera_41.Photo,JSONFormat.IncludeBinaryData)&" />"});
+                Collect(JointAttachments,{Name:"Photo"&photoCounter,Value: "<img src="&JSON(Camera_41.Photo,JSONFormat.IncludeBinaryData)&" />"});
+                UpdateContext({altImagePopUp:false});
+            Visible: =usingCamera
+            Width: =AlternativeAddImageBackground_42.Width
+            X: =AlternativeAddImageBackground_42.X
+            Y: =AlternativeAddImageBackground_42.Y+AlternativeAddImageHeader_42.Height
+            ZIndex: =6
+
+        AddScreenshotButton_41 As button:
+            OnSelect: |-
+                =If( "<img" in CopyPasteRTE_42.HtmlText, Collect(RTEImages,{copyName:TextInput3.Text, base64Image:CopyPasteRTE_42.HtmlText}); Collect(JointAttachments,{Name:TextInput3.Text, Value:CopyPasteRTE_42.HtmlText});
+                Reset(CopyPasteRTE_42);
+                Reset(TextInput3), Notify("No Valid Image"));
+                UpdateContext({altImagePopUp:false})
+            Text: =If(usingCamera,"Take Picture","Add ScreenShot")
+            Visible: =!usingCamera
+            Width: =250
+            X: =(AlternativeAddImageBackground_42.Width-Self.Width)/2 +AlternativeAddImageBackground_42.X
+            Y: =AlternativeAddImageBackground_42.Height-Self.Height-7
+            ZIndex: =7
+
+        ClosePanelButton_41 As icon.Cancel:
+            BorderThickness: =1
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(203, 102, 102, 1)
+            Height: =40
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =UpdateContext({altImagePopUp:false});
+                Reset(CopyPasteRTE_42);
+            Width: =40
+            X: =AlternativeAddImageHeader_42.Width+AlternativeAddImageHeader_42.X-Self.Width
+            Y: =AlternativeAddImageHeader_42.Y
+            ZIndex: =8
+
+        CameraInfoLabel_41 As label:
+            Align: =Align.Center
+            Height: =50
+            Size: =18
+            Text: ="Tap or Click the camera to take a picture"
+            Visible: =usingCamera
+            Width: =Camera_41.Width
+            X: =(AlternativeAddImageBackground_42.Width-Self.Width)/2 +AlternativeAddImageBackground_42.X
+            Y: =AlternativeAddImageBackground_42.Height-Self.Height-7
+            ZIndex: =9
+
+    FeedbackBugReportPA As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='Software/Applications PowerApp TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =8
+
+    SAPowerAppPopup As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =SAPowerAppPopup
+        Width: =Parent.Width
+        ZIndex: =9
+
+        ACPopupBackground_39 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_39 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_46 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_39.Width
+            X: =ACPopupRectangle_39.X
+            Y: =ACPopupRectangle_39.Y
+            ZIndex: =3
+
+        Label10_57 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_46.Width
+            X: =Rectangle8_46.X
+            Y: =Rectangle8_46.Y
+            ZIndex: =4
+
+        Button1_45 As button:
+            OnSelect: |-
+                =UpdateContext({SAPowerAppPopup:false});
+            Text: ="Close"
+            X: =(ACPopupRectangle_39.Width-Self.Width)/2 +ACPopupRectangle_39.X
+            Y: =ACPopupRectangle_39.Height-Self.Height
+            ZIndex: =9
+
+        Label18_130 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank('S/APowerAppLocationIDDropdown'.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank('S/APowerAppLocationIDDropdown'.Selected.Name),"Location Missing", "Location OK")
+            Width: =ACPopupRectangle_39.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_46.Y+Rectangle8_46.Height+15
+            ZIndex: =11
+
+        Label18_131 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank('S/APowerAppDropdown'.Selected.App),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank('S/APowerAppDropdown'.Selected.App), "App Selection Blank","App Selection OK" )
+            Width: =ACPopupRectangle_39.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_130.Y+Label18_130.Height+10
+            ZIndex: =12
+
+        Label18_132 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim('S/APowerAppDescriptionTextInputArea'.Text))=0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim('S/APowerAppDescriptionTextInputArea'.Text))=0, "Power App Details Blank","Power App Details OK" )
+            Width: =ACPopupRectangle_39.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_131.Y+Label18_131.Height+10
+            ZIndex: =13
+
+    AddMedia_1 As AddMedia:
+        AMSize: ='Software/Applications PowerApp TT'.Size
+        AttachCameraOff: =Set(AttachCamera,false);
+        AttachCameraOn: =Set(AttachCamera,true);
+        DisablePickMedia: =Set(AttachFiles,false)
+        EnablePickMedia: =Set(AttachFiles,true)
+        InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+        OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+        PhotoModeDisable: =Set(AttachPhoto,false)
+        PhotoModeEnable: =Set(AttachPhoto,true)
+        Visible: =varOpenMedia
+        ZIndex: =11
+

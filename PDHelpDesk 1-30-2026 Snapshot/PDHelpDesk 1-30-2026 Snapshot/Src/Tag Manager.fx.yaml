@@ -1,0 +1,447 @@
+"'Tag Manager' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnVisible: |-
+        =UpdateContext({switchTagSource:false});
+        Refresh(Tags);
+        Refresh('KB Tags');
+
+    TagManagerMainContainer As groupContainer.horizontalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        TagMangerVerticalLayoutContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            TagManagerHeaderContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //compWebHeader_20.Height + TagScreenName.Height
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Width: =Parent.Width
+                ZIndex: =1
+
+                TagManagerHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =4
+
+                    HomeBackgroundGradient_66 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =130
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    TagManagerLabel As label:
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-TagManagerWebHeader.Height
+                        Size: =If('Tag Manager'.Size= 1 , titleText.mobileSize, titleText.desktopSize)
+                        Text: =If(switchTagSource,"Knowledge Base ","Ticket ")&"Tag Manager"
+                        Width: =Parent.Width
+                        X: =(Parent.Width - Self.Width)/2
+                        Y: =TagManagerWebHeader.Height
+                        ZIndex: =2
+
+                    TagManagerWebHeader As compWebHeader:
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='Tag Manager'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        ZIndex: =3
+
+            TagMangerMainContentContainer As groupContainer.verticalAutoLayoutContainer:
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                LayoutAlignItems: =LayoutAlignItems.Stretch
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Width: =Parent.Width
+                ZIndex: =2
+
+                AddTagHeader As groupContainer.horizontalAutoLayoutContainer:
+                    Fill: =RGBA(255, 255, 255, 1)
+                    FillPortions: =0
+                    Height: =60
+                    LayoutAlignItems: =LayoutAlignItems.Center
+                    LayoutGap: =If('Tag Manager'.Size = 1, 12, 15)
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =//compWebHeader_28.Height
+                    LayoutMinWidth: =250
+                    LayoutMode: =LayoutMode.Auto
+                    PaddingLeft: =10
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                    Icon3 As icon.GlobeRefresh:
+                        AlignInContainer: =AlignInContainer.Center
+                        Color: =ColorScheme.secondary
+                        Height: =32
+                        Icon: =Icon.GlobeRefresh
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinWidth: =32
+                        OnSelect: |-
+                            =UpdateContext({switchTagSource:!switchTagSource})
+                        Width: =Self.Height
+                        ZIndex: =1
+
+                    TagNameLabel As label:
+                        Align: =Align.Center
+                        Height: =Parent.Height/1.5
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        Size: |-
+                            =Switch('Tag Manager'.Size,4,14,3,14,2,13,1,13)
+                            //Switch('Tag Manager'.Size,4,14,3,14,2,13,1,13)
+                        Text: ="Tag Name"
+                        Visible: =false
+                        Width: |
+                            =//Parent.Width/4
+                            If('Tag Manager'.Size = 1,Parent.Width/4.5,Parent.Width/8)
+                            //If('Tag Manager'.Size = 1,textInputTagName_1.Width/2.2,Parent.Width/8)
+                        Y: |
+                            =0
+                        ZIndex: =2
+
+                    TagNameTextInput As text:
+                        Default: =""
+                        Height: |
+                            =Parent.Height/1.5
+                        HintText: ="Enter a new tag name"
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        Width: =If('Tag Manager'.Size=1, Parent.Width/1.7,Parent.Width/1.22)
+                        ZIndex: =3
+
+                    AddTagButton As button:
+                        Color: =ColorScheme.screenBackground
+                        Fill: =ColorScheme.primary
+                        FontWeight: =FontWeight.Bold
+                        Height: =Parent.Height/1.5
+                        HoverColor: =ColorScheme.screenBackground
+                        HoverFill: =ColorFade(ColorScheme.primary, -20%)
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        OnSelect: |-
+                            =//add new record to tag table
+                            If(switchTagSource,
+                            Patch(
+                                'KB Tags',
+                                Defaults('KB Tags'),
+                                { Name : TagNameTextInput.Text }); 
+                                Reset(TagNameTextInput);
+                                ,
+                            Patch(
+                                Tags,
+                                Defaults(Tags),
+                                { Title : TagNameTextInput.Text }); 
+                                Reset(TagNameTextInput);)
+                        PressedBorderColor: =ColorFade(ColorScheme.primary, -20%)
+                        PressedColor: =ColorScheme.screenBackground
+                        PressedFill: =ColorFade(ColorScheme.primary, -20%)
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Size: =Switch('Tag Manager'.Size,4,14,3,14,2,13,1,13)
+                        Text: ="Add"
+                        Width: |
+                            =//Parent.Width/8
+                            If('Tag Manager'.Size = 1,Parent.Width/5.5,Parent.Width/8)
+                            //If('Tag Manager'.Size = 1,textInputTagName_1.Width/2.8,Parent.Width/8)
+                        X: |
+                            =0
+                        ZIndex: =4
+
+                TagBody_1 As groupContainer.horizontalAutoLayoutContainer:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    LayoutAlignItems: =LayoutAlignItems.Center
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    LayoutMode: =LayoutMode.Auto
+                    ZIndex: =2
+
+                    StackTheTagBodyVertically_1 As groupContainer.verticalAutoLayoutContainer:
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGridColumns: =6
+                        LayoutGridRows: =6
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =100
+                        LayoutMinWidth: =250
+                        LayoutMode: =LayoutMode.Auto
+                        ZIndex: =1
+
+                        TicketTagGallery As gallery.galleryVertical:
+                            '#CopilotOverlayLabel': ="Filtered"
+                            AlignInContainer: =AlignInContainer.SetByContainer
+                            DelayItemLoading: =true
+                            FillPortions: =8
+                            Height: =Parent.Height
+                            Items: =If(switchTagSource,'KB Tags',Tags)
+                            Layout: =Layout.Vertical
+                            LayoutMaxHeight: =
+                            LayoutMaxWidth: =
+                            LayoutMinHeight: =287
+                            LayoutMinWidth: =320
+                            LoadingSpinner: =LoadingSpinner.Data
+                            ShowScrollbar: =false
+                            TemplatePadding: =0
+                            TemplateSize: =Parent.Height/3
+                            Visible: |-
+                                =//If(Toggle1.Value=true, true,If('Tag Manager'.Size>1, true,false))
+                                true
+                            Width: =Parent.Width
+                            WrapCount: =Switch('Tag Manager'.Size,4,4,3,3,2,2,2)
+                            ZIndex: =3
+
+                            tagBackground As button:
+                                BorderThickness: =0
+                                Color: =ColorScheme.secondary
+                                DisabledColor: =RGBA(0, 0, 0, 0)
+                                DisabledFill: =RGBA(0, 0, 0, 0)
+                                DisplayMode: =DisplayMode.View
+                                Fill: |-
+                                    =//ColorFade(ColorScheme.primary, 65%)
+                                    ColorScheme.primary
+                                Height: =TicketTagGallery.TemplateHeight/1.15
+                                HoverColor: |-
+                                    =//RGBA(0, 0, 0, 0)
+                                    //ColorScheme.primary
+                                OnSelect: =Select(Parent)
+                                PressedBorderColor: =//Self.Fill
+                                RadiusBottomLeft: =20
+                                RadiusBottomRight: =20
+                                RadiusTopLeft: =20
+                                RadiusTopRight: =20
+                                Text: =""
+                                Visible: =false
+                                Width: |-
+                                    =//If(Screen2.Size =1,Gallery16.TemplateWidth/2,Gallery16.TemplateWidth/1.15)
+                                    //AllTags.TemplateWidth/1.15
+                                    If('Tag Manager'.Size=1,TicketTagGallery.TemplateWidth/1.15,TicketTagGallery.TemplateWidth/1.15)
+                                X: |-
+                                    =//If(Screen2.Size =1,Gallery16.TemplateWidth/4,Gallery16.TemplateWidth/18)
+                                    //Gallery16.TemplateWidth/18
+                                    (Parent.TemplateWidth - Self.Width)/2
+                                Y: |-
+                                    =//Gallery16.TemplateHeight/22
+                                    (Parent.TemplateHeight - Self.Height)/2
+                                ZIndex: =1
+
+                            GalleryButtonColorGradient_7 As htmlViewer:
+                                DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                Height: =tagBackground.Height
+                                HtmlText: |-
+                                    ="<div style='
+                                    height:"&Self.Height-1&"px;
+                                    width:100%;
+                                    bbackground: rgb(53,89,137);
+                                    background: linear-gradient(90deg, rgba(180,194,203,1) 0% , rgba(126,149,180,1) 25%, rgba(53,89,137,1) "&100&"%); -webkit-border-radius: 10px;
+                                    -moz-border-radius: 10px;
+                                    border-radius: 10px;' ></div>"
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                Width: =tagBackground.Width
+                                X: =tagBackground.X
+                                Y: =tagBackground.Y
+                                ZIndex: =2
+
+                            tagDeleteButton As button:
+                                BorderColor: =//ColorFade(Self.Fill, -15%)
+                                BorderThickness: =//
+                                Color: |-
+                                    =//RGBA(255, 255, 255, 1)
+                                    ColorScheme.screenBackground
+                                DisabledBorderColor: =//RGBA(166, 166, 166, 1)
+                                DisabledColor: =//RGBA(166, 166, 166, 1)
+                                DisabledFill: =//RGBA(244, 244, 244, 1)
+                                Fill: |-
+                                    =//RGBA(56, 96, 178, 1)
+                                    ColorScheme.primary
+                                FocusedBorderColor: =//ColorScheme.secondary
+                                Height: |-
+                                    =//Button6_1.Height/5
+                                    //Parent.TemplateHeight/5
+                                    tagBackground.Height/4
+                                HoverBorderColor: =//ColorFade(Self.BorderColor, 20%)
+                                HoverColor: |-
+                                    =//RGBA(255, 255, 255, 1)
+                                    ColorScheme.screenBackground
+                                HoverFill: =ColorFade(ColorScheme.primary, -20%)
+                                OnSelect: |-
+                                    =//Remove item from source
+                                    Remove(Tags, ThisItem)
+                                PressedBorderColor: |-
+                                    =//Self.Fill
+                                    ColorFade(ColorScheme.primary, -20%)
+                                PressedColor: |-
+                                    =//Self.Fill
+                                    ColorScheme.screenBackground
+                                PressedFill: |-
+                                    =//Self.Color
+                                    //ColorScheme.primary
+                                    ColorFade(ColorScheme.primary, -20%)
+                                RadiusBottomLeft: =20
+                                RadiusBottomRight: =20
+                                RadiusTopLeft: =20
+                                RadiusTopRight: =20
+                                Size: |-
+                                    =
+                                    Switch('Tag Manager'.Size,4,14,3,14,2,14,1,11)
+                                Text: ="Delete"
+                                Width: =tagBackground.Width/2
+                                X: |-
+                                    =//Button6_1.Width/3.2
+                                    (Parent.TemplateWidth - Self.Width)/2
+                                Y: |-
+                                    =//Button6_1.Height/1.4
+                                    (Parent.TemplateHeight - Self.Height)/1.2
+                                ZIndex: =3
+
+                            tagName As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =63
+                                OnSelect: =Select(Parent)
+                                Size: |-
+                                    =//If(Home_1.Size= 1, 30,Self.Height/3)
+                                    //(Parent.TemplateWidth - Self.Width)/3
+                                    Switch('Tag Manager'.Size,4,15,3,15,2,15,1,11)
+                                    //If(Home_1.Size =1,11,15)
+                                Text: =ThisItem.'{Name}'
+                                Width: |-
+                                    =//Parent.TemplateWidth/1.15
+                                    tagBackground.Width
+                                X: |-
+                                    =//Button6_1.X
+                                    (Parent.TemplateWidth - Self.Width)/2
+                                Y: |
+                                    =//Button6_1.Y*6.56
+                                    //Button6_1.Height/3
+                                    (Parent.TemplateHeight - Self.Height)/2
+                                ZIndex: =4
+
+                            tagIcon As icon.Tag:
+                                Color: =RGBA(255, 255, 255, 1)
+                                DisplayMode: =DisplayMode.View
+                                Height: =tagBackground.Height/4.5
+                                Icon: =Icon.Tag
+                                Width: |-
+                                    =tagBackground.Width/6
+                                    //(Parent.TemplateWidth-Self.Width)/2
+                                X: |-
+                                    =//Button6_1.X *7.8
+                                    //Button6_1.Width/2
+                                    (Parent.TemplateWidth - Self.Width)/2
+                                Y: |-
+                                    =//Button6_1.Height/8
+                                    (Parent.TemplateHeight - Self.Height)/6
+                                ZIndex: =5
+
+            TagManagerFooter As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                FillPortions: =0
+                Height: =60
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: =If('Tag Manager'.Size = 1, true, false)
+                Width: =Parent.Width
+                ZIndex: =5
+
+                TagManagerMobileMenu As compMobileMenu:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    TagManagerBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =TagManagerLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(TagManagerHeaderContainer.Height-TagManagerLabel.Height)/1.05
+        ZIndex: =3
+
+    TagManagerWebMenu As compWebMenu:
+        Visible: ='Tag Manager'.Size > 1
+        ZIndex: =4
+
+    FeedbackBugReportTM As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =5
+

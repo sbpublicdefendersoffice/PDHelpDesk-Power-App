@@ -1,0 +1,1854 @@
+"'eDefender Adding/Coding Items TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm('eDefenderAdding/CodingItemsForm');
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        ClearCollect(items,
+        {
+            itemName:"",
+            toBeRemoved:false
+        }
+        
+        );
+        
+        ClearCollect(listItemsCol,{
+        
+        listDropdownName:"",
+        listDropdownAdditions:items
+        
+        });
+        
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        Clear(items);
+        Clear(listItemsCol);
+        UpdateContext({usingCamera:false,altImagePopUp:false});
+        UpdateContext({ACPopup:false});
+
+    "'eDefenderAdding/CodingMainContainer' As groupContainer.horizontalAutoLayoutContainer":
+        Height: ='eDefender Adding/Coding Items TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='eDefender Adding/Coding Items TT'.Width
+        ZIndex: =2
+
+        "'eDefenderAdding/CodingVerticalLayoutContainer' As groupContainer.verticalAutoLayoutContainer":
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            "'eDefenderAdding/CodingHeaderContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                AddingCodingItemsHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =11
+
+                    HomeBackgroundGradient_6 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    "'eDefenderAdding/CodingItemsLabel' As label":
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-'eDefenderAdding/CodingWebHeader'.Height
+                        Size: =If('eDefender Adding/Coding Items TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Adding/Coding Items Form"
+                        Width: =Parent.Width
+                        Y: ='eDefenderAdding/CodingWebHeader'.Height
+                        ZIndex: =2
+
+                    "'eDefenderAdding/CodingWebHeader' As compWebHeader":
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='eDefender Adding/Coding Items TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        Height: |-
+                            =82
+                            //Parent.Height
+                        ZIndex: =3
+
+            "'eDefenderAdding/CodingMainContentContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                "'eDefenderAdding/CodingItemsForm' As form":
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    "'eDefenderAdding/CodingTitle_DataCard' As typedDataCard.textualEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If('eDefender Adding/Coding Items TT'.Size =1,100,50)
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        "'eDefenderAdding/CodingTitleLabel' As label":
+                            AutoHeight: =true
+                            Color: =If(CreateTicketTitle = "Title" || !IsBlank('eDefenderAdding/CodingTitleInput'.Text), RGBA(0, 18, 107, 1), Color.Red)
+                            Height: =34
+                            Text: ="Case Number"
+                            Visible: =false
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'eDefenderAdding/CodingTitleError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =false
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='eDefenderAdding/CodingTitleInput'.Y + 'eDefenderAdding/CodingTitleInput'.Height
+                            ZIndex: =3
+
+                        "'eDefenderAdding/CodingTitleStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='eDefenderAdding/CodingTitleLabel'.Color
+                            Height: ='eDefenderAdding/CodingTitleLabel'.Height
+                            Text: ="*"
+                            Visible: =false
+                            Width: =30
+                            Wrap: =false
+                            Y: ='eDefenderAdding/CodingTitleLabel'.Y
+                            ZIndex: =4
+
+                        "'eDefenderAdding/CodingTitleInput' As text":
+                            Default: =""
+                            Height: =30
+                            HintText: ="Add new item to dropdown, Which list and what to add or remove, add a check box"
+                            Visible: =false
+                            Width: =If('eDefender Adding/Coding Items TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                        "'eDefenderAdding/CodingDisclaimerLabel' As label":
+                            Align: =Align.Center
+                            BorderColor: =RGBA(221, 79, 14, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(221, 79, 14, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =If(App.ActiveScreen.Size =1,100,50)
+                            Size: =If('eDefender Adding/Coding Items TT'.Size =1,13,16)
+                            Text: ='eDefender_A/S_Disclaimer_Label'.Text
+                            Width: =Parent.Width
+                            ZIndex: =6
+
+                    "'eDefenderAdding/CodingMainCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Adding/Coding Items TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        "'eDefenderAdding/CodingMainCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'eDefenderAdding/CodingMainCategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='eDefenderAdding/CodingMainCategoryDropdown'.Y + 'eDefenderAdding/CodingMainCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'eDefenderAdding/CodingMainCategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='eDefenderAdding/CodingMainCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='eDefenderAdding/CodingMainCategoryLabel'.Y
+                            ZIndex: =4
+
+                        "'eDefenderAdding/CodingMainCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'eDefenderAdding/CodingSubCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Adding/Coding Items TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        "'eDefenderAdding/CodingSubCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'eDefenderAdding/CodingSubcategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='eDefenderAdding/CodingSubCategoryDropdown'.Y + 'eDefenderAdding/CodingSubCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'eDefenderAdding/CodingSubcategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='eDefenderAdding/CodingSubCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='eDefenderAdding/CodingSubCategoryLabel'.Y
+                            ZIndex: =4
+
+                        "'eDefenderAdding/CodingSubCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = 'eDefenderAdding/CodingMainCategoryDropdown'.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'eDefenderAdding/CodingFields' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =600
+                        Visible: =true
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        Group2 As group:
+                            Height: =5
+                            Width: =5
+                            X: =60
+                            Y: =60
+                            ZIndex: =13
+
+                            AddingEntryHeader As rectangle:
+                                BorderThickness: =2
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Width: =If('eDefender Adding/Coding Items TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                                X: |
+                                    =If('eDefender Adding/Coding Items TT'.Size=1,30,(Parent.Width-Self.Width)/2)
+                                Y: =40
+                                ZIndex: =1
+
+                            AddingEntryHeaderTitle As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Size: =18
+                                Text: ="Dropdown Entry"
+                                Width: =AddingEntryHeader.Width
+                                X: =AddingEntryHeader.X
+                                Y: =40
+                                ZIndex: =2
+
+                            AddingEntryBackground As rectangle:
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Width: =AddingEntryHeader.Width
+                                X: =AddingEntryHeader.X
+                                Y: =90
+                                ZIndex: =3
+
+                            EnterDropdownLabel As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Size: =17
+                                Text: ="Enter a Dropdown"
+                                Width: =(AddingEntryHeader.Width)
+                                X: =AddingEntryHeader.X
+                                Y: =90
+                                ZIndex: =4
+
+                            CodeInput As text:
+                                Default: =""
+                                EnableSpellCheck: =true
+                                HintText: ="Enter item"
+                                Width: =AddingEntryHeader.Width-10
+                                X: =AddingEntryBackground.X+5
+                                Y: =EnterDropdownLabel.Y+EnterDropdownLabel.Height+10
+                                ZIndex: =5
+
+                            CodeAddButtonBackground As button:
+                                Fill: =ColorScheme.primary
+                                FontWeight: =FontWeight.Bold
+                                OnSelect: |-
+                                    =Patch(listItemsCol,Defaults(listItemsCol),
+                                    {
+                                        listDropdownName:CodeInput.Text
+                                    });
+                                    Reset(CodeInput);
+                                Text: ="Add "
+                                Width: =If('eDefender Adding/Coding Items TT'.Size=1,Parent.Width/4.25,Parent.Width/6.25)
+                                X: =(Parent.Width-Self.Width)/2
+                                Y: =AddingEntryBackground.Y+AddingEntryBackground.Height+20
+                                ZIndex: =6
+
+                        Group6 As group:
+                            Height: =5
+                            Width: =5
+                            X: =60
+                            Y: =60
+                            ZIndex: =25
+
+                            AddItemsToDropdownSelectedHeader As rectangle:
+                                BorderThickness: =2
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Width: =AddingEntryHeader.Width
+                                X: =DropdownListGalleryHeader.X
+                                Y: =If('eDefender Adding/Coding Items TT'.Size=1,'Video/AudioEditingMobileGallery_7'.Y+'Video/AudioEditingMobileGallery_7'.Height+30,DropdownListGallery.Height+DropdownListGallery.Y+100)
+                                ZIndex: =8
+
+                            AddItemsToDropdownSelectedHeaderTitle As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Size: =18
+                                Text: ="List-"&DropdownListGallery.Selected.listDropdownName
+                                Width: =AddItemsToDropdownSelectedHeader.Width
+                                X: =AddItemsToDropdownSelectedHeader.X
+                                Y: =AddItemsToDropdownSelectedHeader.Y
+                                ZIndex: =9
+
+                            AddItemsToDropdownSelectedBackground As rectangle:
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Width: =AddingEntryHeader.Width
+                                X: =AddItemsToDropdownSelectedHeader.X
+                                Y: =AddItemsToDropdownSelectedHeader.Y+AddItemsToDropdownSelectedHeader.Height
+                                ZIndex: =10
+
+                            ItemToAddLabel As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Size: =17
+                                Text: ="Item to Add"
+                                Width: =(4*AddItemsToDropdownSelectedHeader.Width)/6
+                                X: =AddItemsToDropdownSelectedHeader.X
+                                Y: =AddItemsToDropdownSelectedHeader.Y+AddItemsToDropdownSelectedHeader.Height
+                                ZIndex: =11
+
+                            ItemInput As text:
+                                Default: =""
+                                EnableSpellCheck: =true
+                                HintText: ="Enter item"
+                                Width: =ItemToAddLabel.Width - 10
+                                X: =AddItemsToDropdownSelectedHeader.X+5
+                                Y: =ItemToAddLabel.Y+ItemToAddLabel.Height+10
+                                ZIndex: =12
+
+                            AddItemToGalleryButton As button:
+                                Fill: =ColorScheme.primary
+                                OnSelect: |-
+                                    =Clear(items);
+                                    Collect(items,LookUp(listItemsCol,DropdownListGallery.Selected.listDropdownName=listDropdownName).listDropdownAdditions);
+                                    
+                                    Patch(items,Defaults(items),{
+                                        itemName:ItemInput.Text
+                                        ,toBeRemoved:RemoveCheckBox.Value});
+                                    Patch(listItemsCol,LookUp(listItemsCol,DropdownListGallery.Selected.listDropdownName = listDropdownName),
+                                    {
+                                        listDropdownAdditions:items
+                                    });
+                                    
+                                    Reset(ItemInput);
+                                    Reset(RemoveCheckBox);
+                                Text: ="Add"
+                                Width: =CodeAddButtonBackground.Width
+                                X: =AddItemsToDropdownSelectedHeader.X+(AddItemsToDropdownSelectedHeader.Width-Self.Width)/2
+                                Y: =AddItemsToDropdownSelectedBackground.Y+AddItemsToDropdownSelectedBackground.Height+25
+                                ZIndex: =13
+
+                            RemoveCheckBoxLabel As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Size: =If('eDefender Adding/Coding Items TT'.Size=1, 11,17)
+                                Text: ="Remove"
+                                Width: =(2*AddingEntryHeader.Width)/6
+                                X: =ItemToAddLabel.X+ItemToAddLabel.Width
+                                Y: =ItemToAddLabel.Y
+                                ZIndex: =23
+
+                            RemoveCheckBox As checkbox:
+                                Height: =60
+                                Text: =""
+                                Width: =40
+                                X: =ItemInput.Width+ItemInput.X+10+(RemoveCheckBoxLabel.Width-Self.Width)/2
+                                Y: =RemoveCheckBoxLabel.Y+RemoveCheckBoxLabel.Height
+                                ZIndex: =24
+
+                        Group1 As group:
+                            Height: =5
+                            Width: =5
+                            X: =60
+                            Y: =60
+                            ZIndex: =28
+
+                            DropdownListGalleryHeader As rectangle:
+                                BorderThickness: =2
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Visible: =!IsEmpty(listItemsCol)
+                                Width: =AddingEntryHeader.Width
+                                X: =AddingEntryHeader.X
+                                Y: =CodeAddButtonBackground.Y+CodeAddButtonBackground.Height+20
+                                ZIndex: =20
+
+                            DropdownListGalleryHeaderLabel As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Size: =18
+                                Text: ="Dropdown List"
+                                Visible: =!IsEmpty(listItemsCol)
+                                Width: =DropdownListGalleryHeader.Width
+                                X: =DropdownListGalleryHeader.X
+                                Y: =DropdownListGalleryHeader.Y
+                                ZIndex: =21
+
+                            DropdownListGallery As gallery.variableTemplateHeightGallery:
+                                '#CopilotOverlayLabel': ="Filtered"
+                                BorderThickness: =1
+                                DelayItemLoading: =true
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =CountRows(listItemsCol)*50
+                                Items: =listItemsCol
+                                Layout: =Layout.Vertical
+                                LoadingSpinner: =LoadingSpinner.Data
+                                ShowScrollbar: =false
+                                TemplatePadding: =0
+                                TemplateSize: =50
+                                Visible: ='eDefender Adding/Coding Items TT'.Size>1
+                                Width: =DropdownListGalleryHeader.Width
+                                X: =DropdownListGalleryHeader.X
+                                Y: =DropdownListGalleryHeader.Y+DropdownListGalleryHeader.Height
+                                ZIndex: =22
+
+                                DropdownName As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Color: =If(ThisItem.IsSelected,RGBA(255,255,255,1),RGBA(0,0,0,1))
+                                    Fill: =If(ThisItem.IsSelected,RGBA(56, 96, 178, .75),RGBA(255,255,255,1))
+                                    Height: =50
+                                    OnSelect: =Select(Parent)
+                                    Size: =18
+                                    Text: =ThisItem.listDropdownName
+                                    Width: =Parent.TemplateWidth
+                                    ZIndex: =1
+
+                                DeleteDropdownButton As button:
+                                    Color: =RGBA(0, 0, 0, 0)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Height: =50
+                                    HoverFill: =RGBA(255,0,0,.35)
+                                    OnSelect: =Remove(listItemsCol,ThisItem)
+                                    PressedFill: =RGBA(255,0,0,.80)
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: ="Delete Entry"
+                                    Visible: =If('eDefender Adding/Coding Items TT'.Size=1,false,true)
+                                    Width: =Parent.TemplateWidth/2
+                                    X: =SelectDropdownButton.Width
+                                    ZIndex: =2
+
+                                SelectDropdownButton As button:
+                                    Color: =RGBA(0, 0, 0, 0)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Height: =50
+                                    HoverFill: =RGBA(50,50,255,.35)
+                                    OnSelect: =Select(Parent)
+                                    PressedFill: =RGBA(50,50,255,.80)
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: ="Select"
+                                    Visible: =If('eDefender Adding/Coding Items TT'.Size=1,false,true)
+                                    Width: =Parent.TemplateWidth/2
+                                    ZIndex: =3
+
+                                Icon10 As icon.Trash:
+                                    Color: =RGBA(0, 0, 0, 1)
+                                    Height: =16
+                                    Icon: =Icon.CancelBadge
+                                    OnSelect: =Remove(listItemsCol,ThisItem)
+                                    Visible: =If('eDefender Adding/Coding Items TT'.Size=1,true,false)
+                                    Width: =16
+                                    X: =Parent.TemplateWidth-Self.Width
+                                    ZIndex: =4
+
+                            "'Video/AudioEditingMobileGallery_7' As gallery.galleryVertical":
+                                '#CopilotOverlayLabel': ="Filtered"
+                                BorderThickness: =1
+                                Default: |-
+                                    =//First(MyTicketsGallery.AllItems)
+                                    {}
+                                DelayItemLoading: |-
+                                    =//false
+                                    true
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =300
+                                Items: =listItemsCol
+                                Layout: =Layout.Vertical
+                                LoadingSpinner: |-
+                                    =//LoadingSpinner.None
+                                    LoadingSpinner.Controls
+                                TemplatePadding: =10
+                                TemplateSize: |-
+                                    =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                    //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+                                    
+                                    If(MyTickets.Size > 1, 250, 240)
+                                Transition: =Transition.Push
+                                Visible: ='eDefender Adding/Coding Items TT'.Size=1 && !IsEmpty(listItemsCol)
+                                Width: =DropdownListGalleryHeader.Width
+                                WrapCount: =RoundDown((Parent.Width / 320), 0)
+                                X: =DropdownListGalleryHeader.X
+                                Y: =DropdownListGalleryHeader.Y+DropdownListGalleryHeader.Height
+                                ZIndex: =27
+
+                                Rectangle6_12 As rectangle:
+                                    BorderColor: =RGBA(0, 0, 0, 0)
+                                    BorderThickness: =25
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Image6_12.Height
+                                    OnSelect: =Select(Parent)
+                                    Width: =Image6_12.Width
+                                    ZIndex: =1
+
+                                Image6_12 As image:
+                                    Height: |-
+                                        =//250
+                                        Parent.TemplateHeight
+                                    Image: |-
+                                        ="data:image/svg+xml," & EncodeUrl(
+                                            "<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+                                        <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+                                        <svg version='1.1'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 " & Self.Width & " " & Self.Height & "' width='" & Self.Width & "' height='" & Self.Height & "'>
+                                            <defs>" &
+                                            // ----- Box for fill
+                                         "<path d='" &
+                                         // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0,0) &
+                                            // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                            // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                         "Z' id='box' stroke='" & "#ff0000" & "' stroke-width='" & 0 & "'></path>
+                                            </defs>
+                                            <g>
+                                                <g>
+                                                    <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>
+                                                        <feFlood></feFlood>
+                                                        <feComposite in2='SourceAlpha' operator='in'></feComposite>
+                                                        <feGaussianBlur stdDeviation='" & 5 & "'></feGaussianBlur>
+                                                        <feOffset dx='" & 0 & "' dy='" & 0 & "' result='afterOffset'></feOffset>
+                                                        <feFlood flood-color='" & "#000000" & "' flood-opacity='" & Substitute(Text(0.5), ",", ".") & "'></feFlood>
+                                                        <feComposite in2='afterOffset' operator='in'></feComposite>
+                                                        <feMorphology operator='dilate' radius='1'></feMorphology>
+                                                        <feComposite in2='SourceAlpha' operator='out'></feComposite>
+                                                    </filter>" &
+                                                    // ----- Box for shadow
+                                         "<path d='" &
+                                         // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                            // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                         "Z' id='Component1' filter='url(#shadow)'></path>
+                                                </g>
+                                                <use xlink:href='#box' opacity='1' fill='" & "#ffffff" & "' fill-opacity='" & Substitute(Text(0), ",", ".") & "'></use>
+                                            </g>
+                                            <g>
+                                                " &
+                                                // ----- Edge
+                                         If(
+                                                true,
+                                                Switch(
+                                                    "left",
+                                                    "left",// -- Position: left
+                                                    "<path d='" &
+                                                // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) + 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Upper right
+                                         "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Lower right
+                                         "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) + 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                         "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>",
+                                                     "right",// -- Position: right
+                                                    "<path d='" &
+                                                // Upper left
+                                         "M" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                // Lower left
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                         "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>"
+                                                   
+                                                )
+                                            ) & "
+                                            </g>
+                                        </svg>"
+                                        )
+                                    OnSelect: =Select(Parent)
+                                    Width: |-
+                                        =//329
+                                        Parent.TemplateWidth
+                                    ZIndex: =2
+
+                                btnBkg_12 As button:
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Parent.TemplateHeight
+                                    HoverFill: =Self.Fill
+                                    OnSelect: =Select(Parent)
+                                    PressedFill: =Self.Fill
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: =""
+                                    Visible: =false
+                                    Width: =Parent.TemplateWidth
+                                    ZIndex: =3
+
+                                TitleLabel_12 As label:
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =54
+                                    OnSelect: =Select(Parent)
+                                    Size: =12
+                                    Text: =If(ThisItem.IsSelected,"Selected","")
+                                    Width: |-
+                                        =//208
+                                        Parent.TemplateWidth - Icon18_11.Width - 47
+                                    X: =24
+                                    Y: =27
+                                    ZIndex: =4
+
+                                OverlapButton_10 As button:
+                                    BorderThickness: =0
+                                    Fill: =Color.Transparent
+                                    Height: |-
+                                        =//220
+                                        Parent.TemplateHeight
+                                    HoverFill: =Self.Fill
+                                    OnSelect: |-
+                                        =
+                                        
+                                        // Sharepoint List
+                                        Select(Parent)
+                                    PressedFill: =Self.Fill
+                                    Text: =""
+                                    Width: |-
+                                        =//303
+                                        Parent.TemplateWidth
+                                    X: |-
+                                        =//24
+                                        (Parent.TemplateWidth - Self.Width) / 2
+                                    Y: |-
+                                        =//15
+                                        (Parent.TemplateHeight - Self.Height) / 2
+                                    ZIndex: =13
+
+                                Icon18_11 As icon.CancelBadge:
+                                    Height: =32
+                                    Icon: =Icon.CancelBadge
+                                    OnSelect: =Remove(listItemsCol,ThisItem)
+                                    Width: =32
+                                    X: =Parent.TemplateWidth - Self.Width - 23
+                                    Y: =27
+                                    ZIndex: =14
+
+                                Group11_8 As group:
+                                    Height: =5
+                                    Width: =5
+                                    X: =60
+                                    Y: =60
+                                    ZIndex: =16
+
+                                    StartedLabelTextValue_10 As label:
+                                        Align: =Align.Center
+                                        Height: =100
+                                        OnSelect: =Select(Parent)
+                                        Text: =ThisItem.listDropdownName
+                                        Width: |-
+                                            =//143
+                                            Parent.TemplateWidth/1.2
+                                        Wrap: =false
+                                        X: |-
+                                            =//89
+                                            StaratedLabelText_10.X
+                                        Y: |
+                                            =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                            //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                            //((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                            StaratedLabelText_10.Y+StaratedLabelText_10.Height
+                                        ZIndex: =11
+
+                                    StaratedLabelText_10 As label:
+                                        Align: =Align.Center
+                                        BorderThickness: =1
+                                        Color: =RGBA(255, 255, 255, 1)
+                                        Fill: =ColorScheme.primary
+                                        Height: =25
+                                        OnSelect: =Select(Parent)
+                                        Size: =10
+                                        Text: ="List name"
+                                        Width: =100
+                                        X: =(Parent.TemplateWidth-Self.Width)/9
+                                        Y: |
+                                            =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                            //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                            ((Parent.TemplateHeight - Self.Height) / 2.8) 
+                                        ZIndex: =12
+
+                                    Rectangle19_8 As rectangle:
+                                        BorderThickness: =1
+                                        Fill: =RGBA(0, 0, 0, 0)
+                                        Height: =StaratedLabelText_10.Height+StartedLabelTextValue_10.Height
+                                        OnSelect: =Select(Parent)
+                                        Width: =Parent.TemplateWidth/1.2
+                                        X: =StaratedLabelText_10.X
+                                        Y: =StaratedLabelText_10.Y
+                                        ZIndex: =15
+
+                        Group8 As group:
+                            Height: =5
+                            Width: =5
+                            X: =60
+                            Y: =60
+                            ZIndex: =29
+
+                            CurrentItemsGalleryHeader As rectangle:
+                                BorderThickness: =2
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Visible: =(!IsEmpty(CurrentItemsGallery.AllItems) || !IsEmpty('Video/AudioEditingMobileGallery_8'.AllItems))
+                                Width: =AddItemsToDropdownSelectedHeader.Width
+                                X: =AddItemsToDropdownSelectedHeader.X
+                                Y: =AddItemToGalleryButton.Y+AddItemToGalleryButton.Height+40
+                                ZIndex: =16
+
+                            CurrentItemsGalleryHeaderLabel As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Size: =18
+                                Text: ="Current Items"
+                                Visible: =(!IsEmpty(CurrentItemsGallery.AllItems) || !IsEmpty('Video/AudioEditingMobileGallery_8'.AllItems))
+                                Width: =CurrentItemsGalleryHeader.Width
+                                X: =CurrentItemsGalleryHeader.X
+                                Y: =CurrentItemsGalleryHeader.Y
+                                ZIndex: =17
+
+                            CurrentItemsGallery As gallery.variableTemplateHeightGallery:
+                                '#CopilotOverlayLabel': ="Filtered"
+                                BorderThickness: =1
+                                DelayItemLoading: =true
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =CountRows(DropdownListGallery.Selected.listDropdownAdditions)*50
+                                Items: =DropdownListGallery.Selected.listDropdownAdditions
+                                Layout: =Layout.Vertical
+                                LoadingSpinner: =LoadingSpinner.Data
+                                ShowScrollbar: =false
+                                TemplatePadding: =0
+                                TemplateSize: =50
+                                Visible: ='eDefender Adding/Coding Items TT'.Size>1 && !IsEmpty(Self.AllItems)
+                                Width: =CurrentItemsGalleryHeader.Width
+                                X: =CurrentItemsGalleryHeader.X
+                                Y: =GalleryItemHeaderLabel.Y+GalleryItemHeaderLabel.Height
+                                ZIndex: =18
+
+                                ItemName As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Height: =50
+                                    OnSelect: =Select(Parent)
+                                    Size: =18
+                                    Text: =ThisItem.itemName
+                                    Width: =If('eDefender Adding/Coding Items TT'.Size=1,(3*Parent.TemplateWidth)/4,Parent.TemplateWidth/2)
+                                    ZIndex: =1
+
+                                ItemRemoveLabel As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Height: =50
+                                    OnSelect: =Select(Parent)
+                                    Size: =18
+                                    Text: =If(ThisItem.toBeRemoved= true,"Yes","No")
+                                    Width: =If('eDefender Adding/Coding Items TT'.Size=1,Parent.TemplateWidth/4,Parent.TemplateWidth/2)
+                                    X: =ItemName.Width
+                                    ZIndex: =2
+
+                                DeleteCurrentItemButton As button:
+                                    Color: =RGBA(0, 0, 0, 0)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Height: =50
+                                    HoverFill: =RGBA(255,0,0,.35)
+                                    OnSelect: |-
+                                        =Clear(items);
+                                        Collect(items,LookUp(listItemsCol,listDropdownName = DropdownListGallery.Selected.listDropdownName).listDropdownAdditions);
+                                        Remove(items,ThisItem);
+                                        Patch(listItemsCol,LookUp(listItemsCol,DropdownListGallery.Selected.listDropdownName = listDropdownName),
+                                        {
+                                            listDropdownAdditions:items
+                                        })
+                                    PressedFill: =RGBA(255,0,0,.80)
+                                    Text: ="Delete Entry"
+                                    Visible: =If('eDefender Adding/Coding Items TT'.Size=1,false,true)
+                                    Width: =Parent.TemplateWidth
+                                    ZIndex: =3
+
+                                Icon15 As icon.CancelBadge:
+                                    Color: =RGBA(0, 0, 0, 1)
+                                    Height: =16
+                                    Icon: =Icon.CancelBadge
+                                    OnSelect: |-
+                                        =Clear(items);
+                                        Collect(items,LookUp(listItemsCol,listDropdownName = DropdownListGallery.Selected.listDropdownName).listDropdownAdditions);
+                                        Remove(items,ThisItem);
+                                        Patch(listItemsCol,LookUp(listItemsCol,DropdownListGallery.Selected.listDropdownName = listDropdownName),
+                                        {
+                                            listDropdownAdditions:items
+                                        })
+                                    Visible: =If('eDefender Adding/Coding Items TT'.Size=1,true,false)
+                                    Width: =16
+                                    X: =Parent.TemplateWidth-Self.Width
+                                    ZIndex: =4
+
+                            GalleryItemHeaderLabel As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Text: ="Item"
+                                Visible: ='eDefender Adding/Coding Items TT'.Size>1 && CurrentItemsGalleryHeader.Visible
+                                Width: =If('eDefender Adding/Coding Items TT'.Size=1,(3*CurrentItemsGalleryHeader.Width)/4,CurrentItemsGalleryHeader.Width/2)
+                                X: =CurrentItemsGalleryHeader.X
+                                Y: =CurrentItemsGalleryHeader.Y+CurrentItemsGalleryHeader.Height
+                                ZIndex: =25
+
+                            GalleryItemRemoveLabel As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Size: =If('eDefender Adding/Coding Items TT'.Size=1,10,13)
+                                Text: =If('eDefender Adding/Coding Items TT'.Size=1,"Remove","To  be Removed")
+                                Visible: ='eDefender Adding/Coding Items TT'.Size>1 && CurrentItemsGalleryHeader.Visible
+                                Width: =If('eDefender Adding/Coding Items TT'.Size=1,CurrentItemsGalleryHeader.Width/4,CurrentItemsGalleryHeader.Width/2)
+                                X: =GalleryItemHeaderLabel.Width+GalleryItemHeaderLabel.X
+                                Y: =CurrentItemsGalleryHeader.Y+CurrentItemsGalleryHeader.Height
+                                ZIndex: =26
+
+                            "'Video/AudioEditingMobileGallery_8' As gallery.galleryVertical":
+                                '#CopilotOverlayLabel': ="Filtered"
+                                BorderThickness: =1
+                                Default: |-
+                                    =//First(MyTicketsGallery.AllItems)
+                                    {}
+                                DelayItemLoading: |-
+                                    =//false
+                                    true
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =300
+                                Items: ='Video/AudioEditingMobileGallery_7'.Selected.listDropdownAdditions
+                                Layout: =Layout.Vertical
+                                LoadingSpinner: |-
+                                    =//LoadingSpinner.None
+                                    LoadingSpinner.Controls
+                                TemplatePadding: =10
+                                TemplateSize: |-
+                                    =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                    //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+                                    
+                                    If(MyTickets.Size > 1, 250, 240)
+                                Transition: =Transition.Push
+                                Visible: ='eDefender Adding/Coding Items TT'.Size=1 && !IsEmpty('Video/AudioEditingMobileGallery_7'.Selected.listDropdownAdditions)
+                                Width: =CurrentItemsGalleryHeader.Width
+                                WrapCount: =RoundDown((Parent.Width / 320), 0)
+                                X: =CurrentItemsGalleryHeader.X
+                                Y: =CurrentItemsGalleryHeader.Y+CurrentItemsGalleryHeader.Height
+                                ZIndex: =28
+
+                                Rectangle6_13 As rectangle:
+                                    BorderColor: =RGBA(0, 0, 0, 0)
+                                    BorderThickness: =25
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Image6_13.Height
+                                    OnSelect: =Select(Parent)
+                                    Width: =Image6_13.Width
+                                    ZIndex: =1
+
+                                Image6_13 As image:
+                                    Height: |-
+                                        =//250
+                                        Parent.TemplateHeight
+                                    Image: |-
+                                        ="data:image/svg+xml," & EncodeUrl(
+                                            "<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+                                        <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+                                        <svg version='1.1'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 " & Self.Width & " " & Self.Height & "' width='" & Self.Width & "' height='" & Self.Height & "'>
+                                            <defs>" &
+                                            // ----- Box for fill
+                                         "<path d='" &
+                                         // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0,0) &
+                                            // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                            // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                         "Z' id='box' stroke='" & "#ff0000" & "' stroke-width='" & 0 & "'></path>
+                                            </defs>
+                                            <g>
+                                                <g>
+                                                    <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>
+                                                        <feFlood></feFlood>
+                                                        <feComposite in2='SourceAlpha' operator='in'></feComposite>
+                                                        <feGaussianBlur stdDeviation='" & 5 & "'></feGaussianBlur>
+                                                        <feOffset dx='" & 0 & "' dy='" & 0 & "' result='afterOffset'></feOffset>
+                                                        <feFlood flood-color='" & "#000000" & "' flood-opacity='" & Substitute(Text(0.5), ",", ".") & "'></feFlood>
+                                                        <feComposite in2='afterOffset' operator='in'></feComposite>
+                                                        <feMorphology operator='dilate' radius='1'></feMorphology>
+                                                        <feComposite in2='SourceAlpha' operator='out'></feComposite>
+                                                    </filter>" &
+                                                    // ----- Box for shadow
+                                         "<path d='" &
+                                         // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                            // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                         "Z' id='Component1' filter='url(#shadow)'></path>
+                                                </g>
+                                                <use xlink:href='#box' opacity='1' fill='" & "#ffffff" & "' fill-opacity='" & Substitute(Text(0), ",", ".") & "'></use>
+                                            </g>
+                                            <g>
+                                                " &
+                                                // ----- Edge
+                                         If(
+                                                true,
+                                                Switch(
+                                                    "left",
+                                                    "left",// -- Position: left
+                                                    "<path d='" &
+                                                // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) + 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Upper right
+                                         "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Lower right
+                                         "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) + 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                         "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>",
+                                                     "right",// -- Position: right
+                                                    "<path d='" &
+                                                // Upper left
+                                         "M" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                // Lower left
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                         "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>"
+                                                   
+                                                )
+                                            ) & "
+                                            </g>
+                                        </svg>"
+                                        )
+                                    OnSelect: =Select(Parent)
+                                    Width: |-
+                                        =//329
+                                        Parent.TemplateWidth
+                                    ZIndex: =2
+
+                                btnBkg_13 As button:
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Parent.TemplateHeight
+                                    HoverFill: =Self.Fill
+                                    OnSelect: =Select(Parent)
+                                    PressedFill: =Self.Fill
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: =""
+                                    Visible: =false
+                                    Width: =Parent.TemplateWidth
+                                    ZIndex: =3
+
+                                TitleLabel_13 As label:
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =54
+                                    OnSelect: =Select(Parent)
+                                    Size: =12
+                                    Text: =If(ThisItem.IsSelected,"Selected","")
+                                    Width: |-
+                                        =//208
+                                        Parent.TemplateWidth - Icon18_12.Width - 47
+                                    X: =24
+                                    Y: =27
+                                    ZIndex: =4
+
+                                DateExpiredLabel_11 As label:
+                                    Align: =Align.Center
+                                    Height: |-
+                                        =//25
+                                        34
+                                    OnSelect: =Select(Parent)
+                                    Size: =11
+                                    Text: =If(ThisItem.toBeRemoved= false,"No","Yes")
+                                    Width: =StartedLabelTextValue_11.Width
+                                    X: =ExpiresLabelText_10.X
+                                    Y: =ExpiresLabelText_10.Y+ExpiresLabelText_10.Height
+                                    ZIndex: =7
+
+                                ExpiresLabelText_10 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(203, 102, 102, 1)
+                                    Height: =25
+                                    OnSelect: =Select(Parent)
+                                    Size: =10
+                                    Text: ="Remove"
+                                    Visible: |-
+                                        =//is_admin
+                                        true
+                                    Width: =60
+                                    X: |-
+                                        =//67
+                                        StaratedLabelText_11.X
+                                    Y: |-
+                                        =//180
+                                        //Parent.TemplateHeight - Self.Height - 27
+                                        Rectangle19_9.Y+Rectangle19_9.Height+10
+                                    ZIndex: =8
+
+                                OverlapButton_11 As button:
+                                    BorderThickness: =0
+                                    Fill: =Color.Transparent
+                                    Height: |-
+                                        =//220
+                                        Parent.TemplateHeight
+                                    HoverFill: =Self.Fill
+                                    OnSelect: |-
+                                        =
+                                        
+                                        // Sharepoint List
+                                        Select(Parent)
+                                    PressedFill: =Self.Fill
+                                    Text: =""
+                                    Width: |-
+                                        =//303
+                                        Parent.TemplateWidth
+                                    X: |-
+                                        =//24
+                                        (Parent.TemplateWidth - Self.Width) / 2
+                                    Y: |-
+                                        =//15
+                                        (Parent.TemplateHeight - Self.Height) / 2
+                                    ZIndex: =13
+
+                                Icon18_12 As icon.CancelBadge:
+                                    Height: =32
+                                    Icon: =Icon.CancelBadge
+                                    OnSelect: |-
+                                        =Clear(items);
+                                        Collect(items,LookUp(listItemsCol,listDropdownName = DropdownListGallery.Selected.listDropdownName).listDropdownAdditions);
+                                        Remove(items,ThisItem);
+                                        Patch(listItemsCol,LookUp(listItemsCol,DropdownListGallery.Selected.listDropdownName = listDropdownName),
+                                        {
+                                            listDropdownAdditions:items
+                                        })
+                                    Width: =32
+                                    X: =Parent.TemplateWidth - Self.Width - 23
+                                    Y: =27
+                                    ZIndex: =14
+
+                                Rectangle20_8 As rectangle:
+                                    BorderThickness: =1
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Height: =ExpiresLabelText_10.Height+DateExpiredLabel_11.Height
+                                    OnSelect: =Select(Parent)
+                                    Width: =Parent.TemplateWidth/1.5
+                                    X: =ExpiresLabelText_10.X
+                                    Y: =ExpiresLabelText_10.Y
+                                    ZIndex: =16
+
+                                Group11_9 As group:
+                                    Height: =5
+                                    Width: =5
+                                    X: =60
+                                    Y: =60
+                                    ZIndex: =16
+
+                                    StartedLabelTextValue_11 As label:
+                                        Align: =Align.Center
+                                        Height: |-
+                                            =//25
+                                            34
+                                        OnSelect: =Select(Parent)
+                                        Size: =11
+                                        Text: =ThisItem.itemName
+                                        Width: |-
+                                            =//143
+                                            Parent.TemplateWidth - StaratedLabelText_11.Width - 47
+                                        Wrap: =false
+                                        X: |-
+                                            =//89
+                                            StaratedLabelText_11.X
+                                        Y: |
+                                            =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                            //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                            //((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                            StaratedLabelText_11.Y+StaratedLabelText_11.Height
+                                        ZIndex: =11
+
+                                    StaratedLabelText_11 As label:
+                                        Align: =Align.Center
+                                        BorderThickness: =1
+                                        Color: =RGBA(255, 255, 255, 1)
+                                        Fill: =RGBA(127, 178, 57, 1)
+                                        Height: =25
+                                        OnSelect: =Select(Parent)
+                                        Size: =10
+                                        Text: ="Item"
+                                        Width: =60
+                                        X: =(Parent.TemplateWidth-Self.Width)/4
+                                        Y: |
+                                            =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                            //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                            ((Parent.TemplateHeight - Self.Height) / 2.8) 
+                                        ZIndex: =12
+
+                                    Rectangle19_9 As rectangle:
+                                        BorderThickness: =1
+                                        Fill: =RGBA(0, 0, 0, 0)
+                                        Height: =StaratedLabelText_11.Height+StartedLabelTextValue_11.Height
+                                        OnSelect: =Select(Parent)
+                                        Width: =Parent.TemplateWidth/1.5
+                                        X: =StaratedLabelText_11.X
+                                        Y: =StaratedLabelText_11.Y
+                                        ZIndex: =15
+
+                    "'eDefenderAdding/CodingSpecificIssue_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank('eDefenderAdding/CodingSpecificIssueDropdown'.Selected.Name), false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        "'eDefenderAdding/CodingSpecificIssueLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'eDefenderAdding/CodingSpecificIssueError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='eDefenderAdding/CodingSpecificIssueDropdown'.Y + 'eDefenderAdding/CodingSpecificIssueDropdown'.Height
+                            ZIndex: =3
+
+                        "'eDefenderAdding/CodingSpecificIssueStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='eDefenderAdding/CodingSpecificIssueLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='eDefenderAdding/CodingSpecificIssueLabel'.Y
+                            ZIndex: =4
+
+                        "'eDefenderAdding/CodingSpecificIssueDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = 'eDefenderAdding/CodingSubCategoryDropdown'.Selected.ID)
+                            Width: ='eDefenderAdding/CodingTitleInput'.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'eDefenderAdding/CodingDescription_DataCard' As typedDataCard.textualEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Adding/Coding Items TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        "'eDefenderAdding/CodingDescriptionLabel' As label":
+                            AutoHeight: =true
+                            Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'eDefenderAdding/CodingDescriptionErrorMessage' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='eDefenderAdding/CodingDescriptionTextInputArea'.Y + 'eDefenderAdding/CodingDescriptionTextInputArea'.Height
+                            ZIndex: =3
+
+                        "'eDefenderAdding/CodingDescriptionStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='eDefenderAdding/CodingDescriptionLabel'.Color
+                            Height: ='eDefenderAdding/CodingDescriptionLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='eDefenderAdding/CodingDescriptionLabel'.Y
+                            ZIndex: =4
+
+                        "'eDefenderAdding/CodingDescriptionTextInputArea' As text":
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: ="Please Describe Your Issue"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: ='eDefenderAdding/CodingDescription_DataCard'.Visible
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    "'eDefenderAdding/CodingLocationID_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        LocationIDLabel_2 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =30
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =LocationIDStarVisible_2.X+LocationIDStarVisible_2.Width
+                            Y: =10
+                            ZIndex: =1
+
+                        ErrorMessage6_2 As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =LocationIDDropDown_2.Y + LocationIDDropDown_2.Height
+                            ZIndex: =3
+
+                        LocationIDStarVisible_2 As label:
+                            Align: =Align.Center
+                            Height: =LocationIDLabel_2.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            X: =AddItemsToDropdownSelectedHeader.X-30
+                            Y: =LocationIDLabel_2.Y
+                            ZIndex: =4
+
+                        LocationIDDropDown_2 As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =35
+                            Items: =Locations
+                            Width: =AddingEntryHeader.Width
+                            X: =AddingEntryHeader.X
+                            Y: =LocationIDLabel_2.Y+LocationIDLabel_2.Height
+                            ZIndex: =5
+
+                    "'eDefenderAdding/CodingAttatchments_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        AddMediaButton_2 As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                            Text: ="Add Media"
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =(Parent.Height-Self.Height)/2
+                            ZIndex: =1
+
+                    "'eDefenderAdding/CodingButtons_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: |-
+                            =//If( 'eDefender Adding/Coding Items TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                            125
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        "'eDefenderAdding/CodingSubmitButton' As button":
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: ='eDefenderAdding/CodingCancelButton'.Height
+                            OnSelect: |
+                                =
+                                If(!'eDefenderAdding/CodingDescriptionTextInputArea'.Visible,
+                                UpdateContext({TicketDescText:Concatenate(Concat(listItemsCol,listDropdownName&Char(13)&Concat(listDropdownAdditions,itemName&" "&If(toBeRemoved," Marked for removal"," Marked for addition"),Char(13)),Char(13)&Char(13)))}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    !IsBlank(LocationIDDropDown_2.Selected.Name) And !IsEmpty(listItemsCol) And !IsEmpty(Index(listItemsCol,1).listDropdownAdditions),
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: 'eDefenderAdding/CodingTitleInput'.Text,
+                                                description: Trim('eDefenderAdding/CodingDescriptionTextInputArea'.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: 'eDefenderAdding/CodingMainCategoryDropdown'.Selected.ID,
+                                                category: 'eDefenderAdding/CodingSubCategoryDropdown'.Selected.ID,
+                                                subCategory: 'eDefenderAdding/CodingSpecificIssueDropdown'.Selected.ID,
+                                                locationId: LocationIDDropDown_2.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(JointAttachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = 'eDefenderAdding/CodingMainCategoryDropdown'.Selected.ID && locationId = LocationIDDropDown_2.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = 'eDefenderAdding/CodingMainCategoryDropdown'.Selected.ID && locationId = LocationIDDropDown_2.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" Adding/Coding Items Request"
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                ForAll(
+                                    attItems As Attachment,
+                                            AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) 
+                                );
+                                ForAll(
+                                    RTEImages As RTEI,
+                                    With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        );
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&&" has been created. Touch");
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm('eDefenderAdding/CodingItemsForm');
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({ACPopup:true});
+                            Text: ="Submit"
+                            Width: ='eDefenderAdding/CodingCancelButton'.Width
+                            X: ='eDefenderAdding/CodingCancelButton'.X + (Self.Width*1.3)
+                            Y: ='eDefenderAdding/CodingCancelButton'.Y
+                            ZIndex: =1
+
+                        "'eDefenderAdding/CodingCancelButton' As button":
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm('eDefenderAdding/CodingItemsForm');
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('eDefender Adding/Coding Items TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            "'eDefenderAdding/CodingFooter' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='eDefender Adding/Coding Items TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                "'eDefenderAdding/CodingMobileMenu' As compMobileMenu":
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    "'eDefenderAdding/CodingBackButton' As icon.BackArrow":
+        Color: =Color.White
+        Height: ='eDefenderAdding/CodingItemsLabel'.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm('eDefenderAdding/CodingItemsForm'); Back(ScreenTransition.UnCoverRight)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =('eDefenderAdding/CodingHeaderContainer'.Height-'eDefenderAdding/CodingItemsLabel'.Height)/1.05
+        ZIndex: =3
+
+    "'eDefenderAdding/CodingWebMenu' As compWebMenu":
+        Visible: ='eDefender Adding/Coding Items TT'.Size > 1
+        ZIndex: =4
+
+    Label38 As label:
+        Height: =76
+        Text: =Concatenate(Concat(listItemsCol,listDropdownName&Char(13)&Concat(listDropdownAdditions,itemName&" "&If(toBeRemoved," Marked for removal"," Marked for addition"),Char(13)),Char(13)))
+        Visible: =false
+        Width: =321
+        X: =134
+        Y: =4
+        ZIndex: =9
+
+    "'A/CErrorPopUp' As groupContainer.manualLayoutContainer":
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =ACPopup
+        Width: =Parent.Width
+        ZIndex: =10
+
+        ACPopupBackground As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_7 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle.Width
+            X: =ACPopupRectangle.X
+            Y: =ACPopupRectangle.Y
+            ZIndex: =3
+
+        Label10_18 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_7.Width
+            X: =Rectangle8_7.X
+            Y: =Rectangle8_7.Y
+            ZIndex: =4
+
+        Button1_6 As button:
+            OnSelect: |-
+                =UpdateContext({ACPopup:false})
+            Text: ="Close"
+            X: =(ACPopupRectangle.Width-Self.Width)/2 +ACPopupRectangle.X
+            Y: =ACPopupRectangle.Height-Self.Height
+            ZIndex: =9
+
+        Label18_9 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(LocationIDDropDown_2.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: |+
+                =If(IsBlank(LocationIDDropDown_2.Selected.Name),"Location Missing", "Location OK")
+                
+            Width: =ACPopupRectangle.Width
+            X: =ACPopupRectangle.X
+            Y: =Rectangle8_7.Y+Rectangle8_7.Height+15
+            ZIndex: =11
+
+        Label18_10 As label:
+            Align: =Align.Center
+            Color: =If(IsEmpty(listItemsCol),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsEmpty(listItemsCol),"Minimum One List", "List OK")
+            Width: =ACPopupRectangle.Width
+            X: =ACPopupRectangle.X
+            Y: =Label18_9.Y+Label18_9.Height+10
+            ZIndex: =12
+
+        Label18_11 As label:
+            Align: =Align.Center
+            Color: =If(IfError(IsEmpty(Index(listItemsCol,1).listDropdownAdditions),true),Color.Red,Color.Green)
+            Size: =20
+            Text: =If(IfError(IsEmpty(Index(listItemsCol,1).listDropdownAdditions),true),"Minimum One List Item","List Item OK")
+            Width: =ACPopupRectangle.Width
+            X: =ACPopupRectangle.X
+            Y: =Label18_10.Y+Label18_10.Height+10
+            ZIndex: =13
+
+    FeedbackBugReportAddingCodingItems As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='eDefender Adding/Coding Items TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =11
+
+    AddMedia_3 As AddMedia:
+        AMSize: ='eDefender Adding/Coding Items TT'.Size
+        AttachCameraOff: =Set(AttachCamera,false);
+        AttachCameraOn: =Set(AttachCamera,true);
+        DisablePickMedia: =Set(AttachFiles,false)
+        EnablePickMedia: =Set(AttachFiles,true)
+        InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+        OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+        PhotoModeDisable: =Set(AttachPhoto,false)
+        PhotoModeEnable: =Set(AttachPhoto,true)
+        Visible: =varOpenMedia
+        ZIndex: =12
+

@@ -1,0 +1,150 @@
+compMobileMenu_2 As CanvasComponent:
+    BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+    Fill: =RGBA(0, 0, 0, 0)
+    ForegroundColor: |-
+        =//RGBA(70, 130, 180, 1)
+        ColorScheme.primary
+    Height: =60
+    NavigationItems: |-
+        =// IF adimn or tech show this table, if not show Staff table
+        gblNavItems
+    SelectedItemBackground: =Color.LightGray
+    Width: =App.DesignWidth
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Gallery1_3 As gallery.galleryHorizontal:
+        '#CopilotOverlayLabel': ="Filtered"
+        BorderThickness: =1
+        Default: |
+            =Switch(
+                true,
+                App.ActiveScreen.Name = "Create A Ticket" || App.ActiveScreen.Name = "Category Select", 
+                LookUp(compMobileMenu_2.NavigationItems, ScreenToGoTo.Name = "Category Select"),
+            
+                App.ActiveScreen.Name = "Tag Manager" 
+                || App.ActiveScreen.Name = "Alert Manager" 
+                || App.ActiveScreen.Name = "Assign Role - Admin"
+                || App.ActiveScreen.Name = "All Tickets"
+                || App.ActiveScreen.Name = "Admin Manager"
+                || App.ActiveScreen.Name = "Create Alert"
+                || App.ActiveScreen.Name = "Create Alert Admin (Redisgn)"
+                || App.ActiveScreen.Name = "Ticket Metrics - Admin Tech", 
+                LookUp(compMobileMenu_2.NavigationItems, ScreenToGoTo.Name = "Admin Manager"),
+            
+                App.ActiveScreen.Name = "Knowledge Base", 
+                LookUp(compMobileMenu_2.NavigationItems, ScreenToGoTo.Name = "Knowledge Base"),
+            
+                App.ActiveScreen.Name = "MyTickets" || App.ActiveScreen.Name = "Single Ticket Info", 
+                LookUp(compMobileMenu_2.NavigationItems, ScreenToGoTo.Name = "MyTickets"),
+            
+                App.ActiveScreen.Name = "Home", 
+                LookUp(compMobileMenu_2.NavigationItems, ScreenToGoTo.Name = "Home")
+            )
+            /*  
+            LookUp(compMobileMenu.NavigationItems, ScreenToGoTo.Name = App.ActiveScreen.Name)*/
+        DelayItemLoading: =true
+        Fill: =
+        Height: =Parent.Height
+        Items: =compMobileMenu_2.NavigationItems
+        LoadingSpinner: =LoadingSpinner.Data
+        OnSelect: =
+        TemplateFill: |-
+            =If(
+                ThisItem.IsSelected, 
+                compMobileMenu_2.ForegroundColor,
+                compMobileMenu_2.BackgroundMenuColor
+            )
+        TemplatePadding: =0
+        TemplateSize: |
+            =IfError(Self.Width / CountRows(compMobileMenu_2.NavigationItems),1,Self.Width / CountRows(compMobileMenu_2.NavigationItems))
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HtmlText4_2 As htmlViewer:
+            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+            Height: =Parent.TemplateHeight
+            HtmlText: |-
+                ="<div style=
+                '
+                height:"&Self.Height-11&"px;
+                width:"&Self.Width-10&"px;
+                border-radius: 0px;
+                "&If(!ThisItem.IsSelected,"background: #ffffff;
+                -webkit-box-shadow: 12px 12px 24px #d9d9d9, -12px -12px 24px #ffffff40;
+                box-shadow: 12px 12px 24px #d9d9d9, -12px -12px 24px #ffffff40;","background: #355989;
+                -webkit-box-shadow: 12px 12px 24px #2d4c74, -12px -12px 24px #3d669e;
+                box-shadow: 12px 12px 24px #2d4c74, -12px -12px 24px #3d669e;")&"
+                margin:5px;
+                '></div>"
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Width: =Parent.TemplateWidth
+            Y: =1
+            ZIndex: =1
+
+        Icon1_7 As icon.Add:
+            Color: |-
+                =If(
+                    ThisItem.IsSelected, 
+                    compMobileMenu_2.BackgroundMenuColor,
+                    compMobileMenu_2.ForegroundColor
+                )
+            DisplayMode: =DisplayMode.View
+            Height: =Parent.Height/3
+            Icon: =ThisItem.MenuIcon
+            OnSelect: =Select(Parent)
+            Width: =Parent.Width/5
+            X: =(Parent.TemplateWidth-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2 -10
+            ZIndex: =2
+
+        Label1_10 As label:
+            Align: =Align.Center
+            Color: |-
+                =If(
+                    ThisItem.IsSelected, 
+                    compMobileMenu_2.BackgroundMenuColor,
+                    compMobileMenu_2.ForegroundColor
+                )
+            Height: =Parent.Height/3
+            OnSelect: =Select(Parent)
+            Size: =8
+            Text: =ThisItem.MenuText
+            Width: =Parent.Width/5
+            X: =(Parent.TemplateWidth-Self.Width)/2
+            Y: =Icon1_7.Y+Icon1_7.Height+2
+            ZIndex: =3
+
+        Icon1_3 As icon.Add:
+            Color: =Color.Transparent
+            DisplayMode: =DisplayMode.View
+            Height: =Parent.Height/2
+            Icon: =ThisItem.MenuIcon
+            OnSelect: =Navigate(ThisItem.ScreenToGoTo);
+            PaddingBottom: =8
+            Width: =Parent.Width/5
+            ZIndex: =4
+
+        Button7_2 As button:
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =Parent.TemplateHeight
+            HoverFill: =ColorFade(RGBA(56, 96, 178, .25), -20%)
+            OnSelect: =Navigate(ThisItem.ScreenToGoTo,ScreenTransition.Fade);
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedFill: =ColorFade(RGBA(56, 96, 178, .45), -50%)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Text: =""
+            Width: =Parent.TemplateWidth-2
+            ZIndex: =5
+

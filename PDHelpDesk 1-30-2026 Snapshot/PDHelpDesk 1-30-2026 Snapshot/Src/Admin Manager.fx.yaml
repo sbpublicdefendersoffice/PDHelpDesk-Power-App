@@ -1,0 +1,267 @@
+"'Admin Manager' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+
+    AdminManagerContainer As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HeaderContainer As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            AdminToolsHeaderElements As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =4
+
+                HomeBackgroundGradient_24 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =Parent.Height
+                    HtmlText: =Home_Background_Gradient.HtmlText
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                ManagerToolsLabel As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =Parent.Height-AdminManagerWebHeader.Height
+                    Size: =If('Admin Manager'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Manager Tools"
+                    Width: =Parent.Width
+                    Y: =AdminManagerWebHeader.Height
+                    ZIndex: =2
+
+                AdminManagerWebHeader As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: ='Admin Manager'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    ZIndex: =3
+
+        MainSectionContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =3
+
+            AdminManagerButtonGallery As gallery.galleryVertical:
+                '#CopilotOverlayLabel': ="Filtered"
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Height: =Parent.Height
+                Items: |
+                    =managerOptions
+                    /*Table(
+                        {
+                            MenuText: "All Tickets",
+                            MenuIcon: Icon.DocumentWithContent,
+                            ScreenToGoTo: 'All Tickets'
+                        },
+                        {
+                            MenuText: "Tag Manager",
+                            MenuIcon: Icon.Tag,
+                            ScreenToGoTo: 'Tag Manager'
+                        },
+                        {
+                            MenuText: "Alert Manager",
+                            MenuIcon: Icon.Bell,
+                            ScreenToGoTo: 'Alert Manager'
+                        },
+                        {
+                            MenuText: "Ticket Metrics",
+                            MenuIcon: Icon.Trending,
+                            ScreenToGoTo: 'Ticket Metrics - Admin Tech'
+                        },
+                        {
+                            MenuText: "Assign Role",
+                            MenuIcon: Icon.People,
+                            ScreenToGoTo: 'Assign Role - Admin'
+                        }
+                    )*/
+                Layout: =Layout.Vertical
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =287
+                LayoutMinWidth: =320
+                OnSelect: =//Switch(ThisItem.MenuText, "All Tickets", Navigate('All Tickets'), "Tag Manager", Navigate('Tag Manager'), "Alert Manager", Navigate('Alert Manager'), "Ticket Metrics", Navigate('Ticket Metrics - Admin Tech'), "Assign Role", Navigate('Assign Role - Admin'))
+                ShowScrollbar: =false
+                TemplateSize: =200
+                Width: =Parent.Width
+                WrapCount: =Switch('Admin Manager'.Size, ScreenSize.Small, 2, ScreenSize.Medium, 2, ScreenSize.Large, 3, 3)
+                ZIndex: =1
+
+                HtmlText1_2 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    DisplayMode: =DisplayMode.View
+                    Height: =175
+                    HtmlText: |-
+                        =// you can use inline Css to create effects that can be found in modern webapps
+                        //you cannot link style sheets
+                        //some elements of html are not supported
+                        //you can include variables in the html string by adding "&PowerAppsVar&" 
+                        "<div style='box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025);
+                        -webkit-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025);
+                        -moz-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025); height:"&ButtonGalleryBackgroundButton_4.Height-11&"px; width:"&ButtonGalleryBackgroundButton_4.Width-11&"px; border-style:none; border-radius:10px'></div>"
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    X: =ButtonGalleryBackgroundButton_4.X
+                    Y: =25
+                    ZIndex: =1
+
+                ButtonGalleryBackgroundButton_4 As button:
+                    BorderStyle: =BorderStyle.Dashed
+                    BorderThickness: =0
+                    Color: =ColorScheme.secondary
+                    Fill: =ColorScheme.primary
+                    Height: |-
+                        =//If('Admin Manager'.Size =1 , Parent.Height/2.5, Parent.Height/4)
+                        Parent.TemplateHeight-50
+                    OnSelect: =Select(Parent)
+                    Text: =""
+                    Width: =If('Admin Manager'.Size = 1, Parent.Width/2.5, Parent.Width/3.5)
+                    X: =(Parent.TemplateWidth - Self.Width)/2
+                    Y: =(Parent.TemplateHeight - Self.Height)/2
+                    ZIndex: =2
+
+                GalleryButtonColorGradient_4 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =ButtonGalleryBackgroundButton_4.Height
+                    HtmlText: |-
+                        =Home_Gallery_Button_Color_Gradient.HtmlText
+                        /*"<div style='
+                        height:"&Self.Height-1&"px;
+                        width:100%;
+                        bbackground: rgb(53,89,137);
+                        background: linear-gradient(90deg, rgba(180,194,203,1) 0% , rgba(126,149,180,1) 25%, rgba(53,89,137,1) "&100&"%); -webkit-border-radius: 10px;
+                        -moz-border-radius: 10px;
+                        border-radius: 10px;' ></div>"*/
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =ButtonGalleryBackgroundButton_4.Width
+                    X: =ButtonGalleryBackgroundButton_4.X
+                    Y: =ButtonGalleryBackgroundButton_4.Y
+                    ZIndex: =3
+
+                ButtonGalleryNavLabel_2 As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    FontWeight: =FontWeight.Semibold
+                    Height: =50
+                    OnSelect: =Select(Parent)
+                    Size: =If('Admin Manager'.Size =1,11,15)
+                    Text: =ThisItem.MenuText
+                    Width: =Overlapbtn_5.Width
+                    X: =ButtonGalleryNavIcon_4.X
+                    Y: =ButtonGalleryNavIcon_4.Y+ButtonGalleryNavIcon_4.Height
+                    ZIndex: =4
+
+                ButtonGalleryNavIcon_4 As icon.Add:
+                    Color: =Color.White
+                    Height: =Parent.TemplateHeight - 150
+                    Icon: =ThisItem.MenuIcon
+                    OnSelect: =Select(Parent)
+                    Width: =Overlapbtn_5.Width
+                    X: =(Parent.TemplateWidth-Self.Width)/2
+                    Y: =(ButtonGalleryBackgroundButton_4.Height-Self.Height)/2
+                    ZIndex: =5
+
+                Overlapbtn_5 As button:
+                    Fill: =RGBA(255, 255, 255, 0)
+                    Height: =ButtonGalleryBackgroundButton_4.Height
+                    HoverFill: =ColorFade(RGBA(105,105,105,.35),-10%)
+                    OnSelect: =Navigate(ThisItem.ScreenToGoTo,ScreenTransition.Fade)
+                    PressedFill: =ColorFade(RGBA(105,105,105,.7),-50%)
+                    Text: =""
+                    Width: =ButtonGalleryBackgroundButton_4.Width
+                    X: =ButtonGalleryBackgroundButton_4.X
+                    Y: =ButtonGalleryBackgroundButton_4.Y
+                    ZIndex: =6
+
+        AdminManagerFooter As groupContainer.verticalAutoLayoutContainer:
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Admin Manager'.Size =1
+            Width: =Parent.Width
+            ZIndex: =4
+
+            AdminManagerMobileMenu As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    AdminManagerBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =ManagerToolsLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(HeaderContainer.Height-ManagerToolsLabel.Height)/1.05
+        ZIndex: =2
+
+    AdminManagerWebMenu As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Admin Manager'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    FeedbackBugReportAT As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =4
+

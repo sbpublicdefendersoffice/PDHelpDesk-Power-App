@@ -1,0 +1,1004 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  G/O Network/Wifi Connection TT:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: |+
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+      OnVisible: |-
+        =ResetForm('G/ONetwork/WifiConnectionForm');
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({usingCamera:false,altImagePopUp:false});
+        UpdateContext({NetworkPopup:false});
+    Children:
+      - G/ONetwork/WifiConnectionMainContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: ='G/O Network/Wifi Connection TT'.Height
+            LayoutDirection: =LayoutDirection.Horizontal
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: ='G/O Network/Wifi Connection TT'.Width
+          Children:
+            - G/ONetwork/WifiConnectionVerticalLayoutContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Height: =Parent.Height
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - G/ONetwork/WifiConnectionHeaderContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.primary
+                        FillPortions: =0
+                        Height: |-
+                          =130
+                          //Parent.Height/11
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =//Home.Size<>1
+                          //This is the top most header container that houses the navbar links
+                          true
+                        Width: =Parent.Width
+                      Children:
+                        - NetworkHeaderElements:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - HomeBackgroundGradient_20:
+                                  Control: HtmlViewer@2.1.0
+                                  Properties:
+                                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height
+                                    HtmlText: =Home_Background_Gradient.HtmlText
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =11
+                                    Width: =Parent.Width
+                              - G/ONetwork/WifiConnectionHeaderLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =Color.Transparent
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height-'G/ONetwork/WifiConnectionWebHeader'.Height
+                                    Size: =If('G/O Network/Wifi Connection TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                                    Text: ="Network/Wifi Connection Form"
+                                    Width: =Parent.Width
+                                    Y: ='G/ONetwork/WifiConnectionWebHeader'.Height
+                              - G/ONetwork/WifiConnectionWebHeader:
+                                  Control: CanvasComponent
+                                  ComponentName: compWebHeader
+                                  Properties:
+                                    BackgroundColor: =Color.Transparent
+                                    CompScreenSize: ='G/O Network/Wifi Connection TT'.Size
+                                    EnableFeedback: =Set(varFeedback,true)
+                                    FeedbackBool: =varFeedback
+                                    Height: |-
+                                      =82
+                                      //Parent.Height
+                                    Width: =App.Width
+                  - G/ONetwork/WifiConnectionMainContentContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                        Height: =Parent.Height/1.21
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutOverflowY: =LayoutOverflow.Scroll
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =true
+                          //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                        Width: =Parent.Width
+                      Children:
+                        - G/ONetwork/WifiConnectionForm:
+                            Control: Form@2.4.4
+                            Variant: Classic
+                            Layout: Vertical
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataSource: =Tickets
+                              DefaultMode: =FormMode.New
+                              Height: =Parent.Height/1.21
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NumberOfColumns: =1
+                              Width: =Parent.Width
+                              Y: =Parent.Height/5.7
+                            Children:
+                              - G/ONetwork/WifiConnectionLocationID_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="locationId"
+                                    Default: =ThisItem.locationId
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =80
+                                    Required: =false
+                                    Update: =//Value(DataCardValue6.Text)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =0
+                                  Children:
+                                    - G/ONetwork/WifiConnectionLocationIDLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Requesting From"
+                                          Width: =170
+                                          Wrap: =false
+                                          X: =30
+                                          Y: ='eDefenderAdding/CodingDisclaimerLabel_9'.Height+25
+                                    - G/ONetwork/WifiConnectionLocationIDErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='G/ONetwork/WifiConnectionLocationIDDropdown'.Y + 'G/ONetwork/WifiConnectionLocationIDDropdown'.Height
+                                    - G/ONetwork/WifiConnectionLocationIDStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='G/ONetwork/WifiConnectionLocationIDLabel'.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='G/ONetwork/WifiConnectionLocationIDLabel'.Y
+                                    - G/ONetwork/WifiConnectionLocationIDDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          AllowEmptySelection: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =ColorScheme.primary
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Blank()
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Locations
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: ='G/ONetwork/WifiConnectionTitleInput'.Width
+                                          X: =30
+                                          Y: ='G/ONetwork/WifiConnectionLocationIDLabel'.Y+'G/ONetwork/WifiConnectionLocationIDLabel'.Height
+                                    - eDefenderAdding/CodingDisclaimerLabel_9:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(221, 79, 14, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(221, 79, 14, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =If('G/O Network/Wifi Connection TT'.Size=1,100,50)
+                                          Size: =If('eDefender Adding/Coding Items TT'.Size =1,13,16)
+                                          Text: ="When Submitting media, DO NOT SUBMIT DOCUMENTS CONTAINING SENSITIVE/RESTRICTED DATA. All case-related files should be uploaded to the Box File."
+                                          Width: =Parent.Width
+                              - G/ONetwork/WifiConnectionTitle_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="title"
+                                    Default: =ThisItem.Title
+                                    DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                                    Height: =80
+                                    MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                                    Required: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =1
+                                  Children:
+                                    - G/ONetwork/WifiConnectionTitleLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Connection Issue"
+                                          Width: =170
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - G/ONetwork/WifiConnectionTitleError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='G/ONetwork/WifiConnectionTitleInput'.Y + 'G/ONetwork/WifiConnectionTitleInput'.Height
+                                    - G/ONetwork/WifiConnectionTitleStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: ='G/ONetwork/WifiConnectionTitleLabel'.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: ='G/ONetwork/WifiConnectionTitleLabel'.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='G/ONetwork/WifiConnectionTitleLabel'.Y
+                                    - G/ONetwork/WifiConnectionTitleInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          EnableSpellCheck: =true
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HintText: ="Enter problem type e.g. connected to wifi but no internet"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Width: =If('G/O Network/Wifi Connection TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                                          X: =30
+                                          Y: =44
+                              - G/ONetwork/WifiConnectionMainCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="mainCategory"
+                                    Default: =ThisItem.mainCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: =If( 'G/O Network/Wifi Connection TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =2
+                                  Children:
+                                    - G/ONetwork/WifiConnectionMainCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - G/ONetwork/WifiConnectionMainCategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='G/ONetwork/WifiConnectionMainCategoryDropdown'.Y + 'G/ONetwork/WifiConnectionMainCategoryDropdown'.Height
+                                    - G/ONetwork/WifiConnectionMainCategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='G/ONetwork/WifiConnectionMainCategoryLabel'.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='G/ONetwork/WifiConnectionMainCategoryLabel'.Y
+                                    - G/ONetwork/WifiConnectionMainCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - G/ONetwork/WifiConnectionSubCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="category"
+                                    Default: =ThisItem.category
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =If( 'G/O Network/Wifi Connection TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =3
+                                  Children:
+                                    - G/ONetwork/WifiConnectionSubCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Sub Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - G/ONetwork/WifiConnectionSubcategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='G/ONetwork/WifiConnectionSubCategoryDropdown'.Y + 'G/ONetwork/WifiConnectionSubCategoryDropdown'.Height
+                                    - G/ONetwork/WifiConnectionSubcategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='G/ONetwork/WifiConnectionSubCategoryLabel'.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='G/ONetwork/WifiConnectionSubCategoryLabel'.Y
+                                    - G/ONetwork/WifiConnectionSubCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = 'G/ONetwork/WifiConnectionMainCategoryDropdown'.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - G/ONetwork/WifiConnectionFields:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =170
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =4
+                                  Children:
+                                    - ExField1_16:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Additional Information"
+                                          Width: =200
+                                          X: =30
+                                          Y: ='Network/WifiInput'.Y-Self.Height
+                                    - Network/WifiInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          EnableSpellCheck: =true
+                                          Font: =Font.'Open Sans'
+                                          Height: =100
+                                          HintText: ="Others having similar issues?  Only works on phone?  Only works on computer?"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Mode: =TextMode.MultiLine
+                                          Width: ='G/ONetwork/WifiConnectionTitleInput'.Width
+                                          X: =30
+                                          Y: =44
+                              - G/ONetwork/WifiConnectionSpecificIssue_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="subCategory"
+                                    Default: =ThisItem.subCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =127
+                                    Required: =false
+                                    Visible: |+
+                                      =If(IsBlank('G/ONetwork/WifiConnectionSpecificIssueDropdown'.Selected.Name), false, true)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =5
+                                  Children:
+                                    - G/ONetwork/WifiConnectionSpecificIssueLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Specific Issue"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - G/ONetwork/WifiConnectionSpecificIssueError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='G/ONetwork/WifiConnectionSpecificIssueDropdown'.Y + 'G/ONetwork/WifiConnectionSpecificIssueDropdown'.Height
+                                    - G/ONetwork/WifiConnectionSpecificIssueStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='G/ONetwork/WifiConnectionSpecificIssueLabel'.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='G/ONetwork/WifiConnectionSpecificIssueLabel'.Y
+                                    - G/ONetwork/WifiConnectionSpecificIssueDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = 'G/ONetwork/WifiConnectionSubCategoryDropdown'.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: ='G/ONetwork/WifiConnectionTitleInput'.Width
+                                          X: =30
+                                          Y: =44
+                              - G/ONetwork/WifiConnectionDescription_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="description"
+                                    Default: =ThisItem.description
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: =If( 'G/O Network/Wifi Connection TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                                    Required: =false
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =6
+                                  Children:
+                                    - G/ONetwork/WifiConnectionDescriptionLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: =CreateTicketDescription
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - G/ONetwork/WifiConnectionDescriptionErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='G/ONetwork/WifiConnectionTextInputArea'.Y + 'G/ONetwork/WifiConnectionTextInputArea'.Height
+                                    - G/ONetwork/WifiConnectionStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: ='G/ONetwork/WifiConnectionDescriptionLabel'.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: ='G/ONetwork/WifiConnectionDescriptionLabel'.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='G/ONetwork/WifiConnectionDescriptionLabel'.Y
+                                    - G/ONetwork/WifiConnectionTextInputArea:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =TicketDescText
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/1.5
+                                          HintText: ="Please Describe Your Issue"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Mode: =TextMode.MultiLine
+                                          Size: =15
+                                          Visible: ='G/ONetwork/WifiConnectionDescription_DataCard'.Visible
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =40
+                              - G/ONetwork/WifiConnectionAttatchments_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =50
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =7
+                                  Children:
+                                    - AddMediaButton_13:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Add Media"
+                                          X: =(Parent.Width-Self.Width)/2
+                                          Y: =(Parent.Height-Self.Height)/2
+                              - G/ONetwork/WifiConnectionButtons_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =If( 'G/O Network/Wifi Connection TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =8
+                                  Children:
+                                    - G/ONetwork/WifiConnectionSubmitButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          DisplayMode: |-
+                                            =
+                                            //could use this to enable/disable button behaviour
+                                            //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+
+                                            DisplayMode.Edit
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: ='G/ONetwork/WifiConnectionCancelButton'.Height
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: "=\nIf(!'G/ONetwork/WifiConnectionTextInputArea'.Visible,\nUpdateContext({TicketDescText:Concatenate(\"Additional Network/Wifi Connection Details:\"&Char(13),'Network/WifiInput'.Text)}), Notify(\"Description is Blank\"));\n\n//Check if the title or Description are empty, if they are the form will not be submitted\nIf(\n    !IsBlank('G/ONetwork/WifiConnectionLocationIDDropdown'.Selected.Name) And Len(Trim('G/ONetwork/WifiConnectionTitleInput'.Text)) >0,\n    UpdateContext({DataCardKey1_1: \"Title\"});\n    UpdateContext({DataCardKey5: \"Description\"});\n    //Set(DataCardKey5: \"Description\");\nSet(\n        //Temporary record\n        rec,\n        //DB operation, from Ticket table, new record, change these columns\n        Patch(\n            Tickets,\n            Defaults(Tickets),\n            {\n                Title: 'G/ONetwork/WifiConnectionTitleInput'.Text,\n                description: Trim('G/ONetwork/WifiConnectionTextInputArea'.Text),\n                creatorId: userData.id,\n                mainCategory: 'G/ONetwork/WifiConnectionMainCategoryDropdown'.Selected.ID,\n                category: 'G/ONetwork/WifiConnectionSubCategoryDropdown'.Selected.ID,\n                subCategory: 'G/ONetwork/WifiConnectionSpecificIssueDropdown'.Selected.ID,\n                locationId: 'G/ONetwork/WifiConnectionLocationIDDropdown'.Selected.ID,\n                status: \"open\",\n                metricDate: Concatenate(\n                    Month(Today()),\n                    \"/\",\n                    Year(Today())\n                ),\n                hasAttachment: If(\n                    IsEmpty(JointAttachments),\n                    0,\n                    1\n                ),\n                //Automation rules table is used to assign tickets\n                assignedTo: If(\n                    IsEmpty(\n                        Filter(\n                            'Ticket Automation Rules',\n                            categoryId = 'G/ONetwork/WifiConnectionMainCategoryDropdown'.Selected.ID && locationId = 'G/ONetwork/WifiConnectionLocationIDDropdown'.Selected.ID\n                        )\n                    ),\n                    0,\n                    LookUp(\n                        'Ticket Automation Rules',\n                        categoryId = 'G/ONetwork/WifiConnectionMainCategoryDropdown'.Selected.ID && locationId = 'G/ONetwork/WifiConnectionLocationIDDropdown'.Selected.ID,\n                        userID\n                    )\n                )\n            }\n        )\n    );\n\nPatch(\n    Tickets, \n    LookUp(Tickets,ID = rec.ID),\n    {\n        Title: \"# \"&rec.ID&\" Network/Wifi Connection -\"&'G/ONetwork/WifiConnectionTitleInput'.Text\n    });\n// for the attachments, run power automate flow for each attached file\nForAll(\n    attItems As Attachment,\n            AttachFiles.Run(\n            rec.ID,\n            {\n                file:{\n                    contentBytes: Attachment.Value,\n                    name: Attachment.Name\n                }\n            }\n        ) \n);\nForAll(\n    RTEImages As RTEI,\n    With({varHTMLTable: Split(RTEI.base64Image , \"<img\")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find(\"<img\",RTEI.base64Image)+32},With({varB64End:Find(\"\"\"\",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &\".png\", rec.ID)\n))))\n        );\n    \n    /*SMTP.SendEmailV3(\n        {\n            From: \"sbpdhelpdesk@outlook.com\",\n            To: userData.email,\n            Subject: \"Help Desk Ticket Received\",\n            Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=\"https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a>.</div>\"\n        }\n    );*/\n    /*If(\n        rec.assignedTo > 0,\n        SMTP.SendEmailV3(\n            {\n                From: \"sbpdhelpdesk@outlook.com\",\n                To: LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n                Subject: \"Help Desk Ticket Assigned\",\n                Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a> to view more details for the ticket.</div>\"\n            }\n        );\n    );*/\nSet(rec,Patch(rec,{description:Substitute(rec.description,Char(13),\"<br>\")}));\n//Power automate flow, sends email to ticket creator \nSendEmail.Run(\n            userData.email,\n        \"Help Desk Ticket Recieved\",\n        //Email Message body\n        TicketCreatorMessageRTE_1.HtmlText,\n        Text(Blank())\n    );\n    // If the ticket it assigned to someone, send them an email\n    If(\n        rec.assignedTo > 0,\n        SendEmail.Run(\n                LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n            \"Help Desk Ticket Assigned\",\n            //Email message body\n            TechAssignMessageRTE_1.HtmlText,\n            Text(Blank())\n        );\nTicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,\"Ticket #\"&rec.ID&\" has been created. Touch this notification for more information.\"),    TicketCreatedUser.Run(userData.email,rec.ID,\"Ticket #\"&rec.ID&\" has been created on your behalf. Touch this notification for more information.\")\n    );\n    //Reset the form upon completion\n    ResetForm('G/ONetwork/WifiConnectionForm');\n    Navigate(Success);\n\n);\n// variables that control color elements\n    UpdateContext({CreateTicketTitle: \"Title is Required\"});\n    UpdateContext({CreateTicketDescription: \"Description is Required\"});\n    UpdateContext({NetworkPopup:true});\n"
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Submit"
+                                          Width: ='G/ONetwork/WifiConnectionCancelButton'.Width
+                                          X: ='G/ONetwork/WifiConnectionCancelButton'.X + (Self.Width*1.3)
+                                          Y: ='G/ONetwork/WifiConnectionCancelButton'.Y
+                                    - G/ONetwork/WifiConnectionCancelButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.orange
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                                          OnSelect: |-
+                                            =ResetForm('G/ONetwork/WifiConnectionForm');
+                                            Navigate(Home);
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Cancel"
+                                          Width: =Parent.Width/3
+                                          X: =If('G/O Network/Wifi Connection TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                                          Y: =Parent.Height - (Self.Height *2)
+                  - G/ONetwork/WifiConnectionFooter:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(255,255,255, 1)
+                        FillPortions: =0
+                        Height: =60
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |+
+                          ='G/O Network/Wifi Connection TT'.Size =1
+                        Width: =Parent.Width
+                      Children:
+                        - G/ONetwork/WifiConnectionMobileMenu:
+                            Control: CanvasComponent
+                            ComponentName: compMobileMenu
+                            Properties:
+                              BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                              ForegroundColor: |-
+                                =//RGBA(70, 130, 180, 1)
+                                ColorScheme.primary
+                              Height: =Parent.Height
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NavigationItems: |-
+                                =// IF adimn or tech show this table, if not show Staff table
+                                gblNavItems
+                              SelectedItemBackground: =Color.LightGray
+                              Width: =Parent.Width
+      - G/ONetwork/WifiConnectionBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: ='G/ONetwork/WifiConnectionHeaderLabel'.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =ResetForm('G/ONetwork/WifiConnectionForm'); Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =('G/ONetwork/WifiConnectionHeaderContainer'.Height-'G/ONetwork/WifiConnectionHeaderLabel'.Height)/1.05
+      - G/ONetwork/WifiConnectionWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, App.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='G/O Network/Wifi Connection TT'.Size > 1
+            Width: =If(showMenu, App.Width, 80)
+      - NetworkPopup:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =NetworkPopup
+            Width: =Parent.Width
+          Children:
+            - ACPopupBackground_14:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, .25)
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - ACPopupRectangle_14:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height/1.125
+                  Width: =Parent.Width/1.125
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - Rectangle8_21:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Width: =ACPopupRectangle_14.Width
+                  X: =ACPopupRectangle_14.X
+                  Y: =ACPopupRectangle_14.Y
+            - Label10_32:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =100
+                  Size: =30
+                  Text: ="Form Error"
+                  Width: =Rectangle8_21.Width
+                  X: =Rectangle8_21.X
+                  Y: =Rectangle8_21.Y
+            - Button1_20:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |+
+                    =UpdateContext({NetworkPopup:false});
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: ="Close"
+                  X: =(ACPopupRectangle_14.Width-Self.Width)/2 +ACPopupRectangle_14.X
+                  Y: =ACPopupRectangle_14.Height-Self.Height
+            - Label18_55:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(IsBlank('G/ONetwork/WifiConnectionLocationIDDropdown'.Selected.Name),Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(IsBlank('G/ONetwork/WifiConnectionLocationIDDropdown'.Selected.Name),"Location Missing", "Location OK")
+                  Width: =ACPopupRectangle_14.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Rectangle8_21.Y+Rectangle8_21.Height+15
+            - Label18_56:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(Len(Trim('G/ONetwork/WifiConnectionTitleInput'.Text)) = 0,Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(Len(Trim('G/ONetwork/WifiConnectionTitleInput'.Text)) = 0, "Network Title Blank","Network Title OK")
+                  Width: =ACPopupRectangle_14.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Label18_55.Y+Label18_55.Height+10
+      - FeedbackBugReportNW:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: ='G/O Network/Wifi Connection TT'.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width
+      - AddMedia_14:
+          Control: CanvasComponent
+          ComponentName: AddMedia
+          Properties:
+            AMSize: ='G/O Network/Wifi Connection TT'.Size
+            AttachCameraOff: =Set(AttachCamera,false);
+            AttachCameraOn: =Set(AttachCamera,true);
+            DisablePickMedia: =Set(AttachFiles,false)
+            EnablePickMedia: =Set(AttachFiles,true)
+            ForSTITickID: =0
+            Height: =App.Height
+            InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+            OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+            PhotoModeDisable: =Set(AttachPhoto,false)
+            PhotoModeEnable: =Set(AttachPhoto,true)
+            Visible: =varOpenMedia
+            Width: =App.Width

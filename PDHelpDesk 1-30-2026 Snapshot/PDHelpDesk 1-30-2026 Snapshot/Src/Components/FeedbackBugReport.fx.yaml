@@ -1,0 +1,514 @@
+FeedbackBugReport As CanvasComponent:
+    CloseReport():
+        ThisProperty:
+            Default: =Set(varFeedback,false)
+    DisablePickMedia():
+        ThisProperty:
+            Default: =Set(PickMedia,false)
+    EnablePickMedia():
+        ThisProperty:
+            Default: =Set(PickMedia,true)
+    FeedbackCameraOff():
+        ThisProperty:
+            Default: =Set(FeedbackCamera,false);
+    FeedbackCameraOn():
+        ThisProperty:
+            Default: =Set(FeedbackCamera,true);
+    PhotoModeDisable():
+        ThisProperty:
+            Default: =Set(FeedbackPhoto,false)
+    PhotoModeEnable():
+        ThisProperty:
+            Default: =Set(FeedbackPhoto,true)
+    FBSize: =App.ActiveScreen.Size
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =App.Height
+    Width: =App.Width
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Rectangle33 As rectangle:
+        Fill: =RGBA(56, 96, 178, 0.5)
+        Height: =App.Height
+        Width: =App.Width
+        ZIndex: =1
+
+    Rectangle34 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =App.Height/1.2
+        Width: =App.Width/1.1
+        X: =(Parent.Width-Self.Width)/2
+        Y: =(Parent.Height-Self.Height)/2
+        ZIndex: =2
+
+    Rectangle35 As rectangle:
+        Width: =Rectangle34.Width
+        X: =Rectangle34.X
+        Y: =Rectangle34.Y
+        ZIndex: =3
+
+    Label66 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =Rectangle35.Height
+        Size: =21
+        Text: ="Feedback/Bug Report"
+        Width: =Rectangle35.Width
+        X: =Rectangle35.X
+        Y: =Rectangle35.Y
+        ZIndex: =4
+
+    TextInput16 As text:
+        Default: =
+        Height: =Rectangle34.Height/2
+        HintText: ="Enter your comments here"
+        Mode: =TextMode.MultiLine
+        Width: =Rectangle34.Width/1.1
+        X: =Rectangle34.Width-Self.Width
+        Y: =Rectangle35.Y+Rectangle35.Height+15
+        ZIndex: =6
+
+    Button27 As button:
+        OnSelect: |
+            =If(Len(TextInput16.Text)>0,
+            //Create a new record, assign info to a temp variable
+            Set(tempRec,Patch('Feedback/Bugs',Defaults('Feedback/Bugs'),
+            {
+                Screen:App.ActiveScreen.Name,
+                FeedbackType: If(Checkbox6.Value,{Value:"Bug"},{Value:"Feedback"}),
+                Comments:TextInput16.Text&If(TicketCategoryID = 1 And TicketSubCategoryID =9 And TicketSpecificIssue =1, Blank(),Char(10)&Char(10)&"Ticket Selection"&Char(10)&LookUp(Category,ID = TicketCategoryID).Name&">"&LookUp(Category,ID = TicketSubCategoryID).Name&">"&LookUp(Category,ID = TicketSpecificIssue).Name),
+                FeedbackChecked:false
+            }));
+            //Process media
+            ForAll(
+                attItems As Attachment,
+                        FeedbackAttachFiles.Run(
+                        tempRec.ID,
+                        {
+                            file:{
+                                contentBytes: Attachment.Value,
+                                name: Attachment.Name
+                            }
+                        }
+                    ) 
+            );
+            ForAll(
+                FeedbackImages As FBI,
+                With({varHTMLTable: Split(FBI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",FBI.base64Image)+32},With({varB64End:Find("""",Mid(FBI.base64Image,varB64Start))-1},CopyPasteFeedback.Run(Mid(FBI.base64Image,varB64Start,varB64End),FBI.copyName&".png",tempRec.ID)
+            ))))
+                    );
+            Clear(FeedbackImages);
+            Clear(JointAttachments);
+            Clear(attItems);
+            Reset(TextInput16);
+            Reset(Checkbox6);
+            FeedbackBugReport.CloseReport()
+            
+            ,Notify("Feedback cannot be blank",NotificationType.Error));
+        Text: ="Submit"
+        Width: =TextInput16.Width/2.5
+        X: =Rectangle35.Width/8
+        Y: =Rectangle34.Height
+        ZIndex: =7
+
+    Button27_1 As button:
+        Fill: =RGBA(151, 0, 0, 1)
+        HoverFill: =RGBA(203, 102, 102, 1)
+        OnSelect: |-
+            =Reset(TextInput16);
+            Reset(Checkbox6);
+            FeedbackBugReport.CloseReport();
+            Clear(FeedbackImages);
+        PressedFill: =RGBA(118, 0, 0, 1)
+        Text: ="Close"
+        Width: =TextInput16.Width/2.5
+        X: =Rectangle35.Width-Self.Width
+        Y: =Rectangle34.Height
+        ZIndex: =8
+
+    Checkbox6 As checkbox:
+        Text: ="This is a bug report"
+        Width: =300
+        X: =TextInput16.X
+        Y: =TextInput16.Height+TextInput16.Y
+        ZIndex: =9
+
+    AlternativeAddImageContainer_45 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =FeedbackPhoto
+        Width: =Parent.Width
+        ZIndex: =10
+
+        AlternativeAddImageBackgroundTint_45 As rectangle:
+            Fill: =RGBA(56, 96, 178, .35)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        AlternativeAddImageBackground_45 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(227, 234, 243, 1)
+            Height: =Parent.Height/1.10
+            Width: =Parent.Width/1.10
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        AlternativeAddImageHeader_45 As rectangle:
+            BorderThickness: =2
+            Height: =80
+            Width: =AlternativeAddImageBackground_45.Width
+            X: =AlternativeAddImageBackground_45.X
+            Y: =AlternativeAddImageBackground_45.Y
+            ZIndex: =3
+
+        AlternativeAddImageHeaderLabel_45 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =AlternativeAddImageHeader_45.Height
+            Size: =18
+            Text: ="Using "&If(FeedbackCamera, "Camera","Copy Paste")
+            Width: =AlternativeAddImageHeader_45.Width
+            X: =AlternativeAddImageHeader_45.X
+            Y: =AlternativeAddImageHeader_45.Y
+            ZIndex: =4
+
+        CopyPasteRTE_45 As richTextEditor:
+            Default: =
+            Height: =AlternativeAddImageBackground_45.Height/1.5
+            Visible: =!FeedbackCamera
+            Width: =AlternativeAddImageBackground_45.Width
+            X: =AlternativeAddImageBackground_45.X
+            Y: =AlternativeAddImageBackground_45.Y+AlternativeAddImageHeader_45.Height
+            ZIndex: =5
+
+        Camera_44 As camera:
+            Camera: |-
+                =//Checks if there are anyback cameras, if there are none then default the camera to the first one otherwise use the first back camera
+                If(IsBlank(LookUp(Camera_44.AvailableDevices, "back" in Name|| "Back" in Name).Id),0,LookUp(Camera_44.AvailableDevices, "back" in Name || "Back" in Name).Id)
+            DisplayMode: =If(FeedbackPhoto,DisplayMode.Edit,DisplayMode.Disabled)
+            Height: =AlternativeAddImageBackground_45.Height/1.5
+            OnSelect: |-
+                =Collect(FeedbackImages,{copyName:App.ActiveScreen.Name&" Photo "&Text(Now(),DateTimeFormat.UTC),base64Image: "<img src="&JSON(Camera_44.Photo,JSONFormat.IncludeBinaryData)&" />"});
+                Collect(JointAttachments,{Name:App.ActiveScreen.Name&" Photo "&Text(Now(),DateTimeFormat.UTC),Value: "<img src="&JSON(Camera_44.Photo,JSONFormat.IncludeBinaryData)&" />"});
+            Visible: =FeedbackCamera
+            Width: =AlternativeAddImageBackground_45.Width
+            X: =AlternativeAddImageBackground_45.X
+            Y: =AlternativeAddImageBackground_45.Y+AlternativeAddImageHeader_45.Height
+            ZIndex: =6
+
+        AddScreenshotButton_44 As button:
+            OnSelect: |
+                =If( "<img" in CopyPasteRTE_45.HtmlText, Collect(FeedbackImages,{copyName:App.ActiveScreen.Name&"ScreenShot "&Text( Now(), "mm/dd/yyyy hh:mm:ss" ), base64Image:CopyPasteRTE_45.HtmlText});Collect(JointAttachments,{Name:App.ActiveScreen.Name&" ScreenShot "&Text(Now(),DateTimeFormat.UTC), Value:CopyPasteRTE_45.HtmlText});
+                Reset(CopyPasteRTE_45);, Notify("No Valid Image"));
+            Text: =If(FeedbackCamera,"Take Picture","Add ScreenShot")
+            Visible: =!FeedbackCamera
+            Width: =250
+            X: =(AlternativeAddImageBackground_45.Width-Self.Width)/2 +AlternativeAddImageBackground_45.X
+            Y: =AlternativeAddImageBackground_45.Height-Self.Height-7
+            ZIndex: =7
+
+        ClosePanelButton_44 As icon.Cancel:
+            BorderThickness: =2
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(203, 102, 102, 1)
+            Height: =40
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =FeedbackBugReport.PhotoModeDisable();
+                Reset(CopyPasteRTE_45);
+            Width: =40
+            X: =AlternativeAddImageHeader_45.Width+AlternativeAddImageHeader_45.X-Self.Width
+            Y: =AlternativeAddImageHeader_45.Y
+            ZIndex: =8
+
+        CameraInfoLabel_44 As label:
+            Align: =Align.Center
+            Height: =50
+            Size: =10
+            Text: |-
+                =//"Tap or Click the camera to take a picture"
+                Concat(Camera_44.AvailableDevices, Name&" "&Id)
+            Visible: =FeedbackCamera
+            Width: =Camera_44.Width
+            X: =(AlternativeAddImageBackground_45.Width-Self.Width)/2 +AlternativeAddImageBackground_45.X
+            Y: =AlternativeAddImageBackground_45.Height-Self.Height-7
+            ZIndex: =9
+
+        Rectangle36 As rectangle:
+            Fill: =RGBA(241, 244, 249, 1)
+            Height: =AlternativeAddImageBackground_45.Height
+            Visible: =PickMedia
+            Width: =AlternativeAddImageBackground_45.Width
+            X: =AlternativeAddImageBackground_45.X
+            Y: =AlternativeAddImageBackground_45.Y
+            ZIndex: =10
+
+        Button25_174 As button:
+            Fill: =ColorScheme.primary
+            Height: =Self.Width
+            Text: =
+            Visible: =PickMedia
+            Width: =Icon11_46.Width+16
+            X: =Icon11_46.X-8
+            Y: =Icon11_46.Y-8
+            ZIndex: =11
+
+        Icon11_46 As icon.Camera:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =Self.Width
+            Icon: =Icon.Paste
+            OnSelect: |-
+                =FeedbackBugReport.FeedbackCameraOff();
+                FeedbackBugReport.DisablePickMedia();
+            Visible: =PickMedia
+            Width: =If(FeedbackBugReport.FBSize = 1 , 32, 48)
+            X: =AddMediaAttachmentControl_1.X+AddMediaAttachmentControl_1.Width+16
+            Y: =AddMediaAttachmentControl_1.Y+5
+            ZIndex: =12
+
+        Button25_175 As button:
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =64
+            HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+            OnSelect: =Select(Icon11_46)
+            PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+            Text: =
+            Visible: =PickMedia
+            Width: =Icon11_46.Width+16
+            X: =Icon11_46.X-8
+            Y: =Icon11_46.Y-8
+            ZIndex: =13
+
+        Button25_172 As button:
+            Fill: =ColorScheme.primary
+            Height: =Self.Width
+            Text: =
+            Visible: =PickMedia
+            Width: =Icon11_46.Width+16
+            X: =Icon11_45.X-8
+            Y: =Icon11_45.Y-8
+            ZIndex: =14
+
+        Icon11_45 As icon.Camera:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =Self.Width
+            Icon: =Icon.Camera
+            OnSelect: |
+                =FeedbackBugReport.FeedbackCameraOn();
+                FeedbackBugReport.DisablePickMedia();
+            Visible: =PickMedia
+            Width: =Icon11_46.Width
+            X: =AddMediaAttachmentControl_1.X-Self.Width-16
+            Y: =AddMediaAttachmentControl_1.Y+5
+            ZIndex: =15
+
+        Button25_173 As button:
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =Self.Width
+            HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+            OnSelect: =Select(Icon11_45)
+            PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+            Text: =
+            Visible: =PickMedia
+            Width: =Icon11_46.Width+16
+            X: =Icon11_45.X-8
+            Y: =Icon11_45.Y-8
+            ZIndex: =16
+
+        AlternativeAddImageHeaderLabel_46 As label:
+            Align: =Align.Center
+            BorderThickness: =2
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =ColorScheme.primary
+            Height: =AlternativeAddImageHeader_45.Height
+            Size: =18
+            Text: ="Choose Submission Type"
+            Visible: =PickMedia
+            Width: =AlternativeAddImageHeader_45.Width
+            X: =AlternativeAddImageHeader_45.X
+            Y: =AlternativeAddImageHeader_45.Y
+            ZIndex: =17
+
+        Icon28 As icon.Cancel:
+            BorderThickness: =2
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(203, 102, 102, 1)
+            Height: =Self.Width
+            Icon: =Icon.Cancel
+            OnSelect: |
+                =FeedbackBugReport.DisablePickMedia();
+                FeedbackBugReport.FeedbackCameraOff();
+                FeedbackBugReport.PhotoModeDisable();
+            Visible: =PickMedia
+            Width: =Icon11_46.Width
+            X: =Rectangle36.Width+Rectangle36.X-Self.Width
+            Y: =Rectangle36.Y
+            ZIndex: =18
+
+        AddMediaAttachmentControl_1 As attachments:
+            BorderColor: =Color.Transparent
+            Height: =66
+            HoverFill: =RGBA(0,0,0,.11)
+            IsInDataCard: =true
+            Items: =
+            MaxAttachments: =10
+            MaxAttachmentsText: =
+            NoAttachmentsText: =
+            OnAddFile: |+
+                =ForAll
+                (
+                    Self.Attachments As Attachment,
+                    If(Not(Attachment in JointAttachments),Collect(JointAttachments,{Name:Attachment.Name,Value:Attachment.Value}))
+                );
+                ClearCollect(attItems,Self.Attachments);
+                Reset(AddMediaAttachmentControl_1);
+                
+            OnRemoveFile: =
+            PressedFill: =RGBA(0, 0, 0, 0)
+            Size: =10
+            Visible: =PickMedia
+            Width: =If(FeedbackBugReport.FBSize>1,Rectangle36.Width/1.2,Rectangle36.Width/1.6)
+            X: =(Rectangle36.X+Rectangle36.Width-Self.Width)/2 +Rectangle36.X/2
+            Y: =AttachmentGalleryView_1.Y+AttachmentGalleryView_1.Height+10
+            ZIndex: =19
+
+        AttachmentGalleryView_1 As gallery.variableTemplateHeightGallery:
+            BorderThickness: =2
+            DelayItemLoading: =true
+            Height: =Rectangle36.Height-AlternativeAddImageHeaderLabel_46.Height-128
+            Items: =JointAttachments
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            TemplatePadding: =
+            TemplateSize: =64
+            Visible: =PickMedia
+            Width: =Rectangle36.Width/1.1
+            X: =(Rectangle36.Width-Self.Width)/2 +Rectangle36.X
+            Y: =AlternativeAddImageHeaderLabel_46.Y+AlternativeAddImageHeaderLabel_46.Height
+            ZIndex: =20
+
+            Label69_2 As label:
+                Height: =Parent.TemplateHeight
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.Name
+                Width: =Parent.TemplateWidth*.8
+                X: =Icon26_1.Width+Icon26_1.X
+                ZIndex: =1
+
+            Icon26_1 As icon.Document:
+                Height: =Self.Width
+                Icon: =Icon.Document
+                OnSelect: =Select(Parent)
+                Width: =If(FeedbackBugReport.FBSize = 1, 32,48)
+                Y: =5
+                ZIndex: =4
+
+            Icon27_1 As icon.Cancel:
+                Color: =RGBA(255, 255, 255, 1)
+                Fill: =RGBA(39, 113, 194, 1)
+                Height: =Self.Width
+                Icon: =Icon.Cancel
+                OnSelect: |-
+                    =Set(workerVar,{copyName:ThisItem.Name,base64Image:ThisItem.Value});
+                    If(workerVar in RTEImages,Remove(RTEImages,LookUp(RTEImages, ThisItem.Value = base64Image)));
+                    Remove(attItems,LookUp(attItems,ThisItem.Value = Value));
+                    Remove(JointAttachments,ThisItem)
+                Width: =If(FeedbackBugReport.FBSize = 1, 32,48)
+                X: =Parent.TemplateWidth-Self.Width
+                Y: =5
+                ZIndex: =5
+
+            HtmlText9 As htmlViewer:
+                HtmlText: =ThisItem.Value
+                OnSelect: =Select(Parent)
+                Visible: =false
+                X: =892
+                Y: =24
+                ZIndex: =6
+
+            Label69 As label:
+                Height: =64
+                OnSelect: =Select(Parent)
+                Overflow: =Overflow.Scroll
+                Text: =ThisItem.Value
+                Visible: =false
+                Width: =423
+                X: =395
+                ZIndex: =7
+
+    FeedbackDebug As gallery.galleryVertical:
+        DelayItemLoading: =true
+        Height: =185
+        Items: =FeedbackImages
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        TemplateSize: =180
+        Visible: =false
+        Width: =1244
+        X: =59
+        Y: =422
+        ZIndex: =12
+
+        Label67 As label:
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.copyName
+            X: =40
+            Y: =40
+            ZIndex: =1
+
+        HtmlText8_1 As htmlViewer:
+            HtmlText: =ThisItem.base64Image
+            X: =250
+            Y: =25
+            ZIndex: =2
+
+    Label68 As label:
+        Height: =50
+        Text: =If(CountRows(FeedbackImages)>0,CountRows(FeedbackImages)&" Screenshot(s) or Photos Added","No Media Attached")
+        Visible: =!PickMedia And !FeedbackPhoto
+        Width: =200
+        X: =If(FeedbackBugReport.FBSize>1,Checkbox6.X+Checkbox6.Width+12,Checkbox6.X)
+        Y: =If(FeedbackBugReport.FBSize>1,Checkbox6.Y+10,Checkbox6.Y+Checkbox6.Height)
+        ZIndex: =13
+
+    Button25_176 As button:
+        Fill: =ColorScheme.primary
+        Height: =Self.Width
+        Text: =
+        Visible: =!PickMedia And !FeedbackPhoto
+        Width: =Icon11_47.Width+16
+        X: =Icon11_47.X-8
+        Y: =Icon11_47.Y-8
+        ZIndex: =14
+
+    Icon11_47 As icon.Camera:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =Self.Width
+        Icon: =Icon.AddDocument
+        OnSelect: |-
+            =FeedbackBugReport.PhotoModeEnable();
+            FeedbackBugReport.EnablePickMedia();
+        Visible: =!PickMedia And !FeedbackPhoto
+        Width: =If(FeedbackBugReport.FBSize = 1, 32, 48)
+        X: =Rectangle35.X+Rectangle35.Width -Self.Width-10
+        Y: =Rectangle35.Y+10
+        ZIndex: =15
+
+    Button25_177 As button:
+        Fill: =RGBA(0, 0, 0, 0)
+        Height: =Button25_176.Height
+        HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+        OnSelect: =Select(Icon11_47)
+        PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+        Text: =
+        Visible: =!PickMedia And !FeedbackPhoto
+        Width: =Button25_176.Width
+        X: =Icon11_47.X-8
+        Y: =Icon11_47.Y-8
+        ZIndex: =16
+

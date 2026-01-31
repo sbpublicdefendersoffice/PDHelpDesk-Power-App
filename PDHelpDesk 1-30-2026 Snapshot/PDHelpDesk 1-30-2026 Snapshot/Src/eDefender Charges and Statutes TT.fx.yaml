@@ -1,0 +1,1563 @@
+"'eDefender Charges and Statutes TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm('eDefenderC&SForm');
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:"",chargeColCount:0});
+        
+        ClearCollect(chargesColletion,
+        {
+            recNum:chargeColCount,
+            statuteCode:123456789,
+            statute: "hi",
+            class: "there",
+            description:"asdfasfasf"
+        });
+        Clear(chargesColletion);
+        UpdateContext({CnSPopUp:false,CnSRecord:Blank(),chargeColCount:1});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({usingCamera:false,altImagePopUp:false});
+        UpdateContext({'C&SPopup':false})
+
+    "'eDefenderC&SMainContainer' As groupContainer.horizontalAutoLayoutContainer":
+        Height: ='eDefender Charges and Statutes TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='eDefender Charges and Statutes TT'.Width
+        ZIndex: =2
+
+        "'eDefenderC&SVerticalLayoutContainer' As groupContainer.verticalAutoLayoutContainer":
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            "'eDefenderC&SHeaderContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                ChargesAndStatutesHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =11
+
+                    HomeBackgroundGradient_15 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    "'eDefenderC&SHeaderLabel' As label":
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-'eDefenderC&SWebHeader'.Height
+                        Size: =If('eDefender Charges and Statutes TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Charges and Statutes Form"
+                        Width: =Parent.Width
+                        Y: ='eDefenderC&SWebHeader'.Height
+                        ZIndex: =2
+
+                    "'eDefenderC&SWebHeader' As compWebHeader":
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='eDefender Charges and Statutes TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        Height: |-
+                            =82
+                            //Parent.Height
+                        ZIndex: =3
+
+            "'eDefenderC&SMainContentContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                "'eDefenderC&SForm' As form":
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    DataCard1 As typedDataCard.blankCard:
+                        BorderColor: =ColorFade(RGBA(219, 219, 219, 1),-30%)
+                        BorderStyle: =BorderStyle.Dashed
+                        BorderThickness: =1
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =100
+                        Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        Label5 As label:
+                            Align: =Align.Center
+                            FontWeight: =FontWeight.Semibold
+                            Height: =100
+                            Size: =If('eDefender Charges and Statutes TT'.Size=1,13,30)
+                            Text: ="Enter Items, or attach a screenshot of the DA complaint"
+                            Width: =Parent.Width
+                            Y: ='eDefenderAdding/CodingDisclaimerLabel_4'.Height
+                            ZIndex: =1
+
+                        "'eDefenderAdding/CodingDisclaimerLabel_4' As label":
+                            Align: =Align.Center
+                            BorderColor: =RGBA(221, 79, 14, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(221, 79, 14, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =If('eDefender Charges and Statutes TT'.Size=1,100,50)
+                            Size: =If('eDefender Adding/Coding Items TT'.Size =1,13,16)
+                            Text: ="When Submitting media, DO NOT SUBMIT DOCUMENTS CONTAINING SENSITIVE/RESTRICTED DATA. All case-related files should be uploaded to the Box File."
+                            Width: =Parent.Width
+                            ZIndex: =2
+
+                    "'eDefenderC&SSpecificIssue_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank('eDefenderC&SSpecificIssueDropdown'.Selected.Name), false, true)
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        "'eDefenderC&SSpecificIssueLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =120
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'eDefenderC&SSpecificIssueError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='eDefenderC&SSpecificIssueDropdown'.Y + 'eDefenderC&SSpecificIssueDropdown'.Height
+                            ZIndex: =3
+
+                        "'eDefenderC&SSpecificIssueStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='eDefenderC&SSpecificIssueLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='eDefenderC&SSpecificIssueLabel'.Y
+                            ZIndex: =4
+
+                        "'eDefenderC&SSpecificIssueDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            DisplayMode: =DisplayMode.View
+                            Height: =35
+                            Items: =Filter(Category, parentId = 'eDefenderC&SSubCategoryDropdown'.Selected.ID)
+                            Width: =If('eDefender Charges and Statutes TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'eDefenderC&STitle_DataCard' As typedDataCard.textualEditCard":
+                        BorderColor: =RGBA(219, 219, 219, 1)
+                        BorderStyle: =BorderStyle.Dashed
+                        BorderThickness: =1
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =100
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", false, true)
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        "'eDefenderC&STitleError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =false
+                            Width: =Parent.Width - 60
+                            ZIndex: =3
+
+                        Label9 As label:
+                            Align: =Align.Center
+                            FontWeight: =FontWeight.Semibold
+                            Height: =100
+                            Size: =Label5.Size
+                            Text: ="Make sure to select a location when submitting"
+                            Width: =Parent.Width
+                            Y: =(Parent.Height-Self.Height)/2
+                            ZIndex: =6
+
+                    "'eDefenderC&SMainCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Charges and Statutes TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        "'eDefenderC&SMainCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'eDefenderC&SMainCategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='eDefenderC&SMainCategoryDropdown'.Y + 'eDefenderC&SMainCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'eDefenderC&SMainCategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='eDefenderC&SMainCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='eDefenderC&SMainCategoryLabel'.Y
+                            ZIndex: =4
+
+                        "'eDefenderC&SMainCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'eDefenderC&SSubCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Charges and Statutes TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        "'eDefenderC&SSubCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'eDefenderC&SSubcategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='eDefenderC&SSubCategoryDropdown'.Y + 'eDefenderC&SSubCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'eDefenderC&SSubcategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='eDefenderC&SSubCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='eDefenderC&SSubCategoryLabel'.Y
+                            ZIndex: =4
+
+                        "'eDefenderC&SSubCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = 'eDefenderC&SMainCategoryDropdown'.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'eDefenderC&SFields' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =100
+                        Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", false, true)
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        Rectangle2 As rectangle:
+                            BorderThickness: =1
+                            Fill: =RGBA(241, 244, 249, 1)
+                            Height: =Button6.Height+Button6.Y+ 25
+                            Width: =Parent.Width/1.05
+                            X: =15
+                            Y: =1
+                            ZIndex: =1
+
+                        Button6 As button:
+                            Fill: =ColorScheme.primary
+                            FontWeight: =FontWeight.Bold
+                            Height: =35
+                            OnSelect: |+
+                                =If(!IsBlank('eDefenderC&STitleInput'.Text) && !IsBlank(StatuteDescriptionInput.Text) && !IsBlank(SourceInput.Text) && !IsBlank(ClassDropdown.Selected.statuteClass), 
+                                UpdateContext({chargeColCount:chargeColCount+1});
+                                Patch(chargesColletion, Defaults(chargesColletion),
+                                {
+                                    recNum:chargeColCount,
+                                    statuteCode:If(IsError(Value('eDefenderC&STitleInput'.Text)),0,Value('eDefenderC&STitleInput'.Text)),
+                                    statute: SourceInput.Text,
+                                    class: ClassDropdown.Selected.statuteClass,
+                                    description:StatuteDescriptionInput.Text
+                                }
+                                );
+                                Reset('eDefenderC&STitleInput');
+                                Reset(SourceInput);
+                                Reset(ClassDropdown);
+                                Reset(StatuteDescriptionInput);,
+                                
+                                
+                                If(IsBlank(StatuteDescriptionInput.Text),Notify("Statute Description is Empty",NotificationType.Error));
+                                If(IsBlank(ClassDropdown.Selected.statuteClass),Notify("No Category Selected", NotificationType.Error));
+                                If(IsBlank(SourceInput.Text),Notify("No Source Provided",NotificationType.Error));
+                                If(IsBlank('eDefenderC&STitleInput'.Text),Notify("No Status Code provided",NotificationType.Error));
+                                );
+                                
+                            Size: =13
+                            Text: ="Add"
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =StatuteDescriptionInput.Y+StatuteDescriptionInput.Height+20
+                            ZIndex: =5
+
+                        Gallery3 As gallery.variableTemplateHeightGallery:
+                            '#CopilotOverlayLabel': ="Filtered"
+                            DelayItemLoading: =true
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =If(CountRows(Gallery3.AllItems)*Self.TemplateHeight<500,CountRows(Gallery3.AllItems)*Self.TemplateHeight,500)
+                            Items: =chargesColletion
+                            Layout: =Layout.Vertical
+                            LoadingSpinner: =LoadingSpinner.Data
+                            TemplatePadding: =0
+                            TemplateSize: =100
+                            Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                            Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                            X: ='eDefenderC&STitleInput'.X
+                            Y: =GalleryHeader.Y+GalleryHeader.Height
+                            ZIndex: =7
+
+                            GalleryStatuteLabel As label:
+                                Align: =Align.Center
+                                Height: =Parent.TemplateHeight
+                                OnSelect: =Select(Parent)
+                                Size: =GalleryStatuteLabel_1.Size
+                                Text: =ThisItem.statute
+                                Width: =Parent.TemplateWidth/4
+                                X: =GalleryStatuteLabel_1.Width
+                                ZIndex: =1
+
+                            GalleryClassLabel As label:
+                                Align: =Align.Center
+                                Height: =Parent.TemplateHeight
+                                OnSelect: =Select(Parent)
+                                Size: =GalleryStatuteLabel_1.Size
+                                Text: =ThisItem.class
+                                Width: =Parent.TemplateWidth/4
+                                X: =GalleryStatuteLabel.Width+GalleryStatuteLabel.X
+                                ZIndex: =2
+
+                            Button9 As button:
+                                BorderColor: =Color.Black
+                                Color: =RGBA(0, 0, 0, 0)
+                                Fill: =RGBA(0, 0, 0, 0)
+                                Height: =Parent.TemplateHeight
+                                HoverFill: =RGBA(255,0,0,.35)
+                                OnSelect: =Remove(chargesColletion,ThisItem)
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Text: ="Remove entry"
+                                Width: =Parent.TemplateWidth
+                                ZIndex: =3
+
+                            GalleryStatuteLabel_1 As label:
+                                Align: =Align.Center
+                                Height: =Parent.TemplateHeight
+                                OnSelect: =Select(Parent)
+                                Size: =If('eDefender Charges and Statutes TT'.Size=1,10,15)
+                                Text: =ThisItem.statuteCode
+                                Width: =Parent.TemplateWidth/4
+                                ZIndex: =5
+
+                            Icon17 As icon.DocumentwithContent:
+                                Height: =Self.Width
+                                Icon: =Icon.DocumentWithContent
+                                OnSelect: |-
+                                    =UpdateContext({CnSPopUp:true,CnSRecord:ThisItem});
+                                Width: =If('eDefender Charges and Statutes TT'.Size=1,32,64)
+                                X: =Parent.TemplateWidth-(Self.Width+GalleryCategoryClassLabel_1.Width)/2
+                                Y: =18
+                                ZIndex: =6
+
+                        CategoryClassLabel As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Category"
+                            Width: =90
+                            X: =ClassDropdown.X
+                            Y: =ClassDropdown.Y-Self.Height
+                            ZIndex: =9
+
+                        SourceInput As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =35
+                            HintText: ="Enter source"
+                            Width: ='eDefenderC&STitleInput'.Width
+                            X: =If('eDefender Charges and Statutes TT'.Size=1,30,'eDefenderC&STitleInput'.X+'eDefenderC&STitleInput'.Width+15)
+                            Y: =If('eDefender Charges and Statutes TT'.Size=1,'eDefenderC&STitleInput'.Y+'eDefenderC&STitleInput'.Height+40,'eDefenderC&STitleInput'.Y)
+                            ZIndex: =10
+
+                        SourceLabel As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Source"
+                            Width: =70
+                            X: =SourceInput.X
+                            Y: =SourceInput.Y-Self.Height
+                            ZIndex: =11
+
+                        ClassDropdown As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =35
+                            Items: |-
+                                =Table({statuteClass:"Misdemeanor"},{statuteClass:"Felony"},{statuteClass:"Infraction"})
+                            Width: ='eDefenderC&STitleInput'.Width
+                            X: =If('eDefender Charges and Statutes TT'.Size=1,30,SourceInput.X+SourceInput.Width+15)
+                            Y: =If('eDefender Charges and Statutes TT'.Size=1,SourceInput.Y+SourceInput.Height+40,'eDefenderC&STitleInput'.Y)
+                            ZIndex: =12
+
+                        StatuteDescriptionInput As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =100
+                            HintText: ="Enter statute description"
+                            Mode: =TextMode.MultiLine
+                            Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                            X: =30
+                            Y: =If('eDefender Charges and Statutes TT'.Size=1,ClassDropdown.Y+ClassDropdown.Height+40,SourceInput.Y+SourceInput.Height+50)
+                            ZIndex: =13
+
+                        SourceLabel_1 As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Statute description"
+                            Width: =180
+                            X: =30
+                            Y: =StatuteDescriptionInput.Y-Self.Height
+                            ZIndex: =14
+
+                        "'eDefenderC&STitleLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Statute Code"
+                            Width: =120
+                            Wrap: =false
+                            X: =30
+                            Y: ='eDefenderC&STitleInput'.Y-Self.Height
+                            ZIndex: =15
+
+                        "'eDefenderC&STitleStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='eDefenderC&STitleLabel'.Color
+                            Height: ='eDefenderC&STitleLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='eDefenderC&STitleLabel'.Y
+                            ZIndex: =16
+
+                        "'eDefenderC&STitleInput' As text":
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =35
+                            HintText: ="Please enter statute code"
+                            Width: =If('eDefender Charges and Statutes TT'.Size=1,'eDefenderC&SSpecificIssueDropdown'.Width,'eDefenderC&SSpecificIssueDropdown'.Width/3 -10)
+                            X: =30
+                            Y: =50
+                            ZIndex: =17
+
+                        GalleryMobileCardHeader As rectangle:
+                            BorderThickness: =1
+                            Fill: =ColorScheme.primary
+                            Height: =50
+                            Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size=1
+                            Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                            X: ='eDefenderC&STitleInput'.X
+                            Y: =Button6.Y+Button6.Height+15
+                            ZIndex: =18
+
+                        "'Statute Header Group' As group":
+                            Height: =5
+                            Width: =5
+                            X: =40
+                            Y: =40
+                            ZIndex: =18
+
+                            GalleryHeader As rectangle:
+                                BorderThickness: =2
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                                Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                                X: ='eDefenderC&STitleInput'.X
+                                Y: =Button6.Y+Button6.Height+15
+                                ZIndex: =2
+
+                            GallerySourceLabel As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =GalleryHeader.Height
+                                Size: =GallerySourceLabel_1.Size
+                                Text: ="Source"
+                                Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                                Width: =GalleryHeader.Width/4
+                                X: =GallerySourceLabel_1.X+GallerySourceLabel_1.Width
+                                Y: =GalleryHeader.Y
+                                ZIndex: =3
+
+                            GalleryCategoryClassLabel As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =GalleryHeader.Height
+                                Size: =GallerySourceLabel_1.Size
+                                Text: ="Category"
+                                Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                                Width: =GalleryHeader.Width/4
+                                X: =GallerySourceLabel.Width+GallerySourceLabel.X
+                                Y: =GalleryHeader.Y
+                                ZIndex: =4
+
+                            GalleryCategoryClassLabel_1 As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =GalleryHeader.Height
+                                Size: =GallerySourceLabel_1.Size
+                                Text: ="Description"
+                                Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                                Width: =GalleryHeader.Width/4
+                                X: =GalleryCategoryClassLabel.Width+GalleryCategoryClassLabel.X
+                                Y: =GalleryHeader.Y
+                                ZIndex: =6
+
+                            GallerySourceLabel_1 As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =GalleryHeader.Height
+                                Size: =If('eDefender Charges and Statutes TT'.Size=1,8,20)
+                                Text: ="Statute Code"
+                                Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                                Width: =GalleryHeader.Width/4
+                                X: =GalleryHeader.X
+                                Y: =GalleryHeader.Y
+                                ZIndex: =8
+
+                        GalleryMobileCardHeaderLabel As label:
+                            Align: =Align.Center
+                            Color: =RGBA(255, 255, 255, 1)
+                            Height: =GalleryHeader.Height
+                            Size: =20
+                            Text: ="Statutes to Submit"
+                            Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size=1
+                            Width: =GalleryHeader.Width
+                            X: =GalleryHeader.X
+                            Y: =GalleryHeader.Y
+                            ZIndex: =19
+
+                        StatutesGalleryMobile As gallery.galleryVertical:
+                            '#CopilotOverlayLabel': ="Filtered"
+                            BorderThickness: =1
+                            Default: =//First(MyTicketsGallery.AllItems)
+                            DelayItemLoading: |-
+                                =//false
+                                true
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =If(CountRows(chargesColletion)*250>=500,500,CountRows(chargesColletion)*250)
+                            Items: =chargesColletion
+                            Layout: =Layout.Vertical
+                            LoadingSpinner: |-
+                                =//LoadingSpinner.None
+                                LoadingSpinner.Controls
+                            TemplatePadding: =10
+                            TemplateSize: |-
+                                =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+                                
+                                If(MyTickets.Size > 1, 250, 240)
+                            Transition: =Transition.Push
+                            Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size=1
+                            Width: =GalleryMobileCardHeader.Width
+                            WrapCount: =RoundDown((Parent.Width / 320), 0)
+                            X: =30
+                            Y: =GalleryMobileCardHeader.Y+GalleryMobileCardHeader.Height
+                            ZIndex: =20
+
+                            Rectangle6_3 As rectangle:
+                                BorderColor: =RGBA(0, 0, 0, 0)
+                                BorderThickness: =25
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =Image6_2.Height
+                                OnSelect: =Select(Parent)
+                                Width: =Image6_2.Width
+                                ZIndex: =1
+
+                            Image6_2 As image:
+                                Height: |-
+                                    =//250
+                                    Parent.TemplateHeight
+                                Image: |-
+                                    ="data:image/svg+xml," & EncodeUrl(
+                                        "<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+                                    <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+                                    <svg version='1.1'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                        xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 " & Self.Width & " " & Self.Height & "' width='" & Self.Width & "' height='" & Self.Height & "'>
+                                        <defs>" &
+                                        // ----- Box for fill
+                                     "<path d='" &
+                                     // Upper left
+                                     "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0,0) &
+                                        // Upper right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                        // Lower right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                        // Lower left
+                                     "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                     "Z' id='box' stroke='" & "#ff0000" & "' stroke-width='" & 0 & "'></path>
+                                        </defs>
+                                        <g>
+                                            <g>
+                                                <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>
+                                                    <feFlood></feFlood>
+                                                    <feComposite in2='SourceAlpha' operator='in'></feComposite>
+                                                    <feGaussianBlur stdDeviation='" & 5 & "'></feGaussianBlur>
+                                                    <feOffset dx='" & 0 & "' dy='" & 0 & "' result='afterOffset'></feOffset>
+                                                    <feFlood flood-color='" & "#000000" & "' flood-opacity='" & Substitute(Text(0.5), ",", ".") & "'></feFlood>
+                                                    <feComposite in2='afterOffset' operator='in'></feComposite>
+                                                    <feMorphology operator='dilate' radius='1'></feMorphology>
+                                                    <feComposite in2='SourceAlpha' operator='out'></feComposite>
+                                                </filter>" &
+                                                // ----- Box for shadow
+                                     "<path d='" &
+                                     // Upper left
+                                     "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                        // Upper right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                        // Lower right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                        // Lower left
+                                     "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                     "Z' id='Component1' filter='url(#shadow)'></path>
+                                            </g>
+                                            <use xlink:href='#box' opacity='1' fill='" & "#ffffff" & "' fill-opacity='" & Substitute(Text(0), ",", ".") & "'></use>
+                                        </g>
+                                        <g>
+                                            " &
+                                            // ----- Edge
+                                     If(
+                                            true,
+                                            Switch(
+                                                "left",
+                                                "left",// -- Position: left
+                                                "<path d='" &
+                                            // Upper left
+                                     "M" & Max(5 * 3 - 0, 0) + 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                            // Upper right
+                                     "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                            // Lower right
+                                     "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                            // Lower left
+                                     "L" & Max(5 * 3 - 0, 0) + 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                     "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>",
+                                                 "right",// -- Position: right
+                                                "<path d='" &
+                                            // Upper left
+                                     "M" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                            // Upper right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                            // Lower right
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                            // Lower left
+                                     "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                     "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>"
+                                               
+                                            )
+                                        ) & "
+                                        </g>
+                                    </svg>"
+                                    )
+                                OnSelect: =Select(Parent)
+                                Width: |-
+                                    =//329
+                                    Parent.TemplateWidth
+                                ZIndex: =2
+
+                            btnBkg_2 As button:
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =Parent.TemplateHeight
+                                HoverFill: =Self.Fill
+                                OnSelect: =Select(Parent)
+                                PressedFill: =Self.Fill
+                                RadiusBottomLeft: =0
+                                RadiusBottomRight: =0
+                                RadiusTopLeft: =0
+                                RadiusTopRight: =0
+                                Text: =""
+                                Visible: =false
+                                Width: =Parent.TemplateWidth
+                                ZIndex: =3
+
+                            TitleLabel_3 As label:
+                                FontWeight: =FontWeight.Semibold
+                                Height: =54
+                                OnSelect: =Select(Parent)
+                                Size: =12
+                                Text: |-
+                                    ="Code: "&ThisItem.statuteCode
+                                Width: |-
+                                    =//208
+                                    Parent.TemplateWidth - Icon18.Width - 47
+                                X: =24
+                                Y: =27
+                                ZIndex: =4
+
+                            DescriptionLabel_2 As label:
+                                Height: =50
+                                OnSelect: =Select(Parent)
+                                Size: =10
+                                Text: |-
+                                    =//ThisItem.Description
+                                    If(Len(ThisItem.description)>45, Concatenate(Left(ThisItem.description,45),"..."),ThisItem.description)
+                                Width: |-
+                                    =//282
+                                    Parent.TemplateWidth - 48
+                                Wrap: =false
+                                X: =24
+                                Y: =TitleLabel_3.Y + TitleLabel_3.Height
+                                ZIndex: =5
+
+                            DateExpiredLabel_2 As label:
+                                Height: |-
+                                    =//25
+                                    34
+                                OnSelect: =Select(Parent)
+                                Size: =10
+                                Text: =ThisItem.class
+                                Width: =StartedLabelTextValue_1.Width
+                                X: =ExpiresLabelText_1.X+ExpiresLabelText_1.Width
+                                Y: =ExpiresLabelText_1.Y
+                                ZIndex: =7
+
+                            ExpiresLabelText_1 As label:
+                                Height: =34
+                                OnSelect: =Select(Parent)
+                                Size: =10
+                                Text: ="Category"
+                                Visible: |-
+                                    =//is_admin
+                                    true
+                                Width: |-
+                                    =//154
+                                    StaratedLabelText_1.Width
+                                X: |-
+                                    =//67
+                                    StaratedLabelText_1.X
+                                Y: |-
+                                    =//180
+                                    Parent.TemplateHeight - Self.Height - 27
+                                ZIndex: =8
+
+                            OverlapButton_1 As button:
+                                BorderThickness: =0
+                                Fill: =Color.Transparent
+                                Height: |-
+                                    =//220
+                                    Parent.TemplateHeight
+                                HoverFill: =Self.Fill
+                                OnSelect: |-
+                                    =
+                                    
+                                    // Sharepoint List
+                                    UpdateContext({CnSPopUp:true,CnSRecord:ThisItem});
+                                PressedFill: =Self.Fill
+                                Text: =""
+                                Width: |-
+                                    =//303
+                                    Parent.TemplateWidth
+                                X: |-
+                                    =//24
+                                    (Parent.TemplateWidth - Self.Width) / 2
+                                Y: |-
+                                    =//15
+                                    (Parent.TemplateHeight - Self.Height) / 2
+                                ZIndex: =13
+
+                            Icon18 As icon.CancelBadge:
+                                Height: =32
+                                Icon: =Icon.CancelBadge
+                                OnSelect: =Remove(chargesColletion,ThisItem)
+                                Width: =32
+                                X: =Parent.TemplateWidth - Self.Width - 23
+                                Y: =27
+                                ZIndex: =14
+
+                            StartedLabelGroup_1 As group:
+                                Height: =5
+                                Width: =5
+                                X: =40
+                                Y: =40
+                                ZIndex: =14
+
+                                StartedLabelTextValue_1 As label:
+                                    Height: |-
+                                        =//25
+                                        34
+                                    OnSelect: =Select(Parent)
+                                    Size: =10
+                                    Text: =ThisItem.statute
+                                    Width: |-
+                                        =//143
+                                        Parent.TemplateWidth - StaratedLabelText_1.Width - 47
+                                    Wrap: =false
+                                    X: |-
+                                        =//89
+                                        StaratedLabelText_1.X + StaratedLabelText_1.Width
+                                    Y: |
+                                        =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                        //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                        ((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                    ZIndex: =11
+
+                                StaratedLabelText_1 As label:
+                                    Height: |-
+                                        =//25
+                                        34
+                                    OnSelect: =Select(Parent)
+                                    Size: =10
+                                    Text: ="Source"
+                                    Width: =67
+                                    X: =24
+                                    Y: |
+                                        =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                        //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                        ((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                    ZIndex: =12
+
+                    "'eDefenderC&SDescription_DataCard' As typedDataCard.textualEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: |-
+                            =//If( 'eDefender Charges and Statutes TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                            300
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", true, false)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        "'eDefenderC&SDescriptionLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =Color.White
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =115
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'eDefenderC&SDescriptionErrorMessage' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='eDefenderC&SDescriptionTextInputArea'.Y + 'eDefenderC&SDescriptionTextInputArea'.Height
+                            ZIndex: =3
+
+                        "'eDefenderC&SDescriptionStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='eDefenderC&SDescriptionLabel'.Color
+                            Height: ='eDefenderC&SDescriptionLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='eDefenderC&SDescriptionLabel'.Y
+                            ZIndex: =4
+
+                        "'eDefenderC&SDescriptionTextInputArea' As text":
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: =""
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: ='eDefenderC&SDescription_DataCard'.Visible
+                            Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                            X: =30
+                            Y: ='eDefenderC&SDescriptionLabel'.Y+'eDefenderC&SDescriptionLabel'.Height
+                            ZIndex: =5
+
+                    "'eDefenderC&SLocationID_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        "'eDefenderC&SLocationIDLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'eDefenderC&SLocationIDErrorMessage' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='eDefenderC&SLocationIDDropDown'.Y + 'eDefenderC&SLocationIDDropDown'.Height
+                            ZIndex: =3
+
+                        "'eDefenderC&SLocationIDStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='eDefenderC&SLocationIDLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='eDefenderC&SLocationIDLabel'.Y
+                            ZIndex: =4
+
+                        "'eDefenderC&SLocationIDDropDown' As dropdown":
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =Parent.Height/3.5
+                            Items: =Locations
+                            Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'eDefenderC&SAttatchments_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        AddMediaButton_8 As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                            Text: ="Add Media"
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =(Parent.Height-Self.Height)/2
+                            ZIndex: =8
+
+                    "'eDefenderC&SButtons_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Charges and Statutes TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =9
+                        ZIndex: =1
+
+                        "'eDefenderC&SSubmitButton' As button":
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: ='eDefenderC&SCancelButton'.Height
+                            OnSelect: |
+                                =
+                                If(!'eDefenderC&SDescriptionTextInputArea'.Visible,
+                                UpdateContext({TicketDescText:If(!IsEmpty(chargesColletion),"Statute Code: "&'eDefenderC&STitleInput'.Text&Char(13)&Concatenate(Concat(chargesColletion,Char(13)&"Statute: "&statute&"         Class: "&class&Char(13)&"Description:"&Char(13)&description)),"Check attachments for DA Complaint")}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    (!IsEmpty(chargesColletion)|| !IsEmpty(JointAttachments) ) && If('eDefenderC&SSpecificIssueDropdown'.Selected.Name="Add New Statute",!IsBlank('eDefenderC&SLocationIDDropDown'.Selected.Name),true) ,  
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: "Charges and Statutes Request",
+                                                description: Trim('eDefenderC&SDescriptionTextInputArea'.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: 'eDefenderC&SMainCategoryDropdown'.Selected.ID,
+                                                category: 'eDefenderC&SSubCategoryDropdown'.Selected.ID,
+                                                subCategory: 'eDefenderC&SSpecificIssueDropdown'.Selected.ID,
+                                                locationId: 'eDefenderC&SLocationIDDropDown'.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(JointAttachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = 'eDefenderC&SMainCategoryDropdown'.Selected.ID && locationId = 'eDefenderC&SLocationIDDropDown'.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = 'eDefenderC&SMainCategoryDropdown'.Selected.ID && locationId = 'eDefenderC&SLocationIDDropDown'.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" Charges and Statutes Request"
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                ForAll(
+                                    attItems As Attachment,
+                                            AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) 
+                                );
+                                ForAll(
+                                    RTEImages As RTEI,
+                                    With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        );
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm('eDefenderC&SForm');
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({'C&SPopup':true})
+                            Text: ="Submit"
+                            Width: ='eDefenderC&SCancelButton'.Width
+                            X: ='eDefenderC&SCancelButton'.X + (Self.Width*1.3)
+                            Y: ='eDefenderC&SCancelButton'.Y
+                            ZIndex: =1
+
+                        "'eDefenderC&SCancelButton' As button":
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm('eDefenderC&SForm');
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('eDefender Charges and Statutes TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            "'eDefenderC&SFooter' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='eDefender Charges and Statutes TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                "'eDefenderC&SMobileMenu' As compMobileMenu":
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    "'eDefenderC&SBackButton' As icon.BackArrow":
+        Color: =Color.White
+        Height: ='eDefenderC&SHeaderLabel'.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm('eDefenderC&SForm'); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =('eDefenderC&SHeaderContainer'.Height-'eDefenderC&SHeaderLabel'.Height)/1.05
+        ZIndex: =3
+
+    "'eDefenderC&SWebMenu' As compWebMenu":
+        Visible: ='eDefender Charges and Statutes TT'.Size > 1
+        ZIndex: =4
+
+    Label12 As label:
+        Height: =58
+        Text: |-
+            =Concatenate(Concat(chargesColletion,Char(13)&"Statute: "&statute&"         Class: "&class&Char(13)))
+        Visible: =false
+        Width: =305
+        X: =970
+        ZIndex: =8
+
+    ChargesAndStatutesDetailsPopUp As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =CnSPopUp
+        Width: =Parent.Width
+        ZIndex: =12
+
+        PopupBackground_5 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        PopupRectangle_5 As rectangle:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_5 As rectangle:
+            Width: =PopupRectangle_5.Width
+            X: =PopupRectangle_5.X
+            Y: =PopupRectangle_5.Y
+            ZIndex: =3
+
+        Label10_16 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Details"
+            Width: =Rectangle8_5.Width
+            X: =Rectangle8_5.X
+            Y: =Rectangle8_5.Y
+            ZIndex: =4
+
+        Button1_4 As button:
+            OnSelect: |-
+                =UpdateContext({CnSPopUp:false});
+                Patch(chargesColletion,LookUp(chargesColletion, CnSRecord.recNum = recNum),
+                {
+                    description:ContentOfInterestInput_2.Text
+                });
+                Reset(ContentOfInterestInput_2);
+                UpdateContext({CnSRecord:Blank()})
+            Text: ="Save & Close"
+            X: =(PopupRectangle_5.Width-Self.Width)/2 +PopupRectangle_5.X
+            Y: =PopupRectangle_5.Height-Self.Height
+            ZIndex: =9
+
+        Label18_4 As label:
+            Align: =Align.Center
+            Color: =
+            Size: =20
+            Text: ="View/Edit Details"
+            Width: =PopupRectangle_5.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_5.Y+Rectangle8_5.Height
+            ZIndex: =11
+
+        ContentOfInterestInput_2 As text:
+            Default: =CnSRecord.description
+            Height: =PopupRectangle_5.Height*.60
+            HintText: ="Insert redacation  information here, content is saved on closing"
+            HoverFill: =RGBA(0, 0, 0, 0)
+            Mode: =TextMode.MultiLine
+            Width: =PopupRectangle_5.Width-40
+            X: =(PopupRectangle_5.Width-Self.Width)/2 +PopupRectangle_5.X
+            Y: =196
+            ZIndex: =12
+
+    "'C&SPopup' As groupContainer.manualLayoutContainer":
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: ='C&SPopup'
+        Width: =Parent.Width
+        ZIndex: =13
+
+        ACPopupBackground_9 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_9 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_16 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_9.Width
+            X: =ACPopupRectangle_9.X
+            Y: =ACPopupRectangle_9.Y
+            ZIndex: =3
+
+        Label10_27 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_16.Width
+            X: =Rectangle8_16.X
+            Y: =Rectangle8_16.Y
+            ZIndex: =4
+
+        Button1_15 As button:
+            OnSelect: |-
+                =UpdateContext({'C&SPopup':false})
+            Text: ="Close"
+            X: =(ACPopupRectangle_9.Width-Self.Width)/2 +ACPopupRectangle_9.X
+            Y: =ACPopupRectangle_9.Height-Self.Height
+            ZIndex: =9
+
+        Label18_37 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank('eDefenderC&SLocationIDDropDown'.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: |+
+                =If(IsBlank('eDefenderC&SLocationIDDropDown'.Selected.Name),"Location Missing", "Location OK")
+                
+            Visible: ='eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Add New Statute"
+            Width: =ACPopupRectangle_9.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_16.Y+Rectangle8_16.Height+15
+            ZIndex: =11
+
+        Label18_38 As label:
+            Align: =Align.Center
+            Color: =If(IsEmpty(chargesColletion),If(IsEmpty(JointAttachments),Color.Red,Color.Green), Color.Green)
+            Size: =20
+            Text: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Add New Statute",If(IsEmpty(chargesColletion),If(IsEmpty(JointAttachments),"No List nor Screenshot","Screenshot OK"),"List OK"),If(Len(Trim('eDefenderC&SDescriptionTextInputArea'.Text))=0,"No Details","Details Provided"))
+            Width: =ACPopupRectangle_9.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_37.Y+Label18_37.Height+10
+            ZIndex: =12
+
+    FeedbackBugReportCS As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='eDefender Charges and Statutes TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =14
+
+    AddMedia_9 As AddMedia:
+        AMSize: ='eDefender Charges and Statutes TT'.Size
+        AttachCameraOff: =Set(AttachCamera,false);
+        AttachCameraOn: =Set(AttachCamera,true);
+        DisablePickMedia: =Set(AttachFiles,false)
+        EnablePickMedia: =Set(AttachFiles,true)
+        InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+        OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+        PhotoModeDisable: =Set(AttachPhoto,false)
+        PhotoModeEnable: =Set(AttachPhoto,true)
+        Visible: =varOpenMedia
+        ZIndex: =15
+

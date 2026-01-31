@@ -1,0 +1,111 @@
+AssetMetrics As screen:
+    OnVisible: |-
+        =UpdateContext({refreshVisual:false,refreshVisualTimer:false});
+
+    Button28_1 As button:
+        Height: =35
+        OnSelect: =Navigate('Asset Manager Menu',ScreenTransition.UnCover)
+        Text: ="Return"
+        X: =Parent.Width-Self.Width
+        Y: =Parent.Height-Self.Height
+        ZIndex: =1
+
+    Button28_2 As button:
+        Fill: =RGBA(99, 139, 44, 1)
+        Height: =35
+        OnSelect: |-
+            =AssetReportRefresh.Run();
+            UpdateContext({refreshVisualTimer:true})
+        Text: ="Refresh"
+        X: =Parent.Width-Self.Width*2 -5
+        Y: =Parent.Height-Self.Height
+        ZIndex: =2
+
+    Timer4 As timer:
+        AutoPause: =false
+        AutoStart: =refreshVisualTimer
+        Duration: =2000
+        OnTimerEnd: |-
+            =UpdateContext({refreshVisual:true});
+            UpdateContext({refreshVisual:false,refreshVisualTimer:false})
+        Visible: =false
+        X: =40
+        Y: =40
+        ZIndex: =3
+
+    Container36 As groupContainer.horizontalAutoLayoutContainer:
+        Height: =Parent.Height-35
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        LayoutOverflowY: =LayoutOverflow.Scroll
+        PaddingBottom: =8
+        PaddingLeft: =8
+        PaddingRight: =8
+        PaddingTop: =8
+        Width: =Parent.Width
+        ZIndex: =5
+
+        EquipmentPowerBIVisual As powerbi:
+            DashboardId: =""
+            Height: =Parent.Height
+            LayoutMaxHeight: =0
+            LayoutMaxWidth: =0
+            LayoutMinHeight: =16
+            LayoutMinWidth: =16
+            TileUrl: |-
+                ="https://app.powerbigov.us/reportEmbed?reportId=74627263-a8b4-48f6-a626-27cc224493fb&autoAuth=true&ctid=e64b3773-9890-4a2f-87cd-23725df35ace"
+            Visible: =amSelection="Equipment Assets"
+            Width: =Parent.Width
+            WorkspaceId: ="f9fd4e91-cd95-4672-a454-dfbcdcd825db"
+            ZIndex: =1
+
+        AssetPowerBIVisual As powerbi:
+            AllowNewAPI: =true
+            DashboardId: =""
+            Height: =Parent.Height
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LoadPowerBIContent: =!refreshVisual
+            TileUrl: |-
+                ="https://app.powerbigov.us/reportEmbed?reportId=e97c68a9-2277-448e-bdf8-a7c30d4744d4&autoAuth=true&ctid=e64b3773-9890-4a2f-87cd-23725df35ace"
+            Visible: =amSelection="Computer Assets"
+            Width: =Parent.Width
+            WorkspaceId: =""
+            ZIndex: =2
+
+        AssetPowerBIVisualMobile As powerbi:
+            DashboardId: ="58a9a05c-0a19-4015-982f-f35d93be0176"
+            Height: =1440
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LoadPowerBIContent: =!refreshVisual
+            TileUrl: |-
+                ="https://app.powerbigov.us/reportEmbed?reportId=8945b5bd-b780-4c87-830f-4b7002dcc372&autoAuth=true&ctid=e64b3773-9890-4a2f-87cd-23725df35ace"
+            Visible: =App.ActiveScreen.Size = 1
+            Width: =Parent.Width
+            WorkspaceId: ="f9fd4e91-cd95-4672-a454-dfbcdcd825db"
+            ZIndex: =3
+
+    Container34 As groupContainer.manualLayoutContainer:
+        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =refreshVisualTimer
+        Width: =Parent.Width
+        ZIndex: =6
+
+        Button46 As button:
+            BorderColor: =Color.Black
+            Color: =RGBA(0, 0, 0, 1)
+            Fill: =RGBA(241, 244, 249, 1)
+            Height: =Parent.Height/1.1
+            Text: ="Content is refreshing please wait..."
+            Width: =Parent.Width/1.1
+            X: =(Parent.Width - Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =1
+

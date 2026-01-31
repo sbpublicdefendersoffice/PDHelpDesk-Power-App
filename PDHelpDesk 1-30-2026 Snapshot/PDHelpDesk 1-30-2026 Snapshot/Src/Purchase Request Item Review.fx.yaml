@@ -1,0 +1,812 @@
+"'Purchase Request Item Review' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: =Reset(AddMediaButton1)
+    OnVisible: |-
+        =//Clear the collections
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({ReviewItemRecord:Blank(),ReviewItemPopup:false});
+        ClearCollect(PRAttachments,{AttachmentName:"",AttachmentValue:Blank()});
+        Clear(PRAttachments);
+        Set(WorkingPR,LookUp('Purchase Requests',ID=PRID));
+
+    TemplateContainer_10 As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        TemplateHeaderContainer_10 As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            TemplateHeaderGroup_8 As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =3
+
+                TemplateWebHeader_10 As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: ='Purchase Request Item Review'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    Fill: =Color.Transparent
+
+                HeaderBackgroundGradient_9 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =130
+                    HtmlText: |-
+                        ="<div style='
+                        height:"&Self.Height-1&"px;
+                        width:100%;
+                        background: rgb(53,89,137);
+                        background: linear-gradient(90deg, rgba(53,89,137,1) 0%, rgba(0,18,107,1) 100%);' ></div>"
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                TemplateLabel_9 As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =48
+                    Size: =If('Purchase Request Item Review'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Review Purchase Items"
+                    Width: =Parent.Width
+                    Y: =TemplateWebHeader_10.Height
+                    ZIndex: =3
+
+        MainSectionTemplateContainer_10 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =6
+
+            Container28 As groupContainer.manualLayoutContainer:
+                AlignInContainer: =AlignInContainer.End
+                FillPortions: =0
+                Height: =Parent.Height
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                Width: =Parent.Width
+                ZIndex: =1
+
+                Gallery16 As gallery.variableTemplateHeightGallery:
+                    DelayItemLoading: =true
+                    Height: =638
+                    Items: =Filter('Purchase Request Items',PRId = PRID And ItemStatus.Value = Blank())
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplatePadding: =
+                    TemplateSize: =50
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                    Button40 As button:
+                        Height: =50
+                        OnSelect: |-
+                            =UpdateContext({ReviewItemRecord:ThisItem,ReviewItemPopup:true});
+                            If(!ThisItem.Viewed, Patch('Purchase Request Items',LookUp('Purchase Request Items',ID=ThisItem.ID),{Viewed:true}));
+                            If(!IsEmpty(Filter('Purchase Request Items',PRId = PRID And ItemStatus.Value=Blank())) And WorkingPR.Status.Value <> "Reviewing Items",Patch('Purchase Requests',WorkingPR,{Status:{Value:"Reviewing Items"}}),SendEmail.Run("'mperez@countyofsb.org'","Purchase Request Update",RIHtmlText.HtmlText,"'bomdell@countyofsb.org'"&Concatenate("'",User().Email,"'")));
+                            If(CountRows(Filter('Purchase Request Items',PRId = PRID And ItemStatus.Value=Blank()))=1,Patch('Purchase Requests',WorkingPR,{Status:{Value:"Waiting For Receipts"}});SendEmail.Run("'mperez@countyofsb.org'","Purchase Request Update",RecieptHtmlText.HtmlText,"'bomdell@countyofsb.org'"&Concatenate("'",User().Email,"'")));
+                        Text: =ThisItem.Title
+                        Width: =Parent.TemplateWidth
+                        ZIndex: =1
+
+                Container30 As groupContainer.manualLayoutContainer:
+                    Height: =Parent.Height
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    Visible: =ReviewItemPopup
+                    Width: =Parent.Width
+                    ZIndex: =2
+
+                    Rectangle43 As rectangle:
+                        Fill: =RGBA(56, 96, 178, .5)
+                        Height: =Parent.Height
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    Rectangle44 As rectangle:
+                        BorderColor: =RGBA(214, 223, 238, 1)
+                        Fill: =RGBA(227, 234, 243, 1)
+                        Height: =Parent.Height/1.1
+                        Width: =Parent.Width/1.1
+                        X: =62
+                        Y: =29
+                        ZIndex: =2
+
+                    Label80 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =50
+                        Size: =16
+                        Text: ="Review Item"
+                        Width: =Rectangle44.Width
+                        X: =Rectangle44.X
+                        Y: =Rectangle44.Y
+                        ZIndex: =3
+
+                    Label80_1 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Item"
+                        Width: =Rectangle44.Width/2
+                        X: =62
+                        Y: =79
+                        ZIndex: =4
+
+                    Label80_2 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Quantity"
+                        Width: =Rectangle44.Width/2
+                        X: =Label80_1.X+Label80_1.Width
+                        Y: =79
+                        ZIndex: =5
+
+                    Label80_3 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Deployment Site"
+                        Width: =Rectangle44.Width/2
+                        X: =62
+                        Y: =153
+                        ZIndex: =6
+
+                    Label80_4 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Requestors"
+                        Width: =Rectangle44.Width/2
+                        X: =Label80_2.X
+                        Y: =153
+                        ZIndex: =7
+
+                    Label80_5 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Delivery Information"
+                        Width: =Rectangle44.Width
+                        X: =Rectangle44.X
+                        Y: =227
+                        ZIndex: =8
+
+                    HtmlText14 As htmlViewer:
+                        Color: =RGBA(0, 121, 187, 1)
+                        HtmlText: |-
+                            ="<div style = 'text-align: center'><a href='"&ReviewItemRecord.ItemLink&"'>"&ReviewItemRecord.Title&"</a></div>"
+                        PaddingLeft: =15
+                        Width: =Rectangle44.Width/2
+                        X: =62
+                        Y: =113
+                        ZIndex: =9
+
+                    Label82 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Text: =ReviewItemRecord.Quantity
+                        Width: =Rectangle44.Width/2
+                        X: =Label80_2.X
+                        Y: =113
+                        ZIndex: =10
+
+                    Label82_1 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Text: =ReviewItemRecord.DeploymentSite
+                        Width: =Rectangle44.Width/2
+                        X: =62
+                        Y: =187
+                        ZIndex: =11
+
+                    Label82_2 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Text: =ReviewItemRecord.Requestors
+                        Width: =Rectangle44.Width/2
+                        X: =Label80_2.X
+                        Y: =187
+                        ZIndex: =12
+
+                    Label82_3 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Text: =ReviewItemRecord.DeliveryInformation
+                        Width: =Rectangle44.Width
+                        X: =62
+                        Y: =261
+                        ZIndex: =13
+
+                    Button38 As button:
+                        OnSelect: |-
+                            =Patch('Purchase Request Items',LookUp('Purchase Request Items',ID = ReviewItemRecord.ID),{ItemStatus:{Value:"Approved", ETA:TextInput21.Text}});
+                            Reset(TextInput21);
+                            UpdateContext({ReviewItemPopup:false});
+                        Text: ="Approve"
+                        X: =292
+                        Y: =521
+                        ZIndex: =14
+
+                    Button38_1 As button:
+                        OnSelect: |-
+                            =Patch('Purchase Request Items',LookUp('Purchase Request Items',ID = ReviewItemRecord.ID),{ItemStatus:{Value:"Denied"}});
+                            UpdateContext({ReviewItemPopup:false})
+                        Text: ="Deny"
+                        X: =913
+                        Y: =510
+                        ZIndex: =15
+
+                    Icon28_1 As icon.Cancel:
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =RGBA(203, 102, 102, 1)
+                        Height: =32
+                        Icon: =Icon.Cancel
+                        OnSelect: |-
+                            =UpdateContext({ReviewItemPopup:false})
+                        Width: =32
+                        X: =Label80.Width+Label80.X-Self.Width
+                        Y: =29
+                        ZIndex: =16
+
+                    Label80_6 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Estimated Time of Delivery (ETA)"
+                        Width: =Rectangle44.Width
+                        X: =62
+                        Y: =302
+                        ZIndex: =17
+
+                    TextInput21 As text:
+                        Default: =
+                        Height: =33
+                        HintText: ="If approving, provide expected delivery date 'e.g. 4/24/2025'"
+                        Width: =Rectangle44.Width/1.03
+                        X: =76
+                        Y: =354
+                        ZIndex: =18
+
+                Container35 As groupContainer.manualLayoutContainer:
+                    Height: =Parent.Height/1.1
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    Visible: =false
+                    Width: =Parent.Width/1.1
+                    X: =40
+                    Y: =40
+                    ZIndex: =10
+
+                    Rectangle46 As rectangle:
+                        BorderThickness: =1
+                        Fill: =RGBA(227, 234, 243, 1)
+                        Height: =Parent.Height/1.1
+                        Visible: =IsEmpty(Gallery16.AllItems) And LookUp('Purchase Requests',ID=PRID).Status.Value <> "Complete"
+                        Width: =Parent.Width/1.1
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =(Parent.Height-Self.Height)/2
+                        ZIndex: =19
+
+                    Label83 As label:
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =50
+                        Size: =16
+                        Text: ="Submit Receipts"
+                        Visible: =IsEmpty(Gallery16.AllItems) And LookUp('Purchase Requests',ID=PRID).Status.Value <> "Complete"
+                        Width: =Rectangle46.Width
+                        X: =Rectangle46.X
+                        Y: =29
+                        ZIndex: =20
+
+                    Icon14 As icon:
+                        Color: =RGBA(0, 121, 187, 1)
+                        Height: =108
+                        Icon: =Icon.Add
+                        OnSelect: =
+                        Visible: =IsEmpty(Gallery16.AllItems) And LookUp('Purchase Requests',ID=PRID).Status.Value <> "Complete"
+                        Width: =108
+                        X: =AddMediaButton1.X
+                        Y: =(Rectangle46.Height-Self.Height)/2 +Rectangle46.Y
+                        ZIndex: =21
+
+                    Button41 As button:
+                        OnSelect: |-
+                            =If(!IsBlank(UploadedImage1.Image),Patch('Purchase Requests',LookUp('Purchase Requests',ID=PRID),{Attachments:PRItemsAttachment, Status:{Value:"Complete"}}));
+                            SendEmail.Run("'mperez@countyofsb.org'","Completed Purchase Request",CompleteHtmlText.HtmlText,"'bmodell@countyofsb.org,'"&Concatenate("'",User().Email,"'"));
+                            Navigate('Purchase Request List');
+                        Text: ="Submit"
+                        Visible: =IsEmpty(Gallery16.AllItems) And LookUp('Purchase Requests',ID=PRID).Status.Value <> "Complete"
+                        X: =(Rectangle46.Width-Self.Width)/2 +Rectangle46.X
+                        Y: =514
+                        ZIndex: =22
+
+                    Label83_1 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Fill: =RGBA(241, 244, 249, 1)
+                        FontWeight: =FontWeight.Semibold
+                        Height: =75
+                        Size: =23
+                        Text: ="This Purchase Request has been completed"
+                        Visible: =LookUp('Purchase Requests',ID=PRID).Status.Value = "Complete"
+                        Width: =Parent.Width
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =(Parent.Height-Self.Height)/2
+                        ZIndex: =23
+
+                    UploadedImage1 As image:
+                        Height: =420
+                        Image: =AddMediaButton1.Media
+                        ImagePosition: =ImagePosition.Fill
+                        Visible: =IsEmpty(Gallery16.AllItems) And !IsBlank(AddMediaButton1.Media)
+                        Width: =Rectangle46.Width
+                        X: =Rectangle46.X
+                        Y: =Label83.Y+Label83.Height
+                        ZIndex: =24
+
+                    ClosePanelButton_47 As icon:
+                        BorderThickness: =1
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =RGBA(203, 102, 102, 1)
+                        Height: =40
+                        Icon: =Icon.Cancel
+                        OnSelect: |+
+                            =Clear(PRAttachments);
+                            Reset(AddMediaButton1);
+                            
+                        Visible: =UploadedImage1.Visible
+                        Width: =40
+                        X: =Rectangle46.Width+Rectangle46.X-Self.Width
+                        Y: =UploadedImage1.Y
+                        ZIndex: =25
+
+        TemplateFooter_10 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Purchase Request Item Review'.Size=1
+            Width: =Parent.Width
+            ZIndex: =7
+
+            TemplateWebMobileMenu_10 As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    TemplateErrorPopup_5 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =
+        Width: =Parent.Width
+        ZIndex: =2
+
+        TemplateErrorBackground_5 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =8
+
+        TemplateErrorWindow_5 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =9
+
+        TemplateErrorHeaderRectangle_5 As rectangle:
+            BorderThickness: =2
+            Width: =TemplateErrorWindow_5.Width
+            X: =TemplateErrorWindow_5.X
+            Y: =TemplateErrorWindow_5.Y
+            ZIndex: =10
+
+        TemplateErrorHeader_5 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =TemplateErrorHeaderRectangle_5.Width
+            X: =TemplateErrorHeaderRectangle_5.X
+            Y: =TemplateErrorHeaderRectangle_5.Y
+            ZIndex: =11
+
+        TemplateField1Label_5 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank('S/APowerAppLocationIDDropdown'.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank('S/APowerAppLocationIDDropdown'.Selected.Name),"Location Missing", "Location OK")
+            Width: =TemplateErrorWindow_5.Width
+            X: =PopupRectangle_5.X
+            Y: =TemplateErrorHeaderRectangle_5.Y+TemplateErrorHeaderRectangle_5.Height+15
+            ZIndex: =12
+
+        CloseTemplateErrorButton_5 As button:
+            OnSelect: |-
+                =UpdateContext({TemplateErrorPopup:false});
+            Text: ="Close"
+            X: =(TemplateErrorWindow_5.Width-Self.Width)/2 +TemplateErrorWindow_5.X
+            Y: =TemplateErrorWindow_5.Height-Self.Height
+            ZIndex: =13
+
+    TemplateWebMenu_10 As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Purchase Request Item Review'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    TemplateBackButton_11 As icon.BackArrow:
+        Color: =Color.White
+        Height: =TemplateLabel_9.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(TemplateHeaderContainer_10.Height-TemplateLabel_9.Height)/1.05
+        ZIndex: =4
+
+    FeedbackBugReportTemp_7 As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =5
+
+    EnableTemplateFormError_5 As button:
+        OnSelect: |-
+            =UpdateContext({TemplateErrorPopup:true})
+        Text: ="Error Popup"
+        Visible: =false
+        X: =80
+        Y: =123
+        ZIndex: =6
+
+    AddMediaButton1 As addMedia:
+        ChangePictureText: =
+        Fill: =RGBA(0, 0, 0, 0)
+        Height: =108
+        OnSelect: |-
+            =Collect(PRAttachments,{AttachmentName:"PRReceipt",AttachmentValue:UploadedImage1.Image})
+        Size: =25
+        Text: =
+        Visible: =IsEmpty(Gallery16.AllItems)
+        Width: =108
+        X: =(Rectangle46.Width-Self.Width)/2 +Rectangle46.X
+        Y: =400
+        ZIndex: =8
+
+    PRItemsAttachment As attachments:
+        BorderColor: =Color.Black
+        Height: =100
+        IsInDataCard: =true
+        Items: =PRAttachments
+        MaxAttachments: =10
+        OnAddFile: =
+        PaddingBottom: =5
+        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+        PaddingRight: =5
+        PaddingTop: =5
+        Visible: =false
+        Width: =If('eDefender Document Generation/Templates TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+        X: =If('eDefender Document Generation/Templates TT'.Size=1,30,(Parent.Width-Self.Width)/2)
+        Y: =Label35.Height+10
+        ZIndex: =9
+
+    RIHtmlText As htmlViewer:
+        Height: =433
+        HtmlText: |-
+            ="<table style='border-style: double ; width:100% '>
+                <tr>
+                <td>
+                    <Table style='width:100%'>
+                    <tr>
+                    <th style='border-bottom-style: solid;'>
+            	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style='text-align:center;'>
+            	The Purchase Request has now been viewed, below you will find the current progress of the request.
+            	</div>
+                    </th>
+                    </tr>
+                    <tr>
+                    <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>
+            	<div>
+            	Purchase Request
+                    </tr>
+                    </td>
+                    <tr>
+                    <td style='font-family: monospace; font-size: 20px '>
+                    <div style='border:1px solid #ccc; border-radius:8px; padding:20px; max-width:100%; background:#fff;'>
+            
+                <!---- Step labels -->
+                <div style='display:flex; justify-content:space-between; font-size:14px; margin-bottom:10px;'>
+                  <span style='flex:1; text-align:center;'>New Request</span>
+                  <span style='flex:1; text-align:center;'>Request Viewed</span>
+                  <span style='flex:1; text-align:center;'>Reviewing Items</span>
+                  <span style='flex:1; text-align:center;'>Waiting For Receipts</span>
+                  <span style='flex:1; text-align:center;'>Complete</span>
+                </div>
+            
+                <!---- Track bar -->
+                <div style='position:relative; height:8px; background:#e0e0e0; border-radius:4px;'>
+                  <!---- FILLED WIDTH: edit the % to match overall progress ---->
+                  <div style='width:50%; height:100%; background:#355989; border-radius:4px; transition:width .3s;'></div>
+            
+                  <!---- STEP DOTS: change background / border colors to mark completed (+) current step ---->
+                  <span style='position:absolute; top:50%; left:0%;   transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>
+                  <span style='position:absolute; top:50%; left:25%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>
+                  <span style='position:absolute; top:50%; left:50%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#fff;    border:2px solid #355989;'></span> <!-- current -->
+                  <span style='position:absolute; top:50%; left:75%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#fff;    border:2px solid #e0e0e0;'></span>
+                  <span style='position:absolute; top:50%; left:100%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#fff;    border:2px solid #e0e0e0;'></span>
+                </div>
+            
+                <!---- Percentage read-out -->
+                <p style='text-align:right; margin-top:10px; font-size:14px;'>
+                  <strong>50%</strong> complete
+                </p>
+              </div>
+                    </tr>
+                    </td>
+            
+                    <br>
+            
+                    <tr>
+                    <td>
+                    Request Items are being Reviewed, as the process continues the tracker will reflect the stage the request is in along with providing email updates.
+                    </tr>
+                    </td>
+                
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Visible: =false
+        Width: =1043
+        X: =69
+        Y: =210
+        ZIndex: =10
+
+    RecieptHtmlText As htmlViewer:
+        Height: =363
+        HtmlText: |-
+            ="<table style='border-style: double ; width:100% '>
+                <tr>
+                <td>
+                    <Table style='width:100%'>
+                    <tr>
+                    <th style='border-bottom-style: solid;'>
+            	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style='text-align:center;'>
+            	The Purchase Request has now been viewed, below you will find the current progress of the request.
+            	</div>
+                    </th>
+                    </tr>
+                    <tr>
+                    <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>
+            	<div>
+            	Purchase Request
+                    </tr>
+                    </td>
+                    <tr>
+                    <td style='font-family: monospace; font-size: 20px '>
+                    <div style='border:1px solid #ccc; border-radius:8px; padding:20px; max-width:100%; background:#fff;'>
+            
+                <!---- Step labels -->
+                <div style='display:flex; justify-content:space-between; font-size:14px; margin-bottom:10px;'>
+                  <span style='flex:1; text-align:center;'>New Request</span>
+                  <span style='flex:1; text-align:center;'>Request Viewed</span>
+                  <span style='flex:1; text-align:center;'>Reviewing Items</span>
+                  <span style='flex:1; text-align:center;'>Waiting For Receipts</span>
+                  <span style='flex:1; text-align:center;'>Complete</span>
+                </div>
+            
+                <!---- Track bar -->
+                <div style='position:relative; height:8px; background:#e0e0e0; border-radius:4px;'>
+                  <!---- FILLED WIDTH: edit the % to match overall progress ---->
+                  <div style='width:75%; height:100%; background:#355989; border-radius:4px; transition:width .3s;'></div>
+            
+                  <!---- STEP DOTS: change background / border colors to mark completed (+) current step ---->
+                  <span style='position:absolute; top:50%; left:0%;   transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>
+                  <span style='position:absolute; top:50%; left:25%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>
+                  <span style='position:absolute; top:50%; left:50%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989;    border:2px solid #fff;'></span> <!-- current -->
+                  <span style='position:absolute; top:50%; left:75%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989;    border:2px solid #fff;'></span>
+                  <span style='position:absolute; top:50%; left:100%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#fff;    border:2px solid #e0e0e0;'></span>
+                </div>
+            
+                <!---- Percentage read-out -->
+                <p style='text-align:right; margin-top:10px; font-size:14px;'>
+                  <strong>75%</strong> complete
+                </p>
+              </div>
+                    </tr>
+                    </td>
+            
+                    <br>
+            
+                    <tr>
+                    <td>
+                    Your Request is almost complete, only the receipt(s) are needed to complete the request, as the process continues the tracker will reflect the stage the request is in along with providing email updates.
+                    </tr>
+                    </td>
+                
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Visible: =false
+        Width: =907
+        X: =69
+        Y: =210
+        ZIndex: =11
+
+    CompleteHtmlText As htmlViewer:
+        Height: =363
+        HtmlText: |-
+            ="<table style='border-style: double ; width:100% '>
+                <tr>
+                <td>
+                    <Table style='width:100%'>
+                    <tr>
+                    <th style='border-bottom-style: solid;'>
+            	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style='text-align:center;'>
+            	The Purchase Request has now been viewed, below you will find the current progress of the request.
+            	</div>
+                    </th>
+                    </tr>
+                    <tr>
+                    <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>
+            	<div>
+            	Purchase Request
+                    </tr>
+                    </td>
+                    <tr>
+                    <td style='font-family: monospace; font-size: 20px '>
+                    <div style='border:1px solid #ccc; border-radius:8px; padding:20px; max-width:100%; background:#fff;'>
+            
+                <!---- Step labels -->
+                <div style='display:flex; justify-content:space-between; font-size:14px; margin-bottom:10px;'>
+                  <span style='flex:1; text-align:center;'>New Request</span>
+                  <span style='flex:1; text-align:center;'>Request Viewed</span>
+                  <span style='flex:1; text-align:center;'>Reviewing Items</span>
+                  <span style='flex:1; text-align:center;'>Waiting For Receipts</span>
+                  <span style='flex:1; text-align:center;'>Complete</span>
+                </div>
+            
+                <!---- Track bar -->
+                <div style='position:relative; height:8px; background:#e0e0e0; border-radius:4px;'>
+                  <!---- FILLED WIDTH: edit the % to match overall progress ---->
+                  <div style='width:100%; height:100%; background:#355989; border-radius:4px; transition:width .3s;'></div>
+            
+                  <!---- STEP DOTS: change background / border colors to mark completed (+) current step ---->
+                  <span style='position:absolute; top:50%; left:0%;   transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>
+                  <span style='position:absolute; top:50%; left:25%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>
+                  <span style='position:absolute; top:50%; left:50%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989;    border:2px solid #fff;'></span> <!-- current -->
+                  <span style='position:absolute; top:50%; left:75%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989;    border:2px solid #fff;'></span>
+                  <span style='position:absolute; top:50%; left:100%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989;    border:2px solid #fff;'></span>
+                </div>
+            
+                <!---- Percentage read-out -->
+                <p style='text-align:right; margin-top:10px; font-size:14px;'>
+                  <strong>100%</strong> complete
+                </p>
+              </div>
+                    </tr>
+                    </td>
+            
+                    <br>
+            
+                    <tr>
+                    <td>
+                    Your Request has been completed!
+                    </tr>
+                    </td>
+                
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Visible: =false
+        Width: =907
+        X: =89
+        Y: =230
+        ZIndex: =12
+

@@ -1,0 +1,72 @@
+"'User Not Valid' As screen":
+    BackgroundImage: =SantaBarabaraBuilding
+    Fill: =ColorScheme.screenBackground
+    ImagePosition: =ImagePosition.Fill
+    OnVisible: =
+
+    Rectangle28 As rectangle:
+        Fill: =    ColorScheme.screenBackgroundSeeThroughMid
+        Height: =Parent.Height-Container10_5.Y-Container10_5.Height
+        Width: =Parent.Width
+        Y: =130
+        ZIndex: =1
+
+    NoAccessLabel1 As label:
+        Align: =Align.Center
+        FontWeight: =FontWeight.Bold
+        Height: =60
+        Size: =If('User Not Valid'.Size > 1, 30, 15)
+        Text: |-
+            ="You don't have access to use this app
+            "
+        Width: =Parent.Width
+        Y: =Parent.Height/2
+        ZIndex: =2
+
+    NoAccessLabel2 As label:
+        Align: =Align.Center
+        Size: =If('User Not Valid'.Size > 1, 13, 10)
+        Text: ="Please contact system adminstrators to see if this is a mistake"
+        Width: =Parent.Width
+        Y: =Parent.Height / 2 + 50
+        ZIndex: =3
+
+    HomeBackgroundGradient_67 As htmlViewer:
+        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+        Height: =130
+        HtmlText: =Home_Background_Gradient.HtmlText
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Width: =Parent.Width
+        ZIndex: =4
+
+    Container10_5 As groupContainer.manualLayoutContainer:
+        Fill: =Color.Transparent
+        Height: |-
+            =48
+            //Parent.Height/12
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Width: =Parent.Width
+        Y: =UserNotValidWebHeader.Height
+        ZIndex: =5
+
+    UserNotValidWebHeader As compWebHeader:
+        BackgroundColor: =Color.Transparent
+        CompScreenSize: ='User Not Valid'.Size
+        EnableFeedback: =Set(varFeedback,true)
+        ZIndex: =6
+
+    FeedbackBugReportUNV As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =7
+

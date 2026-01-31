@@ -1,0 +1,2072 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Case Support Forensic Analysis TT:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: |+
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+      OnVisible: |-
+        =ResetForm(CSForensicAnalysisForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        UpdateContext({altImagePopUp:false,usingCamera:false});
+        ClearCollect(forensicCol,
+        {
+            userName:"",
+            application:"",
+            physicalType:"",
+            clientPermission:false
+        });
+        Clear(forensicCol);
+    Children:
+      - CSForensicAnalysisMainContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: ='Case Support Forensic Analysis TT'.Height
+            LayoutDirection: =LayoutDirection.Horizontal
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: ='Case Support Forensic Analysis TT'.Width
+          Children:
+            - CSForensicAnalysisVerticalLayoutContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Height: =Parent.Height
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - CSForensicAnalysisHeaderContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.primary
+                        FillPortions: =0
+                        Height: |-
+                          =130
+                          //Parent.Height/11
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =//Home.Size<>1
+                          //This is the top most header container that houses the navbar links
+                          true
+                        Width: =Parent.Width
+                      Children:
+                        - ForensicAnalysisHeaderElements:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - HomeBackgroundGradient_49:
+                                  Control: HtmlViewer@2.1.0
+                                  Properties:
+                                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height
+                                    HtmlText: =Home_Background_Gradient.HtmlText
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =11
+                                    Width: =Parent.Width
+                              - CSForensicAnalysisHeaderLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =Color.Transparent
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height-CSForensicAnalysisWebHeader.Height
+                                    Size: =If('Case Support Forensic Analysis TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                                    Text: ="Forensic Analysis Form"
+                                    Width: =Parent.Width
+                                    Y: =CSForensicAnalysisWebHeader.Height
+                              - CSForensicAnalysisWebHeader:
+                                  Control: CanvasComponent
+                                  ComponentName: compWebHeader
+                                  Properties:
+                                    BackgroundColor: =Color.Transparent
+                                    CompScreenSize: ='Case Support Forensic Analysis TT'.Size
+                                    EnableFeedback: =Set(varFeedback,true)
+                                    FeedbackBool: =varFeedback
+                                    Height: =82
+                                    Width: =App.Width
+                  - CSForensicAnalysisMainContentContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                        Height: =Parent.Height/1.21
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutOverflowY: =LayoutOverflow.Scroll
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =true
+                          //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                        Width: =Parent.Width
+                      Children:
+                        - CSForensicAnalysisForm:
+                            Control: Form@2.4.4
+                            Variant: Classic
+                            Layout: Vertical
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataSource: =Tickets
+                              DefaultMode: =FormMode.New
+                              Height: =Parent.Height/1.21
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NumberOfColumns: =1
+                              Width: =Parent.Width
+                              Y: =Parent.Height/5.7
+                            Children:
+                              - CSForensicAnalysisSpecificIssue_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="subCategory"
+                                    Default: =ThisItem.subCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =80
+                                    Required: =false
+                                    Visible: |+
+                                      =If(IsBlank(CSForensicAnalysisSpecificIssueDropdown.Selected.Name), false, true)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =0
+                                  Children:
+                                    - CSForensicAnalysisSpecificIssueLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Selection"
+                                          Width: =120
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSForensicAnalysisSpecificIssueError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =CSForensicAnalysisSpecificIssueDropdown.Y + CSForensicAnalysisSpecificIssueDropdown.Height
+                                    - CSForensicAnalysisSpecificIssueStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSForensicAnalysisSpecificIssueLabel.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =CSForensicAnalysisSpecificIssueLabel.Y
+                                    - CSForensicAnalysisSpecificIssueDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                                          DisabledBorderColor: =RGBA(9, 33, 98, 1)
+                                          DisplayMode: =DisplayMode.View
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = CSForensicAnalysisSubCategoryDropdown.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =CSForensicAnalysisTitleInput.Width
+                                          X: =30
+                                          Y: =44
+                              - CSForensicAnalysisTitle_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="title"
+                                    Default: =ThisItem.Title
+                                    DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                                    Height: =80
+                                    MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                                    Required: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =1
+                                  Children:
+                                    - CSForensicAnalysisTitleLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Case Number"
+                                          Width: =130
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSForensicAnalysisTitleError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =65
+                                    - CSForensicAnalysisTitleStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =CSForensicAnalysisTitleLabel.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSForensicAnalysisTitleLabel.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =CSForensicAnalysisTitleLabel.Y
+                                    - CSForensicAnalysisTitleInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HintText: ="Enter the case number"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Width: =If('Case Support Forensic Analysis TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                                          X: =30
+                                          Y: =44
+                              - CSForensicAnalysisMainCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="mainCategory"
+                                    Default: =ThisItem.mainCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =2
+                                  Children:
+                                    - CSForensicAnalysisMainCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSForensicAnalysisMainCategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =CSForensicAnalysisMainCategoryDropdown.Y + CSForensicAnalysisMainCategoryDropdown.Height
+                                    - CSForensicAnalysisMainCategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSForensicAnalysisMainCategoryLabel.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =10
+                                    - CSForensicAnalysisMainCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - CSForensicAnalysisSubCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="category"
+                                    Default: =ThisItem.category
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =3
+                                  Children:
+                                    - CSForensicAnalysisSubCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Sub Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSForensicAnalysisSubcategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =73
+                                    - CSForensicAnalysisSubcategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSForensicAnalysisSubCategoryLabel.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =CSForensicAnalysisSubCategoryLabel.Y
+                                    - CSForensicAnalysisSubCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = CSForensicAnalysisMainCategoryDropdown.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - CSForensicAnalysisFields:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =4
+                                  Children:
+                                    - Rectangle10:
+                                        Control: Rectangle@2.3.0
+                                        Group: Group4
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Fill: =ColorScheme.primary
+                                          Height: =50
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device" && !IsEmpty(forensicCol)
+                                          Width: =Rectangle8.Width
+                                          X: =Rectangle8.X
+                                          Y: =207
+                                    - Gallery8:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                        Group: Group4
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =200
+                                          Items: =forensicCol
+                                          TemplateSize: =50
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device" && !IsEmpty(forensicCol)
+                                          Width: =Rectangle8.Width
+                                          X: =30
+                                          Y: =257
+                                        Children:
+                                          - Title3:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                BorderThickness: =1
+                                                Color: =RGBA(71, 69, 64, 1)
+                                                DisabledColor: =RGBA(186, 186, 186, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =Parent.TemplateHeight
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =12.5
+                                                Size: =14
+                                                Text: =ThisItem.physicalType
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =Parent.TemplateWidth
+                                          - Button17:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =
+                                                Color: =RGBA(0, 0, 0, 0)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =Color.Transparent
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.TemplateHeight
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =RGBA(118, 0, 0, .4)
+                                                OnSelect: =Remove(forensicCol, ThisItem)
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =RGBA(118, 0, 0, .8)
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Text: ="Remove"
+                                                Visible: =If('Case Support Forensic Analysis TT'.Size=1,false,true)
+                                                Width: =Parent.TemplateWidth
+                                          - Icon19:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(0, 18, 107, 1)
+                                                Height: =Self.Width
+                                                Icon: =Icon.CancelBadge
+                                                OnSelect: =Remove(forensicCol, ThisItem)
+                                                Visible: =If('Case Support Forensic Analysis TT'.Size=1,true,false)
+                                                Width: =24
+                                                X: =Parent.TemplateWidth-Self.Width
+                                    - Label46:
+                                        Control: Label@2.5.1
+                                        Group: Group4
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Rectangle10.Height
+                                          Size: =15
+                                          Text: ="Media to be submitted for analysis"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device" && !IsEmpty(forensicCol)
+                                          Width: =Rectangle10.Width
+                                          X: =30
+                                          Y: =207
+                                    - Rectangle8:
+                                        Control: Rectangle@2.3.0
+                                        Group: Group3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Fill: =ColorScheme.primary
+                                          Height: =50
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device"
+                                          Width: =CSForensicAnalysisTitleInput.Width
+                                          X: =30
+                                          Y: =20
+                                    - Label45:
+                                        Control: Label@2.5.1
+                                        Group: Group3
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Rectangle8.Height
+                                          Size: =15
+                                          Text: ="Add media to be analyzed"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device"
+                                          Width: =Rectangle8.Width
+                                          X: =Rectangle8.X
+                                          Y: =Rectangle8.Y
+                                    - Rectangle9:
+                                        Control: Rectangle@2.3.0
+                                        Group: Group3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =50
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device"
+                                          Width: =Rectangle8.Width
+                                          X: =30
+                                          Y: =Rectangle8.Y+Rectangle8.Height
+                                    - TextInput10:
+                                        Control: Classic/TextInput@2.3.2
+                                        Group: Group3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          HintText: ="Enter the type, such as Hard Drive, Usb Stick, Mobile Phone, Laptop, etc."
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device"
+                                          Width: =If('Case Support Forensic Analysis TT'.Size=1,Rectangle9.Width-10,Rectangle9.Width/1.25)
+                                          X: =35
+                                          Y: =(Rectangle9.Height-Self.Height)/2 +Rectangle9.Y
+                                    - Button8:
+                                        Control: Classic/Button@2.2.0
+                                        Group: Group3
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: |-
+                                            =If(Len(TextInput10.Text)>0,
+                                            Patch(forensicCol,Defaults(forensicCol),
+                                            {
+                                                physicalType:TextInput10.Text
+                                            });,Notify("Cannot add blank entry"));
+
+                                            Reset(TextInput10);
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Add"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Computer/Mobile Device"
+                                          Width: =If('Case Support Forensic Analysis TT'.Size=1,100,Rectangle9.Width-TextInput10.Width -35)
+                                          X: =If('Case Support Forensic Analysis TT'.Size=1,(TextInput10.Width-Self.Width)/2+TextInput10.X,TextInput10.Width+TextInput10.X+10)
+                                          Y: =If('Case Support Forensic Analysis TT'.Size=1,Rectangle9.Y+Rectangle9.Height+10,TextInput10.Y)
+                                    - Rectangle8_3:
+                                        Control: Rectangle@2.3.0
+                                        Group: Group5
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Fill: =ColorScheme.primary
+                                          Height: =50
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                          Width: =CSForensicAnalysisTitleInput.Width
+                                          X: =30
+                                          Y: =40
+                                    - Label45_1:
+                                        Control: Label@2.5.1
+                                        Group: Group5
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Rectangle8_3.Height
+                                          Size: =15
+                                          Text: ="Add information for applications"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                          Width: =Rectangle8_3.Width
+                                          X: '=Rectangle8_3.X  '
+                                          Y: =Rectangle8_3.Y
+                                    - Rectangle9_1:
+                                        Control: Rectangle@2.3.0
+                                        Group: Group5
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =If('Case Support Forensic Analysis TT'.Size=1,370,100)
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                          Width: =Rectangle8_3.Width
+                                          X: =Rectangle8_3.X
+                                          Y: =Rectangle8_3.Y+Rectangle8_3.Height
+                                    - TextInput10_1:
+                                        Control: Classic/TextInput@2.3.2
+                                        Group: Group5
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          HintText: ="Enter User name for app"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                          Width: =If('Case Support Forensic Analysis TT'.Size=1,Rectangle8_3.Width-10,Rectangle8_3.Width/4 -10)
+                                          X: =35
+                                          Y: =140
+                                    - Button8_1:
+                                        Control: Classic/Button@2.2.0
+                                        Group: Group5
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: |-
+                                            =If(Len(Trim(TextInput10_1.Text))>0 &&Len(Trim(TextInput10_2.Text)),
+
+                                            Patch(forensicCol,Defaults(forensicCol),
+                                            {
+                                                userName:TextInput10_1.Text,
+                                                application:TextInput10_2.Text,
+                                                clientPermission:Checkbox4.Value
+                                            });
+                                            Reset(TextInput10_1);
+                                            Reset(TextInput10_2);
+                                            Reset(Checkbox4);,
+                                            Notify("Missing username or application name"))
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          RadiusBottomLeft: =15
+                                          RadiusBottomRight: =15
+                                          RadiusTopLeft: =15
+                                          RadiusTopRight: =15
+                                          Text: ="Add"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                          Width: =Rectangle8_3.Width/4 -10
+                                          X: =If('Case Support Forensic Analysis TT'.Size=1,(Parent.Width-Self.Width)/2,Rectangle9_1.Width-Self.Width + Rectangle9_1.X - 5)
+                                          Y: =If('Case Support Forensic Analysis TT'.Size=1,Checkbox4.Y+Checkbox4.Height+20+Rectangle8_3.X,140)
+                                    - Rectangle10_1:
+                                        Control: Rectangle@2.3.0
+                                        Group: Group7
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Fill: =ColorScheme.primary
+                                          Height: =50
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol)
+                                          Width: =CSForensicAnalysisTitleInput.Width
+                                          X: =30
+                                          Y: =Rectangle9_1.Height+Rectangle9_1.Y+20
+                                    - Gallery8_1:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                        Group: Group7
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =200
+                                          Items: =forensicCol
+                                          TemplateSize: =50
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol) && 'Case Support Forensic Analysis TT'.Size>1
+                                          Width: =CSForensicAnalysisTitleInput.Width
+                                          X: =Rectangle10_1.X
+                                          Y: =Label48.Y+Label48.Height
+                                        Children:
+                                          - Title3_1:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                BorderThickness: =1
+                                                Color: =RGBA(71, 69, 64, 1)
+                                                DisabledColor: =RGBA(186, 186, 186, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =Parent.TemplateHeight
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =12.5
+                                                Size: =14
+                                                Text: =ThisItem.userName
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =Parent.TemplateWidth/3
+                                          - Title3_2:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                BorderThickness: =1
+                                                Color: =RGBA(71, 69, 64, 1)
+                                                DisabledColor: =RGBA(186, 186, 186, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =Parent.TemplateHeight
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =12.5
+                                                Size: =14
+                                                Text: =ThisItem.application
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =Parent.TemplateWidth/3
+                                                X: =Title3_1.Width
+                                          - Title3_3:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                BorderThickness: =1
+                                                Color: =RGBA(71, 69, 64, 1)
+                                                DisabledColor: =RGBA(186, 186, 186, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                                Height: =Parent.TemplateHeight
+                                                OnSelect: =Select(Parent)
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =12.5
+                                                Size: =14
+                                                Text: =If(ThisItem.clientPermission, "Yes","No")
+                                                VerticalAlign: =VerticalAlign.Top
+                                                Width: =Parent.TemplateWidth/3
+                                                X: =Title3_2.X+Title3_2.Width
+                                          - Button17_1:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =
+                                                Color: =RGBA(0, 0, 0, 0)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =Color.Transparent
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.TemplateHeight
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =RGBA(118, 0, 0, .4)
+                                                OnSelect: =Remove(forensicCol, ThisItem)
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =RGBA(118, 0, 0, .8)
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Text: ="Remove"
+                                                Width: =Parent.TemplateWidth
+                                    - Label46_1:
+                                        Control: Label@2.5.1
+                                        Group: Group7
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Rectangle10_1.Height
+                                          Size: =15
+                                          Text: ="Social Media profiles to be analyzed"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol)
+                                          Width: =Rectangle10_1.Width
+                                          X: =Rectangle10_1.X
+                                          Y: =Rectangle10_1.Y
+                                    - Label47:
+                                        Control: Label@2.5.1
+                                        Group: Group5
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Font: =Font.'Open Sans'
+                                          Text: ="User Name"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                          Width: =If('Case Support Forensic Analysis TT'.Size=1,Rectangle8_3.Width,Rectangle8_3.Width/4)
+                                          X: =30
+                                          Y: =Rectangle8_3.Y+Rectangle8_3.Height
+                                    - TextInput10_2:
+                                        Control: Classic/TextInput@2.3.2
+                                        Group: Group5
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          HintText: ="Enter app name"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                          Width: =TextInput10_1.Width
+                                          X: =If('Case Support Forensic Analysis TT'.Size=1,TextInput10_1.X,TextInput10_1.Width+TextInput10_1.X+10)
+                                          Y: =If('Case Support Forensic Analysis TT'.Size=1,Label47_1.Y+Label47_1.Height+10,140)
+                                    - Checkbox4:
+                                        Control: Classic/CheckBox@2.1.0
+                                        Group: Group5
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          CheckboxBorderColor: =RGBA(0, 18, 107, 1)
+                                          CheckmarkFill: =RGBA(0, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =30
+                                          HoverColor: =RGBA(0, 18, 107, 1)
+                                          Text: =If(Self.Value = true, "Yes", "No")
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                          Width: =100
+                                          X: =If('Case Support Forensic Analysis TT'.Size=1,(Parent.Width-Self.Width)/2+Rectangle8_3.X,TextInput10_2.X+TextInput10_2.Width+(TextInput10_2.Width/3))
+                                          Y: =If('Case Support Forensic Analysis TT'.Size=1,Label47_2.Y+Label47_2.Height+10,140)
+                                    - Label47_1:
+                                        Control: Label@2.5.1
+                                        Group: Group5
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Application"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                          Width: =Label47.Width
+                                          X: =If('Case Support Forensic Analysis TT'.Size=1,30,Label47.X+Label47.Width)
+                                          Y: =If('Case Support Forensic Analysis TT'.Size=1,TextInput10_1.Y+TextInput10_1.Height+10,Rectangle8_3.Y+Rectangle8_3.Height)
+                                    - Label47_2:
+                                        Control: Label@2.5.1
+                                        Group: Group5
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Client Permisssion?"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                          Width: =Label47.Width
+                                          X: =If('Case Support Forensic Analysis TT'.Size=1,30,Label47_1.X+Label47_1.Width)
+                                          Y: =If('Case Support Forensic Analysis TT'.Size=1,TextInput10_2.Y+TextInput10_2.Height+10,Rectangle8_3.Y+Rectangle8_3.Height)
+                                    - Label47_3:
+                                        Control: Label@2.5.1
+                                        Group: Group5
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =If('Case Support Forensic Analysis TT'.Size=1,0,1)
+                                          Font: =Font.'Open Sans'
+                                          Text: =""
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media"
+                                          Width: =Label47.Width
+                                          X: =Label47_2.X+Label47_2.Width
+                                          Y: =Rectangle8_3.Y+Rectangle8_3.Height
+                                    - Label48:
+                                        Control: Label@2.5.1
+                                        Group: Group7
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =46
+                                          Text: ="User Name"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol) && 'Case Support Forensic Analysis TT'.Size>1
+                                          Width: =Rectangle10_1.Width/3
+                                          X: =30
+                                          Y: =Rectangle10_1.Height+Rectangle10_1.Y
+                                    - Label48_1:
+                                        Control: Label@2.5.1
+                                        Group: Group7
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =46
+                                          Text: ="Application"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol) && 'Case Support Forensic Analysis TT'.Size>1
+                                          Width: =Rectangle10_1.Width/3
+                                          X: =Label48.X+Label48.Width
+                                          Y: =Rectangle10_1.Height+Rectangle10_1.Y
+                                    - Label48_2:
+                                        Control: Label@2.5.1
+                                        Group: Group7
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =46
+                                          Text: ="Obtained Permission?"
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol) && 'Case Support Forensic Analysis TT'.Size>1
+                                          Width: =Rectangle10_1.Width/3
+                                          X: =Label48_1.X+Label48_1.Width
+                                          Y: =Rectangle10_1.Height+Rectangle10_1.Y
+                                    - StatutesGalleryMobile_1:
+                                        Control: Gallery@2.15.0
+                                        Variant: Vertical
+                                        Group: Group7
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Default: =//First(MyTicketsGallery.AllItems)
+                                          DelayItemLoading: |-
+                                            =//false
+                                            true
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =300
+                                          Items: =forensicCol
+                                          LoadingSpinner: |-
+                                            =//LoadingSpinner.None
+                                            LoadingSpinner.Controls
+                                          TemplatePadding: =10
+                                          TemplateSize: |-
+                                            =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                            //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+
+                                            If(MyTickets.Size > 1, 250, 240)
+                                          Transition: =Transition.Push
+                                          Visible: =CSForensicAnalysisSpecificIssueDropdown.Selected.Name = "Social Media" && !IsEmpty(forensicCol)&&'Case Support Forensic Analysis TT'.Size=1
+                                          Width: =Rectangle10_1.Width
+                                          WrapCount: =RoundDown((Parent.Width / 320), 0)
+                                          X: =Rectangle10_1.X
+                                          Y: =Rectangle10_1.Y+Rectangle10_1.Height
+                                        Children:
+                                          - Rectangle6_4:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 0)
+                                                BorderThickness: =25
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =Image6_4.Height
+                                                OnSelect: =Select(Parent)
+                                                Width: =Image6_4.Width
+                                          - Image6_4:
+                                              Control: Image@2.2.3
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Height: |-
+                                                  =//250
+                                                  Parent.TemplateHeight
+                                                Image: "=\"data:image/svg+xml,\" & EncodeUrl(\r\n    \"<?xml version='1.0' encoding='UTF-8' standalone='no'?>\r\n<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>\r\n<svg version='1.1'\r\n    xmlns='http://www.w3.org/2000/svg'\r\n    xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 \" & Self.Width & \" \" & Self.Height & \"' width='\" & Self.Width & \"' height='\" & Self.Height & \"'>\r\n    <defs>\" &\r\n    // ----- Box for fill\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0,0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='box' stroke='\" & \"#ff0000\" & \"' stroke-width='\" & 0 & \"'></path>\r\n    </defs>\r\n    <g>\r\n        <g>\r\n            <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>\r\n                <feFlood></feFlood>\r\n                <feComposite in2='SourceAlpha' operator='in'></feComposite>\r\n                <feGaussianBlur stdDeviation='\" & 5 & \"'></feGaussianBlur>\r\n                <feOffset dx='\" & 0 & \"' dy='\" & 0 & \"' result='afterOffset'></feOffset>\r\n                <feFlood flood-color='\" & \"#000000\" & \"' flood-opacity='\" & Substitute(Text(0.5), \",\", \".\") & \"'></feFlood>\r\n                <feComposite in2='afterOffset' operator='in'></feComposite>\r\n                <feMorphology operator='dilate' radius='1'></feMorphology>\r\n                <feComposite in2='SourceAlpha' operator='out'></feComposite>\r\n            </filter>\" &\r\n            // ----- Box for shadow\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='Component1' filter='url(#shadow)'></path>\r\n        </g>\r\n        <use xlink:href='#box' opacity='1' fill='\" & \"#ffffff\" & \"' fill-opacity='\" & Substitute(Text(0), \",\", \".\") & \"'></use>\r\n    </g>\r\n    <g>\r\n        \" &\r\n        // ----- Edge\r\n If(\r\n        true,\r\n        Switch(\r\n            \"left\",\r\n            \"left\",// -- Position: left\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\",\r\n             \"right\",// -- Position: right\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\"\r\n           \r\n        )\r\n    ) & \"\r\n    </g>\r\n</svg>\"\r\n)"
+                                                OnSelect: =Select(Parent)
+                                                Width: |-
+                                                  =//329
+                                                  Parent.TemplateWidth
+                                          - btnBkg_4:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =ColorFade(Self.Fill, -15%)
+                                                Color: =RGBA(255, 255, 255, 1)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.TemplateHeight
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =Self.Fill
+                                                OnSelect: =Select(Parent)
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =Self.Fill
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Text: =""
+                                                Visible: =false
+                                                Width: =Parent.TemplateWidth
+                                          - TitleLabel_4:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =FontWeight.Semibold
+                                                Height: =54
+                                                OnSelect: =Select(Parent)
+                                                Size: =12
+                                                Text: |-
+                                                  ="Permisson Obtained: "&ThisItem.clientPermission
+                                                Width: |-
+                                                  =//208
+                                                  Parent.TemplateWidth - Icon18_1.Width - 47
+                                                X: =24
+                                                Y: =27
+                                          - DateExpiredLabel_3:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: |-
+                                                  =//25
+                                                  34
+                                                OnSelect: =Select(Parent)
+                                                Size: =11
+                                                Text: =ThisItem.userName
+                                                Width: =StartedLabelTextValue_2.Width
+                                                X: =ExpiresLabelText_2.X
+                                                Y: =ExpiresLabelText_2.Y+ExpiresLabelText_2.Height
+                                          - ExpiresLabelText_2:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =25
+                                                OnSelect: =Select(Parent)
+                                                Size: =10
+                                                Text: ="User Name"
+                                                Visible: |-
+                                                  =//is_admin
+                                                  true
+                                                Width: |-
+                                                  =//154
+                                                  80
+                                                X: |-
+                                                  =//67
+                                                  StaratedLabelText_2.X
+                                                Y: |-
+                                                  =//180
+                                                  //Parent.TemplateHeight - Self.Height - 27
+                                                  Rectangle19.Y+Rectangle19.Height+10
+                                          - StartedLabelTextValue_2:
+                                              Control: Label@2.5.1
+                                              Group: Group11
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: |-
+                                                  =//25
+                                                  34
+                                                OnSelect: =Select(Parent)
+                                                Size: =11
+                                                Text: =ThisItem.application
+                                                Width: |-
+                                                  =//143
+                                                  Parent.TemplateWidth - StaratedLabelText_2.Width - 47
+                                                Wrap: =false
+                                                X: |-
+                                                  =//89
+                                                  (Parent.TemplateWidth-Self.Width)/2
+                                                Y: |+
+                                                  =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                  //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                  //((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                                  StaratedLabelText_2.Y+StaratedLabelText_2.Height
+                                          - StaratedLabelText_2:
+                                              Control: Label@2.5.1
+                                              Group: Group11
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =25
+                                                OnSelect: =Select(Parent)
+                                                Size: =10
+                                                Text: ="App"
+                                                Width: =67
+                                                X: =(Parent.TemplateWidth-Self.Width)/4
+                                                Y: |+
+                                                  =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                  //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                  ((Parent.TemplateHeight - Self.Height) / 2.8) 
+                                          - OverlapButton_2:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =ColorFade(Self.Fill, -15%)
+                                                BorderThickness: =0
+                                                Color: =RGBA(255, 255, 255, 1)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =Color.Transparent
+                                                Font: =Font.'Open Sans'
+                                                Height: |-
+                                                  =//220
+                                                  Parent.TemplateHeight
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =Self.Fill
+                                                OnSelect: |-
+                                                  =
+
+                                                  // Sharepoint List
+                                                  UpdateContext({CnSPopUp:true,CnSRecord:ThisItem});
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =Self.Fill
+                                                Text: =""
+                                                Width: |-
+                                                  =//303
+                                                  Parent.TemplateWidth
+                                                X: |-
+                                                  =//24
+                                                  (Parent.TemplateWidth - Self.Width) / 2
+                                                Y: |-
+                                                  =//15
+                                                  (Parent.TemplateHeight - Self.Height) / 2
+                                          - Icon18_1:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(0, 18, 107, 1)
+                                                Height: =32
+                                                Icon: =Icon.CancelBadge
+                                                OnSelect: =Remove(forensicCol,ThisItem)
+                                                Width: =32
+                                                X: =Parent.TemplateWidth - Self.Width - 23
+                                                Y: =27
+                                          - Rectangle19:
+                                              Control: Rectangle@2.3.0
+                                              Group: Group11
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(0, 0, 0, 0)
+                                                Height: =StaratedLabelText_2.Height+StartedLabelTextValue_2.Height
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth/1.5
+                                                X: =StaratedLabelText_2.X
+                                                Y: =StaratedLabelText_2.Y
+                                          - Rectangle20:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(0, 0, 0, 0)
+                                                Height: =ExpiresLabelText_2.Height+DateExpiredLabel_3.Height
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth/1.5
+                                                X: =ExpiresLabelText_2.X
+                                                Y: =ExpiresLabelText_2.Y
+                              - CSForensicAnalysisDescription_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="description"
+                                    Default: =ThisItem.description
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                                    Required: =false
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =5
+                                  Children:
+                                    - CSForensicAnalysisDescriptionLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: =CreateTicketDescription
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSForensicAnalysisDescriptionErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =CSForensicAnalysisDescriptionTextInputArea.Y + CSForensicAnalysisDescriptionTextInputArea.Height
+                                    - CSForesnsicAnalysisDescriptionStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =CSForensicAnalysisDescriptionLabel.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSForensicAnalysisDescriptionLabel.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =CSForensicAnalysisDescriptionLabel.Y
+                                    - CSForensicAnalysisDescriptionTextInputArea:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =TicketDescText
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/1.5
+                                          HintText: ="Please Describe Your Issue"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Mode: =TextMode.MultiLine
+                                          Size: =15
+                                          Visible: =CSForensicAnalysisDescription_DataCard.Visible
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =40
+                              - CSForensicAnalysisLocationID_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="locationId"
+                                    Default: =ThisItem.locationId
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =127
+                                    Required: =false
+                                    Update: =//Value(DataCardValue6.Text)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =6
+                                  Children:
+                                    - CSForensicAnalysisLocationIDLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Requesting From"
+                                          Width: =170
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSForensicAnalysisLocationIDErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =CSForensicAnalysisLocationIDDropdown.Y + CSForensicAnalysisLocationIDDropdown.Height
+                                    - CSForensicAnalysisLocationIDStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSForensicAnalysisLocationIDLabel.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =CSForensicAnalysisLocationIDLabel.Y
+                                    - CSForensicAnalysisLocationIDDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          AllowEmptySelection: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =ColorScheme.primary
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Blank()
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Locations
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =CSForensicAnalysisTitleInput.Width
+                                          X: =30
+                                          Y: =44
+                              - CSForensicAnalysisAttatchments_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/2, Parent.Height/3.5)
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =7
+                                  Children:
+                                    - CSForensicAnalysisAttachmentControl:
+                                        Control: Attachments@2.3.0
+                                        Properties:
+                                          BorderColor: =Color.Black
+                                          Font: =Font.'Open Sans'
+                                          Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/1.5, Parent.Height/1.5)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          ItemColor: =RGBA(255, 255, 255, 1)
+                                          ItemFill: =RGBA(56, 96, 178, 1)
+                                          ItemHoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =RTEImages
+                                          Items.Name: =copyName
+                                          Items.Value: =copyName
+                                          MaxAttachments: =10
+                                          PaddingBottom: =5
+                                          PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                                          PaddingRight: =5
+                                          PaddingTop: =5
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          Width: =If('Case Support Forensic Analysis TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                                          X: =(Parent.Width-Self.Width)/2
+                                          Y: =36
+                                    - Button25_162:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =64
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: =
+                                          Width: =64
+                                          X: =Icon11_40.X-8
+                                          Y: =Icon11_40.Y-8
+                                    - Icon11_40:
+                                        Control: Classic/Icon@2.5.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Height: =48
+                                          Icon: =Icon.Camera
+                                          OnSelect: =UpdateContext({altImagePopUp:true,usingCamera:true})
+                                          Width: =48
+                                          X: =If('Case Support Forensic Analysis TT'.Size=1,(CSForensicAnalysisAttachmentControl.Width-Self.Width)/2+Self.Width,CSForensicAnalysisAttachmentControl.X+CSForensicAnalysisAttachmentControl.Width+Self.Width)
+                                          Y: =If('Case Support Forensic Analysis TT'.Size=1,(CSForensicAnalysisAttachmentControl.Y+CSForensicAnalysisAttachmentControl.Height+20),(Parent.Height-Self.Height)/2)
+                                    - Button25_163:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =RGBA(0, 0, 0, 0)
+                                          Font: =Font.'Open Sans'
+                                          Height: =64
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                                          OnSelect: =Select(Icon11_40)
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+                                          Text: =
+                                          Width: =64
+                                          X: =Icon11_40.X-8
+                                          Y: =Icon11_40.Y-8
+                                    - Button25_160:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =64
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: =
+                                          Width: =64
+                                          X: =Icon12_40.X-8
+                                          Y: =Icon12_40.Y-8
+                                    - Icon12_40:
+                                        Control: Classic/Icon@2.5.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Height: =48
+                                          Icon: =Icon.Paste
+                                          OnSelect: =UpdateContext({altImagePopUp:true,usingCamera:false})
+                                          Width: =48
+                                          X: =If('Case Support Forensic Analysis TT'.Size=1,(CSForensicAnalysisAttachmentControl.Width-Self.Width)/2-Self.Width,(CSForensicAnalysisAttachmentControl.X-Self.Width)/2)
+                                          Y: =If('Case Support Forensic Analysis TT'.Size=1,(CSForensicAnalysisAttachmentControl.Y+CSForensicAnalysisAttachmentControl.Height+20),(Parent.Height-Self.Height)/2)
+                                    - Button25_161:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =RGBA(0, 0, 0, 0)
+                                          Font: =Font.'Open Sans'
+                                          Height: =64
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                                          OnSelect: =Select(Icon12_40)
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+                                          Text: =
+                                          Width: =64
+                                          X: =Icon12_40.X-8
+                                          Y: =Icon12_40.Y-8
+                              - CSForensicAnalysisButtons_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =8
+                                  Children:
+                                    - CSForensicAnalysisSubmitButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          DisplayMode: |-
+                                            =
+                                            //could use this to enable/disable button behaviour
+                                            //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+
+                                            DisplayMode.Edit
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =CSForensicAnalysisCancelButton.Height
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: "=\nIf(!CSForensicAnalysisDescriptionTextInputArea.Visible,\nUpdateContext({TicketDescText:Concatenate(If(CSForensicAnalysisSpecificIssueDropdown.Selected.Name=\"Computer/Mobile Device\",\"Physical Media Requested for analysis:\"&Char(13)&Concat(forensicCol,physicalType,Char(13)),\"Social Media Requested for Analysis:\"&Char(13)&Concat(forensicCol,\"Application: \"&application&Char(13)&\"User Name: \"&userName& \"     Have client permission: \"&clientPermission,Char(13))))}), Notify(\"Description is Blank\"));\n\n//Check if the title or Description are empty, if they are the form will not be submitted\nIf(\n    !IsBlank(CSForensicAnalysisLocationIDDropdown.Selected.Name) And !IsEmpty(forensicCol) And Len(Trim(CSForensicAnalysisTitleInput.Text))>0 ,\n    UpdateContext({DataCardKey1_1: \"Title\"});\n    UpdateContext({DataCardKey5: \"Description\"});\n    //Set(DataCardKey5: \"Description\");\nSet(\n        //Temporary record\n        rec,\n        //DB operation, from Ticket table, new record, change these columns\n        Patch(\n            Tickets,\n            Defaults(Tickets),\n            {\n                Title: CSForensicAnalysisTitleInput.Text,\n                description: Trim(CSForensicAnalysisDescriptionTextInputArea.Text),\n                creatorId: userData.id,\n                mainCategory: CSForensicAnalysisMainCategoryDropdown.Selected.ID,\n                category: CSForensicAnalysisSubCategoryDropdown.Selected.ID,\n                subCategory: CSForensicAnalysisSpecificIssueDropdown.Selected.ID,\n                locationId: CSForensicAnalysisLocationIDDropdown.Selected.ID,\n                status: \"open\",\n                metricDate: Concatenate(\n                    Month(Today()),\n                    \"/\",\n                    Year(Today())\n                ),\n                hasAttachment: If(\n                    IsEmpty(CSForensicAnalysisAttachmentControl.Attachments),\n                    0,\n                    1\n                ),\n                //Automation rules table is used to assign tickets\n                assignedTo: If(\n                    IsEmpty(\n                        Filter(\n                            'Ticket Automation Rules',\n                            categoryId = CSForensicAnalysisMainCategoryDropdown.Selected.ID && locationId = CSForensicAnalysisLocationIDDropdown.Selected.ID\n                        )\n                    ),\n                    0,\n                    LookUp(\n                        'Ticket Automation Rules',\n                        categoryId = CSForensicAnalysisMainCategoryDropdown.Selected.ID && locationId = CSForensicAnalysisLocationIDDropdown.Selected.ID,\n                        userID\n                    )\n                )\n            }\n        )\n    );\n\nPatch(\n    Tickets, \n    LookUp(Tickets,ID = rec.ID),\n    {\n        Title: \"# \"&rec.ID&\" Forensic Analysis (\"&CSForensicAnalysisSpecificIssueDropdown.Selected.Name&\")\"\n    });\n// for the attachments, run power automate flow for each attached file\n    ForAll(\n        CSForensicAnalysisAttachmentControl.Attachments As Attachment,\n               /*AttachFiles.Run(\n            rec.ID,\n            {\n                file: {\n                    contentBytes: Value,\n                    name: Name\n                }\n            }\n        )*/\n        If(Left(Attachment.Value,6) = \"appres\", \n        AttachFiles.Run(\n            rec.ID,\n            {\n                file:{\n                    contentBytes: Attachment.Value,\n                    name: Attachment.Name\n                }\n            }\n        ) ;,\n\n\nWith({varHTMLTable: Split(Attachment.Name , \"<img\")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find(\"<img\",Attachment.Name)+32},With({varB64End:Find(\"\"\"\",Mid(Attachment.Name,varB64Start))-1},CopyPasteTest.Run(Mid(Attachment.Name,varB64Start,varB64End),Attachment.Value & Text(Now(),DateTimeFormat.UTC) &\".png\", rec.ID)\n))))\n        )\n    );\n    \n    /*SMTP.SendEmailV3(\n        {\n            From: \"sbpdhelpdesk@outlook.com\",\n            To: userData.email,\n            Subject: \"Help Desk Ticket Received\",\n            Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=\"https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a>.</div>\"\n        }\n    );*/\n    /*If(\n        rec.assignedTo > 0,\n        SMTP.SendEmailV3(\n            {\n                From: \"sbpdhelpdesk@outlook.com\",\n                To: LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n                Subject: \"Help Desk Ticket Assigned\",\n                Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a> to view more details for the ticket.</div>\"\n            }\n        );\n    );*/\nSet(rec,Patch(rec,{description:Substitute(rec.description,Char(13),\"<br>\")}));\n//Power automate flow, sends email to ticket creator \nSendEmail.Run(\n            userData.email,\n        \"Help Desk Ticket Recieved\",\n        //Email Message body\n        TicketCreatorMessageRTE_1.HtmlText,\n        Text(Blank())\n    );\n    // If the ticket it assigned to someone, send them an email\n    If(\n        rec.assignedTo > 0,\n        SendEmail.Run(\n                LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n            \"Help Desk Ticket Assigned\",\n            //Email message body\n            TechAssignMessageRTE_1.HtmlText,\n            Text(Blank())\n        );\nTicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,\"Ticket #\"&rec.ID&\" has been created. Touch this notification for more information.\"),    TicketCreatedUser.Run(userData.email,rec.ID,\"Ticket #\"&rec.ID&\" has been created on your behalf. Touch this notification for more information.\")\n\n    );\n    //Reset the form upon completion\n    ResetForm(CSForensicAnalysisForm);\n    Navigate(Success);\n\n);\n// variables that control color elements\n    UpdateContext({CreateTicketTitle: \"Title is Required\"});\n    UpdateContext({CreateTicketDescription: \"Description is Required\"});\n    UpdateContext({CSForensicAnalysisPopup:true});\n"
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Submit"
+                                          Width: =CSForensicAnalysisCancelButton.Width
+                                          X: =CSForensicAnalysisCancelButton.X + (Self.Width*1.3)
+                                          Y: =CSForensicAnalysisCancelButton.Y
+                                    - CSForensicAnalysisCancelButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.orange
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                                          OnSelect: |-
+                                            =ResetForm(CSForensicAnalysisForm);
+                                            Navigate(Home);
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Cancel"
+                                          Width: =Parent.Width/3
+                                          X: =If('Case Support Forensic Analysis TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                                          Y: =Parent.Height - (Self.Height *2)
+                  - CSForensicAnalysisFooter:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(255,255,255, 1)
+                        FillPortions: =0
+                        Height: =60
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |+
+                          ='Case Support Forensic Analysis TT'.Size =1
+                        Width: =Parent.Width
+                      Children:
+                        - CSForensicAnalysisMobileMenu:
+                            Control: CanvasComponent
+                            ComponentName: compMobileMenu_3
+                            Properties:
+                              BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                              ForegroundColor: |-
+                                =//RGBA(70, 130, 180, 1)
+                                ColorScheme.primary
+                              Height: =Parent.Height
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NavigationItems: |-
+                                =// IF adimn or tech show this table, if not show Staff table
+                                gblNavItems
+                              SelectedItemBackground: =Color.LightGray
+                              Width: =Parent.Width
+      - CSForensicAnalysisBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =CSForensicAnalysisHeaderLabel.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =ResetForm(CSForensicAnalysisForm); Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(CSForensicAnalysisHeaderContainer.Height-CSForensicAnalysisHeaderLabel.Height)/1.05
+      - CSForensicAnalysisWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu_3
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, App.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Case Support Forensic Analysis TT'.Size > 1
+            Width: =If(showMenu, App.Width, 80)
+      - TechAssignMessageRTE_43:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: |-
+              =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+              //Combine string as html body
+              /*
+              Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+              , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")*/
+
+              "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                  <tr>
+                  <td>
+                      <Table style="&Char(34)&"width:100% "&Char(34)&">
+                      <tr>
+                      <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+              	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+              	</div>
+              	<br>
+              	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+              	A ticket has been asssigned to you, to check additional ticket details: 
+                  <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+              	</div>
+                      </th>
+                      </tr>
+              	<br>
+                      <tr>
+                      <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+              	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                  <br>
+                  Ticket # "&rec.ID&"
+                  <br>
+                  Status: "&rec.status&"
+                  <br>
+                  <br>
+                  "&rec.description&"
+              	</div>
+                      </td>
+                      </tr>
+                  </td>
+                  </tr>
+                  </Table>
+              </table>"
+            Height: =9
+            Visible: =false
+            Width: =0
+            X: =892
+            Y: =759
+      - TicketCreatorMessageRTE_43:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: |-
+              =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+              /*
+              Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.</div>")*/
+
+              "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                  <tr>
+                  <td>
+                      <Table style="&Char(34)&"width:100% "&Char(34)&">
+                      <tr>
+                      <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+              	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+              	</div>
+              	<br>
+              	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+              	Your ticket has been created, a technician will be assigned to your case, if you would like to see additional details about your ticket: 
+                  <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+              	</div>
+                      </th>
+                      </tr>
+              	<br>
+                      <tr>
+                      <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+              	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                  <br>
+                  Ticket # "&rec.ID&"
+                  <br>
+                  Status: "&rec.status&"
+                  <br>
+                  <br>
+                  "&rec.description&"
+              	</div>
+                      </td>
+                      </tr>
+                  </td>
+                  </tr>
+                  </Table>
+              </table>"
+            Height: =99
+            Visible: =false
+            Width: =293
+            X: =988
+            Y: =40
+      - RichTextEditor2_42:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: =
+            Height: =20
+            Visible: =false
+            Width: =208
+            X: =40
+            Y: =40
+      - AlternativeAddImageContainer_41:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =altImagePopUp
+            Width: =Parent.Width
+          Children:
+            - AlternativeAddImageBackgroundTint_41:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, .35)
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - AlternativeAddImageBackground_41:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(227, 234, 243, 1)
+                  Height: =Parent.Height/1.10
+                  Width: =Parent.Width/1.10
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - AlternativeAddImageHeader_41:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Height: =80
+                  Width: =AlternativeAddImageBackground_41.Width
+                  X: =AlternativeAddImageBackground_41.X
+                  Y: =AlternativeAddImageBackground_41.Y
+            - AlternativeAddImageHeaderLabel_41:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =AlternativeAddImageHeader_41.Height
+                  Size: =18
+                  Text: ="Using "&If(usingCamera, "Camera","Copy Paste")
+                  Width: =AlternativeAddImageHeader_41.Width
+                  X: =AlternativeAddImageHeader_41.X
+                  Y: =AlternativeAddImageHeader_41.Y
+            - CopyPasteRTE_41:
+                Control: RichTextEditor@2.7.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Default: ="Erase this text and then you can paste your Screenshot here, then hit add at the bottom, you have to do this for every screenshot you add."
+                  Height: =AlternativeAddImageBackground_41.Height/1.5
+                  Visible: =!usingCamera
+                  Width: =AlternativeAddImageBackground_41.Width
+                  X: =AlternativeAddImageBackground_41.X
+                  Y: =AlternativeAddImageBackground_41.Y+AlternativeAddImageHeader_41.Height
+            - Camera_40:
+                Control: Camera@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Camera: |-
+                    =//Checks if there are anyback cameras, if there are none then default the camera to the first one otherwise use the first back camera
+                    If(IsBlank(LookUp(Camera_40.AvailableDevices, "Back" in Name).Id),0,LookUp(Camera_40.AvailableDevices, "Back" in Name).Id)
+                  Height: =AlternativeAddImageBackground_41.Height/1.5
+                  OnSelect: |-
+                    =UpdateContext({photoCounter:photoCounter+1});
+                    Collect(RTEImages,{copyName:"Photo"&photoCounter,base64Image: "<img src="&JSON(Camera_40.Photo,JSONFormat.IncludeBinaryData)&" />"});
+                    UpdateContext({altImagePopUp:false});
+                  Visible: =usingCamera
+                  Width: =AlternativeAddImageBackground_41.Width
+                  X: =AlternativeAddImageBackground_41.X
+                  Y: =AlternativeAddImageBackground_41.Y+AlternativeAddImageHeader_41.Height
+            - AddScreenshotButton_40:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =If( "<img" in CopyPasteRTE_41.HtmlText, Collect(RTEImages,{copyName:TextInput3.Text, base64Image:CopyPasteRTE_41.HtmlText});
+                    Reset(CopyPasteRTE_41);
+                    Reset(TextInput3), Notify("No Valid Image"));
+                    UpdateContext({altImagePopUp:false})
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: =If(usingCamera,"Take Picture","Add ScreenShot")
+                  Visible: =!usingCamera
+                  Width: =250
+                  X: =(AlternativeAddImageBackground_41.Width-Self.Width)/2 +AlternativeAddImageBackground_41.X
+                  Y: =AlternativeAddImageBackground_41.Height-Self.Height-7
+            - ClosePanelButton_40:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =1
+                  Color: =RGBA(255, 255, 255, 1)
+                  Fill: =RGBA(203, 102, 102, 1)
+                  Height: =40
+                  Icon: =Icon.Cancel
+                  OnSelect: |-
+                    =UpdateContext({altImagePopUp:false});
+                    Reset(CopyPasteRTE_41);
+                  Width: =40
+                  X: =AlternativeAddImageHeader_41.Width+AlternativeAddImageHeader_41.X-Self.Width
+                  Y: =AlternativeAddImageHeader_41.Y
+            - CameraInfoLabel_40:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =50
+                  Size: =18
+                  Text: ="Tap or Click the camera to take a picture"
+                  Visible: =usingCamera
+                  Width: =Camera_40.Width
+                  X: =(AlternativeAddImageBackground_41.Width-Self.Width)/2 +AlternativeAddImageBackground_41.X
+                  Y: =AlternativeAddImageBackground_41.Height-Self.Height-7
+      - CSForensicAnalysisPopup:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =CSForensicAnalysisPopup
+            Width: =Parent.Width
+          Children:
+            - ACPopupBackground_40:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, .25)
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - ACPopupRectangle_40:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height/1.125
+                  Width: =Parent.Width/1.125
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - Rectangle8_47:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Width: =ACPopupRectangle_40.Width
+                  X: =ACPopupRectangle_40.X
+                  Y: =ACPopupRectangle_40.Y
+            - Label10_58:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =100
+                  Size: =30
+                  Text: ="Form Error"
+                  Width: =Rectangle8_47.Width
+                  X: =Rectangle8_47.X
+                  Y: =Rectangle8_47.Y
+            - Button1_46:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: =UpdateContext({CSForensicAnalysisPopup:false});
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: ="Close"
+                  X: =(ACPopupRectangle_40.Width-Self.Width)/2 +ACPopupRectangle_40.X
+                  Y: =ACPopupRectangle_40.Height-Self.Height
+            - Label18_133:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(IsBlank(CSForensicAnalysisLocationIDDropdown.Selected.Name),Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(IsBlank(CSForensicAnalysisLocationIDDropdown.Selected.Name),"Location Missing", "Location OK")
+                  Width: =ACPopupRectangle_40.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Rectangle8_47.Y+Rectangle8_47.Height+15
+            - Label18_134:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(Len(Trim(CSForensicAnalysisTitleInput.Text))=0,Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(Len(Trim(CSForensicAnalysisTitleInput.Text))=0, "Case Number Blank","Case Number OK" )
+                  Width: =ACPopupRectangle_40.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Label18_133.Y+Label18_133.Height+10
+            - Label18_135:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(IsEmpty(forensicCol),Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(IsEmpty(forensicCol), "List Blank","List OK" )
+                  Width: =ACPopupRectangle_40.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Label18_134.Y+Label18_134.Height+10
+      - FeedbackBugReportFA:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

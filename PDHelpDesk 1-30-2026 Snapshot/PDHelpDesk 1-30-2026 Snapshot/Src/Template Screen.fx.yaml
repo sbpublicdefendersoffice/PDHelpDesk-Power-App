@@ -1,0 +1,216 @@
+"'Template Screen' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnVisible: |+
+        =//Clear the collections
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({TemplateErrorPopup:false});
+        
+
+    TemplateContainer As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        TemplateHeaderContainer As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =1
+
+            TemplateHeaderGroup As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =4
+
+                HeaderBackgroundGradient As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =130
+                    HtmlText: |-
+                        ="<div style='
+                        height:"&Self.Height-1&"px;
+                        width:100%;
+                        background: rgb(53,89,137);
+                        background: linear-gradient(90deg, rgba(53,89,137,1) 0%, rgba(0,18,107,1) 100%);' ></div>"
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                TemplateLabel As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =48
+                    Size: =If('Template Screen'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Template"
+                    Width: =Parent.Width
+                    Y: =TemplateWebHeader.Height
+                    ZIndex: =2
+
+                TemplateWebHeader As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: ='Template Screen'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    Fill: =Color.Transparent
+                    ZIndex: =3
+
+        MainSectionTemplateContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+        TemplateFooter As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Template Screen'.Size=1
+            Width: =Parent.Width
+            ZIndex: =3
+
+            TemplateWebMobileMenu As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    TemplateBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =TemplateLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(TemplateHeaderContainer.Height-TemplateLabel.Height)/1.05
+        ZIndex: =2
+
+    TemplateWebMenu As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Template Screen'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    FeedbackBugReportTemp As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =4
+
+    TemplateErrorPopup As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =TemplateErrorPopup
+        Width: =Parent.Width
+        ZIndex: =5
+
+        TemplateErrorBackground As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        TemplateErrorWindow As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        TemplateErrorHeaderRectangle As rectangle:
+            BorderThickness: =2
+            Width: =TemplateErrorWindow.Width
+            X: =TemplateErrorWindow.X
+            Y: =TemplateErrorWindow.Y
+            ZIndex: =3
+
+        TemplateErrorHeader As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =TemplateErrorHeaderRectangle.Width
+            X: =TemplateErrorHeaderRectangle.X
+            Y: =TemplateErrorHeaderRectangle.Y
+            ZIndex: =4
+
+        CloseTemplateErrorButton As button:
+            OnSelect: |-
+                =UpdateContext({TemplateErrorPopup:false});
+            Text: ="Close"
+            X: =(TemplateErrorWindow.Width-Self.Width)/2 +TemplateErrorWindow.X
+            Y: =TemplateErrorWindow.Height-Self.Height
+            ZIndex: =9
+
+        TemplateField1Label As label:
+            Align: =Align.Center
+            Color: =If(IsBlank('S/APowerAppLocationIDDropdown'.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank('S/APowerAppLocationIDDropdown'.Selected.Name),"Location Missing", "Location OK")
+            Width: =TemplateErrorWindow.Width
+            X: =PopupRectangle_5.X
+            Y: =TemplateErrorHeaderRectangle.Y+TemplateErrorHeaderRectangle.Height+15
+            ZIndex: =11
+
+    EnableTemplateFormError As button:
+        OnSelect: |-
+            =UpdateContext({TemplateErrorPopup:true})
+        Text: =
+        X: =80
+        Y: =123
+        ZIndex: =6
+

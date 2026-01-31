@@ -1,0 +1,762 @@
+"'Ticket Metrics - Admin Tech' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |-
+        =Set(ticketMonth,""&Month(Now())&"/2023");
+        Reset(Dropdown9);
+    OnVisible: |
+        =//Set(ticketMonth,Concatenate(Month(Today()),"/",Year(Today())));
+        UpdateContext({ticketMonth:""&Month(Today())&"/"&Year(Today())});
+        UpdateContext({cycle:0,editMonth:false});
+        ClearCollect(metricCol,
+        {recID:1,
+        TicketComplete:0,
+        TicketLate:0,
+        Tickets:0});
+        ClearCollect(ticketMetrics, 
+        Table(
+            {
+                ID:1,
+                metricTitle: "Monthly Tickets Recieved",
+                metricNumber: CountRows(Filter(Tickets, metricDate = ticketMonth))
+            },
+            {
+                ID:2,
+                metricTitle: "Monthly Tickets Resolved",
+                metricNumber: CountRows(Filter(Tickets, metricDate = ticketMonth && status = "closed"))
+            },
+            {
+                ID:3,
+                metricTitle: "Monthly Tickets Open",
+                metricNumber: CountRows(Filter(Tickets, metricDate = ticketMonth && status = "open"))
+            },
+            {
+                ID:4,
+                metricTitle: "Tickets Assigned to Me",
+                metricNumber: CountRows(Filter(Tickets, assignedTo = userData.id && metricDate= ticketMonth))
+            }
+            )
+        );
+        
+        Set(MontlyTotal, CountRows(Filter(Tickets,metricDate=ticketMonth)));
+        ForAll(Filter(Tickets,assignedTo=userData.id && metricDate=Month(Now())&""&"/"&Year(Now())) As TicketData,
+        If(DateDiff(TicketData.dateCreated,TicketData.dateClosed,TimeUnit.Days)>=2,Patch(metricCol,LookUp(metricCol,recID=1),{TicketLate:LookUp(metricCol,recID=1).TicketLate+1}),Patch(metricCol,LookUp(metricCol,recID=1),{TicketComplete:LookUp(metricCol,recID=1).TicketComplete+1})); );
+        
+        
+        //Ticket response rate get the date created then the date closed
+        // We should make it out of 5 business days
+        //Month Cat1
+        Set(monthlyCat1,CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=1)));
+        Set(monthlyCat2,CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=2)));
+        Set(monthlyCat3,CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=3)));
+        Set(monthlyCat4,CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=4)));
+        Set(monthlyCat5,CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=5)));
+        Set(monthlyCat6,CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=6)));
+        Set(monthlyCat7,CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=7)));
+        Set(monthlyCat8,CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=8)));
+        
+        ClearCollect(monthlyTicketDistribution,
+        {
+            Category:LookUp(Category,ID=1,Name),
+            Value:monthlyCat1
+        },
+        {
+            Category:LookUp(Category,ID=2,Name),
+            Value:monthlyCat2
+        },
+        {
+            Category:LookUp(Category,ID=3,Name),
+            Value:monthlyCat3
+        },
+        {
+            Category:LookUp(Category,ID=4,Name),
+            Value:monthlyCat4
+        },
+        {
+            Category:LookUp(Category,ID=5,Name),
+            Value:monthlyCat5
+        },
+        {
+            Category:LookUp(Category,ID=6,Name),
+            Value:monthlyCat6
+        },
+        {
+            Category:LookUp(Category,ID=7,Name),
+            Value:monthlyCat7
+        },
+        {
+            Category:LookUp(Category,ID=8,Name),
+            Value:monthlyCat8
+        }
+        );
+
+    TicketMetricsContainer As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        LayoutOverflowY: =LayoutOverflow.Scroll
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HeaderContainer_1 As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.Start
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =1
+
+            Container16 As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =4
+
+                HomeBackgroundGradient_61 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =Parent.Height+1
+                    HtmlText: =Home_Background_Gradient.HtmlText
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                TicketMetricsLabel As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =Parent.Height-TicketMetricsWebHeader.Height
+                    Size: =If('Ticket Metrics - Admin Tech'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Ticket Metrics"
+                    Width: =Parent.Width
+                    Y: =TicketMetricsWebHeader.Height
+                    ZIndex: =2
+
+                TicketMetricsWebHeader As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: ='Ticket Metrics - Admin Tech'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    ZIndex: =3
+
+        MainSectionContainer_2 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.Start
+            Fill: =ColorScheme.screenBackgroundSeeThroughDark
+            FillPortions: =0
+            Height: =If('Ticket Metrics - Admin Tech'.Size=1,Parent.Height-190,Parent.Height-130)
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            Width: =Parent.Width
+            ZIndex: =3
+
+            Container4 As groupContainer.manualLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                FillPortions: =0
+                Height: =Parent.Height
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                Width: =Parent.Width
+                ZIndex: =1
+
+                TicketMetricsGallery As gallery.galleryVertical:
+                    '#CopilotOverlayLabel': ="Filtered"
+                    DelayItemLoading: =true
+                    Height: |-
+                        =//If('Ticket Metrics - Admin Tech'.Size=1, Parent.Height, Parent.Height)
+                        Parent.Height-60
+                    Items: =ticketMetrics
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    ShowScrollbar: =false
+                    TemplatePadding: =10
+                    TemplateSize: |-
+                        =//If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(280, Self.Height - 60))
+                        If('Ticket Metrics - Admin Tech'.Size>1,300,200)
+                    Visible: =cycle=0
+                    Width: =Parent.Width
+                    WrapCount: =Switch('Ticket Metrics - Admin Tech'.Size,4,4,2)
+                    Y: =If(Container20.Visible,Container20.Height,10)
+                    ZIndex: =1
+
+                    TicketMetricMonthlyLabel As label:
+                        Align: =Align.Center
+                        AutoHeight: =true
+                        FontWeight: =FontWeight.Bold
+                        OnSelect: =Select(Parent)
+                        Text: =ThisItem.metricTitle
+                        Width: =TicketMetricBox.Width
+                        X: =TicketMetricBox.X
+                        Y: =TicketMetricBox.Y
+                        ZIndex: =1
+
+                    TicketMetricNumber As label:
+                        Align: =Align.Center
+                        Color: =RGBA(56, 96, 178, 1)
+                        FontWeight: =FontWeight.Bold
+                        Height: =TicketMetricBox.Height-TicketMetricMonthlyLabel.Height
+                        OnSelect: =Select(Parent)
+                        Size: =Switch('Ticket Metrics - Admin Tech'.Size,1,30,2,35,3,40,55)
+                        Text: =ThisItem.metricNumber
+                        Width: =TicketMetricBox.Width
+                        X: =TicketMetricBox.X
+                        Y: |-
+                            =//Rectangle6_6.Y
+                            //(Rectangle6_6.Height - Self.Height)/2
+                            TicketMetricMonthlyLabel.Y+TicketMetricMonthlyLabel.Height
+                        ZIndex: =2
+
+                    TicketMetricBox As rectangle:
+                        BorderThickness: =2
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: |-
+                            =//Rectangle6_4.Width //to make it a square
+                            If('Ticket Metrics - Admin Tech'.Size>1,Parent.TemplateHeight/1.3,Parent.TemplateHeight/1.3)
+                        OnSelect: =Select(Parent)
+                        Width: =Parent.TemplateWidth/1.3
+                        X: |-
+                            =//If(ScreenSize.Medium, Parent.Width/2 - Rectangle6_4.Width, Parent.Width/2 - Rectangle6_4.Width*2 - 50)
+                            
+                            //Parent.Width/2 - Rectangle6_4.Width*2 - 50
+                            
+                            (Parent.TemplateWidth - Self.Width)/2
+                        Y: =//(Parent.Height - Rectangle6_6.Height)/2
+                        ZIndex: =3
+
+                Image2 As image:
+                    Height: =Parent.Height-60
+                    Image: |-
+                        ="https://quickchart.io/chart?c="&EncodeUrl("{
+                          'type': 'horizontalBar',
+                          'data': {
+                            'datasets': [
+                              {
+                                'fill': true,
+                                'spanGaps': false,
+                                'lineTension': 0.4,
+                                'pointRadius': 3,
+                                'pointHoverRadius': 3,
+                                'pointStyle': 'circle',
+                                'borderDash': [
+                                  0,
+                                  0
+                                ],
+                                'barPercentage': 0.9,
+                                'categoryPercentage': 0.8,
+                                'data': [
+                                  "&monthlyCat1&",
+                                  "&monthlyCat2&",
+                                  "&monthlyCat3&",
+                                  "&monthlyCat4&",
+                                  "&monthlyCat5&",
+                                  "&monthlyCat6&",
+                                  "&monthlyCat7&",
+                                  "&monthlyCat8&"
+                                ],
+                                'type': 'horizontalBar',
+                                'label': 'Tickets in Category',
+                                'borderColor': '#4E79A7',
+                                'backgroundColor': '#4E79A733',
+                                'borderWidth': 3,
+                                'hidden': false,
+                                'xAxisID': 'X1',
+                                'yAxisID': null
+                              }
+                            ],
+                            'labels': [
+                              '"&LookUp(Category,ID=1,Name)&"',
+                              '"&LookUp(Category,ID=2,Name)&"',
+                              '"&LookUp(Category,ID=3,Name)&"',
+                              '"&LookUp(Category,ID=4,Name)&"',
+                              '"&LookUp(Category,ID=5,Name)&"',
+                              '"&LookUp(Category,ID=6,Name)&"',
+                              '"&LookUp(Category,ID=7,Name)&"',
+                              '"&LookUp(Category,ID=8,Name)&"'
+                            ]
+                          },
+                          'options': {
+                            'title': {
+                              'display': true,
+                              'position': 'top',
+                              'fontSize': 12,
+                              'fontFamily': 'sans-serif',
+                              'fontColor': '#666666',
+                              'fontStyle': 'bold',
+                              'padding': 10,
+                              'lineHeight': 1.2,
+                              'text': 'Ticket Category Distribution'
+                            },
+                            'layout': {
+                              'padding': {},
+                              'left': 0,
+                              'right': 0,
+                              'top': 0,
+                              'bottom': 0
+                            },
+                            'legend': {
+                              'display': true,
+                              'position': 'top',
+                              'align': 'center',
+                              'fullWidth': true,
+                              'reverse': false,
+                              'labels': {
+                                'fontSize': 12,
+                                'fontFamily': 'sans-serif',
+                                'fontColor': '#666666',
+                                'fontStyle': 'normal',
+                                'padding': 10
+                              }
+                            },
+                            'scales': {
+                              'xAxes': [
+                                {
+                                  'id': 'X1',
+                                  'display': true,
+                                  'position': 'bottom',
+                                  'type': 'linear',
+                                  'stacked': false,
+                                  'offset': false,
+                                  'time': {
+                                    'unit': false,
+                                    'stepSize': 1,
+                                    'displayFormats': {
+                                      'millisecond': 'h:mm:ss.SSS a',
+                                      'second': 'h:mm:ss a',
+                                      'minute': 'h:mm a',
+                                      'hour': 'hA',
+                                      'day': 'MMM D',
+                                      'week': 'll',
+                                      'month': 'MMM YYYY',
+                                      'quarter': '[Q]Q - YYYY',
+                                      'year': 'YYYY'
+                                    }
+                                  },
+                                  'distribution': 'linear',
+                                  'gridLines': {
+                                    'display': true,
+                                    'color': 'rgba(0, 0, 0, 0.1)',
+                                    'borderDash': [
+                                      0,
+                                      0
+                                    ],
+                                    'lineWidth': 1,
+                                    'drawBorder': true,
+                                    'drawOnChartArea': true,
+                                    'drawTicks': true,
+                                    'tickMarkLength': 10,
+                                    'zeroLineWidth': 1,
+                                    'zeroLineColor': 'rgba(0, 0, 0, 0.25)',
+                                    'zeroLineBorderDash': [
+                                      0,
+                                      0
+                                    ]
+                                  },
+                                  'angleLines': {
+                                    'display': true,
+                                    'color': 'rgba(0, 0, 0, 0.1)',
+                                    'borderDash': [
+                                      0,
+                                      0
+                                    ],
+                                    'lineWidth': 1
+                                  },
+                                  'pointLabels': {
+                                    'display': true,
+                                    'fontColor': '#666',
+                                    'fontSize': 10,
+                                    'fontStyle': 'normal'
+                                  },
+                                  'ticks': {
+                                    'display': true,
+                                    'fontSize': 12,
+                                    'fontFamily': 'sans-serif',
+                                    'fontColor': '#666666',
+                                    'fontStyle': 'normal',
+                                    'padding': 0,
+                                    'stepSize': null,
+                                    'minRotation': 0,
+                                    'maxRotation': 50,
+                                    'mirror': false,
+                                    'reverse': false
+                                  },
+                                  'scaleLabel': {
+                                    'display': false,
+                                    'labelString': 'Axis label',
+                                    'lineHeight': 1.2,
+                                    'fontColor': '#666666',
+                                    'fontFamily': 'sans-serif',
+                                    'fontSize': 12,
+                                    'fontStyle': 'normal',
+                                    'padding': 4
+                                  }
+                                }
+                              ],
+                              'yAxes': [
+                                {
+                                  'id': 'Y1',
+                                  'display': true,
+                                  'position': 'left',
+                                  'type': 'category',
+                                  'stacked': false,
+                                  'offset': true,
+                                  'time': {
+                                    'unit': false,
+                                    'stepSize': 1,
+                                    'displayFormats': {
+                                      'millisecond': 'h:mm:ss.SSS a',
+                                      'second': 'h:mm:ss a',
+                                      'minute': 'h:mm a',
+                                      'hour': 'hA',
+                                      'day': 'MMM D',
+                                      'week': 'll',
+                                      'month': 'MMM YYYY',
+                                      'quarter': '[Q]Q - YYYY',
+                                      'year': 'YYYY'
+                                    }
+                                  },
+                                  'distribution': 'linear',
+                                  'gridLines': {
+                                    'display': true,
+                                    'color': 'rgba(0, 0, 0, 0.1)',
+                                    'borderDash': [
+                                      0,
+                                      0
+                                    ],
+                                    'lineWidth': 1,
+                                    'drawBorder': true,
+                                    'drawOnChartArea': true,
+                                    'drawTicks': true,
+                                    'tickMarkLength': 10,
+                                    'zeroLineWidth': 1,
+                                    'zeroLineColor': 'rgba(0, 0, 0, 0.25)',
+                                    'zeroLineBorderDash': [
+                                      0,
+                                      0
+                                    ]
+                                  },
+                                  'angleLines': {
+                                    'display': true,
+                                    'color': 'rgba(0, 0, 0, 0.1)',
+                                    'borderDash': [
+                                      0,
+                                      0
+                                    ],
+                                    'lineWidth': 1
+                                  },
+                                  'pointLabels': {
+                                    'display': true,
+                                    'fontColor': '#666',
+                                    'fontSize': 10,
+                                    'fontStyle': 'normal'
+                                  },
+                                  'ticks': {
+                                    'display': true,
+                                    'fontSize': 12,
+                                    'fontFamily': 'sans-serif',
+                                    'fontColor': '#666666',
+                                    'fontStyle': 'normal',
+                                    'padding': 0,
+                                    'stepSize': null,
+                                    'minRotation': 0,
+                                    'maxRotation': 50,
+                                    'mirror': false,
+                                    'reverse': false
+                                  },
+                                  'scaleLabel': {
+                                    'display': false,
+                                    'labelString': 'Axis label',
+                                    'lineHeight': 1.2,
+                                    'fontColor': '#666666',
+                                    'fontFamily': 'sans-serif',
+                                    'fontSize': 12,
+                                    'fontStyle': 'normal',
+                                    'padding': 4
+                                  }
+                                }
+                              ]
+                            },
+                            'plugins': {
+                              'datalabels': {
+                                'display': false,
+                                'align': 'center',
+                                'anchor': 'center',
+                                'backgroundColor': '#eee',
+                                'borderColor': '#ddd',
+                                'borderRadius': 6,
+                                'borderWidth': 1,
+                                'padding': 4,
+                                'color': '#666666',
+                                'font': {
+                                  'family': 'sans-serif',
+                                  'size': 10,
+                                  'style': 'normal'
+                                }
+                              },
+                              'datalabelsZAxis': {
+                                'enabled': false
+                              },
+                              'googleSheets': {},
+                              'airtable': {},
+                              'tickFormat': ''
+                            },
+                            'cutoutPercentage': 50,
+                            'rotation': -1.5707963267948966,
+                            'circumference': 6.283185307179586,
+                            'startAngle': -1.5707963267948966
+                          }
+                        }")
+                    Visible: =cycle=1
+                    Width: =Parent.Width
+                    Y: =If(Container20.Visible,Container20.Height,10)
+                    ZIndex: =2
+
+                Image2_1 As image:
+                    Height: =Parent.Height-60
+                    Image: |-
+                        =//put into data &If(Index(metricCol,1).Tickets=0,0,Index(metricCol,1).TicketComplete/IfError(Index(metricCol,1).Tickets,1,Index(metricCol,1).Tickets) *100)&", "&If(Index(metricCol,1).Tickets=0,0,Index(metricCol,1).TicketLate/IfError(Index(metricCol,1).Tickets,1,Index(metricCol,1).Tickets) *100)&
+                        
+                        //put into text at bottom &Min(If(Index(metricCol,1).Tickets=0,0,RoundDown((Index(metricCol,1).TicketComplete/If(Index(metricCol,1).TicketLate=0,1,Index(metricCol,1).TicketLate))*100,0)),100)&
+                        
+                        "https://quickchart.io/chart?c="&EncodeUrl("{
+                          type: 'doughnut',
+                          data: {
+                            datasets: [
+                              {
+                                data: ["&If(Index(metricCol,1).Tickets=0,0,Index(metricCol,1).TicketComplete/IfError(Index(metricCol,1).Tickets,1,Index(metricCol,1).Tickets) *100)&", "&If(Index(metricCol,1).Tickets=0,0,Index(metricCol,1).TicketLate/IfError(Index(metricCol,1).Tickets,1,Index(metricCol,1).Tickets) *100)&"],
+                                backgroundColor: ['green', 'red'],
+                                label: 'Dataset 1',
+                                borderWidth: 10,
+                              },
+                            ],
+                            labels: ['A', 'B'],
+                          },
+                          options: {
+                            circumference: Math.PI,
+                            rotation: Math.PI,
+                            cutoutPercentage: 75,
+                            layout: {
+                              padding: 40,
+                            },
+                            legend: {
+                              display: false,
+                            },
+                            plugins: {
+                              datalabels: {
+                                color: '#000',
+                                anchor: 'end',
+                                align: 'end',
+                                formatter: (val) => val + '%',
+                                font: {
+                                  size: 25,
+                                  weight: 'bold',
+                                },
+                              },
+                              doughnutlabel: {
+                                labels: [
+                                  {
+                                    text: '\nYour Response Rate',
+                                    font: {
+                                      size: 20,
+                                    },
+                                  },
+                                  {
+                                    text: '\n"&Min(If(Index(metricCol,1).Tickets=0,0,RoundDown((Index(metricCol,1).TicketComplete/If(Index(metricCol,1).TicketLate=0,1,Index(metricCol,1).TicketLate))*100,0)),100)&"%',
+                                    color: '#000',
+                                    font: {
+                                      size: 40,
+                                      weight: 'bold',
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        }")
+                    Visible: =cycle=2
+                    Width: =Parent.Width
+                    Y: =If(Container20.Visible,Container20.Height,10)
+                    ZIndex: =3
+
+                Container20 As groupContainer.manualLayoutContainer:
+                    BorderThickness: =4
+                    Fill: =RGBA(255, 255, 255, 1)
+                    Height: =50
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    Visible: =editMonth
+                    Width: =Parent.Width
+                    ZIndex: =4
+
+                    Dropdown9 As dropdown:
+                        Default: =Month(Today())
+                        Items: =ForAll(Sequence(12),Text(Value&"/"&Year(Today())))
+                        OnChange: |+
+                            =UpdateContext({ticketMonth:Self.Selected.Value});
+                            UpdateContext({monthlyCat1:CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=1))});
+                            UpdateContext({monthlyCat2:CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=2))});
+                            UpdateContext({monthlyCat3:CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=3))});
+                            UpdateContext({monthlyCat4:CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=4))});
+                            UpdateContext({monthlyCat5:CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=5))});
+                            UpdateContext({monthlyCat6:CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=6))});
+                            UpdateContext({monthlyCat7:CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=7))});
+                            UpdateContext({monthlyCat8:CountRows(Filter(Tickets,metricDate=ticketMonth && mainCategory=8))});
+                            
+                            Patch(metricCol,LookUp(metricCol,recID=1), {TicketLate:0, TicketComplete:0, Tickets:0});
+                            
+                            ForAll(Filter(Tickets,assignedTo=userData.id && metricDate=Self.Selected.Value) As TicketData,
+                            If(DateDiff(TicketData.dateCreated,TicketData.dateClosed,TimeUnit.Days)>=2,Patch(metricCol,LookUp(metricCol,recID=1),{TicketLate:LookUp(metricCol,recID=1).TicketLate+1}),Patch(metricCol,LookUp(metricCol,recID=1),{TicketComplete:LookUp(metricCol,recID=1).TicketComplete+1})));
+                            Patch(metricCol,LookUp(metricCol,recID=1),{Tickets:CountRows(Filter(Tickets,assignedTo=userData.id && metricDate = Self.Selected.Value))});
+                            Clear(ticketMetrics);
+                            Collect(ticketMetrics,    
+                            
+                                {
+                                    ID:1,
+                                    metricTitle: "Monthly Tickets Recieved",
+                                    metricNumber: CountRows(Filter(Tickets, metricDate = ticketMonth))
+                                },
+                                {
+                                    ID:2,
+                                    metricTitle: "Monthly Tickets Resolved",
+                                    metricNumber: CountRows(Filter(Tickets, metricDate = ticketMonth && status = "closed"))
+                                },
+                                {
+                                    ID:3,
+                                    metricTitle: "Monthly Tickets Open",
+                                    metricNumber: CountRows(Filter(Tickets, metricDate = ticketMonth && status = "open"))
+                                },
+                                {
+                                    ID:4,
+                                    metricTitle: "Tickets Assigned to Me",
+                                    metricNumber: CountRows(Filter(Tickets, assignedTo = userData.id && metricDate= ticketMonth))
+                                }
+                            );
+                            
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =(Parent.Height-Self.Height)/2
+                        ZIndex: =1
+
+                    Label64 As label:
+                        Align: =Align.Center
+                        Text: ="Select Month"
+                        X: =Dropdown9.X-Self.Width
+                        Y: =Dropdown9.Y
+                        ZIndex: =2
+
+                    Button14 As button:
+                        Height: =Parent.Height-15
+                        OnSelect: |-
+                            =If(cycle=2,UpdateContext({cycle:0}),UpdateContext({cycle:cycle+1}))
+                        Text: =Switch(cycle,0,"Ticket Distribution",1,"My Response Rate",2,"Monthly Stats")
+                        Width: =320
+                        X: =Parent.Width-Self.Width-15
+                        Y: =(Parent.Height-Self.Height)/2
+                        ZIndex: =3
+
+                Button24 As button:
+                    Height: =Icon23.Height
+                    Text: =
+                    Width: =Icon23.Width    
+                    X: =643
+                    Y: =Icon23.Y
+                    ZIndex: =5
+
+                Icon23 As icon.ChevronDown:
+                    Color: =RGBA(255, 255, 255, 1)
+                    Height: =20
+                    Icon: =If(editMonth,Icon.ChevronUp,Icon.ChevronDown)
+                    Width: =80
+                    X: =643
+                    Y: =If(editMonth,Container20.Height,0)
+                    ZIndex: =6
+
+                Button24_1 As button:
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =Icon23.Height
+                    HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                    OnSelect: |-
+                        =UpdateContext({editMonth:!editMonth})
+                    PressedFill: =RGBA(255,255,255,.25)
+                    Text: =
+                    Width: =Icon23.Width
+                    X: =643
+                    Y: =Icon23.Y
+                    ZIndex: =7
+
+            MetricButtonsContainer As groupContainer.manualLayoutContainer:
+                FillPortions: =0
+                Height: =50
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =50
+                LayoutMinWidth: =250
+                ZIndex: =2
+
+        TicketMetricsFooter As groupContainer.verticalAutoLayoutContainer:
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Ticket Metrics - Admin Tech'.Size =1
+            Width: =Parent.Width
+            ZIndex: =4
+
+            TicketMetricsMobileMenu As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    TicketMetricsBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =TicketMetricsLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(HeaderContainer_1.Height-TicketMetricsLabel.Height)/1.05
+        ZIndex: =2
+
+    TicketMetricsWebMenu As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Ticket Metrics - Admin Tech'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+

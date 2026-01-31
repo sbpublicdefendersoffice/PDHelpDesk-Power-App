@@ -1,0 +1,2979 @@
+"AssetDetails As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |-
+        =ResetForm(AssetDetailsForm);
+        If(!IsEmpty(Gallery20.AllItems),Select(Gallery20,1))
+    OnVisible: |+
+        =//Clear the collections
+        //Figure out which mode we are in
+        
+        If(IsBlank(computerAsset),Set(jsonCommentString,GetAssetComments.Run(equipmentAsset.ID,"Equipment").commentsjson),Set(jsonCommentString,GetAssetComments.Run(computerAsset.ID,"Computer").commentsjson));
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({TemplateErrorPopup:false, assetFormError:false,prepAsset:false,deleteAsset:false});
+        UpdateContext({assetEmail:""});
+        ClearCollect(AssetComments, 
+        If(jsonCommentString <> "",Sort(ForAll(Table(ParseJSON(jsonCommentString)),
+        {
+            Comment: Text(Value.CommentText),
+            CommentDate: DateTimeValue(Value.CommentDate),
+            CommentAuthor: Text(Value.CommentAuthor),
+            CommentID: Value(Value.CommentID)
+        }),CommentDate,SortOrder.Ascending),Table()))
+        
+
+    AssetDetailsContainer As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        AssetDetailsHeaderContainer As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            AssetDetailsHeaderGroup As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =3
+
+                HeaderBackgroundGradient_11 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =130
+                    HtmlText: |-
+                        ="<div style='
+                        height:"&Self.Height-1&"px;
+                        width:100%;
+                        background: rgb(53,89,137);
+                        background: linear-gradient(90deg, rgba(53,89,137,1) 0%, rgba(0,18,107,1) 100%);' ></div>"
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                AssetDetailsLabel As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =48
+                    Size: =If(AssetDetails.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Asset Details"
+                    Width: =Parent.Width
+                    Y: =AssetDetailsWebHeader.Height
+                    ZIndex: =2
+
+                AssetDetailsWebHeader As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: =AssetDetails.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    Fill: =Color.Transparent
+                    ZIndex: =3
+
+        MainSectionAssetDetailsContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =6
+
+            Container29 As groupContainer.manualLayoutContainer:
+                Fill: =RGBA(241, 244, 249, 1)
+                FillPortions: =0
+                Height: =Parent.Height
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =Parent.Width
+                ZIndex: =2
+
+                AssetDetailsForm As form:
+                    AcceptsFocus: =false
+                    DataSource: ='PubDef Computer Inventory_ Asset List_Computers'
+                    Height: =Parent.Height
+                    Item: =computerAsset
+                    NumberOfColumns: =1
+                    Visible: =amSelection="Computer Assets"
+                    Width: =Parent.Width
+                    ZIndex: =18
+
+                    Barcode_DataCard2_1 As typedDataCard.addLargePictureCard:
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="Barcode"
+                        Default: =ThisItem.Barcode
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,Barcode)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =AssetBarcodeImage_1.Image
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        DataCardKey19_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (AddPicture2_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        AssetBarcodeImage_1 As image:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DisplayMode: =Parent.DisplayMode
+                            Height: =AddPicture2_1.Height
+                            Image: =If(IsBlank(computerAsset.Barcode), Parent.Default, computerAsset.Barcode.Full)
+                            Tooltip: =Parent.DisplayName
+                            Width: =AddPicture2_1.Width
+                            X: =AddPicture2_1.X
+                            Y: =AddPicture2_1.Y
+                            ZIndex: =2
+
+                        AddPicture2_1 As addMedia:
+                            ChangePictureText: ="Change Picture"
+                            Height: =150
+                            PlaceholderText: ="Tap or click to add a picture"
+                            Text: ="Tap or click to add a picture"
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey19_1.X + DataCardKey19_1.Width
+                            Y: =10
+                            ZIndex: =3
+
+                        ErrorMessage21_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =AssetBarcodeImage_1.Y + AssetBarcodeImage_1.Height
+                            ZIndex: =4
+
+                        StarVisible19_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey19_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey19_1.Y
+                            ZIndex: =5
+
+                    AssetComments_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =200
+                        Visible: =!IsEmpty(Gallery20.AllItems)
+                        Width: =Parent.Width
+                        X: =0
+                        Y: =16
+                        ZIndex: =1
+
+                        Gallery20 As gallery.variableTemplateHeightGallery:
+                            '#CopilotOverlayLabel': ="Filtered"
+                            BorderThickness: =2
+                            Default: =First(Self.AllItems)
+                            DelayItemLoading: =true
+                            Height: =200
+                            Items: =AssetComments
+                            Layout: =Layout.Vertical
+                            LoadingSpinner: =LoadingSpinner.Data
+                            TemplateSize: =180
+                            Width: =Parent.Width
+                            ZIndex: =21
+
+                            Label89 As label:
+                                Align: =Align.Center
+                                BorderThickness: =2
+                                Color: =RGBA(255, 255, 255, 1)
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                OnSelect: =Select(Parent)
+                                Text: =ThisItem.CommentAuthor
+                                ZIndex: =1
+
+                            Label90 As label:
+                                OnSelect: =Select(Parent)
+                                Text: =ThisItem.CommentDate
+                                Width: =200
+                                X: =Label89.X+Label89.Width+5
+                                Y: =5
+                                ZIndex: =2
+
+                            Rectangle49 As rectangle:
+                                Fill: =ColorScheme.primary
+                                Height: =2
+                                OnSelect: =Select(Parent)
+                                Width: =Parent.TemplateWidth
+                                X: =
+                                Y: =Parent.TemplateHeight-Self.Height
+                                ZIndex: =3
+
+                            Label91 As label:
+                                Height: =Parent.TemplateHeight-Label89.Height
+                                OnSelect: =Select(Parent)
+                                Text: =ThisItem.Comment
+                                VerticalAlign: =VerticalAlign.Top
+                                Width: =Parent.TemplateWidth
+                                Y: =50
+                                ZIndex: =4
+
+                    AssetID_DataCard2_1 As typedDataCard.numberEditCard:
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="SKU"
+                        Default: =ThisItem.AssetID
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,SKU)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =true
+                        Update: =Value(AssetIDInput_1.Text)
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =2
+
+                        DataCardKey30_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (AssetIDInput_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        AssetIDInput_1 As text:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            Default: =computerAsset.AssetID
+                            DelayOutput: =true
+                            DisplayMode: =Parent.DisplayMode
+                            Format: =TextFormat.Number
+                            HintText: =""
+                            PaddingLeft: =5
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey30_1.X + DataCardKey30_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage32_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =AssetIDInput_1.Y + AssetIDInput_1.Height
+                            ZIndex: =3
+
+                        StarVisible30_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey30_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey30_1.Y
+                            ZIndex: =4
+
+                    "'Asset Name_DataCard2_1' As typedDataCard.textualEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="AssetName"
+                        Default: =ThisItem.'Asset Name'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,AssetName)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        MaxLength: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'], DataSourceInfo.MaxLength, AssetName)
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =true
+                        Update: =AssetNameInput_1.Text
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =3
+
+                        DataCardKey27_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (AssetNameInput_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        AssetNameInput_1 As text:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            Default: =computerAsset.'Asset Name'
+                            DelayOutput: =true
+                            DisplayMode: =Parent.DisplayMode
+                            HintText: =""
+                            MaxLength: =Parent.MaxLength
+                            PaddingLeft: =5
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey27_1.X + DataCardKey27_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage29_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =AssetNameInput_1.Y + AssetNameInput_1.Height
+                            ZIndex: =3
+
+                        StarVisible27_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey27_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey27_1.Y
+                            ZIndex: =4
+
+                    "'AD Description_DataCard2_1' As typedDataCard.textualEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="ADDescription"
+                        Default: =ThisItem.'AD Description'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,ADDescription)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        MaxLength: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'], DataSourceInfo.MaxLength, ADDescription)
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =ADDescriptionInput_1.Text
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =4
+
+                        DataCardKey20_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (ADDescriptionInput_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        ADDescriptionInput_1 As text:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            Default: =computerAsset.'AD Description'
+                            DelayOutput: =true
+                            DisplayMode: =Parent.DisplayMode
+                            HintText: =""
+                            MaxLength: =Parent.MaxLength
+                            PaddingLeft: =5
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey20_1.X + DataCardKey20_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage22_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =ADDescriptionInput_1.Y + ADDescriptionInput_1.Height
+                            ZIndex: =3
+
+                        StarVisible20_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey20_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey20_1.Y
+                            ZIndex: =4
+
+                    ADStaffLocation_DataCard2_1 As typedDataCard.comboBoxEditCard:
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="ADStaffLocation"
+                        Default: =ThisItem.ADStaffLocation
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,ADStaffLocation)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =ADStaffLocationDropDown_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =5
+
+                        DataCardKey21_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (ADStaffLocationDropDown_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        ADStaffLocationDropDown_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =computerAsset.ADStaffLocation
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Computers'].ADStaffLocation)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SearchItems: =Choices('PubDef Computer Inventory_ Asset List_Computers'.ADStaffLocation,ADStaffLocationDropDown_1.SearchText)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey21_1.X + DataCardKey21_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage23_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =ADStaffLocationDropDown_1.Y + ADStaffLocationDropDown_1.Height
+                            ZIndex: =3
+
+                        StarVisible21_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey21_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey21_1.Y
+                            ZIndex: =4
+
+                    ADStaffType_DataCard2_1 As typedDataCard.comboBoxEditCard:
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="ADStaffType"
+                        Default: =ThisItem.ADStaffType
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,ADStaffType)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =ADStaffTypeDropdown_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =6
+
+                        DataCardKey22_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (ADStaffTypeDropdown_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        ADStaffTypeDropdown_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =computerAsset.ADStaffType
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Computers'].ADStaffType)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SearchItems: =Choices('PubDef Computer Inventory_ Asset List_Computers'.ADStaffType,ADStaffTypeDropdown_1.SearchText)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey22_1.X + DataCardKey22_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage24_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =ADStaffTypeDropdown_1.Y + ADStaffTypeDropdown_1.Height
+                            ZIndex: =3
+
+                        StarVisible22_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey22_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey22_1.Y
+                            ZIndex: =4
+
+                    "'Asset Condition_DataCard2_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="AssetCondition"
+                        Default: =ThisItem.'Asset Condition'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,AssetCondition)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =AssetConditionDropdown_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =7
+
+                        DataCardKey23_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (AssetConditionDropdown_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        AssetConditionDropdown_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =computerAsset.'Asset Condition'
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Computers'].AssetCondition)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SearchItems: =Choices('PubDef Computer Inventory_ Asset List_Computers'.AssetCondition,AssetConditionDropdown_1.SearchText)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey23_1.X + DataCardKey23_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage25_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =AssetConditionDropdown_1.Y + AssetConditionDropdown_1.Height
+                            ZIndex: =3
+
+                        StarVisible23_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey23_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey23_1.Y
+                            ZIndex: =4
+
+                    "'Asset Location_DataCard2_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="AssetDeployment"
+                        Default: =ThisItem.'Asset Location'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,AssetDeployment)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =true
+                        Update: =AssetLocationDropdown_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =8
+
+                        DataCardKey24_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (AssetLocationDropdown_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        AssetLocationDropdown_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =computerAsset.'Asset Location'
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Computers'].AssetDeployment)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SearchItems: =Choices('PubDef Computer Inventory_ Asset List_Computers'.AssetDeployment,AssetLocationDropdown_1.SearchText)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey24_1.X + DataCardKey24_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage26_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =AssetLocationDropdown_1.Y + AssetLocationDropdown_1.Height
+                            ZIndex: =3
+
+                        StarVisible24_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey24_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey24_1.Y
+                            ZIndex: =4
+
+                    "'Asset Maker_DataCard2_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="AssetMaker"
+                        Default: =ThisItem.'Asset Maker'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,AssetMaker)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =AssetMakerDropdown_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =9
+
+                        DataCardKey25_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (AssetMakerDropdown_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        AssetMakerDropdown_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =computerAsset.'Asset Maker'
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Computers'].AssetMaker)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SearchItems: =Choices('PubDef Computer Inventory_ Asset List_Computers'.AssetMaker,AssetMakerDropdown_1.SearchText)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey25_1.X + DataCardKey25_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage27_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =AssetMakerDropdown_1.Y + AssetMakerDropdown_1.Height
+                            ZIndex: =3
+
+                        StarVisible25_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey25_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey25_1.Y
+                            ZIndex: =4
+
+                    "'Asset Model_DataCard2_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="AssetModel"
+                        Default: =ThisItem.'Asset Model'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,AssetModel)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =AssetModelDropdown_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =9
+                        ZIndex: =10
+
+                        DataCardKey26_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (AssetModelDropdown_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        AssetModelDropdown_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =computerAsset.'Asset Model'
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Computers'].AssetModel)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SearchItems: =Choices('PubDef Computer Inventory_ Asset List_Computers'.AssetModel,AssetModelDropdown_1.SearchText)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey26_1.X + DataCardKey26_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage28_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =AssetModelDropdown_1.Y + AssetModelDropdown_1.Height
+                            ZIndex: =3
+
+                        StarVisible26_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey26_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey26_1.Y
+                            ZIndex: =4
+
+                    "'Asset Type_DataCard2_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="AssetType"
+                        Default: =ThisItem.'Asset Type'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,AssetType)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =AssetTypeDropdown_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =10
+                        ZIndex: =11
+
+                        DataCardKey29_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (AssetTypeDropdown_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        AssetTypeDropdown_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =computerAsset.'Asset Type'
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Computers'].AssetType)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SearchItems: =Choices('PubDef Computer Inventory_ Asset List_Computers'.AssetType,AssetTypeDropdown_1.SearchText)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey29_1.X + DataCardKey29_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage31_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =AssetTypeDropdown_1.Y + AssetTypeDropdown_1.Height
+                            ZIndex: =3
+
+                        StarVisible29_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey29_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey29_1.Y
+                            ZIndex: =4
+
+                    "'Asset Status_DataCard2_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="AssetStatus"
+                        Default: =ThisItem.'Asset Status'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,AssetStatus)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =true
+                        Update: =AssetStatusDropdown_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =11
+                        ZIndex: =12
+
+                        DataCardKey28_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (AssetStatusDropdown_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        AssetStatusDropdown_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =computerAsset.'Asset Status'
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Computers'].AssetStatus)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SearchItems: =Choices('PubDef Computer Inventory_ Asset List_Computers'.AssetStatus,AssetStatusDropdown_1.SearchText)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey28_1.X + DataCardKey28_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage30_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =AssetStatusDropdown_1.Y + AssetStatusDropdown_1.Height
+                            ZIndex: =3
+
+                        StarVisible28_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey28_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey28_1.Y
+                            ZIndex: =4
+
+                    "'Assigned User_DataCard2_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="AssignedUser"
+                        Default: =ThisItem.'Assigned User'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,AssignedUser)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =true
+                        Update: =AssignedUserDropdown_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =12
+                        ZIndex: =13
+
+                        DataCardKey31_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (AssignedUserDropdown_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        AssignedUserDropdown_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =LookUp(Users,email = computerAsset.'Assigned User'.Email)
+                            DisplayFields: =["fullName"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Users
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["fullName"]
+                            SearchItems: =Search(Users,AssignedUserDropdown_1.SearchText,fullName)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey31_1.X + DataCardKey31_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage33_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =AssignedUserDropdown_1.Y + AssignedUserDropdown_1.Height
+                            ZIndex: =3
+
+                        StarVisible31_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey31_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey31_1.Y
+                            ZIndex: =4
+
+                    "'Connection Type_DataCard2_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="ConnectionType"
+                        Default: =ThisItem.'Connection Type'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,ConnectionType)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =ConnectionTypeDropdown_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =13
+                        ZIndex: =14
+
+                        DataCardKey32_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (ConnectionTypeDropdown_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        ConnectionTypeDropdown_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =computerAsset.'Connection Type'
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Computers'].ConnectionType)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SearchItems: =Choices('PubDef Computer Inventory_ Asset List_Computers'.ConnectionType,ConnectionTypeDropdown_1.SearchText)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey32_1.X + DataCardKey32_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage34_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =ConnectionTypeDropdown_1.Y + ConnectionTypeDropdown_1.Height
+                            ZIndex: =3
+
+                        StarVisible32_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey32_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey32_1.Y
+                            ZIndex: =4
+
+                    "'Device Last Updated_DataCard2_1' As typedDataCard.dateEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="UpdatesRequired"
+                        Default: =ThisItem.'Device Last Updated'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,UpdatesRequired)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =DeviceLastUpdatedDatePicker_1.SelectedDate
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =14
+                        ZIndex: =15
+
+                        DataCardKey33_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (DeviceLastUpdatedDatePicker_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        DeviceLastUpdatedDatePicker_1 As datepicker:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            CalendarHeaderFill: =App.Theme.Colors.Primary
+                            DefaultDate: =computerAsset.'Device Last Updated'
+                            DisplayMode: =Parent.DisplayMode
+                            EndYear: =Year(Today())+100
+                            HoverDateFill: =App.Theme.Colors.Lighter70
+                            InputTextPlaceholder: =If(IsBlank(Self.SelectedDate), Text("If no suitable date leave blank"))
+                            IsEditable: =true
+                            PaddingBottom: =0
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SelectedDateFill: =App.Theme.Colors.Primary
+                            StartYear: =1899
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey33_1.X + DataCardKey33_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage35_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DeviceLastUpdatedDatePicker_1.Y + DeviceLastUpdatedDatePicker_1.Height
+                            ZIndex: =3
+
+                        StarVisible33_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey33_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey33_1.Y
+                            ZIndex: =4
+
+                    "'Windows Verison_DataCard2_1' As typedDataCard.textualEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="WindowsVerison"
+                        Default: =ThisItem.'Windows Verison'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'],DataSourceInfo.DisplayName,WindowsVerison)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        MaxLength: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Computers'], DataSourceInfo.MaxLength, WindowsVerison)
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =WindowsVersionInput_1.Text
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =15
+                        ZIndex: =16
+
+                        DataCardKey34_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (WindowsVersionInput_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        WindowsVersionInput_1 As text:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            Default: =computerAsset.'Windows Verison'
+                            DelayOutput: =true
+                            DisplayMode: =Parent.DisplayMode
+                            HintText: ="Windows 10, Windows 11"
+                            MaxLength: =Parent.MaxLength
+                            PaddingLeft: =5
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey34_1.X + DataCardKey34_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage36_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =WindowsVersionInput_1.Y + WindowsVersionInput_1.Height
+                            ZIndex: =3
+
+                        StarVisible34_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey34_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey34_1.Y
+                            ZIndex: =4
+
+                    AssetSubmitCard_1 As typedDataCard.blankCard:
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: =""
+                        DisplayMode: =DisplayMode.Edit
+                        DisplayName: =""
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Visible: =true
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =17
+                        ZIndex: =17
+
+                        SubmitNewAsset_1 As button:
+                            OnSelect: |-
+                                =If(Len(AssetIDInput_1.Text)=14 && ((computerAsset.AssetID = Value(AssetIDInput_1.Text))||((computerAsset.AssetID  <> Value(AssetIDInput_1.Text) && IsBlank(LookUp('PubDef Computer Inventory_ Asset List_Computers',Value(AssetIDInput_1.Text) = AssetID)))))&& !IsBlank(AssignedUserDropdown_1.Selected) && !IsBlank(AssetNameInput_1.Text) && !IsBlank(AssetLocationDropdown_1.Selected) && !IsBlank(AssetStatusDropdown_1.Selected),UpdateContext({assetEmail:AssignedUserDropdown_1.Selected.email});Patch('PubDef Computer Inventory_ Asset List_Computers',LookUp('PubDef Computer Inventory_ Asset List_Computers', computerAsset.ID = ID),
+                                {
+                                    Barcode: AssetBarcodeImage_1.Image,
+                                    'Asset Name':AssetNameInput_1.Text,
+                                    'AD Description':If(IsBlank(ADDescriptionInput_1.Text),"N/A",ADDescriptionInput_1.Text),
+                                    'Asset Status':AssetStatusDropdown_1.Selected,
+                                    'Asset Type':If(IsBlank(AssetTypeDropdown_1.Selected),{Value:"N/A"},AssetTypeDropdown_1.Selected),
+                                    'Asset Maker':If(IsBlank(AssetMakerDropdown_1.Selected),{Value:"N/A"},AssetMakerDropdown_1.Selected),
+                                    'Asset Model':If(IsBlank(AssetModelDropdown_1.Selected),{Value:"N/A"},AssetModelDropdown_1.Selected),
+                                    'Asset Location': AssetLocationDropdown_1.Selected, 
+                                    'Windows Verison':If(IsBlank(WindowsVersionInput_1.Text),"N/A",WindowsVersionInput_1.Text),
+                                    'Device Last Updated': DeviceLastUpdatedDatePicker_1.SelectedDate,
+                                    'Assigned User':{
+                                        '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",		
+                                        Claims: "i:0#.f|membership|" & assetEmail,
+                                        Department: Office365Users.UserProfileV2(assetEmail).department,		
+                                        DisplayName: Office365Users.UserProfileV2(assetEmail).displayName,		
+                                        Email: assetEmail,		
+                                        JobTitle: Office365Users.UserProfileV2(assetEmail).jobTitle,		
+                                        Picture: ""
+                                    },
+                                    'Email Address':assetEmail,
+                                    ADStaffLocation:If(IsBlank(ADStaffLocationDropDown_1.Selected),{Value:"N/A"},ADStaffLocationDropDown_1.Selected), 
+                                    ADStaffType:If(IsBlank(ADStaffTypeDropdown_1.Selected),{Value:"N/A"},ADStaffTypeDropdown_1.Selected), 
+                                    AssetCondition:If(IsBlank(AssetConditionDropdown_1.Selected),{Value:"N/A"},AssetConditionDropdown_1.Selected),
+                                    'Connection Type':If(IsBlank(ConnectionTypeDropdown_1.Selected),{Value:"N/A"},ConnectionTypeDropdown_1.Selected)
+                                
+                                });
+                                ,Notify("Form entries may have errors!");UpdateContext({assetIDError:!(Len(AssetIDInput_1.Text)=14),assetName:IsBlank(AssetNameInput_1.Text),assetStatus:IsBlank(AssetStatusDropdown_1.Selected),assetLocation:IsBlank(AssetLocationDropdown_1.Selected),assignedUser:IsBlank(AssignedUserDropdown_1.Selected)}); 
+                                If(assetIDError||assetName||assetStatus||assetLocation||assignedUser, UpdateContext({assetFormError:true})));
+                            Size: =If(App.ActiveScreen.Size=1,10,15)
+                            Text: ="Submit Changes"
+                            Width: =If(App.ActiveScreen.Size=1,90,180)
+                            X: =(Parent.Width-Self.Width)/3
+                            Y: =5
+                            ZIndex: =1
+
+                        SubmitNewAsset_2 As button:
+                            Color: =RGBA(0, 0, 0, 1)
+                            Fill: =RGBA(255, 191, 0, 1)
+                            OnSelect: |-
+                                =UpdateContext({prepAsset:true})
+                            Size: =SubmitNewAsset_1.Size
+                            Text: ="Prep Asset"
+                            Width: =SubmitNewAsset_1.Width
+                            X: =SubmitNewAsset_1.X+Self.Width+15
+                            Y: =5
+                            ZIndex: =19
+
+                        SubmitNewAsset_3 As button:
+                            Fill: =RGBA(151, 0, 0, 1)
+                            OnSelect: |-
+                                =UpdateContext({deleteAsset:true})
+                            Size: =SubmitNewAsset_1.Size
+                            Text: ="Delete Asset"
+                            Width: =SubmitNewAsset_1.Width
+                            X: =SubmitNewAsset_2.X+Self.Width+15
+                            Y: =5
+                            ZIndex: =20
+
+                AssetDetailsForm2 As form:
+                    AcceptsFocus: =false
+                    DataSource: ='PubDef Computer Inventory_ Asset List_Equipment'
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height
+                    NumberOfColumns: =1
+                    Visible: =amSelection = "Equipment Assets"
+                    Width: =Parent.Width
+                    ZIndex: =23
+
+                    "'Barcoded Image_DataCard3_1' As typedDataCard.addLargePictureCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="BarcodedImage"
+                        Default: =ThisItem.'Barcoded Image'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Equipment'],DataSourceInfo.DisplayName,BarcodedImage)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =EquipmentBarcodeImage_1.Image
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        DataCardKey16_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (AddPicture4_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        EquipmentBarcodeImage_1 As image:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DisplayMode: =Parent.DisplayMode
+                            Height: =AddPicture4_1.Height
+                            Image: =If(IsBlank(equipmentAsset.BarcodedImage), Parent.Default, equipmentAsset.'Barcoded Image'.Full)
+                            Tooltip: =Parent.DisplayName
+                            Width: =AddPicture4_1.Width
+                            X: =AddPicture4_1.X
+                            Y: =AddPicture4_1.Y
+                            ZIndex: =2
+
+                        AddPicture4_1 As addMedia:
+                            ChangePictureText: ="Change Picture"
+                            Height: =150
+                            PlaceholderText: ="Tap or click to add a picture"
+                            Text: ="Tap or click to add a picture"
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey16_1.X + DataCardKey16_1.Width
+                            Y: =10
+                            ZIndex: =3
+
+                        ErrorMessage18_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =EquipmentBarcodeImage_1.Y + EquipmentBarcodeImage_1.Height
+                            ZIndex: =4
+
+                        StarVisible16_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey16_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey16_1.Y
+                            ZIndex: =5
+
+                    SKU_DataCard2_1 As typedDataCard.numberEditCard:
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="SKU"
+                        Default: =ThisItem.SKU
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Equipment'],DataSourceInfo.DisplayName,SKU)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =Value(EquipmentSKUInput_1.Text)
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =2
+
+                        DataCardKey15_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (EquipmentSKUInput_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        EquipmentSKUInput_1 As text:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            Default: =Text(equipmentAsset.SKU,"00000000000000")
+                            DelayOutput: =true
+                            DisplayMode: =Parent.DisplayMode
+                            Format: =TextFormat.Number
+                            HintText: ="14 Digit Number"
+                            PaddingLeft: =5
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey15_1.X + DataCardKey15_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage17_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =EquipmentSKUInput_1.Y + EquipmentSKUInput_1.Height
+                            ZIndex: =3
+
+                        StarVisible15_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey15_1.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey15_1.Y
+                            ZIndex: =4
+
+                    "'Asset Status_DataCard3_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="AssetStatus"
+                        Default: =ThisItem.'Asset Status'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Equipment'],DataSourceInfo.DisplayName,AssetStatus)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =EquipmentAssetStatusInput_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =3
+
+                        DataCardKey40_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (EquipmentAssetStatusInput_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        EquipmentAssetStatusInput_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =equipmentAsset.'Asset Status'
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Equipment'].AssetStatus)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SearchItems: =Choices('PubDef Computer Inventory_ Asset List_Equipment'.AssetStatus,EquipmentAssetStatusInput_1.SearchText)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey40_1.X + DataCardKey40_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage42_2 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =EquipmentAssetStatusInput_1.Y + EquipmentAssetStatusInput_1.Height
+                            ZIndex: =3
+
+                        StarVisible40_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey40_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey40_1.Y
+                            ZIndex: =4
+
+                    "'Asset Type_DataCard3_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="AssetType"
+                        Default: =ThisItem.'Asset Type'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Equipment'],DataSourceInfo.DisplayName,AssetType)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =EquipmentAssetTypeInput_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =4
+
+                        DataCardKey17_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (EquipmentAssetTypeInput_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        EquipmentAssetTypeInput_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =equipmentAsset.'Asset Type'
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Equipment'].AssetType)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey17_1.X + DataCardKey17_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage19_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =EquipmentAssetTypeInput_1.Y + EquipmentAssetTypeInput_1.Height
+                            ZIndex: =3
+
+                        StarVisible17_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey17_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey17_1.Y
+                            ZIndex: =4
+
+                    "'Asset Model_DataCard3_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="AssetModel"
+                        Default: =ThisItem.'Asset Model'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Equipment'],DataSourceInfo.DisplayName,AssetModel)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =EquipmentAssetModelInput_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =5
+
+                        DataCardKey18_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (EquipmentAssetModelInput_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        EquipmentAssetModelInput_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =equipmentAsset.'Asset Model'
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Equipment'].AssetModel)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey18_1.X + DataCardKey18_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage20_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =EquipmentAssetModelInput_1.Y + EquipmentAssetModelInput_1.Height
+                            ZIndex: =3
+
+                        StarVisible18_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey18_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey18_1.Y
+                            ZIndex: =4
+
+                    "'Office Site_DataCard2_1' As typedDataCard.comboBoxEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="OfficeSite"
+                        Default: =ThisItem.'Office Site'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Equipment'],DataSourceInfo.DisplayName,OfficeSite)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =OfficeSiteInput_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =6
+
+                        DataCardKey35_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (OfficeSiteInput_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        OfficeSiteInput_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =equipmentAsset.'Office Site'
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Equipment'].OfficeSite)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey35_1.X + DataCardKey35_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage37_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =OfficeSiteInput_1.Y + OfficeSiteInput_1.Height
+                            ZIndex: =3
+
+                        StarVisible35_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey35_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey35_1.Y
+                            ZIndex: =4
+
+                    Floor_DataCard2_1 As typedDataCard.comboBoxEditCard:
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="Floor"
+                        Default: =ThisItem.Floor
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Equipment'],DataSourceInfo.DisplayName,Floor)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =DataCardValue17_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =7
+
+                        DataCardKey36_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (DataCardValue17_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        DataCardValue17_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =equipmentAsset.Floor
+                            DisplayFields: =["Value"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Choices([@'PubDef Computer Inventory_ Asset List_Equipment'].Floor)
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["Value"]
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey36_1.X + DataCardKey36_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage38_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardValue17_1.Y + DataCardValue17_1.Height
+                            ZIndex: =3
+
+                        StarVisible36_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey36_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey36_1.Y
+                            ZIndex: =4
+
+                    "'Office/Cubicle Number_DataCard2_1' As typedDataCard.textualEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="Office_x002f_CubicleNumber"
+                        Default: =ThisItem.'Office/Cubicle Number'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Equipment'],DataSourceInfo.DisplayName,Office_x002f_CubicleNumber)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        MaxLength: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Equipment'], DataSourceInfo.MaxLength, Office_x002f_CubicleNumber)
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =CubicleInput_1.Text
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =8
+
+                        DataCardKey37_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (CubicleInput_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        CubicleInput_1 As text:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            Default: =equipmentAsset.'Office/Cubicle Number'
+                            DelayOutput: =true
+                            DisplayMode: =Parent.DisplayMode
+                            HintText: ="e.g. 101, Office 2"
+                            MaxLength: =Parent.MaxLength
+                            PaddingLeft: =5
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey37_1.X + DataCardKey37_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage39_2 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =CubicleInput_1.Y + CubicleInput_1.Height
+                            ZIndex: =3
+
+                        StarVisible37_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey37_1.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey37_1.Y
+                            ZIndex: =4
+
+                    "'Deployment Date_DataCard2_1' As typedDataCard.dateEditCard":
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="DeploymentDate"
+                        Default: =ThisItem.'Deployment Date'
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Equipment'],DataSourceInfo.DisplayName,DeploymentDate)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Update: =DataCardValue19_1.SelectedDate
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =9
+
+                        DataCardKey38_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (DataCardValue19_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        DataCardValue19_1 As datepicker:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            CalendarHeaderFill: =App.Theme.Colors.Primary
+                            DefaultDate: =equipmentAsset.'Deployment Date'
+                            DisplayMode: =Parent.DisplayMode
+                            EndYear: =Year(Today())+100
+                            HoverDateFill: =App.Theme.Colors.Lighter70
+                            InputTextPlaceholder: =If(IsBlank(Self.SelectedDate), Text("If no suitable date leave blank"))
+                            IsEditable: =true
+                            PaddingBottom: =0
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SelectedDateFill: =App.Theme.Colors.Primary
+                            StartYear: =1899
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey38_1.X + DataCardKey38_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage40_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardValue19_1.Y + DataCardValue19_1.Height
+                            ZIndex: =3
+
+                        StarVisible38_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey38_1.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey38_1.Y
+                            ZIndex: =4
+
+                    User_DataCard2_1 As typedDataCard.comboBoxEditCard:
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: ="User"
+                        Default: =ThisItem.User
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@'PubDef Computer Inventory_ Asset List_Equipment'],DataSourceInfo.DisplayName,User)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =true
+                        Update: =EquipmentUserInput_1.Selected
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =9
+                        ZIndex: =10
+
+                        DataCardKey39_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =34
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (EquipmentUserInput_1.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        EquipmentUserInput_1 As combobox:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            DefaultSelectedItems: =LookUp(Users,email = equipmentAsset.User.Email)
+                            DisplayFields: =["fullName"]
+                            DisplayMode: =Parent.DisplayMode
+                            InputTextPlaceholder: ="Find items"
+                            Items: =Users
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SearchFields: =["fullName"]
+                            SearchItems: =Search(Users,EquipmentUserInput_1.SearchText,fullName)
+                            SelectMultiple: =false
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey39_1.X + DataCardKey39_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage41_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(168, 0, 0, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =EquipmentUserInput_1.Y + EquipmentUserInput_1.Height
+                            ZIndex: =3
+
+                        StarVisible39_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(0, 18, 107, 1)
+                            Height: =DataCardKey39_1.Height
+                            Text: ="*"
+                            Visible: =false
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey39_1.Y
+                            ZIndex: =4
+
+                    AssetFormSubmit2_1 As typedDataCard.blankCard:
+                        AutoHeight: =true
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =0
+                        ContentLanguage: =""
+                        DataField: =""
+                        DisplayMode: =DisplayMode.Edit
+                        DisplayName: =""
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        LayoutHeight: =0
+                        LayoutWidth: =0
+                        LayoutX: =0
+                        LayoutY: =0
+                        maximumHeight: =7680
+                        maximumWidth: =1366
+                        minimumHeight: =20
+                        minimumWidth: =20
+                        Required: =false
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =10
+                        ZIndex: =11
+
+                        SubmitNewAsset_5 As button:
+                            OnSelect: |-
+                                =If(Len(EquipmentSKUInput_1.Text)=14 && ((equipmentAsset.SKU = Value(EquipmentSKUInput_1.Text))||((equipmentAsset.SKU <> Value(EquipmentSKUInput_1.Text) && IsBlank(LookUp('PubDef Computer Inventory_ Asset List_Equipment',Value(EquipmentSKUInput_1.Text) = SKU))))),UpdateContext({assetEmail:EquipmentUserInput_1.Selected.email});Patch('PubDef Computer Inventory_ Asset List_Equipment',LookUp('PubDef Computer Inventory_ Asset List_Equipment',ID = equipmentAsset.ID),
+                                {
+                                    'Barcoded Image': EquipmentBarcodeImage_1.Image,
+                                    SKU: Value(EquipmentSKUInput_1.Text),
+                                    'Asset Status': If(IsBlank(EquipmentAssetStatusInput_1.Selected),{Value:Blank()},EquipmentAssetStatusInput_1.Selected),
+                                    'Asset Type':If(IsBlank(EquipmentAssetTypeInput_1.Selected),{Value:Blank()},EquipmentAssetTypeInput_1.Selected),
+                                    'Asset Model':If(IsBlank(EquipmentAssetModelInput_1.Selected),{Value:Blank()},EquipmentAssetModelInput_1.Selected),
+                                    'Office Site':If(IsBlank(OfficeSiteInput_1.Selected),{Value:Blank()},OfficeSiteInput_1.Selected),
+                                    'Office/Cubicle Number':If(Len(CubicleInput_1.Text)=0,Blank(),CubicleInput_1.Text),
+                                    'Deployment Date':If(IsBlank(DataCardValue19_1.SelectedDate),Blank(),DataCardValue19_1.SelectedDate),
+                                    User:If(!IsBlank(EquipmentUserInput_1.Selected),{
+                                        '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",		
+                                        Claims: "i:0#.f|membership|" & assetEmail,
+                                        Department: Office365Users.UserProfileV2(assetEmail).department,		
+                                        DisplayName: Office365Users.UserProfileV2(assetEmail).displayName,		
+                                        Email: assetEmail,		
+                                        JobTitle: Office365Users.UserProfileV2(assetEmail).jobTitle,		
+                                        Picture: ""
+                                    }, Blank())
+                                
+                                });UpdateContext({assetPopup:true});
+                                ,Notify("Form entries may have errors!");UpdateContext({assetIDError:Len(EquipmentSKUInput_1.Text)=14})); If(assetIDError||assignedUser,UpdateContext({assetFormError:true}))
+                            Text: ="Finalize Edit"
+                            Width: =190
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =5
+                            ZIndex: =1
+
+        AssetDetailsFooter As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                =AssetDetails.Size=1
+            Width: =Parent.Width
+            ZIndex: =7
+
+            AssetDetailsWebMobileMenu As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    AssetDetailsWebMenu As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: =AssetDetails.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    AssetDetailsBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =AssetDetailsLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(AssetDetailsHeaderContainer.Height-AssetDetailsLabel.Height)/1.05
+        ZIndex: =3
+
+    AssetDetailsFeedbackBugReport As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =4
+
+    SubmittingAssetContainer_1 As groupContainer.manualLayoutContainer:
+        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =assetPopup
+        Width: =Parent.Width
+        ZIndex: =5
+
+        Rectangle48_1 As rectangle:
+            BorderThickness: =1
+            Fill: =RGBA(241, 244, 249, 1)
+            Height: =Parent.Height/1.1
+            Width: =Parent.Width/1.1
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =1
+
+        WindowBar_1 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(39, 113, 194, 1)
+            Height: =70
+            Width: =Rectangle48_1.Width
+            X: =Rectangle48_1.X
+            Y: =Rectangle48_1.Y
+            ZIndex: =2
+
+        Label88_1 As label:
+            Align: =Align.Center
+            Height: =80
+            Text: |-
+                ="Performing Action please wait...
+                
+                You will be redirected shortly."
+            Width: =Rectangle48_1.Width
+            X: =Rectangle48_1.X+(Rectangle48_1.Width-Self.Width)/2
+            Y: =Rectangle48_1.Y+(Rectangle48_1.Height-Self.Height)/2
+            ZIndex: =3
+
+    AssetPopupTimer_1 As timer:
+        AutoPause: =false
+        AutoStart: =assetPopup
+        Duration: =4000
+        OnTimerEnd: |-
+            =UpdateContext({assetPopup:false});
+            Back(ScreenTransition.UnCoverRight);
+        Visible: =false
+        Y: =20
+        ZIndex: =6
+
+    Gallery21 As gallery.variableTemplateHeightGallery:
+        Default: =First(Self.AllItems)
+        DelayItemLoading: =true
+        Height: =40
+        Items: =Filter('PubDef Computer Inventory_ Asset List_Computers',ID=computerAsset.ID)
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        TemplateSize: =280
+        Visible: =false
+        Width: =168
+        X: =40
+        Y: =40
+        ZIndex: =9
+
+        Label93 As label:
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.'Assigned User'.DisplayName
+            ZIndex: =1
+
+    TemplateErrorPopup_7 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =assetFormError
+        Width: =Parent.Width
+        ZIndex: =10
+
+        TemplateErrorBackground_7 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        TemplateErrorWindow_7 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        TemplateErrorHeaderRectangle_7 As rectangle:
+            BorderThickness: =2
+            Width: =TemplateErrorWindow_7.Width
+            X: =TemplateErrorWindow_7.X
+            Y: =TemplateErrorWindow_7.Y
+            ZIndex: =3
+
+        TemplateErrorHeader_7 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =TemplateErrorHeaderRectangle_7.Width
+            X: =TemplateErrorHeaderRectangle_7.X
+            Y: =TemplateErrorHeaderRectangle_7.Y
+            ZIndex: =4
+
+        CloseTemplateErrorButton_7 As button:
+            OnSelect: |-
+                =UpdateContext({assetFormError:false});
+            Text: ="Close"
+            X: =(TemplateErrorWindow_7.Width-Self.Width)/2 +TemplateErrorWindow_7.X
+            Y: =TemplateErrorWindow_7.Height-Self.Height
+            ZIndex: =5
+
+        TemplateField1Label_11 As label:
+            Align: =Align.Center
+            Color: =If(assetIDError, Color.Red, Color.Green)
+            Height: =60
+            Size: =20
+            Text: |-
+                =If(assetIDError,"Error with amount of numbers, 14 digits required
+                Current count: "&Len(AssetIDInput.Text), "Asset ID OK")
+            Width: =TemplateErrorWindow_7.Width
+            X: =PopupRectangle_5.X
+            Y: =TemplateErrorHeaderRectangle_7.Y+TemplateErrorHeaderRectangle_7.Height+15
+            ZIndex: =6
+
+        TemplateField1Label_12 As label:
+            Align: =Align.Center
+            Color: =If(assetName, Color.Red, Color.Green)
+            Height: =60
+            Size: =20
+            Text: =If(assetName,"Asset Name left blank", "Asset Name OK")
+            Width: =TemplateErrorWindow_7.Width
+            X: =PopupRectangle_5.X
+            Y: =TemplateField1Label_11.Y+TemplateField1Label_11.Height+15
+            ZIndex: =7
+
+        TemplateField1Label_13 As label:
+            Align: =Align.Center
+            Color: =If(assetLocation, Color.Red, Color.Green)
+            Height: =60
+            Size: =20
+            Text: =If(assetLocation,"Location Blank or not selected", "Asset Location OK")
+            Width: =TemplateErrorWindow_7.Width
+            X: =PopupRectangle_5.X
+            Y: =TemplateField1Label_12.Y+TemplateField1Label_12.Height+15
+            ZIndex: =8
+
+        TemplateField1Label_14 As label:
+            Align: =Align.Center
+            Color: =If(assetStatus, Color.Red, Color.Green)
+            Height: =60
+            Size: =20
+            Text: =If(assetStatus,"Asset Status not selected", "Asset Status OK")
+            Width: =TemplateErrorWindow_7.Width
+            X: =PopupRectangle_5.X
+            Y: =TemplateField1Label_13.Y+TemplateField1Label_13.Height+15
+            ZIndex: =9
+
+        TemplateField1Label_15 As label:
+            Align: =Align.Center
+            Color: =If(assignedUser, Color.Red, Color.Green)
+            Height: =60
+            Size: =20
+            Text: =If(assignedUser,"User not Selected", "User OK")
+            Width: =TemplateErrorWindow_7.Width
+            X: =PopupRectangle_5.X
+            Y: =TemplateField1Label_14.Y+TemplateField1Label_14.Height+15
+            ZIndex: =10
+
+        TemplateField1Label_17 As label:
+            Align: =Align.Center
+            Color: =If(assignedUser, Color.Red, Color.Green)
+            Height: =60
+            Size: =20
+            Text: =If(Len(AssetIDInput.Text)=14 && computerAsset.AssetID <> Value(AssetIDInput.Text) && IsBlank( LookUp('PubDef Computer Inventory_ Asset List_Computers', Value(AssetIDInput.Text) = AssetID)),"","Duplicate SKU Found")
+            Width: =TemplateErrorWindow_7.Width
+            X: =PopupRectangle_5.X
+            Y: =TemplateField1Label_15.Y+TemplateField1Label_15.Height+15
+            ZIndex: =22
+
+    ConfirmAssetAction As groupContainer.manualLayoutContainer:
+        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =prepAsset || deleteAsset
+        Width: =Parent.Width
+        ZIndex: =11
+
+        Rectangle48_2 As rectangle:
+            BorderThickness: =1
+            Fill: =RGBA(241, 244, 249, 1)
+            Height: =Parent.Height/1.1
+            Width: =Parent.Width/1.1
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =1
+
+        WindowBar_2 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(39, 113, 194, 1)
+            Height: =70
+            Width: =Rectangle48_2.Width
+            X: =Rectangle48_2.X
+            Y: =Rectangle48_2.Y
+            ZIndex: =2
+
+        Label88_2 As label:
+            Align: =Align.Center
+            Height: =80
+            Text: =If(prepAsset,"Are you sure you want to initialize the Asset?","Are you sure you want to delete the Asset?")
+            Width: =Rectangle48_2.Width
+            X: =Rectangle48_2.X+(Rectangle48_2.Width-Self.Width)/2
+            Y: =Rectangle48_2.Y+(Rectangle48_2.Height-Self.Height)/2
+            ZIndex: =3
+
+        Button47 As button:
+            OnSelect: |-
+                =Remove('PubDef Computer Inventory_ Asset List_Computers',Gallery21.Selected);
+                UpdateContext({assetPopup:true,deleteAsset:false});
+            Text: ="Delete"
+            Visible: =deleteAsset
+            X: =Rectangle48_2.X+(Rectangle48_2.Width-Self.Width)/2
+            Y: =Rectangle48_2.Height-Self.Height
+            ZIndex: =4
+
+        Button47_1 As button:
+            OnSelect: |-
+                =Patch('PubDef Computer Inventory_ Asset List_Computers',LookUp('PubDef Computer Inventory_ Asset List_Computers',ID=computerAsset.ID),
+                {
+                    AssetID: IfError(computerAsset.AssetID,Blank(),computerAsset.AssetID),
+                    'Asset Name':computerAsset.'Asset Name',
+                    'AD Description': Blank(),
+                    'Asset Status':{Value:"Spare"},
+                    'Asset Type':computerAsset.'Asset Type',
+                    'Asset Maker':computerAsset.'Asset Maker',
+                    'Asset Model':computerAsset.'Asset Model',
+                    'Asset Location': computerAsset.'Asset Location', 
+                    'Windows Verison':computerAsset.'Windows Verison',
+                    'Device Last Updated': Now(),
+                    'Assigned User':Blank(),
+                    'Email Address':Blank(),
+                    ADStaffLocation:Blank(), 
+                    ADStaffType:Blank(), 
+                    AssetCondition:computerAsset.'Asset Condition',
+                    'Connection Type':computerAsset.'Connection Type'
+                
+                });
+                Notify("Asset Has been initialized");
+                UpdateContext({assetPopup:true,prepAsset:false});
+            Text: ="Prep Asset"
+            Visible: =prepAsset
+            X: =Rectangle48_2.X+(Rectangle48_2.Width-Self.Width)/2
+            Y: =Rectangle48_2.Height-Self.Height
+            ZIndex: =24
+
+        Icon28_3 As icon:
+            BorderThickness: =2
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(203, 102, 102, 1)
+            Height: =Self.Width
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =UpdateContext({prepAsset:false,deleteAsset:false})
+            Width: =32
+            X: =Rectangle48_2.Width+Rectangle48_2.X-Self.Width
+            Y: =Rectangle48_2.Y
+            ZIndex: =25
+

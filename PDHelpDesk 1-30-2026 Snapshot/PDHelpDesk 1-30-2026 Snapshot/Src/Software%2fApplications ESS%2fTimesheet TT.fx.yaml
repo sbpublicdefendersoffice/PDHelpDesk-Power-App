@@ -1,0 +1,913 @@
+"'Software/Applications ESS/Timesheet TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm('S/AESS/TSForm');
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({altImagePopUp:false,usingCamera:false});
+
+    "'S/AESS/TSMainContainer' As groupContainer.horizontalAutoLayoutContainer":
+        Height: ='Software/Applications ESS/Timesheet TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='Software/Applications ESS/Timesheet TT'.Width
+        ZIndex: =1
+
+        "'S/AESS/TSVerticalLayoutContainer' As groupContainer.verticalAutoLayoutContainer":
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            "'S/AESS/TSHeaderContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                TimeSheetHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =4
+
+                    HomeBackgroundGradient_37 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    "'S/AESS/TSHeaderLabel' As label":
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-'S/AESS/TSWebHeader'.Height
+                        Size: =If('Software/Applications ESS/Timesheet TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="ESS/Timesheet Form"
+                        Width: =Parent.Width
+                        Y: ='S/AESS/TSWebHeader'.Height
+                        ZIndex: =2
+
+                    "'S/AESS/TSWebHeader' As compWebHeader":
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='Software/Applications ESS/Timesheet TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        ZIndex: =3
+
+            "'S/AESS/TSMainContentContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                "'S/AESS/TSForm' As form":
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    "'S/AESS/TSTitle_DataCard' As typedDataCard.textualEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        "'S/AESS/TSTitleLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Name of File"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'S/AESS/TSTitleError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =73
+                            ZIndex: =3
+
+                        "'S/AESS/TSTitleStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='S/AESS/TSTitleLabel'.Color
+                            Height: ='S/AESS/TSTitleLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='S/AESS/TSTitleLabel'.Y
+                            ZIndex: =4
+
+                        "'S/AESS/TSTitleInput' As text":
+                            Default: =""
+                            Height: =Parent.Height/3.5
+                            HintText: ="Please Enter A Title"
+                            Width: =Parent.Width/1.10
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'S/AESS/TSMainCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Software/Applications ESS/Timesheet TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        "'S/AESS/TSMainCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'S/AESS/TSVLCMainCategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='S/AESS/TSMainCategoryDropdown'.Y + 'S/AESS/TSMainCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'S/AESS/TSMainCategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='S/AESS/TSMainCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='S/AESS/TSMainCategoryLabel'.Y
+                            ZIndex: =4
+
+                        "'S/AESS/TSMainCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'S/AESS/TSSubCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Software/Applications ESS/Timesheet TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        "'S/AESS/TSSubCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'S/AESS/TSSubcategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='S/AESS/TSOnSubCategoryDropdown'.Y + 'S/AESS/TSOnSubCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'S/AESS/TSSubcategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='S/AESS/TSSubCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='S/AESS/TSSubCategoryLabel'.Y
+                            ZIndex: =4
+
+                        "'S/AESS/TSOnSubCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = 'S/AESS/TSMainCategoryDropdown'.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'S/AESS/TSFields' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =100
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        ExField1_31 As label:
+                            Text: ="NewField1"
+                            X: =28
+                            Y: =4
+                            ZIndex: =1
+
+                        ExFieldInput1_32 As text:
+                            Default: =""
+                            Height: =28
+                            HintText: ="Enter Information"
+                            Width: ='S/AESS/TSTitleInput'.Width/3
+                            X: =28
+                            Y: =44
+                            ZIndex: =2
+
+                        ExField2_31 As label:
+                            Text: ="NewField2"
+                            X: =ExFieldInput2_31.X
+                            Y: =7
+                            ZIndex: =3
+
+                        ExFieldInput2_31 As text:
+                            Default: =""
+                            Height: =28
+                            HintText: ="Enter Information"
+                            Width: =ExFieldInput1_32.Width
+                            X: =ExFieldInput1_32.X+ExFieldInput1_32.Width
+                            Y: =44
+                            ZIndex: =4
+
+                        ExField3_31 As label:
+                            Text: ="NewField3"
+                            X: =ExFieldInput3_31.X
+                            Y: =7
+                            ZIndex: =5
+
+                        ExFieldInput3_31 As text:
+                            Default: =""
+                            Height: =28
+                            HintText: ="Enter Information"
+                            Width: =ExFieldInput1_32.Width
+                            X: =ExFieldInput2_31.X+ExFieldInput2_31.Width
+                            Y: =44
+                            ZIndex: =6
+
+                    "'S/AESS/TSSpecificIssue_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank('S/AESS/TSSpecificIssueDropdown'.Selected.Name), false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        "'S/AESS/TSSpecificIssueLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'S/AESS/TSSpecificIssueError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='S/AESS/TSSpecificIssueDropdown'.Y + 'S/AESS/TSSpecificIssueDropdown'.Height
+                            ZIndex: =3
+
+                        "'S/AESS/TSSpecificIssueStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='S/AESS/TSSpecificIssueLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='S/AESS/TSSpecificIssueLabel'.Y
+                            ZIndex: =4
+
+                        "'S/AESS/TSSpecificIssueDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = 'S/AESS/TSOnSubCategoryDropdown'.Selected.ID)
+                            Width: ='S/AESS/TSTitleInput'.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'S/AESS/TSDescription_DataCard' As typedDataCard.textualEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Software/Applications ESS/Timesheet TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =true
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        "'S/AESS/TSDescriptionLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Describe your Issue"
+                            Width: =190
+                            Wrap: =false
+                            X: =30
+                            Y: ='eDefenderAdding/CodingDisclaimerLabel_21'.Height+25
+                            ZIndex: =1
+
+                        "'S/AESS/TSDescriptionErrorMessage' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='S/AESS/TSDescriptionTextInputArea'.Y + 'S/AESS/TSDescriptionTextInputArea'.Height
+                            ZIndex: =3
+
+                        "'S/AESS/TSDescriptionStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='S/AESS/TSDescriptionLabel'.Color
+                            Height: ='S/AESS/TSDescriptionLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='S/AESS/TSDescriptionLabel'.Y
+                            ZIndex: =4
+
+                        "'S/AESS/TSDescriptionTextInputArea' As text":
+                            Default: =TicketDescText
+                            EnableSpellCheck: =true
+                            Height: =Parent.Height/1.5
+                            HintText: ="What problems are you having with ESS"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: ='S/AESS/TSDescription_DataCard'.Visible
+                            Width: =If('Software/Applications ESS/Timesheet TT'.Size=1, Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: ='S/AESS/TSDescriptionLabel'.Y+'S/AESS/TSDescriptionLabel'.Height
+                            ZIndex: =5
+
+                        "'eDefenderAdding/CodingDisclaimerLabel_21' As label":
+                            Align: =Align.Center
+                            BorderColor: =RGBA(221, 79, 14, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(221, 79, 14, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =If('Software/Applications ESS/Timesheet TT'.Size=1,80,40)
+                            Size: =If('eDefender Adding/Coding Items TT'.Size =1,13,16)
+                            Text: ="When Submitting media, DO NOT SUBMIT SENSITIVE DOCUMENTS. In addition, Documents should be uploaded to Box"
+                            Width: =Parent.Width
+                            ZIndex: =6
+
+                    "'S/AESS/TSLocationID_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        "'S/AESS/TSLocationIDLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'S/AESS/TSLocationIDErrorMessage' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='S/AESS/TSLocationIDDropdown'.Y + 'S/AESS/TSLocationIDDropdown'.Height
+                            ZIndex: =3
+
+                        "'S/AESS/TSLocationIDStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='S/AESS/TSLocationIDLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='S/AESS/TSLocationIDLabel'.Y
+                            ZIndex: =4
+
+                        "'S/AESS/TSLocationIDDropdown' As dropdown":
+                            AllowEmptySelection: =true
+                            Default: =Blank()
+                            Height: =35
+                            Items: =Locations
+                            Width: ='S/AESS/TSDescriptionTextInputArea'.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'S/AESS/TSAttatchments_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        AddMediaButton_28 As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                            Text: ="Add Media"
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =(Parent.Height-Self.Height)/2
+                            ZIndex: =8
+
+                    "'S/AESS/TSButtons_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Software/Applications ESS/Timesheet TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        "'S/AESS/TSSubmitButton' As button":
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: ='S/AESS/TSCancelButton'.Height
+                            OnSelect: |
+                                =
+                                If(!'S/AESS/TSDescriptionTextInputArea'.Visible,
+                                UpdateContext({TicketDescText:Concatenate("Adding Coding Items Template",Char(13),Char(13),ExFieldInput1_32.Text,Char(13),ExFieldInput2_31.Text,Char(13),ExFieldInput3_31.Text)}));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    Len(Trim('S/AESS/TSDescriptionTextInputArea'.Text))>0 And !IsBlank('S/AESS/TSLocationIDDropdown'.Selected.Name),
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: 'S/AESS/TSTitleInput'.Text,
+                                                description: Trim('S/AESS/TSDescriptionTextInputArea'.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: 'S/AESS/TSMainCategoryDropdown'.Selected.ID,
+                                                category: 'S/AESS/TSOnSubCategoryDropdown'.Selected.ID,
+                                                subCategory: 'S/AESS/TSSpecificIssueDropdown'.Selected.ID,
+                                                locationId: 'S/AESS/TSLocationIDDropdown'.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(JointAttachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = 'S/AESS/TSMainCategoryDropdown'.Selected.ID && locationId = 'S/AESS/TSLocationIDDropdown'.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = 'S/AESS/TSMainCategoryDropdown'.Selected.ID && locationId = 'S/AESS/TSLocationIDDropdown'.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" ESS Support Request"
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                ForAll(
+                                    attItems As Attachment,
+                                            AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) 
+                                );
+                                ForAll(
+                                    RTEImages As RTEI,
+                                    With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        );
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm('S/AESS/TSForm');
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({SAESSPopup:true});
+                            Text: ="Submit"
+                            Width: ='S/AESS/TSCancelButton'.Width
+                            X: ='S/AESS/TSCancelButton'.X + (Self.Width*1.3)
+                            Y: ='S/AESS/TSCancelButton'.Y
+                            ZIndex: =1
+
+                        "'S/AESS/TSCancelButton' As button":
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm('S/AESS/TSForm');
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('Software/Applications ESS/Timesheet TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            "'S/AESS/TSFooter' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='Software/Applications ESS/Timesheet TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                "'S/AESS/TSMobileMenu' As compMobileMenu_1":
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    "'S/AESS/TSBackButton' As icon.BackArrow":
+        Color: =Color.White
+        Height: ='S/AESS/TSHeaderLabel'.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm('S/AESS/TSForm'); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =('S/AESS/TSHeaderContainer'.Height-'S/AESS/TSHeaderLabel'.Height)/1.05
+        ZIndex: =2
+
+    "'S/AESS/TSWebMenu' As compWebMenu_1":
+        Visible: ='Software/Applications ESS/Timesheet TT'.Size > 1
+        ZIndex: =3
+
+    SAESSPopup As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =SAESSPopup
+        Width: =Parent.Width
+        ZIndex: =8
+
+        ACPopupBackground_28 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_28 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_35 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_28.Width
+            X: =ACPopupRectangle_28.X
+            Y: =ACPopupRectangle_28.Y
+            ZIndex: =3
+
+        Label10_46 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_35.Width
+            X: =Rectangle8_35.X
+            Y: =Rectangle8_35.Y
+            ZIndex: =4
+
+        Button1_34 As button:
+            OnSelect: |-
+                =UpdateContext({SAESSPopup:false});
+            Text: ="Close"
+            X: =(ACPopupRectangle_28.Width-Self.Width)/2 +ACPopupRectangle_28.X
+            Y: =ACPopupRectangle_28.Height-Self.Height
+            ZIndex: =9
+
+        Label18_107 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank('S/AESS/TSLocationIDDropdown'.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank('S/AESS/TSLocationIDDropdown'.Selected.Name),"Location Missing", "Location OK")
+            Width: =ACPopupRectangle_28.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_35.Y+Rectangle8_35.Height+15
+            ZIndex: =11
+
+        Label18_108 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim('S/AESS/TSDescriptionTextInputArea'.Text))=0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim('S/AESS/TSDescriptionTextInputArea'.Text))=0, "Details Blank","Details OK" )
+            Width: =ACPopupRectangle_28.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_107.Y+Label18_107.Height+10
+            ZIndex: =12
+
+    FeedbackBugReportESS As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='Software/Applications ESS/Timesheet TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =9
+
+    AddMedia_29 As AddMedia:
+        AMSize: ='Software/Applications ESS/Timesheet TT'.Size
+        AttachCameraOff: =Set(AttachCamera,false);
+        AttachCameraOn: =Set(AttachCamera,true);
+        DisablePickMedia: =Set(AttachFiles,false)
+        EnablePickMedia: =Set(AttachFiles,true)
+        InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+        OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+        PhotoModeDisable: =Set(AttachPhoto,false)
+        PhotoModeEnable: =Set(AttachPhoto,true)
+        Visible: =varOpenMedia
+        ZIndex: =10
+

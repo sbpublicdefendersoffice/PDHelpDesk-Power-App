@@ -1,0 +1,1322 @@
+"'HR Employee Offboarding TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm(HREOffForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({altImagePopUp:false,usingCamera:false});
+        UpdateContext({OffboardingPopup:false});
+
+    HREOffMainContainer As groupContainer.horizontalAutoLayoutContainer:
+        Height: ='HR Employee Offboarding TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='HR Employee Offboarding TT'.Width
+        ZIndex: =2
+
+        HREOffVerticalLayoutContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            HREOffHeaderContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                OffboardingHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =11
+
+                    HomeBackgroundGradient_32 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    HREOffHeaderLabel As label:
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-HREOffWebHeader.Height
+                        Size: =If('HR Employee Offboarding TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Employee Offboarding Form"
+                        Width: =Parent.Width
+                        Y: =HREOffWebHeader.Height
+                        ZIndex: =2
+
+                    HREOffWebHeader As compWebHeader:
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='HR Employee Offboarding TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        Height: |-
+                            =82
+                            //Parent.Height
+                        ZIndex: =3
+
+            HREOffMainContentContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                HREOffForm As form:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    HREOffTitle_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =530
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        HREOffFirstNameLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="First Name"
+                            Width: =100
+                            Wrap: =false
+                            X: =30
+                            Y: ='eDefenderAdding/CodingDisclaimerLabel_16'.Height+25
+                            ZIndex: =1
+
+                        HREOffTitleError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HREOffFirstNameInput.Y + HREOffFirstNameInput.Height
+                            ZIndex: =3
+
+                        HREOffTitleStarVisible As label:
+                            Align: =Align.Center
+                            Color: =HREOffFirstNameLabel.Color
+                            Height: =HREOffFirstNameLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =HREOffFirstNameLabel.Y
+                            ZIndex: =4
+
+                        HREOffFirstNameInput As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =35
+                            HintText: ="Enter First name"
+                            Width: =If('HR Employee Offboarding TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: =HREOffFirstNameLabel.Y+HREOffFirstNameLabel.Height
+                            ZIndex: =5
+
+                        HREOffLastNameLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Last Name"
+                            Width: =100
+                            Wrap: =false
+                            X: =30
+                            Y: =HREOffFirstNameInput.Y+HREOffFirstNameInput.Height+20
+                            ZIndex: =6
+
+                        HREOffLastNameInput As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =35
+                            HintText: ="Enter Last name"
+                            Width: =If('HR Employee Offboarding TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: =HREOffLastNameLabel.Y+HREOffLastNameLabel.Height
+                            ZIndex: =7
+
+                        HREOffStaffGroupLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Staff Group"
+                            Width: =120
+                            Wrap: =false
+                            X: =30
+                            Y: =HREOffEmailAddressInput.Y+HREOffEmailAddressInput.Height+20
+                            ZIndex: =8
+
+                        HREOffStaffGroupDropdown As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =
+                            Height: =35
+                            Items: |-
+                                =Table(
+                                {
+                                    Role:"Attorney"
+                                }
+                                ,
+                                {
+                                    Role:"CDD"
+                                }
+                                ,
+                                {
+                                    Role:"LOP"
+                                }
+                                ,
+                                {
+                                    Role:"IT"
+                                }
+                                )
+                            Width: =HREOffFirstNameInput.Width
+                            X: =30
+                            Y: =HREOffStaffGroupLabel.Y+HREOffStaffGroupLabel.Height
+                            ZIndex: =9
+
+                        HREOffOperationLocationLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Operation Location"
+                            Width: =180
+                            Wrap: =false
+                            X: =30
+                            Y: =HREOffStaffGroupDropdown.Y+HREOffStaffGroupDropdown.Height+20
+                            ZIndex: =10
+
+                        HREOffOperationLocationDropdown As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =
+                            Height: =35
+                            Items: |-
+                                =Table(
+                                {
+                                    Location:"SB"
+                                }
+                                ,
+                                {
+                                    Location:"SM"
+                                }
+                                ,
+                                {
+                                    Location:"LM"
+                                })
+                            Width: =HREOffFirstNameInput.Width
+                            X: =30
+                            Y: =HREOffOperationLocationLabel.Y+HREOffOperationLocationLabel.Height
+                            ZIndex: =11
+
+                        HREOffEndDateLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="End Date"
+                            Width: =100
+                            Wrap: =false
+                            X: =30
+                            Y: =HREOffOperationLocationDropdown.Y+HREOffOperationLocationDropdown.Height+20
+                            ZIndex: =12
+
+                        HREOffEndDatePicker As datepicker:
+                            DefaultDate: =
+                            Height: =35
+                            IconBackground: =ColorScheme.primary
+                            InputTextPlaceholder: ="Select ending date"
+                            Width: =HREOffFirstNameInput.Width
+                            X: =30
+                            Y: =HREOffEndDateLabel.Y+HREOffEndDateLabel.Height
+                            ZIndex: =13
+
+                        HREOffEmailAddressLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Email Address"
+                            Width: =140
+                            Wrap: =false
+                            X: =30
+                            Y: =HREOffLastNameInput.Y+HREOffLastNameInput.Height+20
+                            ZIndex: =14
+
+                        HREOffEmailAddressInput As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =35
+                            HintText: ="Enter email address"
+                            Width: =If('HR Employee Offboarding TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: =HREOffEmailAddressLabel.Y+HREOffEmailAddressLabel.Height
+                            ZIndex: =15
+
+                        "'eDefenderAdding/CodingDisclaimerLabel_16' As label":
+                            Align: =Align.Center
+                            BorderColor: =RGBA(221, 79, 14, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(221, 79, 14, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =If('HR Employee Offboarding TT'.Size=1,80,40)
+                            Size: =If('eDefender Adding/Coding Items TT'.Size =1,13,16)
+                            Text: ="When Submitting media, DO NOT SUBMIT SENSITIVE DOCUMENTS. In addition, Documents should be uploaded to Box"
+                            Width: =Parent.Width
+                            ZIndex: =16
+
+                    HREOffMainCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'HR Employee Offboarding TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        HREOffMainCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        HREOffMainCategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HREOffMainCategoryDropdown.Y + HREOffMainCategoryDropdown.Height
+                            ZIndex: =3
+
+                        HREOffMainCategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =HREOffMainCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =HREOffMainCategoryLabel.Y
+                            ZIndex: =4
+
+                        HREOffMainCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    HREOffSubCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'HR Employee Offboarding TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        HREOffSubCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        HREOffSubcategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HREOffSubCategoryDropdown.Y + HREOffSubCategoryDropdown.Height
+                            ZIndex: =3
+
+                        HREOffSubcategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =HREOffSubCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =HREOffSubCategoryLabel.Y
+                            ZIndex: =4
+
+                        HREOffSubCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = HREOffMainCategoryDropdown.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    HREOffFields As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =150
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        ExField1_26 As label:
+                            Text: ="Offboarding Info"
+                            Width: =250
+                            X: =28
+                            Y: =4
+                            ZIndex: =1
+
+                        ExFieldInput1_27 As text:
+                            Default: =""
+                            Height: =80
+                            HintText: ="What needs to be returned by the offboardee, and any additional instructions"
+                            Mode: =TextMode.MultiLine
+                            Width: =HREOffFirstNameInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =2
+
+                    HREOffSpecificIssue_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank(HREOffSpecificIssueDropdown.Selected.Name), false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        HREOffSpecificIssueLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        HREOffSpecificIssueError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HREOffSpecificIssueDropdown.Y + HREOffSpecificIssueDropdown.Height
+                            ZIndex: =3
+
+                        HREOffSpecificIssueStarVisible As label:
+                            Align: =Align.Center
+                            Height: =HREOffSpecificIssueLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =HREOffSpecificIssueLabel.Y
+                            ZIndex: =4
+
+                        HREOffSpecificIssueDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = HREOffSubCategoryDropdown.Selected.ID)
+                            Width: =HREOffFirstNameInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    HREOffDescription_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'HR Employee Offboarding TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        HREOffDescriptionLabel As label:
+                            AutoHeight: =true
+                            Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        HREOffDescriptionErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HREOffDescriptionTextInputArea.Y + HREOffDescriptionTextInputArea.Height
+                            ZIndex: =3
+
+                        HREOffDescriptionStarVisible As label:
+                            Align: =Align.Center
+                            Color: =HREOffDescriptionLabel.Color
+                            Height: =HREOffDescriptionLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =HREOffDescriptionLabel.Y
+                            ZIndex: =4
+
+                        HREOffDescriptionTextInputArea As text:
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: ="Please Describe Your Issue"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: =HREOffDescription_DataCard.Visible
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    HREOffLocationID_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        HREOffLocationIDLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        HREOffLocationIDErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =HREOffLocationIDDropdown.Y + HREOffLocationIDDropdown.Height
+                            ZIndex: =3
+
+                        HREOffLocationIDStarVisible As label:
+                            Align: =Align.Center
+                            Height: =HREOffLocationIDLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =HREOffLocationIDLabel.Y
+                            ZIndex: =4
+
+                        HREOffLocationIDDropdown As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =35
+                            Items: =Locations
+                            Width: =HREOffFirstNameInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    HREOffAttatchments_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        AddMediaButton_23 As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                            Text: ="Add Media"
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =(Parent.Height-Self.Height)/2
+                            ZIndex: =8
+
+                    HREOffButtons_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'HR Employee Offboarding TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        HREOffSubmitButton As button:
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: =HREOffCancelButton.Height
+                            OnSelect: |
+                                =
+                                If(!HREOffDescriptionTextInputArea.Visible,
+                                UpdateContext({TicketDescText:Concatenate("Onboarding Ticket Information",Char(13)&Char(13),"Employee Name: "&HREOffFirstNameInput.Text&" "&HREOffLastNameInput.Text&Char(13)&Char(13),"Email: "&HREOffEmailAddressInput.Text&Char(13)&Char(13),"Staff Group: "&HREOffStaffGroupDropdown.Selected.Role&Char(13)&Char(13),"Operation Location: "&HREOffOperationLocationDropdown.Selected.Location&Char(13)&Char(13),"End Date: "&DateValue(HREOffEndDatePicker.SelectedDate))}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    Len(Trim(HREOffFirstNameInput.Text))>0 And Len(Trim(HREOffLastNameInput.Text))>0 And Len(Trim(HREOffEmailAddressInput.Text)) And        !IsBlank(HREOffStaffGroupDropdown.Selected.Role) And !IsBlank(HREOffOperationLocationDropdown.Selected.Location) And 
+                                    !IsBlank(HREOffEndDatePicker) And !IsBlank(HREOffLocationIDDropdown.Selected.Name),
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        offboardinfo,
+                                            {
+                                                Title: "# "&rec.ID&" Offboarding Request",
+                                                description: Trim(HREOffDescriptionTextInputArea.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: HREOffMainCategoryDropdown.Selected.ID,
+                                                category: HREOffSubCategoryDropdown.Selected.ID,
+                                                subCategory: HREOffSpecificIssueDropdown.Selected.ID,
+                                                locationId: HREOffLocationIDDropdown.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(JointAttachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = HREOffMainCategoryDropdown.Selected.ID && locationId = HREOffLocationIDDropdown.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = HREOffMainCategoryDropdown.Selected.ID && locationId = HREOffLocationIDDropdown.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                    );
+                                
+                                // for the attachments, run power automate flow for each attached file
+                                ForAll(
+                                    attItems As Attachment,
+                                            AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) 
+                                );
+                                ForAll(
+                                    RTEImages As RTEI,
+                                    With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        );
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                //Begin the Offboarding process
+                                //Ticket 1 PDGOTicket
+                                Set(rec,
+                                    Patch(Tickets,Defaults(Tickets),
+                                    {
+                                        Title: "",
+                                        description:Trim(HREOffDescriptionTextInputArea.Text),
+                                        creatorId: userData.id,
+                                        mainCategory: HREOffMainCategoryDropdown.Selected.ID,
+                                        category: HREOffSubCategoryDropdown.Selected.ID,
+                                        subCategory: HREOffSpecificIssueDropdown.Selected.ID,
+                                        locationId: HREOffLocationIDDropdown.Selected.ID,
+                                        status: "open",
+                                        metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                    ),
+                                        hasAttachment: If(IsEmpty(JointAttachments),0,1),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: 13,
+                                                addAssignees:LookUp(Users,ID=userData.id,fullName)    
+                                                
+                                    }
+                                
+                                    ));
+                                //Fix title
+                                Patch(Tickets,LookUp(Tickets,rec.ID=ID),
+                                {
+                                    Title: "# "&rec.ID&" PDGo Account Closure"
+                                }
+                                );
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                    // Send to assigned for AD Ticket
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),   TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                    );
+                                //Ticket 2 equipment check
+                                
+                                Set(rec,
+                                    Patch(Tickets,Defaults(Tickets),
+                                    {
+                                        Title: "",
+                                        description:Trim(HREOffDescriptionTextInputArea.Text),
+                                        creatorId: userData.id,
+                                        mainCategory: HREOffMainCategoryDropdown.Selected.ID,
+                                        category: HREOffSubCategoryDropdown.Selected.ID,
+                                        subCategory: HREOffSpecificIssueDropdown.Selected.ID,
+                                        locationId: HREOffLocationIDDropdown.Selected.ID,
+                                        status: "open",
+                                        metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                    ),
+                                        hasAttachment: If(IsEmpty(JointAttachments),0,1),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = HREOffMainCategoryDropdown.Selected.ID && locationId = HREOffLocationIDDropdown.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = HREOffMainCategoryDropdown.Selected.ID && locationId = HREOffLocationIDDropdown.Selected.ID,
+                                                        userID
+                                                    )
+                                                ),
+                                                addAssignees:LookUp(Users,ID=userData.id,fullName)    
+                                                
+                                    }
+                                
+                                    ));
+                                //Fix title
+                                Patch(Tickets,LookUp(Tickets,rec.ID=ID),
+                                {
+                                    Title: "# "&rec.ID&" Equipment Reclaim"
+                                }
+                                );
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                    // Send to assigned for AD Ticket
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),   TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                    );
+                                //Ticket 3 Odyssey & CEB
+                                Set(rec,
+                                    Patch(Tickets,Defaults(Tickets),
+                                    {
+                                        Title: "",
+                                        description:Trim(HREOffDescriptionTextInputArea.Text),
+                                        creatorId: userData.id,
+                                        mainCategory: HREOffMainCategoryDropdown.Selected.ID,
+                                        category: HREOffSubCategoryDropdown.Selected.ID,
+                                        subCategory: HREOffSpecificIssueDropdown.Selected.ID,
+                                        locationId: HREOffLocationIDDropdown.Selected.ID,
+                                        status: "open",
+                                        metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                    ),
+                                        hasAttachment: If(IsEmpty(JointAttachments),0,1),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: 4,
+                                                addAssignees:LookUp(Users,ID=userData.id,fullName)    
+                                                
+                                    }
+                                
+                                    ));
+                                //Fix title
+                                Patch(Tickets,LookUp(Tickets,rec.ID=ID),
+                                {
+                                    Title: "# "&rec.ID&" Odyssey & CEB Account Closures"
+                                }
+                                );
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                    // Send to assigned for AD Ticket
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),   TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                    );
+                                //Ticket 4 eDefender Closure
+                                Set(rec,
+                                    Patch(Tickets,Defaults(Tickets),
+                                    {
+                                        Title: "",
+                                        description:Trim(HREOffDescriptionTextInputArea.Text),
+                                        creatorId: userData.id,
+                                        mainCategory: HREOffMainCategoryDropdown.Selected.ID,
+                                        category: HREOffSubCategoryDropdown.Selected.ID,
+                                        subCategory: HREOffSpecificIssueDropdown.Selected.ID,
+                                        locationId: HREOffLocationIDDropdown.Selected.ID,
+                                        status: "open",
+                                        metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                    ),
+                                        hasAttachment: If(IsEmpty(JointAttachments),0,1),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: 5,
+                                                addAssignees:LookUp(Users,ID=userData.id,fullName)    
+                                                
+                                    }
+                                
+                                    ));
+                                //Fix title
+                                Patch(Tickets,LookUp(Tickets,rec.ID=ID),
+                                {
+                                    Title: "# "&rec.ID&" eDefender Account Closure"
+                                }
+                                );
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                    // Send to assigned for AD Ticket
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),   TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                    );
+                                //Ticket 5 AD Closure
+                                Set(rec,
+                                    Patch(Tickets,Defaults(Tickets),
+                                    {
+                                        Title: "",
+                                        description:Trim(HREOffDescriptionTextInputArea.Text),
+                                        creatorId: userData.id,
+                                        mainCategory: HREOffMainCategoryDropdown.Selected.ID,
+                                        category: HREOffSubCategoryDropdown.Selected.ID,
+                                        subCategory: HREOffSpecificIssueDropdown.Selected.ID,
+                                        locationId: HREOffLocationIDDropdown.Selected.ID,
+                                        status: "open",
+                                        metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                    ),
+                                        hasAttachment: If(IsEmpty(JointAttachments),0,1),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: 6,
+                                                addAssignees:LookUp(Users,ID=userData.id,fullName)    
+                                                
+                                    }
+                                
+                                    ));
+                                //Fix title
+                                Patch(Tickets,LookUp(Tickets,rec.ID=ID),
+                                {
+                                    Title: "# "&rec.ID&" AD Account Closure"
+                                }
+                                );
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                    // Send to assigned for AD Ticket
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),   TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                    );
+                                
+                                
+                                    
+                                    //Reset the form upon completion
+                                    ResetForm(HREOffForm);
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({OffboardingPopup:true});
+                            Text: ="Submit"
+                            Width: =HREOffCancelButton.Width
+                            X: =HREOffCancelButton.X + (Self.Width*1.3)
+                            Y: =HREOffCancelButton.Y
+                            ZIndex: =1
+
+                        HREOffCancelButton As button:
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm(HREOffForm);
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('HR Employee Offboarding TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            HREOffFooter As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='HR Employee Offboarding TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                HREOffMobileMenu As compMobileMenu:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    HREOffBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =HREOffHeaderLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm(HREOffForm); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(HREOffHeaderContainer.Height-HREOffHeaderLabel.Height)/1.05
+        ZIndex: =3
+
+    HREOffWebMenu As compWebMenu:
+        Visible: ='HR Employee Offboarding TT'.Size > 1
+        ZIndex: =4
+
+    OffboardingPopup As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =OffboardingPopup
+        Width: =Parent.Width
+        ZIndex: =9
+
+        ACPopupBackground_23 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_23 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_30 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_23.Width
+            X: =ACPopupRectangle_23.X
+            Y: =ACPopupRectangle_23.Y
+            ZIndex: =3
+
+        Label10_41 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_30.Width
+            X: =Rectangle8_30.X
+            Y: =Rectangle8_30.Y
+            ZIndex: =4
+
+        Button1_29 As button:
+            OnSelect: |-
+                =UpdateContext({OffboardingPopup:false});
+            Text: ="Close"
+            X: =(ACPopupRectangle_23.Width-Self.Width)/2 +ACPopupRectangle_23.X
+            Y: =ACPopupRectangle_23.Height-Self.Height
+            ZIndex: =9
+
+        Label18_84 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(HREOffLocationIDDropdown.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank(HREOffLocationIDDropdown.Selected.Name),"Request Location Missing", "Reqest Location OK")
+            Width: =ACPopupRectangle_23.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_30.Y+Rectangle8_30.Height+15
+            ZIndex: =11
+
+        Label18_85 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(HREOffFirstNameInput.Text))=0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(HREOffFirstNameInput.Text))=0, "First Name Blank","First Name OK" )
+            Width: =ACPopupRectangle_23.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_84.Y+Label18_84.Height+10
+            ZIndex: =12
+
+        Label18_86 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(HREOffLastNameInput.Text))=0,Color.Red,Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(HREOffLastNameInput.Text))=0,"Last Name Blank","Last Name OK")
+            Width: =ACPopupRectangle_23.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_85.Y+Label18_85.Height+10
+            ZIndex: =13
+
+        Label18_87 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(HREOffEmailAddressInput.Text))=0,Color.Red,Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(HREOffEmailAddressInput.Text))=0,"Email Blank","Email OK")
+            Width: =ACPopupRectangle_23.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_86.Y+Label18_86.Height+10
+            ZIndex: =14
+
+        Label18_88 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(HREOffStaffGroupDropdown.Selected.Role),Color.Red,Color.Green)
+            Size: =20
+            Text: =If(IsBlank(HREOffStaffGroupDropdown.Selected.Role),"Staff Group Blank","Staff Group OK")
+            Width: =ACPopupRectangle_23.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_87.Y+Label18_87.Height+10
+            ZIndex: =15
+
+        Label18_89 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(HREOffOperationLocationDropdown.Selected.Location),Color.Red,Color.Green)
+            Size: =20
+            Text: =If(IsBlank(HREOffOperationLocationDropdown.Selected.Location),"Operation Location Blank","Operation Location OK")
+            Width: =ACPopupRectangle_23.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_88.Y+Label18_88.Height+10
+            ZIndex: =16
+
+        Label18_90 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(HREOffEndDatePicker.SelectedDate),Color.Red,Color.Green)
+            Size: =20
+            Text: =If(IsBlank(HREOffEndDatePicker.SelectedDate),"End Date Blank","End Date OK")
+            Width: =ACPopupRectangle_23.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_89.Y+Label18_89.Height+10
+            ZIndex: =17
+
+    FeedbackBugReportOffB As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='HR Employee Offboarding TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =10
+
+    AddMedia_24 As AddMedia:
+        AMSize: ='HR Employee Offboarding TT'.Size
+        AttachCameraOff: =Set(AttachCamera,false);
+        AttachCameraOn: =Set(AttachCamera,true);
+        DisablePickMedia: =Set(AttachFiles,false)
+        EnablePickMedia: =Set(AttachFiles,true)
+        InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+        OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+        PhotoModeDisable: =Set(AttachPhoto,false)
+        PhotoModeEnable: =Set(AttachPhoto,true)
+        Visible: =varOpenMedia
+        ZIndex: =11
+

@@ -1,0 +1,946 @@
+"'Software/Applications Microsoft TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm('S/AMicrosoftForm');
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({altImagePopUp:false,usingCamera:false});
+
+    "'S/AMicrosoftMainContainer' As groupContainer.horizontalAutoLayoutContainer":
+        Height: ='Software/Applications Microsoft TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='Software/Applications Microsoft TT'.Width
+        ZIndex: =1
+
+        "'S/AMicrosoftVerticalLayoutContainer' As groupContainer.verticalAutoLayoutContainer":
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            "'S/AMicrosoftHeaderContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                MicrosoftHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =4
+
+                    HomeBackgroundGradient_41 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    "'S/AMicrosoftHeaderLabel' As label":
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-'S/AMicrosoftWebHeader'.Height
+                        Size: =If('Software/Applications Microsoft TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="M365 Products Form"
+                        Width: =Parent.Width
+                        Y: ='S/AMicrosoftWebHeader'.Height
+                        ZIndex: =2
+
+                    "'S/AMicrosoftWebHeader' As compWebHeader":
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='Software/Applications Microsoft TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        ZIndex: =3
+
+            "'S/AMicrosoftMainContentContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                "'S/AMicrosoftForm' As form":
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    "'S/AMicrosoftTitle_DataCard' As typedDataCard.textualEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =195
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Visible: =true
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        "'S/AMicrosoftTitleLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Name of File"
+                            Visible: =false
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'S/AMicrosoftTitleError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =false
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =73
+                            ZIndex: =2
+
+                        "'S/AMicrosoftTitleStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='S/AMicrosoftTitleLabel'.Color
+                            Height: ='S/AMicrosoftTitleLabel'.Height
+                            Text: ="*"
+                            Visible: =false
+                            Width: =30
+                            Wrap: =false
+                            Y: ='S/AMicrosoftTitleLabel'.Y
+                            ZIndex: =3
+
+                        "'S/AMicrosoftTitleInput' As text":
+                            Default: =""
+                            Height: =Parent.Height/3.5
+                            HintText: ="Please Enter A Title"
+                            Visible: =false
+                            Width: =Parent.Width/1.10
+                            X: =30
+                            Y: =44
+                            ZIndex: =4
+
+                        Rectangle18 As rectangle:
+                            BorderThickness: =2
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =Label52.Height+Radio8.Height
+                            Width: =ExFieldInput1_36.Width
+                            X: =Label52.X
+                            Y: =Label52.Y
+                            ZIndex: =5
+
+                        Radio8 As radio:
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            Height: =If('Software/Applications Microsoft TT'.Size=1,250,70)
+                            Items: |-
+                                =Table(
+                                {
+                                    Option:"Outlook"
+                                },
+                                {
+                                    Option:"Word"
+                                },
+                                {
+                                    Option:"Excel"
+                                },
+                                {
+                                    Option:"PowerPoint"
+                                },
+                                {
+                                    Option:"Teams"
+                                })
+                            Layout: =If('Software/Applications Microsoft TT'.Size=1,Layout.Vertical,Layout.Horizontal)
+                            Width: =If('Software/Applications Microsoft TT'.Size=1,300,675)
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =Label52.Height+Label52.Y
+                            ZIndex: =6
+
+                        Label52 As label:
+                            Align: =Align.Center
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: |
+                                =ColorScheme.primary
+                            Text: ="Select Product"
+                            X: =30
+                            Y: ='eDefenderAdding/CodingDisclaimerLabel_25'.Height+25
+                            ZIndex: =7
+
+                        "'eDefenderAdding/CodingDisclaimerLabel_25' As label":
+                            Align: =Align.Center
+                            BorderColor: =RGBA(221, 79, 14, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(221, 79, 14, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =If('Software/Applications Microsoft TT'.Size=1,80,40)
+                            Size: =If('eDefender Adding/Coding Items TT'.Size =1,13,16)
+                            Text: ="When Submitting media, DO NOT SUBMIT SENSITIVE DOCUMENTS. In addition, Documents should be uploaded to Box"
+                            Width: =Parent.Width
+                            ZIndex: =8
+
+                    "'S/AMicrosoftMainCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Software/Applications Microsoft TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        "'S/AMicrosoftMainCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'S/AMicrosoftMainCategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='S/AMicrosoftMainCategoryDropdown'.Y + 'S/AMicrosoftMainCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'S/AMicrosoftMainCategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='S/AMicrosoftMainCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =10
+                            ZIndex: =4
+
+                        "'S/AMicrosoftMainCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'S/AMicrosoftSubCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Software/Applications Microsoft TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        "'S/AMicrosoftSubCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'S/AMicrosoftSubcategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='S/AMicrosoftSubCategoryDropdown'.Y + 'S/AMicrosoftSubCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'S/AMicrosoftSubcategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='S/AMicrosoftSubCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='S/AMicrosoftSubCategoryLabel'.Y
+                            ZIndex: =4
+
+                        "'S/AMicrosoftSubCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = 'S/AMicrosoftMainCategoryDropdown'.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'S/AMicrosoftFields' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =150
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        ExField1_35 As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Text: ="Describe Issues with "&If(IsBlank(Radio8.Selected.Option),"MS Product",Radio8.Selected.Option)
+                            Width: =300
+                            X: =28
+                            Y: =4
+                            ZIndex: =1
+
+                        ExFieldInput1_36 As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =100
+                            HintText: ="What are your problems/ issue with "&If(IsBlank(Radio8.Selected.Option),"MS Product",Radio8.Selected.Option)
+                            Mode: =TextMode.MultiLine
+                            Width: =If('Software/Applications Microsoft TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =28
+                            Y: =44
+                            ZIndex: =2
+
+                    "'S/AMicrosoftSpecificIssue_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank('S/AMicrosoftSpecificIssueDropdown'.Selected.Name), false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        "'S/AMicrosoftSpecificIssueLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'S/AMicrosoftSpecificIssueError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='S/AMicrosoftSpecificIssueDropdown'.Y + 'S/AMicrosoftSpecificIssueDropdown'.Height
+                            ZIndex: =3
+
+                        "'S/AMicrosoftSpecificIssueStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='S/AMicrosoftSpecificIssueLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='S/AMicrosoftSpecificIssueLabel'.Y
+                            ZIndex: =4
+
+                        "'S/AMicrosoftSpecificIssueDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = 'S/AMicrosoftSubCategoryDropdown'.Selected.ID)
+                            Width: ='S/AMicrosoftTitleInput'.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'S/AMicrosoftDescription_DataCard' As typedDataCard.textualEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Software/Applications Microsoft TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        "'S/AMicrosoftDescriptionLabel' As label":
+                            AutoHeight: =true
+                            Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'S/AMicrosoftDescriptionErrorMessage' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='S/AMicrosoftDescriptionTextInputArea'.Y + 'S/AMicrosoftDescriptionTextInputArea'.Height
+                            ZIndex: =3
+
+                        "'S/AMicrosoftDescriptionStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='S/AMicrosoftDescriptionLabel'.Color
+                            Height: ='S/AMicrosoftDescriptionLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='S/AMicrosoftDescriptionLabel'.Y
+                            ZIndex: =4
+
+                        "'S/AMicrosoftDescriptionTextInputArea' As text":
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: ="Please Describe Your Issue"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: ='S/AMicrosoftDescription_DataCard'.Visible
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    "'S/AMicrosoftLocationID_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        "'S/AMicrosoftLocationIDLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'S/AMicrosoftLocationIDErrorMessage' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='S/AMicrosoftLocationIDDropdown'.Y + 'S/AMicrosoftLocationIDDropdown'.Height
+                            ZIndex: =3
+
+                        "'S/AMicrosoftLocationIDStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='S/AMicrosoftLocationIDLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='S/AMicrosoftLocationIDLabel'.Y
+                            ZIndex: =4
+
+                        "'S/AMicrosoftLocationIDDropdown' As dropdown":
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =35
+                            Items: =Locations
+                            Width: =ExFieldInput1_36.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'S/AMicrosoftAttatchments_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        AddMediaButton_32 As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                            Text: ="Add Media"
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =(Parent.Height-Self.Height)/2
+                            ZIndex: =8
+
+                    "'S/AMicrosoftButtons_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Software/Applications Microsoft TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        "'S/AMicrosoftSubmitButton' As button":
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: ='S/AMicrosoftCancelButton'.Height
+                            OnSelect: |
+                                =
+                                If(!'S/AMicrosoftDescriptionTextInputArea'.Visible,
+                                UpdateContext({TicketDescText:Concatenate("Microsoft Product Chosen: "&Radio8.Selected.Option&Char(13)&Char(13),"Problem Details: "&Char(13)&ExFieldInput1_36.Text)}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    !IsBlank('S/AMicrosoftLocationIDDropdown'.Selected.Name) And !IsBlank(Radio8.Selected.Option) And 
+                                    Len(Trim(ExFieldInput1_36.Text))> 0,
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: 'S/AMicrosoftTitleInput'.Text,
+                                                description: Trim('S/AMicrosoftDescriptionTextInputArea'.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: 'S/AMicrosoftMainCategoryDropdown'.Selected.ID,
+                                                category: 'S/AMicrosoftSubCategoryDropdown'.Selected.ID,
+                                                subCategory: 'S/AMicrosoftSpecificIssueDropdown'.Selected.ID,
+                                                locationId: 'S/AMicrosoftLocationIDDropdown'.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(JointAttachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = 'S/AMicrosoftMainCategoryDropdown'.Selected.ID && locationId = 'S/AMicrosoftLocationIDDropdown'.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = 'S/AMicrosoftMainCategoryDropdown'.Selected.ID && locationId = 'S/AMicrosoftLocationIDDropdown'.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" Microsoft "&Radio8.Selected.Option&" Request"
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                ForAll(
+                                    attItems As Attachment,
+                                            AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) 
+                                );
+                                ForAll(
+                                    RTEImages As RTEI,
+                                    With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        );
+                                
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm('S/AMicrosoftForm');
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({SAMicrosoftPopup:true});
+                            Text: ="Submit"
+                            Width: ='S/AMicrosoftCancelButton'.Width
+                            X: ='S/AMicrosoftCancelButton'.X + (Self.Width*1.3)
+                            Y: ='S/AMicrosoftCancelButton'.Y
+                            ZIndex: =1
+
+                        "'S/AMicrosoftCancelButton' As button":
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm('S/AMicrosoftForm');
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('Software/Applications Microsoft TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            "'S/AMicrosoftFooter' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='Software/Applications Microsoft TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                "'S/AMicrosoftMobileMenu' As compMobileMenu_2":
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    "'S/AMicrosoftBackButton' As icon.BackArrow":
+        Color: =Color.White
+        Height: ='S/AMicrosoftHeaderLabel'.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm('S/AMicrosoftForm'); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =('S/AMicrosoftHeaderContainer'.Height-'S/AMicrosoftHeaderLabel'.Height)/1.05
+        ZIndex: =2
+
+    "'S/AMicrosoftWebMenu' As compWebMenu_2":
+        Visible: ='Software/Applications Microsoft TT'.Size > 1
+        ZIndex: =3
+
+    SAMicrosoftPopup As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =SAMicrosoftPopup
+        Width: =Parent.Width
+        ZIndex: =8
+
+        ACPopupBackground_32 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_32 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_39 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_32.Width
+            X: =ACPopupRectangle_32.X
+            Y: =ACPopupRectangle_32.Y
+            ZIndex: =3
+
+        Label10_50 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_39.Width
+            X: =Rectangle8_39.X
+            Y: =Rectangle8_39.Y
+            ZIndex: =4
+
+        Button1_38 As button:
+            OnSelect: |-
+                =UpdateContext({SAMicrosoftPopup:false});
+            Text: ="Close"
+            X: =(ACPopupRectangle_32.Width-Self.Width)/2 +ACPopupRectangle_32.X
+            Y: =ACPopupRectangle_32.Height-Self.Height
+            ZIndex: =9
+
+        Label18_115 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank('S/AMicrosoftLocationIDDropdown'.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank('S/AMicrosoftLocationIDDropdown'.Selected.Name),"Location Missing", "Location OK")
+            Width: =ACPopupRectangle_32.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_39.Y+Rectangle8_39.Height+15
+            ZIndex: =11
+
+        Label18_116 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(Radio8.Selected.Option),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank(Radio8.Selected.Option), "Product Selection Blank","Product Seletion OK" )
+            Width: =ACPopupRectangle_32.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_115.Y+Label18_115.Height+10
+            ZIndex: =12
+
+        Label18_117 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(ExFieldInput1_36.Text))= 0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(ExFieldInput1_36.Text))= 0, "Problem Details Blank","Problem Details OK" )
+            Width: =ACPopupRectangle_32.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_116.Y+Label18_116.Height+10
+            ZIndex: =13
+
+    FeedbackBugReportMSP As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='Software/Applications Microsoft TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =9
+
+    AddMedia_33 As AddMedia:
+        AMSize: ='Software/Applications Microsoft TT'.Size
+        AttachCameraOff: =Set(AttachCamera,false);
+        AttachCameraOn: =Set(AttachCamera,true);
+        DisablePickMedia: =Set(AttachFiles,false)
+        EnablePickMedia: =Set(AttachFiles,true)
+        InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+        OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+        PhotoModeDisable: =Set(AttachPhoto,false)
+        PhotoModeEnable: =Set(AttachPhoto,true)
+        Visible: =varOpenMedia
+        ZIndex: =10
+

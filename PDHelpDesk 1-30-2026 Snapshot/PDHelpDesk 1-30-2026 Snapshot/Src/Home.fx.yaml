@@ -1,0 +1,405 @@
+Home As screen:
+    BackgroundImage: =SantaBarabaraBuilding
+    Fill: =ColorScheme.screenBackground
+    ImagePosition: =ImagePosition.Fill
+    OnVisible: |
+        =
+        //Outdated variables for contextual menu
+        UpdateContext({NDrop:false,MGallery:false,HambIconChange:false,CloseAlertRibbon:false, buttonText:""});
+        Set(galleryVisible, true);
+        ForAll(userNav,
+              Collect(tempC,
+                      Last(
+                        FirstN(
+                            AddColumns(
+                                DropColumns(userNav,row),row,CountRows(tempC)+1
+                                      ),CountRows(tempC)+1
+                              )
+                          )
+                     )
+              );
+              
+        ClearCollect(userNav,tempC);
+        Clear(tempC);
+        //FeedbackBug Reporting Clear Collections
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+
+    Home_Main_Container As groupContainer.horizontalAutoLayoutContainer:
+        Height: =Home.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        LayoutOverflowY: =LayoutOverflow.Scroll
+        Visible: |-
+            =true
+            //This is the Main container
+        Width: =Home.Width
+        ZIndex: =4
+
+        Home_Verical_Layout_Container As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            FillPortions: =9
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            Visible: |-
+                =true
+                // This is the main Vertical container of the screen
+            Width: =Parent.Width
+            ZIndex: =2
+
+            Home_Header_Container As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                Home_Header_Elements As groupContainer.manualLayoutContainer:
+                    AlignInContainer: =AlignInContainer.Start
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    Width: =Parent.Width
+                    ZIndex: =7
+
+                    Home_Background_Gradient As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: |-
+                            ="<div style='
+                            height:"&Self.Height-1&"px;
+                            width:100%;
+                            bbackground: rgb(53,89,137);
+                            background: linear-gradient(90deg, rgb("&gradientLeft.red&","&gradientLeft.blue&","&gradientLeft.green&") 0%, rgb("&gradientRight.red&","&gradientRight.blue&","&gradientRight.green&") 100%);' ></div>"
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    Home_Header_Label As label:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-Home_Web_Header.Height
+                        Size: =If(Home.Size= 1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Home"
+                        Width: =Parent.Width
+                        X: =(Parent.Width - Self.Width)/2
+                        Y: =82
+                        ZIndex: =2
+
+                    Home_Web_Header As compWebHeader:
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: =Home.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        Height: |-
+                            =82
+                            //Parent.Height
+                        ZIndex: =3
+
+            Home_Main_Content_Container As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughLight
+                FillPortions: =10
+                Height: =Parent.Height
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =4
+
+                Home_Buttons_Container As groupContainer.verticalAutoLayoutContainer:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    FillPortions: =8
+                    Height: =Parent.Height
+                    LayoutDirection: =LayoutDirection.Vertical
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    LayoutMode: =LayoutMode.Auto
+                    LayoutOverflowY: =LayoutOverflow.Scroll
+                    Width: =Parent.Width
+                    ZIndex: =3
+
+                    Home_Content_Area As groupContainer.manualLayoutContainer:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        LayoutGridColumns: =6
+                        LayoutGridRows: =6
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =100
+                        LayoutMinWidth: =250
+                        Width: =Parent.Width
+                        ZIndex: =3
+
+                        "'Home_Navigation_ Buttons_Gallery' As gallery.galleryVertical":
+                            '#CopilotOverlayLabel': ="Filtered"
+                            Height: =If(Home.Size=1,Parent.Height, 400)
+                            Items: =userNav
+                            Layout: =Layout.Vertical
+                            OnSelect: =Switch(ThisItem.NavName, "Create Ticket", Navigate('Category Select'), "My Tickets", Navigate(MyTickets), "Ticket Log", Navigate('All Tickets'), "Ticket Metrics", Navigate('Ticket Metrics - Admin Tech'), "Assign Role", Navigate('Assign Role - Admin'))
+                            ShowScrollbar: =false
+                            TemplateSize: =200
+                            Width: =Parent.Width
+                            WrapCount: =Switch(Home.Size, ScreenSize.Small, 2, ScreenSize.Medium, 2, ScreenSize.Large, 3, If(userData.role ="staff", 4, 4))
+                            Y: =42
+                            ZIndex: =1
+
+                            Home_Gallery_Background_Button As button:
+                                Color: =ColorScheme.primary
+                                Fill: =Color.Transparent
+                                Height: |-
+                                    =//If ( Home.Size =1 , Parent.TemplateHeight/1.5,Parent.TemplateHeight/1.1)
+                                    Parent.TemplateHeight-50
+                                OnSelect: =Select(Parent)
+                                Text: =""
+                                Width: =If(Home.Size = 1, Parent.Width/2.5, Parent.Width/5)
+                                X: =(Parent.TemplateWidth-Self.Width)/2
+                                Y: =(Parent.TemplateHeight-Self.Height)/2
+                                ZIndex: =1
+
+                            Home_Gallery_Button_Color_Gradient As htmlViewer:
+                                DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                Height: =Home_Gallery_Background_Button.Height
+                                HtmlText: |-
+                                    ="<div style='
+                                    height:"&Self.Height-1&"px;
+                                    width:100%;
+                                    bbackground: rgb(53,89,137);
+                                    background: "&If(ThisItem.NavName="Emergency","linear-gradient(90deg, rgb("&200&","&0&","&0&") 0% , rgb("&100&","&0&","&0&") "&100&"%)","linear-gradient(90deg, rgb("&gradientLeft.red&","&gradientLeft.blue&","&gradientLeft.green&") 0% , rgb("&gradientRight.red&","&gradientRight.blue&","&gradientRight.green&") "&100&"%)")&"; -webkit-border-radius: 10px;
+                                    -moz-border-radius: 10px;
+                                    border-radius: 10px;' ></div>"
+                                    
+                                    //rgba(180,194,203,1) 0% , rgba(126,149,180,1) 25%, rgba(53,89,137,1)
+                                PaddingBottom: =0
+                                PaddingLeft: =0
+                                PaddingRight: =0
+                                PaddingTop: =0
+                                Width: =Home_Gallery_Background_Button.Width
+                                X: =Home_Gallery_Background_Button.X
+                                Y: =    Home_Gallery_Background_Button.Y
+                                ZIndex: =2
+
+                            Home_Gallery_Nav_Label As label:
+                                Align: =Align.Center
+                                Color: =Color.White
+                                FontWeight: =FontWeight.Semibold
+                                Height: |-
+                                    =//If(Home.Size >1,ButtonGalleryBackgroundButton_1.Height/4.5,15)
+                                    40
+                                OnSelect: =Select(Parent)
+                                Size: |
+                                    =If(Home.Size =1,11,15)
+                                Text: =ThisItem.NavName
+                                Width: =Home_Gallery_Background_Button.Width
+                                X: =(Parent.TemplateWidth-Self.Width)/2
+                                Y: =Home_Gallery_Nav_Icon.Y+Home_Gallery_Nav_Icon.Height
+                                ZIndex: =3
+
+                            Home_Gallery_Nav_Icon As icon.Add:
+                                AccessibleLabel: =ThisItem.NavName&" Icon"
+                                Color: =Color.White
+                                Height: |-
+                                    =
+                                    
+                                    //If(Home.Size >1, Parent.TemplateHeight/2.5,Parent.TemplateHeight/3)
+                                    Parent.TemplateHeight-150
+                                Icon: =ThisItem.NavIcon
+                                OnSelect: =Select(Parent)
+                                Width: =Parent.TemplateWidth/2
+                                X: =(Parent.TemplateWidth-Self.Width)/2 
+                                Y: |-
+                                    =//If( Home.Size = 1, (ButtonGalleryBackgroundButton_1.Height-Self.Height)/1.2,(ButtonGalleryBackgroundButton_1.Height-Self.Height)/2)
+                                    (Home_Gallery_Background_Button.Height-Self.Height)/2
+                                ZIndex: =4
+
+                            Home_Gallery_Html_Element As htmlViewer:
+                                DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                DisplayMode: =DisplayMode.View
+                                Height: =175
+                                HtmlText: |-
+                                    =// you can use inline Css to create effects that can be found in modern webapps
+                                    //you cannot link style sheets
+                                    //some elements of html are not supported
+                                    //you can include variables in the html string by adding "&PowerAppsVar&" 
+                                    "<div style='box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025);
+                                    -webkit-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025);
+                                    -moz-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025); height:"&Home_Gallery_Background_Button.Height-11&"px; width:"&Home_Gallery_Background_Button.Width-11&"px; border-style:none; border-radius:10px'></div>"
+                                OnSelect: =Select(Parent)
+                                Width: =Parent.TemplateWidth
+                                X: =Home_Gallery_Background_Button.X
+                                Y: =25
+                                ZIndex: =5
+
+                            Home_Overlap_Button As button:
+                                Fill: =RGBA(255, 255, 255, 0)
+                                Height: =Home_Gallery_Background_Button.Height
+                                HoverFill: |
+                                    =ColorFade(RGBA(105,105,105,.15),50%)
+                                OnSelect: =Navigate(ThisItem.ScreenToGoTo, ScreenTransition.Cover)
+                                PressedFill: =ColorFade(RGBA(105,105,105,.35),-10%)
+                                Text: =""
+                                Width: =Home_Gallery_Background_Button.Width
+                                X: =Home_Gallery_Background_Button.X
+                                Y: |
+                                    =Home_Gallery_Background_Button.Y
+                                ZIndex: =6
+
+                        Home_Alerts_Container As groupContainer.manualLayoutContainer:
+                            Height: =Home_Alert_Gallery.Height
+                            LayoutGridColumns: =6
+                            LayoutGridRows: =6
+                            Visible: =galleryVisible
+                            Width: =Parent.Width
+                            ZIndex: =2
+
+                            "Home_Alert_Gallery As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+                                '#CopilotOverlayLabel': ="Filtered"
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 128, 1)
+                                Height: =If(CountRows(Home_Alert_Gallery.AllItems) *Home_Alert_Gallery.TemplateHeight > 400, 400,(CountRows(Home_Alert_Gallery.AllItems) *Home_Alert_Gallery.TemplateHeight))
+                                Items: |-
+                                    =//Filter takes a data source, then a logical expression to filter out the results
+                                    // like a query
+                                    Filter(Alerts, dateExpired >= Now() || dateExpired = Blank())
+                                Layout: =Layout.Vertical
+                                TemplatePadding: =0
+                                TemplateSize: =35
+                                Visible: |-
+                                    =galleryVisible
+                                    //If(CountRows(Alerts_1) > 0, true, false)
+                                Width: =Parent.Width
+                                WrapCount: =0
+                                ZIndex: =1
+
+                                Home_Alert_Title As label:
+                                    Align: =Align.Center
+                                    Height: =Parent.TemplateHeight
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =//Parent.TemplateHeight / 4
+                                    Size: =If(Home.Size =1,11,15)
+                                    Text: |-
+                                        =//ThisItem refers to an item in the list of items in the gallery
+                                        //each item has properties in this case we want the Title property to display
+                                        ThisItem.Title
+                                    Width: =Parent.Width
+                                    ZIndex: =2
+
+                                Home_Alert_Separator As rectangle:
+                                    Height: =1
+                                    OnSelect: =Select(Parent)
+                                    Width: =Parent.TemplateWidth
+                                    Y: =Home_Alert_Title.Height+3
+                                    ZIndex: =5
+
+                            Home_Dismiss_Alert_Icon As icon.Cancel:
+                                AccessibleLabel: ="Close Alerts"
+                                Color: =RGBA(0, 0, 0, 1)
+                                Height: =Home_Alert_Gallery.TemplateHeight
+                                Icon: =Icon.Cancel
+                                OnSelect: =Set(galleryVisible, false)
+                                PaddingBottom: =5
+                                PaddingLeft: =5
+                                PaddingRight: =5
+                                PaddingTop: =5
+                                Visible: =galleryVisible
+                                Width: =30
+                                X: =Parent.Width-Self.Width
+                                ZIndex: =2
+
+            Home_Footer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: |-
+                    =//Parent.Height/8
+                    60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    =//logical test, check if the screen size is the smallest, this means mobile
+                    // if it is the footer becomes visible, it is invisible otherwise
+                    
+                    Home.Size=1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                Home_Mobile_Menu As compMobileMenu:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    Home_Web_Menu As compWebMenu:
+        Visible: =MyTickets.Size > 1
+        ZIndex: =5
+
+    Home_Feedback_Bug_Report As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: =Home.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =6
+

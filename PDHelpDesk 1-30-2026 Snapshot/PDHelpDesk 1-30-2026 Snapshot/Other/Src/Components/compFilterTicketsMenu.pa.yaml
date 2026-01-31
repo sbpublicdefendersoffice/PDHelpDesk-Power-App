@@ -1,0 +1,928 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  compFilterTicketsMenu:
+    DefinitionType: CanvasComponent
+    AccessAppScope: true
+    CustomProperties:
+      AssignCheckTrue:
+        PropertyKind: Output
+        DisplayName: AssignCheckTrue
+        Description: True if assigned check is true
+        DataType: Boolean
+      BackgroundColor:
+        PropertyKind: Input
+        DisplayName: BackgroundColor
+        Description: A custom property
+        DataType: Color
+        Default: =ColorScheme.backgroundDark
+      CheckAdmin:
+        PropertyKind: Input
+        DisplayName: CheckAdmin
+        Description: Checks if user is either admin/tech
+        DataType: Boolean
+        Default: =!(App.ActiveScreen.Name = "MyTickets") || (App.ActiveScreen.Name = "MyTickets" && (userData.role = "admin" || userData.role = "tech"))
+      CloseFilter:
+        PropertyKind: Event
+        DisplayName: CloseFilter
+        Description: Sets filter visible to false
+        ReturnType: Boolean
+        Default: =Set(varFilterVisible, false)
+      ColorOrange:
+        PropertyKind: Input
+        DisplayName: ColorOrange
+        Description: A custom property
+        DataType: Color
+        Default: =ColorScheme.orange
+      FilterIconSize:
+        PropertyKind: Input
+        DisplayName: FilterIconSize
+        Description: Sets the size of the filter icon
+        DataType: Number
+        Default: |+
+          =If(App.Width > 600, 50, 40)
+      FilterVisible:
+        PropertyKind: Input
+        DisplayName: FilterVisible
+        Description: Determines if menu should be visible or not
+        DataType: Boolean
+        Default: =varFilterVisible
+      FontSize:
+        PropertyKind: Input
+        DisplayName: FontSize
+        Description: Sets the font size
+        DataType: Number
+        Default: =If(App.Height - compFilterTicketsMenu.HeightOffset > 340, 16, 13)
+      HeightOffset:
+        PropertyKind: Input
+        DisplayName: HeightOffset
+        Description: Used to calculate how much height the filter menu can use based on remaining screen space
+        DataType: Number
+        Default: =0
+      IconSize:
+        PropertyKind: Input
+        DisplayName: IconSize
+        Description: Sets the icon size
+        DataType: Number
+        Default: =If(App.Height - compFilterTicketsMenu.HeightOffset > 560, 40, 30)
+      NewHeight:
+        PropertyKind: Input
+        DisplayName: NewHeight
+        Description: Set the height of the component
+        DataType: Number
+        Default: |-
+          =If(
+              compFilterTicketsMenu.CheckAdmin && App.ActiveScreen.Name = "MyTickets",
+              If(
+                  App.Height - compFilterTicketsMenu.HeightOffset > 560,
+                  400,
+                  320
+              ),
+              !compFilterTicketsMenu.CheckAdmin && App.ActiveScreen.Name = "MyTickets",
+              150,
+              If(
+                  App.Height - compFilterTicketsMenu.HeightOffset > 560,
+                  420,
+                  320
+              )
+          )
+      OffColor:
+        PropertyKind: Input
+        DisplayName: OffColor
+        Description: A custom property
+        DataType: Color
+        Default: =ColorScheme.offColor
+      OpenFilter:
+        PropertyKind: Event
+        DisplayName: OpenFilter
+        Description: Sets filter visible to true
+        ReturnType: Boolean
+        Default: =Set(varFilterVisible, true)
+      PrimaryColor:
+        PropertyKind: Input
+        DisplayName: PrimaryColor
+        Description: A custom property
+        DataType: Color
+        Default: =ColorScheme.primary
+      SecondaryColor:
+        PropertyKind: Input
+        DisplayName: SecondaryColor
+        Description: A custom property
+        DataType: Color
+        Default: =ColorScheme.secondary
+      SelectMonths:
+        PropertyKind: Input
+        DisplayName: SelectMonths
+        Description: Specifies how many months to count
+        DataType: Number
+        Default: =1
+      TicketsChoice:
+        PropertyKind: Output
+        DisplayName: TicketsChoice
+        Description: Returns the chosen selection of tickets
+        DataType: Text
+    Properties:
+      AssignCheckTrue: =CheckboxAssignment.Value
+      Height: =If(compFilterTicketsMenu.FilterVisible, compFilterTicketsMenu.NewHeight, compFilterTicketsMenu.FilterIconSize)
+      OnReset: |+
+        =Reset(RadioTickets);
+        Reset(DropdownStatus);
+        Reset(DropdownTag);
+        If(App.ActiveScreen.Name = "All Tickets" And !(compFilterTicketsMenu.SelectMonths = 12), Reset(CheckboxAssignment));
+        Set(
+            TicketsChoice,
+            If(
+                userData.role = "admin" || userData.role = "tech",
+                "My Assigned",
+                "My Tickets"
+            )
+        );
+        Set(
+            StatusChoice,
+            "open"
+        );
+        Set(
+            TagChoice,
+            "None"
+        );
+        Set(
+            AssignmentChoice,
+            If(IsEmpty(colAllTickets),false,If(App.ActiveScreen.Name = "All Tickets" And compFilterTicketsMenu.SelectMonths = 12, false, true))
+        );
+        compFilterTicketsMenu.CloseFilter();
+        If(App.ActiveScreen.Name = "All Tickets" And compFilterTicketsMenu.SelectMonths = 12, ClearCollect(
+                colAllTickets,
+                ForAll(
+                    Table(
+                        ParseJSON(
+                            RecentTicketsSPListV2.Run(
+                                DateAdd(
+                                    Today(),
+                                    -compFilterTicketsMenu.SelectMonths,
+                                    TimeUnit.Months
+                                ),
+                                If(
+                                    IsBlank(SearchAllTicketsQuery),
+                                    "___",
+                                    SearchAllTicketsQuery
+                                ),
+                                StatusChoice,
+                                AssignmentChoice
+                            ).searchresults
+                        )
+                    ),
+                    {
+                        ID: Value(Value.ID),
+                        Title: Text(Value.title),
+                        Description: Text(Value.description),
+                        MainCategory: Value(Value.mainCategory),
+                        Category: Value(Value.category),
+                        SubCategory: Value(Value.subCategory),
+                        DateCreated: DateTimeValue(Value.dateCreated),
+                        DateClosed: DateTimeValue(Value.dateClosed),
+                        CreatorId: Value(Value.creatorId),
+                        Status: Text(Value.status),
+                        AssignedTo: Value(Value.assignedTo),
+                        LastUpdated: DateTimeValue(Value.lastUpdated),
+                        UpdatedBy: Value(Value.updatedBy),
+                        ParentId: Value(Value.parentId),
+                        LocationId: Value(Value.locationId),
+                        Tags: Text(Value.tags),
+                        AddAssignees: Text(Value.addAssignees)
+                    }
+                )
+            ););
+
+
+      TicketsChoice: |+
+        =RadioTickets.SelectedText.Value
+      Width: =If(compFilterTicketsMenu.FilterVisible, If(App.Width > 600 && App.Height - compFilterTicketsMenu.HeightOffset > 400, 220, 185), compFilterTicketsMenu.FilterIconSize)
+    Children:
+      - FilterMenu:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            BorderColor: =compFilterTicketsMenu.OffColor
+            BorderThickness: =2
+            DropShadow: =DropShadow.None
+            Fill: =compFilterTicketsMenu.SecondaryColor
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =compFilterTicketsMenu.FilterVisible
+            Width: =Parent.Width
+          Children:
+            - FilterHeader:
+                Control: GroupContainer@1.4.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: =compFilterTicketsMenu.IconSize + 2
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinWidth: =Parent.Width
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                  Y: =5
+                Children:
+                  - LabelTitle:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =Color.White
+                        Fill: =compFilterTicketsMenu.PrimaryColor
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =compFilterTicketsMenu.IconSize
+                        PaddingLeft: =10
+                        Size: =compFilterTicketsMenu.FontSize
+                        Text: ="Filter"
+                        Width: =Parent.Width
+                  - ResetIcon:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        AccessibleLabel: ="Filter Menu Reset Button"
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =compFilterTicketsMenu.OffColor
+                        Height: =compFilterTicketsMenu.IconSize * 0.80
+                        Icon: =Icon.Reload
+                        OnSelect: |-
+                          =//Reset all options to default
+                          Reset(RadioTickets);
+                          Reset(DropdownStatus);
+                          Reset(DropdownTag);
+                          //Check if we are on All tickets, and if reset the 12 month value if possible
+                          If(App.ActiveScreen.Name = "All Tickets" And !(compFilterTicketsMenu.SelectMonths = 12), Reset(CheckboxAssignment));
+                          Set(
+                              TicketsChoice,
+                              If(
+                                  userData.role = "admin" || userData.role = "tech",
+                                  "My Assigned",
+                                  "My Tickets"
+                              )
+                          );
+                          Set(
+                              StatusChoice,
+                              "open"
+                          );
+                          Set(
+                              TagChoice,
+                              "None"
+                          );
+                          Set(
+                              AssignmentChoice,
+                              If(IsEmpty(colAllTickets),false,If(App.ActiveScreen.Name = "All Tickets" And compFilterTicketsMenu.SelectMonths = 12, false, true))
+                          );
+                          If(
+                              App.ActiveScreen.Name = "MyTickets",
+                          // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+                              ClearCollect(
+                                  colTickets,
+                                  ForAll(
+                                      Table(
+                                          ParseJSON(
+                                              SearchFilterTicketsSPListV2.Run(
+                                                  If(
+                                                      IsBlank(SearchQuery),
+                                                      "___",
+                                                      SearchQuery
+                                                  ),
+                                                  StatusChoice,
+                                                  TagChoice,
+                                                  userData.id,
+                                                  TicketsChoice,
+                                                  DateAdd(
+                                                      Today(),
+                                                      -varSubtractDate,
+                                                      varTimeUnits
+                                                  )
+                                              ).searchresults
+                                          )
+                                      ),
+                                      {
+                                          ID: Value(Value.ID),
+                                          Title: Text(Value.title),
+                                          Description: Text(Value.description),
+                                          MainCategory: Value(Value.mainCategory),
+                                          Category: Value(Value.category),
+                                          SubCategory: Value(Value.subCategory),
+                                          DateCreated: DateTimeValue(Value.dateCreated),
+                                          DateClosed: DateTimeValue(Value.dateClosed),
+                                          CreatorId: Value(Value.creatorId),
+                                          Status: Text(Value.status),
+                                          AssignedTo: Value(Value.assignedTo),
+                                          LastUpdated: DateTimeValue(Value.lastUpdated),
+                                          UpdatedBy: Value(Value.updatedBy),
+                                          ParentId: Value(Value.parentId),
+                                          LocationId: Value(Value.locationId),
+                                          Tags: Text(Value.tags),
+                                          AddAssignees: Text(Value.addAssignees)
+                                      }
+                                  )
+                              ),
+                          // Used with RecentTicketsSPListV2
+                              ClearCollect(
+                                  colAllTickets,
+                                  ForAll(
+                                      Table(
+                                          ParseJSON(
+                                              RecentTicketsSPListV2.Run(
+                                                  DateAdd(
+                                                      Today(),
+                                                      -compFilterTicketsMenu.SelectMonths,
+                                                      TimeUnit.Months
+                                                  ),
+                                                  If(
+                                                      IsBlank(SearchAllTicketsQuery),
+                                                      "___",
+                                                      SearchAllTicketsQuery
+                                                  ),
+                                                  StatusChoice,
+                                                  AssignmentChoice
+                                              ).searchresults
+                                          )
+                                      ),
+                                      {
+                                          ID: Value(Value.ID),
+                                          Title: Text(Value.title),
+                                          Description: Text(Value.description),
+                                          MainCategory: Value(Value.mainCategory),
+                                          Category: Value(Value.category),
+                                          SubCategory: Value(Value.subCategory),
+                                          DateCreated: DateTimeValue(Value.dateCreated),
+                                          DateClosed: DateTimeValue(Value.dateClosed),
+                                          CreatorId: Value(Value.creatorId),
+                                          Status: Text(Value.status),
+                                          AssignedTo: Value(Value.assignedTo),
+                                          LastUpdated: DateTimeValue(Value.lastUpdated),
+                                          UpdatedBy: Value(Value.updatedBy),
+                                          ParentId: Value(Value.parentId),
+                                          LocationId: Value(Value.locationId),
+                                          Tags: Text(Value.tags),
+                                          AddAssignees: Text(Value.addAssignees)
+                                      }
+                                  )
+                              );
+                          )
+                        TabIndex: =3
+                        Width: =compFilterTicketsMenu.IconSize
+                        X: =LabelTitle.Width / 2
+                        Y: =(LabelTitle.Height - Self.Height) / 2
+                  - CancelIcon:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        AccessibleLabel: ="Filter Menu Cancel Button"
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =compFilterTicketsMenu.OffColor
+                        Height: =compFilterTicketsMenu.IconSize
+                        Icon: =Icon.Cancel
+                        OnSelect: =compFilterTicketsMenu.CloseFilter()
+                        TabIndex: =2
+                        Width: =compFilterTicketsMenu.IconSize
+                        X: =Parent.Width - Self.Width
+                  - Separator:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =compFilterTicketsMenu.ColorOrange
+                        Height: =1
+                        Width: =Parent.Width
+                        Y: =LabelTitle.Y + LabelTitle.Height
+            - TicketsSelection:
+                Control: GroupContainer@1.4.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: =If(App.ActiveScreen.Name = "MyTickets", If(App.Height - compFilterTicketsMenu.HeightOffset > 560, 150, 110), If(App.Height - compFilterTicketsMenu.HeightOffset > 560, 100, 70))
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinWidth: =Parent.Width
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =compFilterTicketsMenu.CheckAdmin
+                  Width: =Parent.Width
+                Children:
+                  - LabelTickets:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =Color.White
+                        Fill: =compFilterTicketsMenu.PrimaryColor
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =compFilterTicketsMenu.IconSize
+                        PaddingLeft: =10
+                        Size: =compFilterTicketsMenu.FontSize
+                        Text: ="Tickets"
+                        Width: =Parent.Width
+                  - Separator_1:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =compFilterTicketsMenu.ColorOrange
+                        Height: =1
+                        Width: =Parent.Width
+                        Y: =LabelTickets.Y + LabelTickets.Height
+                  - RadioTickets:
+                      Control: Classic/Radio@2.3.0
+                      Properties:
+                        AccessibleLabel: ="Filter Menu Radio Selection Options"
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =Color.White
+                        Default: =TicketsChoice
+                        Font: =Font.'Open Sans'
+                        Height: =Parent.Height - LabelTickets.Height - Separator_1.Height+20
+                        HoverColor: =RGBA(0, 0, 0, 1)
+                        Items: =["My Assigned", "My Tickets","My Observed"]
+                        Items.Value: =Value
+                        OnChange: |-
+                          =Set(TicketsChoice, RadioTickets.SelectedText.Value);
+
+                          // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+                          ClearCollect(
+                              colTickets,
+                          If(TicketsChoice = "My Observed",
+                              Filter(ForAll(
+                                  Table(
+                                      ParseJSON(
+                                          SearchFilterTicketsSPListV2.Run(
+                                          If(
+                                              IsBlank(SearchQuery),
+                                              "___",
+                                              SearchQuery
+                                              ), StatusChoice, TagChoice, userData.id, TicketsChoice, DateAdd(Today(), -varSubtractDate, varTimeUnits)
+                                          ).searchresults
+                                      )
+                                  ),
+                                  {
+                                      ID: Value(Value.ID),
+                                      Title: Text(Value.title),
+                                      Description: Text(Value.description),
+                                      MainCategory: Value(Value.mainCategory),
+                                      Category: Value(Value.category),
+                                      SubCategory: Value(Value.subCategory),
+                                      DateCreated: DateTimeValue(Value.dateCreated),
+                                      DateClosed: DateTimeValue(Value.dateClosed),
+                                      CreatorId: Value(Value.creatorId),
+                                      Status: Text(Value.status),
+                                      AssignedTo: Value(Value.assignedTo),
+                                      LastUpdated: DateTimeValue(Value.lastUpdated),
+                                      UpdatedBy: Value(Value.updatedBy),
+                                      ParentId: Value(Value.parentId),
+                                      LocationId: Value(Value.locationId),
+                                      Tags: Text(Value.tags),
+                                      AddAssignees: Text(Value.addAssignees)
+                                  }
+                              ),userData.fullName in AddAssignees)
+                          ,
+                              ForAll(
+                                  Table(
+                                      ParseJSON(
+                                          SearchFilterTicketsSPListV2.Run(
+                                          If(
+                                              IsBlank(SearchQuery),
+                                              "___",
+                                              SearchQuery
+                                              ), StatusChoice, TagChoice, userData.id, TicketsChoice, DateAdd(Today(), -varSubtractDate, varTimeUnits)
+                                          ).searchresults
+                                      )
+                                  ),
+                                  {
+                                      ID: Value(Value.ID),
+                                      Title: Text(Value.title),
+                                      Description: Text(Value.description),
+                                      MainCategory: Value(Value.mainCategory),
+                                      Category: Value(Value.category),
+                                      SubCategory: Value(Value.subCategory),
+                                      DateCreated: DateTimeValue(Value.dateCreated),
+                                      DateClosed: DateTimeValue(Value.dateClosed),
+                                      CreatorId: Value(Value.creatorId),
+                                      Status: Text(Value.status),
+                                      AssignedTo: Value(Value.assignedTo),
+                                      LastUpdated: DateTimeValue(Value.lastUpdated),
+                                      UpdatedBy: Value(Value.updatedBy),
+                                      ParentId: Value(Value.parentId),
+                                      LocationId: Value(Value.locationId),
+                                      Tags: Text(Value.tags),
+                                      AddAssignees: Text(Value.addAssignees)
+                                  }
+                              )
+                          )
+                          )
+                        PaddingTop: =0
+                        RadioBackgroundFill: =compFilterTicketsMenu.BackgroundColor
+                        RadioBorderColor: =RGBA(0, 18, 107, 1)
+                        RadioSelectionFill: =RGBA(0, 0, 0, 1)
+                        RadioSize: =compFilterTicketsMenu.IconSize - 5
+                        Size: =compFilterTicketsMenu.FontSize - 2
+                        Visible: =App.ActiveScreen.Name = "MyTickets"
+                        Width: =Parent.Width
+                        Y: =Separator_1.Y + Separator_1.Height
+                  - CheckboxAssignment:
+                      Control: Classic/CheckBox@2.1.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        CheckboxBackgroundFill: =compFilterTicketsMenu.BackgroundColor
+                        CheckboxBorderColor: =RGBA(0, 18, 107, 1)
+                        CheckmarkFill: =RGBA(0, 0, 0, 1)
+                        Color: =Color.White
+                        Default: =AssignmentChoice
+                        Font: =Font.'Open Sans'
+                        Height: =Parent.Height - LabelTickets.Height - Separator_1.Height
+                        HoverColor: =RGBA(0, 0, 0, 1)
+                        OnCheck: |-
+                          =Set(AssignmentChoice, CheckboxAssignment.Value);
+
+                          // Used with RecentTicketsSPListV2
+                          ClearCollect(
+                              colAllTickets,
+                              ForAll(
+                                  Table(
+                                      ParseJSON(
+                                          RecentTicketsSPListV2.Run(
+                                          DateAdd(
+                                                  Today(),
+                                                  -compFilterTicketsMenu.SelectMonths,
+                                                  TimeUnit.Months
+                                              ),
+                                              If(
+                                                  IsBlank(SearchAllTicketsQuery),
+                                                  "___",
+                                                  SearchAllTicketsQuery
+                                              ), StatusChoice, AssignmentChoice
+                                          ).searchresults
+                                      )
+                                  ),
+                                  {
+                                      ID: Value(Value.ID),
+                                      Title: Text(Value.title),
+                                      Description: Text(Value.description),
+                                      MainCategory: Value(Value.mainCategory),
+                                      Category: Value(Value.category),
+                                      SubCategory: Value(Value.subCategory),
+                                      DateCreated: DateTimeValue(Value.dateCreated),
+                                      DateClosed: DateTimeValue(Value.dateClosed),
+                                      CreatorId: Value(Value.creatorId),
+                                      Status: Text(Value.status),
+                                      AssignedTo: Value(Value.assignedTo),
+                                      LastUpdated: DateTimeValue(Value.lastUpdated),
+                                      UpdatedBy: Value(Value.updatedBy),
+                                      ParentId: Value(Value.parentId),
+                                      LocationId: Value(Value.locationId),
+                                      Tags: Text(Value.tags),
+                                      AddAssignees: Text(Value.addAssignees)
+                                  }
+                              )
+                          )
+                        OnUncheck: |-
+                          =Set(AssignmentChoice, CheckboxAssignment.Value);
+
+                          // Used with RecentTicketsSPListV2
+                          ClearCollect(
+                              colAllTickets,
+                              ForAll(
+                                  Table(
+                                      ParseJSON(
+                                          RecentTicketsSPListV2.Run(
+                                          DateAdd(
+                                                  Today(),
+                                                  -compFilterTicketsMenu.SelectMonths,
+                                                  TimeUnit.Months
+                                              ),
+                                              If(
+                                                  IsBlank(SearchAllTicketsQuery),
+                                                  "___",
+                                                  SearchAllTicketsQuery
+                                              ), StatusChoice, AssignmentChoice
+                                          ).searchresults
+                                      )
+                                  ),
+                                  {
+                                      ID: Value(Value.ID),
+                                      Title: Text(Value.title),
+                                      Description: Text(Value.description),
+                                      MainCategory: Value(Value.mainCategory),
+                                      Category: Value(Value.category),
+                                      SubCategory: Value(Value.subCategory),
+                                      DateCreated: DateTimeValue(Value.dateCreated),
+                                      DateClosed: DateTimeValue(Value.dateClosed),
+                                      CreatorId: Value(Value.creatorId),
+                                      Status: Text(Value.status),
+                                      AssignedTo: Value(Value.assignedTo),
+                                      LastUpdated: DateTimeValue(Value.lastUpdated),
+                                      UpdatedBy: Value(Value.updatedBy),
+                                      ParentId: Value(Value.parentId),
+                                      LocationId: Value(Value.locationId),
+                                      Tags: Text(Value.tags),
+                                      AddAssignees: Text(Value.addAssignees)
+                                  }
+                              )
+                          )
+                        Size: =compFilterTicketsMenu.FontSize
+                        Text: ="Unassigned"
+                        Visible: =!(App.ActiveScreen.Name = "MyTickets")
+                        Width: =Parent.Width - 10
+                        X: =(Parent.Width - Self.Width) / 2
+                        Y: =(Parent.Height - Self.Height + Separator_1.Y + Separator_1.Height) / 2
+            - StatusSelection:
+                Control: GroupContainer@1.4.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: |-
+                    =//If(App.Height > 560, 100, 80)
+
+                    If(App.Height - compFilterTicketsMenu.HeightOffset > 560, 100, 80)
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinWidth: =Parent.Width
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                  Y: =45
+                Children:
+                  - LabelStatus:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =Color.White
+                        Fill: =compFilterTicketsMenu.PrimaryColor
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =compFilterTicketsMenu.IconSize
+                        PaddingLeft: =10
+                        Size: =compFilterTicketsMenu.FontSize
+                        Text: ="Status"
+                        Width: =Parent.Width
+                  - Separator_2:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =compFilterTicketsMenu.ColorOrange
+                        Height: =1
+                        Width: =Parent.Width
+                        Y: =LabelStatus.Y + LabelStatus.Height
+                  - DropdownStatus:
+                      Control: Classic/DropDown@2.3.1
+                      Properties:
+                        AccessibleLabel: ="Filter Menu Ticket Status Dropdown"
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        ChevronBackground: =compFilterTicketsMenu.PrimaryColor
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        Color: =Color.White
+                        Default: =StatusChoice
+                        Fill: =compFilterTicketsMenu.BackgroundColor
+                        Font: =Font.'Open Sans'
+                        Height: =compFilterTicketsMenu.IconSize
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =colStatus
+                        Items.Value: =Result
+                        OnChange: |-
+                          =Set(
+                              StatusChoice,
+                              DropdownStatus.SelectedText.'data-ADB4D7A662F548B49FAC2B986E348A1BResult'
+                          );
+                          If(
+                              App.ActiveScreen.Name = "MyTickets",
+                          // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+                              ClearCollect(
+                                  colTickets,
+                                  ForAll(
+                                      Table(
+                                          ParseJSON(
+                                              SearchFilterTicketsSPListV2.Run(
+                                                  If(
+                                                      IsBlank(SearchQuery),
+                                                      "___",
+                                                      SearchQuery
+                                                  ),
+                                                  StatusChoice,
+                                                  TagChoice,
+                                                  userData.id,
+                                                  TicketsChoice,
+                                                  DateAdd(
+                                                      Today(),
+                                                      -varSubtractDate,
+                                                      varTimeUnits
+                                                  )
+                                              ).searchresults
+                                          )
+                                      ),
+                                      {
+                                          ID: Value(Value.ID),
+                                          Title: Text(Value.title),
+                                          Description: Text(Value.description),
+                                          MainCategory: Value(Value.mainCategory),
+                                          Category: Value(Value.category),
+                                          SubCategory: Value(Value.subCategory),
+                                          DateCreated: DateTimeValue(Value.dateCreated),
+                                          DateClosed: DateTimeValue(Value.dateClosed),
+                                          CreatorId: Value(Value.creatorId),
+                                          Status: Text(Value.status),
+                                          AssignedTo: Value(Value.assignedTo),
+                                          LastUpdated: DateTimeValue(Value.lastUpdated),
+                                          UpdatedBy: Value(Value.updatedBy),
+                                          ParentId: Value(Value.parentId),
+                                          LocationId: Value(Value.locationId),
+                                          Tags: Text(Value.tags),
+                                          AddAssignees: Text(Value.addAssignees)
+                                      }
+                                  )
+                              ),
+                          // Used with RecentTicketsSPListV2
+                              ClearCollect(
+                                  colAllTickets,
+                                  ForAll(
+                                      Table(
+                                          ParseJSON(
+                                              RecentTicketsSPListV2.Run(
+                                                  DateAdd(
+                                                      Today(),
+                                                      -1,
+                                                      TimeUnit.Months
+                                                  ),
+                                                  If(
+                                                      IsBlank(SearchAllTicketsQuery),
+                                                      "___",
+                                                      SearchAllTicketsQuery
+                                                  ),
+                                                  StatusChoice,
+                                                  AssignmentChoice
+                                              ).searchresults
+                                          )
+                                      ),
+                                      {
+                                          ID: Value(Value.ID),
+                                          Title: Text(Value.title),
+                                          Description: Text(Value.description),
+                                          MainCategory: Value(Value.mainCategory),
+                                          Category: Value(Value.category),
+                                          SubCategory: Value(Value.subCategory),
+                                          DateCreated: DateTimeValue(Value.dateCreated),
+                                          DateClosed: DateTimeValue(Value.dateClosed),
+                                          CreatorId: Value(Value.creatorId),
+                                          Status: Text(Value.status),
+                                          AssignedTo: Value(Value.assignedTo),
+                                          LastUpdated: DateTimeValue(Value.lastUpdated),
+                                          UpdatedBy: Value(Value.updatedBy),
+                                          ParentId: Value(Value.parentId),
+                                          LocationId: Value(Value.locationId),
+                                          Tags: Text(Value.tags),
+                                          AddAssignees: Text(Value.addAssignees)
+                                      }
+                                  )
+                              )
+                          )
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =compFilterTicketsMenu.FontSize
+                        Width: =Parent.Width - 20
+                        X: =(Parent.Width - Self.Width) / 2
+                        Y: =Separator_2.Y + Separator_2.Height + 10
+            - TagSelection:
+                Control: GroupContainer@1.4.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Height: =If(App.ActiveScreen.Name = "MyTickets" && compFilterTicketsMenu.CheckAdmin, Parent.Height - FilterHeader.Height - TicketsSelection.Height, Parent.Height - FilterHeader.Height)
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: |-
+                    =//If(App.Height > 560, 100, 80)
+
+                    If(App.Height - compFilterTicketsMenu.HeightOffset > 560, 100, 80)
+                  LayoutMinWidth: =Parent.Width
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =compFilterTicketsMenu.CheckAdmin && App.ActiveScreen.Name = "MyTickets"
+                  Width: =Parent.Width
+                  Y: =45
+                Children:
+                  - LabelTag:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =Color.White
+                        Fill: =compFilterTicketsMenu.PrimaryColor
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =compFilterTicketsMenu.IconSize
+                        PaddingLeft: =10
+                        Size: =compFilterTicketsMenu.FontSize
+                        Text: ="Tag"
+                        Width: =Parent.Width
+                  - Separator_3:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =compFilterTicketsMenu.ColorOrange
+                        Height: =1
+                        Width: =Parent.Width
+                        Y: =LabelTag.Y + LabelTag.Height
+                  - DropdownTag:
+                      Control: Classic/DropDown@2.3.1
+                      Properties:
+                        AccessibleLabel: ="Filter Menu Tag Dropdown"
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        ChevronBackground: =compFilterTicketsMenu.PrimaryColor
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        Color: =Color.White
+                        Default: =TagChoice
+                        Fill: =compFilterTicketsMenu.BackgroundColor
+                        Font: =Font.'Open Sans'
+                        Height: =compFilterTicketsMenu.IconSize
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =colTags
+                        Items.Value: =Value
+                        OnChange: |+
+                          =Set(TagChoice, DropdownTag.SelectedText.Value);
+                          // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+                          ClearCollect(
+                              colTickets,
+                              ForAll(
+                                  Table(
+                                      ParseJSON(
+                                          SearchFilterTicketsSPListV2.Run(
+                                          If(
+                                              IsBlank(SearchQuery),
+                                              "___",
+                                              SearchQuery
+                                              ), StatusChoice, TagChoice, userData.id, TicketsChoice, DateAdd(Today(), -varSubtractDate, varTimeUnits)
+                                          ).searchresults
+                                      )
+                                  ),
+                                  {
+                                      ID: Value(Value.ID),
+                                      Title: Text(Value.title),
+                                      Description: Text(Value.description),
+                                      MainCategory: Value(Value.mainCategory),
+                                      Category: Value(Value.category),
+                                      SubCategory: Value(Value.subCategory),
+                                      DateCreated: DateTimeValue(Value.dateCreated),
+                                      DateClosed: DateTimeValue(Value.dateClosed),
+                                      CreatorId: Value(Value.creatorId),
+                                      Status: Text(Value.status),
+                                      AssignedTo: Value(Value.assignedTo),
+                                      LastUpdated: DateTimeValue(Value.lastUpdated),
+                                      UpdatedBy: Value(Value.updatedBy),
+                                      ParentId: Value(Value.parentId),
+                                      LocationId: Value(Value.locationId),
+                                      Tags: Text(Value.tags),
+                                      AddAssignees: Text(Value.addAssignees)
+                                  }
+                              )
+                          )
+
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =compFilterTicketsMenu.FontSize
+                        Width: =Parent.Width - 20
+                        X: =(Parent.Width - Self.Width) / 2
+                        Y: =Separator_3.Y + Separator_3.Height + 10
+      - FilterIcon:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =compFilterTicketsMenu.PrimaryColor
+            Height: =compFilterTicketsMenu.FilterIconSize
+            HoverColor: =ColorScheme.secondaryPressedColor
+            Icon: |-
+              =If(
+                  App.ActiveScreen.Name = "MyTickets" && (!compFilterTicketsMenu.CheckAdmin && (!(DropdownStatus.SelectedText.'data-ADB4D7A662F548B49FAC2B986E348A1BResult' = "open") || !(RadioTickets.SelectedText.Value = "My Tickets") || !(DropdownTag.SelectedText.Value = "None")) || compFilterTicketsMenu.CheckAdmin && (!(DropdownStatus.SelectedText.'data-ADB4D7A662F548B49FAC2B986E348A1BResult' = "open") || !(RadioTickets.SelectedText.Value = "My Assigned") || !(DropdownTag.SelectedText.Value = "None"))) || !(App.ActiveScreen.Name = "MyTickets") && (!(DropdownStatus.SelectedText.'data-ADB4D7A662F548B49FAC2B986E348A1BResult' = "open") || !(CheckboxAssignment.Value = true)),
+                  Icon.FilterFlatFilled,
+                  Icon.FilterFlat
+              )
+            OnSelect: =compFilterTicketsMenu.OpenFilter()
+            TabIndex: =1
+            Visible: =!compFilterTicketsMenu.FilterVisible
+            Width: =compFilterTicketsMenu.FilterIconSize
+            X: =Parent.Width - Self.Width

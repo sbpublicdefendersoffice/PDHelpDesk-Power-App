@@ -1,0 +1,499 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Asset Manager Menu:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =UpdateContext({assetManageRefresh:false,amTimer:false});
+        Set(amSelection,"")
+    Children:
+      - Asset ManagerContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - Asset ManagerHeaderContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: =130
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - Asset ManagerHeaderElements:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - HomeBackgroundGradient_70:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =Parent.Height
+                              HtmlText: =Home_Background_Gradient.HtmlText
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =Parent.Width
+                        - AssetManagerLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =Parent.Height-'Asset ManagerWebHeader'.Height
+                              Size: =If('Asset Manager Menu'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                              Text: =If(IsBlank(amSelection),"Asset Manager",If(amSelection = "Computer Assets", "Computer Asset Manager", "Equipment Asset Manager"))
+                              Width: =Parent.Width
+                              Y: ='Asset ManagerWebHeader'.Height
+                        - Asset ManagerWebHeader:
+                            Control: CanvasComponent
+                            ComponentName: compWebHeader
+                            Properties:
+                              BackgroundColor: =Color.Transparent
+                              CompScreenSize: ='Asset Manager Menu'.Size
+                              EnableFeedback: =Set(varFeedback,true)
+                              FeedbackBool: =varFeedback
+                              Height: =82
+                              Width: =App.Width
+            - Asset ManagerMainSectionContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - Asset Manager Selection Gallery:
+                      Control: Gallery@2.15.0
+                      Variant: Vertical
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        DelayItemLoading: =false
+                        Height: =Parent.Height
+                        Items: |
+                          =
+                          Table(
+                              {
+                                  MenuText: "Computer Assets",
+                                  MenuIcon: Icon.Devices
+                              },
+                              {
+                                  MenuText: "Equipment Assets",
+                                  MenuIcon: Icon.Scan
+                              }
+                          )
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LoadingSpinner: =LoadingSpinner.None
+                        OnSelect: =
+                        ShowScrollbar: =false
+                        TemplateSize: =200
+                        Visible: =IsBlank(amSelection)
+                        Width: =Parent.Width
+                        WrapCount: =Switch('Asset Manager Menu'.Size, ScreenSize.Small, 2, ScreenSize.Medium, 2, ScreenSize.Large, 3, 3)
+                      Children:
+                        - HtmlText1_9:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              DisplayMode: =DisplayMode.View
+                              Font: =Font.'Open Sans'
+                              Height: =175
+                              HtmlText: |-
+                                =// you can use inline Css to create effects that can be found in modern webapps
+                                //you cannot link style sheets
+                                //some elements of html are not supported
+                                //you can include variables in the html string by adding "&PowerAppsVar&" 
+                                "<div style='box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025);
+                                -webkit-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025);
+                                -moz-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025); height:"&ButtonGalleryBackgroundButton_6.Height-11&"px; width:"&ButtonGalleryBackgroundButton_6.Width-11&"px; border-style:none; border-radius:10px'></div>"
+                              OnSelect: =Select(Parent)
+                              Size: =11
+                              Width: =Parent.TemplateWidth
+                              Y: =25
+                        - ButtonGalleryBackgroundButton_6:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -15%)
+                              BorderStyle: =BorderStyle.Dashed
+                              BorderThickness: =0
+                              Color: =ColorScheme.secondary
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              Fill: =ColorScheme.primary
+                              Font: =Font.'Open Sans'
+                              Height: |-
+                                =//If('Admin Manager'.Size =1 , Parent.Height/2.5, Parent.Height/4)
+                                Parent.TemplateHeight-50
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =Self.Color
+                              Text: =""
+                              Width: =If('Asset Manager Menu'.Size = 1, Parent.Width/2.5, Parent.Width/3.5)
+                              X: =(Parent.TemplateWidth - Self.Width)/2
+                              Y: =(Parent.TemplateHeight - Self.Height)/2
+                        - GalleryButtonColorGradient_9:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =ButtonGalleryBackgroundButton_6.Height
+                              HtmlText: |-
+                                =Home_Gallery_Button_Color_Gradient.HtmlText
+                                /*"<div style='
+                                height:"&Self.Height-1&"px;
+                                width:100%;
+                                bbackground: rgb(53,89,137);
+                                background: linear-gradient(90deg, rgba(180,194,203,1) 0% , rgba(126,149,180,1) 25%, rgba(53,89,137,1) "&100&"%); -webkit-border-radius: 10px;
+                                -moz-border-radius: 10px;
+                                border-radius: 10px;' ></div>"*/
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =ButtonGalleryBackgroundButton_6.Width
+                              X: =ButtonGalleryBackgroundButton_6.X
+                              Y: =ButtonGalleryBackgroundButton_6.Y
+                        - ButtonGalleryNavIcon_6:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Height: =Parent.TemplateHeight - 150
+                              Icon: =ThisItem.MenuIcon
+                              OnSelect: =Select(Parent)
+                              Width: =Overlapbtn_7.Width
+                              X: =(Parent.TemplateWidth-Self.Width)/2
+                              Y: =(ButtonGalleryBackgroundButton_6.Height-Self.Height)/2
+                        - ButtonGalleryNavLabel_5:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Font: =Font.'Open Sans'
+                              FontWeight: =FontWeight.Semibold
+                              Height: =50
+                              OnSelect: =Select(Parent)
+                              Size: =If('Asset Manager Menu'.Size =1,11,15)
+                              Text: =ThisItem.MenuText
+                              Width: =Overlapbtn_7.Width
+                              X: =ButtonGalleryNavIcon_6.X
+                              Y: =ButtonGalleryNavIcon_6.Y+ButtonGalleryNavIcon_6.Height
+                        - Overlapbtn_7:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -15%)
+                              Color: =RGBA(255, 255, 255, 1)
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              Fill: =RGBA(255, 255, 255, 0)
+                              Font: =Font.'Open Sans'
+                              Height: =ButtonGalleryBackgroundButton_6.Height
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =ColorFade(RGBA(105,105,105,.35),-10%)
+                              OnSelect: =Set(amSelection,ThisItem.MenuText)
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =ColorFade(RGBA(105,105,105,.7),-50%)
+                              Text: =""
+                              Width: =ButtonGalleryBackgroundButton_6.Width
+                              X: =ButtonGalleryBackgroundButton_6.X
+                              Y: =ButtonGalleryBackgroundButton_6.Y
+                  - Asset ManagerButtonGallery:
+                      Control: Gallery@2.15.0
+                      Variant: Vertical
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        DelayItemLoading: =false
+                        Height: =Parent.Height
+                        Items: |-
+                          =Table(
+                              {
+                                  MenuText: "Add New Asset",
+                                  MenuIcon: Icon.AddDocument,
+                                  ScreenToGoTo: NewAsset
+                              },
+                              {
+                                  MenuText: "Find Asset",
+                                  MenuIcon: Icon.Search,
+                                  ScreenToGoTo: Assets
+                              },
+                              {
+                                  MenuText: "Asset Metrics",
+                                  MenuIcon: Icon.Trending,
+                                  ScreenToGoTo: AssetMetrics
+                              }
+                          )
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LoadingSpinner: =LoadingSpinner.None
+                        OnSelect: =//Switch(ThisItem.MenuText, "All Tickets", Navigate('All Tickets'), "Tag Manager", Navigate('Tag Manager'), "Alert Manager", Navigate('Alert Manager'), "Ticket Metrics", Navigate('Ticket Metrics - Admin Tech'), "Assign Role", Navigate('Assign Role - Admin'))
+                        ShowScrollbar: =false
+                        TemplateSize: =200
+                        Visible: =!IsBlank(amSelection)
+                        Width: =Parent.Width
+                        WrapCount: =Switch('Asset Manager Menu'.Size, ScreenSize.Small, 2, ScreenSize.Medium, 2, ScreenSize.Large, 3, 3)
+                      Children:
+                        - HtmlText1_8:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              DisplayMode: =DisplayMode.View
+                              Font: =Font.'Open Sans'
+                              Height: =175
+                              HtmlText: |-
+                                =// you can use inline Css to create effects that can be found in modern webapps
+                                //you cannot link style sheets
+                                //some elements of html are not supported
+                                //you can include variables in the html string by adding "&PowerAppsVar&" 
+                                "<div style='box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025);
+                                -webkit-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025);
+                                -moz-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.025); height:"&ButtonGalleryBackgroundButton_5.Height-11&"px; width:"&ButtonGalleryBackgroundButton_5.Width-11&"px; border-style:none; border-radius:10px'></div>"
+                              OnSelect: =Select(Parent)
+                              Size: =11
+                              Width: =Parent.TemplateWidth
+                              Y: =25
+                        - ButtonGalleryBackgroundButton_5:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -15%)
+                              BorderStyle: =BorderStyle.Dashed
+                              BorderThickness: =0
+                              Color: =ColorScheme.secondary
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              Fill: =ColorScheme.primary
+                              Font: =Font.'Open Sans'
+                              Height: |-
+                                =//If('Admin Manager'.Size =1 , Parent.Height/2.5, Parent.Height/4)
+                                Parent.TemplateHeight-50
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =Self.Color
+                              Text: =""
+                              Width: =If('Asset Manager Menu'.Size = 1, Parent.Width/2.5, Parent.Width/3.5)
+                              X: =(Parent.TemplateWidth - Self.Width)/2
+                              Y: =(Parent.TemplateHeight - Self.Height)/2
+                        - GalleryButtonColorGradient_8:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =ButtonGalleryBackgroundButton_5.Height
+                              HtmlText: |-
+                                =Home_Gallery_Button_Color_Gradient.HtmlText
+                                /*"<div style='
+                                height:"&Self.Height-1&"px;
+                                width:100%;
+                                bbackground: rgb(53,89,137);
+                                background: linear-gradient(90deg, rgba(180,194,203,1) 0% , rgba(126,149,180,1) 25%, rgba(53,89,137,1) "&100&"%); -webkit-border-radius: 10px;
+                                -moz-border-radius: 10px;
+                                border-radius: 10px;' ></div>"*/
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =ButtonGalleryBackgroundButton_5.Width
+                              X: =ButtonGalleryBackgroundButton_5.X
+                              Y: =ButtonGalleryBackgroundButton_5.Y
+                        - ButtonGalleryNavIcon_5:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Height: =Parent.TemplateHeight - 150
+                              Icon: =ThisItem.MenuIcon
+                              OnSelect: =Select(Parent)
+                              Width: =Overlapbtn_6.Width
+                              X: =(Parent.TemplateWidth-Self.Width)/2
+                              Y: =(ButtonGalleryBackgroundButton_5.Height-Self.Height)/2
+                        - ButtonGalleryNavLabel_4:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Font: =Font.'Open Sans'
+                              FontWeight: =FontWeight.Semibold
+                              Height: =50
+                              OnSelect: =Select(Parent)
+                              Size: =If('Asset Manager Menu'.Size =1,11,15)
+                              Text: =ThisItem.MenuText
+                              Width: =Overlapbtn_6.Width
+                              X: =ButtonGalleryNavIcon_5.X
+                              Y: =ButtonGalleryNavIcon_5.Y+ButtonGalleryNavIcon_5.Height
+                        - Overlapbtn_6:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -15%)
+                              Color: =RGBA(255, 255, 255, 1)
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              Fill: =RGBA(255, 255, 255, 0)
+                              Font: =Font.'Open Sans'
+                              Height: =ButtonGalleryBackgroundButton_5.Height
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =ColorFade(RGBA(105,105,105,.35),-10%)
+                              OnSelect: =Navigate(ThisItem.ScreenToGoTo,ScreenTransition.Fade)
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =ColorFade(RGBA(105,105,105,.7),-50%)
+                              Text: =""
+                              Width: =ButtonGalleryBackgroundButton_5.Width
+                              X: =ButtonGalleryBackgroundButton_5.X
+                              Y: =ButtonGalleryBackgroundButton_5.Y
+            - Asset ManagerFooter:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(255,255,255, 1)
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    ='Asset Manager Menu'.Size =1
+                  Width: =Parent.Width
+                Children:
+                  - Asset ManagerMobileMenu:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Width: =Parent.Width
+      - Asset ManagerBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =AssetManagerLabel.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =('Asset ManagerHeaderContainer'.Height-AssetManagerLabel.Height)/1.05
+      - Asset ManagerWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, Parent.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Asset Manager Menu'.Size > 1
+            Width: =If(showMenu, Parent.Width, 80)
+      - FeedbackBugReportAsset Manager:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width
+      - AMTimer:
+          Control: Timer@2.1.0
+          Properties:
+            AutoPause: =false
+            AutoStart: =amTimer
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Duration: =1000
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: =UpdateContext({assetManageRefresh:true,amTimer:false})
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Visible: =false
+            X: =40
+            Y: =40

@@ -1,0 +1,482 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Emergency TT:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({AreYouSure:false});
+    Children:
+      - TemplateContainer_4:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - TemplateHeaderContainer_4:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.primary
+                  FillPortions: =0
+                  Height: =130
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - TemplateHeaderGroup_2:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - HeaderBackgroundGradient_3:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =130
+                              HtmlText: |-
+                                ="<div style='
+                                height:"&Self.Height-1&"px;
+                                width:100%;
+                                background: rgb(53,89,137);
+                                background: linear-gradient(90deg, rgba(53,89,137,1) 0%, rgba(0,18,107,1) 100%);' ></div>"
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =Parent.Width
+                        - TemplateWebHeader_4:
+                            Control: CanvasComponent
+                            ComponentName: compWebHeader
+                            Properties:
+                              BackgroundColor: =Color.Transparent
+                              CompScreenSize: ='Emergency TT'.Size
+                              EnableFeedback: =Set(varFeedback,true)
+                              FeedbackBool: =varFeedback
+                              Fill: =Color.Transparent
+                              Height: =82
+                              Width: =App.Width
+                        - TemplateLabel_3:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =48
+                              Size: =If('Emergency TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                              Text: ="Emergency Trial Request"
+                              Width: =Parent.Width
+                              Y: =TemplateWebHeader_4.Height
+            - MainSectionTemplateContainer_4:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - EmergencyForm:
+                      Control: Form@2.4.4
+                      Variant: Classic
+                      Layout: Vertical
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        DataSource: =Tickets
+                        DefaultMode: =FormMode.New
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NumberOfColumns: =1
+                        Width: =Parent.Width
+                      Children:
+                        - EmergencyDetailsDataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =259
+                              Width: =Parent.Width
+                              X: =0
+                              Y: =0
+                            Children:
+                              - Label70:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(255, 0, 0, 1)
+                                    BorderThickness: =1
+                                    Color: =RGBA(255, 0, 0, 1)
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =If('Emergency TT'.Size =1, 70, 40)
+                                    Text: |-
+                                      ="WARNING: For Trial Use Only"
+                                    Width: =Parent.Width
+                              - DRFTitleLabel_5:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =30
+                                    Text: ="Details"
+                                    Width: =100
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =Label70.Height+25
+                              - TextInput19:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    EnableSpellCheck: =true
+                                    Font: =Font.'Open Sans'
+                                    Height: =150
+                                    HintText: ="Describe your situation as precisely and in specific detail as possible. "
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Mode: =TextMode.MultiLine
+                                    Width: =If('Emergency TT'.Size = 1, Parent.Width/1.2, Parent.Width/1.1)
+                                    X: =30
+                                    Y: =DRFTitleLabel_5.Y+DRFTitleLabel_5.Height
+                        - EmergencyAddMediaDataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =40
+                              Width: =Parent.Width
+                              X: =0
+                              Y: =1
+                            Children:
+                              - AddMediaButton_47:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Add Media"
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: =(Parent.Height-Self.Height)/2
+                        - EmergencyButtonsDataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =100
+                              Width: =Parent.Width
+                              X: =0
+                              Y: =2
+                            Children:
+                              - DRFCancelButton_5:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorScheme.orange
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                                    OnSelect: |-
+                                      =ResetForm(DRFForm_1);
+                                      Navigate(Home);
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Cancel"
+                                    Width: =Parent.Width/3
+                                    X: =If('eDefender Broken File Paths TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                                    Y: =Parent.Height - (Self.Height *2)
+                              - DRFSubmitButton_5:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    DisplayMode: |-
+                                      =
+                                      //could use this to enable/disable button behaviour
+                                      //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+
+                                      DisplayMode.Edit
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =DRFCancelButton_5.Height
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: =UpdateContext({AreYouSure:true});
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Submit"
+                                    Width: =DRFCancelButton_5.Width
+                                    X: =DRFCancelButton_5.X + (Self.Width*1.3)
+                                    Y: =DRFCancelButton_5.Y
+            - TemplateFooter_4:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(255,255,255, 1)
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    ='Emergency TT'.Size=1
+                  Width: =Parent.Width
+                Children:
+                  - TemplateWebMobileMenu_4:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Width: =Parent.Width
+      - TemplateBackButton_5:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =TemplateLabel_3.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(TemplateHeaderContainer_4.Height-TemplateLabel_3.Height)/1.05
+      - TemplateWebMenuEmergency:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, Parent.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Emergency TT'.Size > 1
+            Width: =If(showMenu, Parent.Width, 80)
+      - FeedbackBugReportEmergency:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: ='Emergency TT'.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width
+      - Rectangle38:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(56, 96, 178, .5)
+            Height: =Parent.Height
+            Visible: =AreYouSure
+            Width: =Parent.Width
+      - Rectangle38_1:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(241, 244, 249, 1)
+            Height: =Parent.Height/1.1
+            Visible: =AreYouSure
+            Width: =Parent.Width/1.1
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+      - Label72:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(9, 33, 98, 1)
+            BorderThickness: =2
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =ColorScheme.primary
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =50
+            Size: =15
+            Text: ="Confirm Submission"
+            Visible: =AreYouSure
+            Width: =Rectangle38_1.Width
+            X: =(Parent.Width-Self.Width)/2
+            Y: =Rectangle38_1.Y
+      - Button31:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: "=//Check if the title or Description are empty, if they are the form will not be submitted\r\nIf(\r\n    Len(Trim(TextInput19.Text)) > 0 ,\r\n    UpdateContext({DataCardKey1_1: \"Title\"});\r\n    UpdateContext({DataCardKey5: \"Description\"});\r\n    //Set(DataCardKey5: \"Description\");\r\nSet(\r\n        //Temporary record\r\n        rec,\r\n        //DB operation, from Ticket table, new record, change these columns\r\n        Patch(\r\n            Tickets,\r\n            Defaults(Tickets),\r\n            {\r\n                Title: \"\",\r\n                description: Trim(TextInput19.Text),\r\n                creatorId: userData.id,\r\n                mainCategory: 5,\r\n                category: 0,\r\n                subCategory: 0,\r\n                locationId: 10,\r\n                status: \"open\",\r\n                metricDate: Concatenate(\r\n                    Month(Today()),\r\n                    \"/\",\r\n                    Year(Today())\r\n                ),\r\n                hasAttachment: If(\r\n                    IsEmpty(attItems),\r\n                    0,\r\n                    1\r\n                ),\r\n                //Automation rules table is used to assign tickets\r\n                assignedTo: 2,\r\n                addAssignees:Concat(Filter(Users,userRole = \"tech\" || userRole= \"admin\"),fullName,\",\")\r\n                \r\n            }\r\n        )\r\n    );\r\n\r\nPatch(\r\n    Tickets, \r\n    LookUp(Tickets,ID = rec.ID),\r\n    {\r\n        Title: \"#\"&rec.ID&\" Emergency Request\"\r\n    });\r\n// for the attachments, run power automate flow for each attached file\r\nForAll(\r\n    attItems As Attachment,\r\n            AttachFiles.Run(\r\n            rec.ID,\r\n            {\r\n                file:{\r\n                    contentBytes: Attachment.Value,\r\n                    name: Attachment.Name\r\n                }\r\n            }\r\n        ) \r\n);\r\n//Now do it for the camera and screenshots\r\nForAll(\r\n    RTEImages As RTEI,\r\n    With({varHTMLTable: Split(RTEI.base64Image , \"<img\")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find(\"<img\",RTEI.base64Image)+32},With({varB64End:Find(\"\"\"\",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &\".png\", rec.ID)\r\n))))\r\n        );\r\n    \r\n    /*SMTP.SendEmailV3(\r\n        {\r\n            From: \"sbpdhelpdesk@outlook.com\",\r\n            To: userData.email,\r\n            Subject: \"Help Desk Ticket Received\",\r\n            Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=\"https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a>.</div>\"\r\n        }\r\n    );*/\r\n    /*If(\r\n        rec.assignedTo > 0,\r\n        SMTP.SendEmailV3(\r\n            {\r\n                From: \"sbpdhelpdesk@outlook.com\",\r\n                To: LookUp(\r\n                    Users,\r\n                    ID = rec.assignedTo,\r\n                    email\r\n                ),\r\n                Subject: \"Help Desk Ticket Assigned\",\r\n                Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a> to view more details for the ticket.</div>\"\r\n            }\r\n        );\r\n    );*/\r\nSet(rec,Patch(rec,{description:Substitute(rec.description,Char(13),\"<br>\")}));\r\n//Power automate flow, sends email to ticket creator \r\nSendEmail.Run(\r\n            userData.email,\r\n        \"Help Desk Ticket Recieved\",\r\n        //Email Message body\r\n        TicketCreatorMessageRTE_1.HtmlText,\r\n        Text(Blank())\r\n    );\r\n    // If the ticket it assigned to someone, send them an email\r\n    If(\r\n        rec.assignedTo > 0,\r\n        SendEmail.Run(\r\n                LookUp(\r\n                    Users,\r\n                    ID = rec.assignedTo,\r\n                    email\r\n                ),\r\n            \"Help Desk Ticket Assigned\",\r\n            //Email message body\r\n            TechAssignMessageRTE_1.HtmlText,\r\n            Text(Blank())\r\n        );\r\nTicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,\"Ticket #\"&rec.ID&\" has been created. Touch this notification for more information.\"),    TicketCreatedUser.Run(userData.email,rec.ID,\"Ticket #\"&rec.ID&\" has been created on your behalf. Touch this notification for more information.\")\r\n    );\r\n\r\nSet(addEmails,Split(rec.addAssignees,\",\")); \r\n//Send Email and CC observers \r\nSendEmail.Run(LookUp(Users,ID = rec.assignedTo).email,\"Observers Added\",EmergencyRTE.HtmlText,If(!IsEmpty(addEmails),Concat(addEmails,LookUp(Users,Value=fullName,email),\",\"),\"\"));\r\n    //Reset the form upon completion\r\n    ResetForm(DRFForm_1);\r\n    Navigate(Success);\r\n\r\n);\r\n// variables that control color elements\r\n    UpdateContext({CreateTicketTitle: \"Title is Required\"});\r\n    UpdateContext({CreateTicketDescription: \"Description is Required\"});\r\n    UpdateContext({BFPPopup:true})"
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: ="SUBMIT"
+            Visible: =AreYouSure
+            X: =(Parent.Width-Self.Width)/2
+            Y: =Rectangle38_1.Y+Rectangle38_1.Height-2*Self.Height
+      - Label72_1:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(246, 88, 16, 1)
+            BorderThickness: =2
+            Color: =RGBA(246, 88, 16, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =15
+            Text: |-
+              ="By submitting this request, you the requestor :
+              • Acknowledge that all PD IT staff will be alerted
+              • This request will be marked CRITICAL
+              • Consent to not abuse this system"
+            Visible: =AreYouSure
+            Width: =Rectangle38_1.Width/2
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+      - Icon13:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(203, 102, 102, 1)
+            Height: =32
+            Icon: =Icon.Cancel
+            OnSelect: =UpdateContext({AreYouSure:false})
+            Visible: =AreYouSure
+            Width: =32
+            X: =Label72.Width+Label72.X-Self.Width
+            Y: =Label72.Y
+      - AddMedia_47:
+          Control: CanvasComponent
+          ComponentName: AddMedia
+          Properties:
+            AMSize: ='Emergency TT'.Size
+            AttachCameraOff: =Set(AttachCamera,false);
+            AttachCameraOn: =Set(AttachCamera,true);
+            DisablePickMedia: =Set(AttachFiles,false)
+            EnablePickMedia: =Set(AttachFiles,true)
+            ForSTITickID: =0
+            Height: =App.Height
+            InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+            OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+            PhotoModeDisable: =Set(AttachPhoto,false)
+            PhotoModeEnable: =Set(AttachPhoto,true)
+            Visible: =varOpenMedia
+            Width: =App.Width
+      - Label77:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            Text: =Concat(Filter(Users,userRole = "tech" || userRole= "admin"),fullName,",")
+            Visible: =false
+            Width: =1000
+            X: =62
+            Y: =123
+      - EmergencyRTE:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: "=\"<table style='border-style: double ; width:100% '>\r\n    <tr>\r\n    <td>\r\n        <Table style='width:100%'>\r\n        <tr>\r\n        <th style='border-bottom-style: solid;'>\r\n	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>\r\n	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!\r\n	</div>\r\n	<br>\r\n	<div style='text-align:center;'>\r\n	An emergency request has been made, this message is sent to all technicians, to view this information in the app:  \r\n    <a style='text-decoration: none;' href='https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=\"&rec.ID&\"'> Click here</a>\r\n	</div>\r\n        </th>\r\n        </tr>\r\n        <tr>\r\n        <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>\r\n	<div>\r\n	\"&rec.Title&\"\r\n        </tr>\r\n        </td>\r\n        <tr>\r\n        <td style='font-family: monospace; font-size: 20px '>\r\n        Status: \"&rec.status&\" \r\n        </tr>\r\n        </td>\r\n        <tr>\r\n        <td style='font-family: monospace; font-size: 20px '>\r\n        Created By: \"&LookUp(Users,rec.creatorId = ID).fullName&\"\r\n        </tr>\r\n        </td>\r\n        <tr>\r\n        <td style='font-family: monospace; font-size: 20px '>\r\n        Information:\r\n    	<br> \r\n    	\"&rec.description&\"\r\n        </tr>\r\n        </td>\r\n    \r\n    <tr>\r\n    <td style='font-family: monospace; font-size: 20px; border-bottom-style: solid '>\r\n    \r\n    </td>\r\n    </tr>\r\n    \r\n	</div>\r\n        </td>\r\n        </tr>\r\n    </td>\r\n    </tr>\r\n    </Table>\r\n</table>\r\n\""
+            Height: =0
+            Visible: =false
+            Width: =0
+            X: =851
+            Y: =610
+      - Label76:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            Visible: =false
+            X: =40
+            Y: =40

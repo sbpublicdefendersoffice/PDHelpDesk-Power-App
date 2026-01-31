@@ -1,0 +1,954 @@
+"'Request For Time Off Form' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |-
+        =
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Set(TicketCategoryID,2);
+        Set(TicketSubCategoryID,3);
+        ResetForm(RFTOForm);
+        ClearCollect(leaveCodes,
+        {
+            Code:"ADM"    
+        }
+        ,
+        {
+            Code:"ALN"
+        }
+        ,
+        {
+            Code:"VAC"
+        }
+        ,
+        {
+            Code:"COMP"
+        }
+        ,
+        {
+            Code:"TRNG"
+        }
+        );
+        ClearCollect(RTFOSupervisors,
+        {
+            RevFullName: "Budwani, Deepak"
+        }
+        ,
+        {
+            RevFullName: "Kyle-Griffiths, La Mer"
+        }
+        );
+
+    RFTOContainer As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        RFTOHeaderContainer As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            RFTOWebHeader As compWebHeader:
+                CompScreenSize: ='Request For Time Off Form'.Size
+                EnableFeedback: =Set(varFeedback,true)
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                ZIndex: =1
+
+            RFTOLabel As label:
+                Align: =Align.Center
+                Color: =Color.White
+                Fill: =ColorScheme.primary
+                FillPortions: =1
+                Height: =48
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                Size: =If('Request For Time Off Form'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                Text: ="Request For Time Off Form"
+                Width: =Parent.Width
+                ZIndex: =2
+
+        RFTOMainSection As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            ZIndex: =3
+
+            RFTOForm As form:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                DataSource: =Tickets
+                DefaultMode: =FormMode.New
+                Height: =Parent.Height/1.21
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =250
+                LayoutMinWidth: =400
+                NumberOfColumns: =1
+                Width: =Parent.Width
+                Y: =Parent.Height/5.7
+                ZIndex: =1
+
+                RFTO_Title_DataCard As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="title"
+                    Default: =ThisItem.Title
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =100
+                    MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                    Required: =false
+                    Update: =
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =0
+                    ZIndex: =1
+
+                    RFTOTitleError As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =RFTOTitleInput.Y + RFTOTitleInput.Height
+                        ZIndex: =1
+
+                    RFTOStarVisible As label:
+                        Align: =Align.Center
+                        Color: =RFTOTitle.Color
+                        Height: =RFTOTitle.Height
+                        Text: ="*"
+                        Width: =30
+                        Wrap: =false
+                        Y: =RFTOTitle.Y
+                        ZIndex: =2
+
+                    RFTOTitleInput As text:
+                        Default: =Concatenate("Request For Time Off ",Upper(userData.fullName))
+                        Height: =Parent.Height/3.5
+                        HintText: =""
+                        Width: =Parent.Width/1.15
+                        X: =30
+                        Y: =44
+                        ZIndex: =3
+
+                    RFTOTitle As label:
+                        AutoHeight: =true
+                        Color: =If( CreateTicketTitle= "Title" || !IsBlank(RFTOTitleInput.Text), RGBA(0, 18, 107, 1), Color.Red)
+                        Height: =34
+                        Text: =CreateTicketTitle
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =4
+
+                RFTO_MainCategory_DataCard As typedDataCard.numberEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="mainCategory"
+                    Default: =ThisItem.mainCategory
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =If( 'eDefender Adding/Coding Items TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                    Required: =true
+                    Update: =
+                    Visible: =false
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =1
+                    ZIndex: =1
+
+                    RFTOMainCategoryError As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =RFTOMainCategoryDropdown.Y + RFTOMainCategoryDropdown.Height
+                        ZIndex: =1
+
+                    RFTOMainCategoryStarVisible As label:
+                        Align: =Align.Center
+                        Height: =RFTOMainCategoryLabel.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =RFTOMainCategoryLabel.Y
+                        ZIndex: =2
+
+                    RFTOMainCategoryDropdown As dropdown:
+                        Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                        Height: =Parent.Height/3.5
+                        Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                        Width: =Parent.Width/1.05
+                        X: =30
+                        Y: =44
+                        ZIndex: =3
+
+                    RFTOMainCategoryLabel As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Category"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =4
+
+                RFTO_SubCategory_DataCard As typedDataCard.numberEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="category"
+                    Default: =ThisItem.category
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =If( 'eDefender Adding/Coding Items TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                    Required: =true
+                    Update: =
+                    Visible: =false
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =2
+                    ZIndex: =1
+
+                    RFTOSubCategoryError As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =RFTOSubCategoryDropdown.Y + RFTOSubCategoryDropdown.Height
+                        ZIndex: =1
+
+                    RFTOSubCategoryVisible As label:
+                        Align: =Align.Center
+                        Height: =RFTOSubCategoryLabel.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =RFTOSubCategoryLabel.Y
+                        ZIndex: =2
+
+                    RFTOSubCategoryDropdown As dropdown:
+                        Default: |
+                            =LookUp(Category, ID = TicketSubCategoryID, Name)
+                        Height: =Parent.Height/3.5
+                        Items: |
+                            =Filter(Category, parentId = RFTOMainCategoryDropdown.Selected.ID)
+                        Width: =Parent.Width/1.05
+                        X: =30
+                        Y: =44
+                        ZIndex: =3
+
+                    RFTOSubCategoryLabel As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Sub Category"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =4
+
+                RFTOLocationID_DataCard As typedDataCard.numberEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="locationId"
+                    Default: =ThisItem.locationId
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =100
+                    Required: =false
+                    Update: =//Value(DataCardValue6.Text)
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =3
+                    ZIndex: =1
+
+                    RFTOSubCategoryErrorMessage As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =RFTOLocationIDDropdown.Y + RFTOLocationIDDropdown.Height
+                        ZIndex: =1
+
+                    RFTOLocationIDStarVisible As label:
+                        Align: =Align.Center
+                        Height: =RFTOLocationIDLabel.Height
+                        Text: ="*"
+                        Width: =30
+                        Wrap: =false
+                        Y: =RFTOLocationIDLabel.Y
+                        ZIndex: =2
+
+                    RFTOLocationIDDropdown As dropdown:
+                        AllowEmptySelection: =true
+                        Default: =Blank()
+                        Height: =Parent.Height/3.5
+                        Items: =Locations
+                        Width: =RFTOTitleInput.Width
+                        X: =30
+                        Y: =44
+                        ZIndex: =3
+
+                    RFTOLocationIDLabel As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Location"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =4
+
+                "'RFTOExclusiveFields_ DataCard' As typedDataCard.blankCard":
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =368
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =4
+                    ZIndex: =1
+
+                    RFTOSupervisorDropdown As dropdown:
+                        Default: =1
+                        Height: =28
+                        Items: =RTFOSupervisors
+                        Width: =268
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =RFTOApprovedCheckBox.Y+RFTOApprovedCheckBox.Height+20
+                        ZIndex: =1
+
+                    RFTODeniedCheckBox As checkbox:
+                        Text: ="Denied"
+                        X: =178
+                        Y: =RFTOApprovedCheckBox.Y
+                        ZIndex: =2
+
+                    RFTOApprovedCheckBox As checkbox:
+                        Text: ="Approved"
+                        X: =28
+                        Y: =RFTOAdditionalCommentsInput.Y+RFTOAdditionalCommentsInput.Height
+                        ZIndex: =3
+
+                    RFTOLeaveCodeDropdown As dropdown:
+                        Default: =1
+                        Height: =RFTOTitle.Height
+                        Items: =leaveCodes
+                        Width: =If('Request For Time Off Form'.Size=1,Parent.Width/1.15,Parent.Width/5)
+                        X: =If('Request For Time Off Form'.Size=1, RFTONumberOfDaysInput.X,RFTONumberOfHoursInput.X+RFTONumberOfHoursInput.Width)
+                        Y: =If('Request For Time Off Form'.Size=1, RFTONumberOfHoursInput.Y+RFTONumberOfHoursInput.Height+30 ,44)
+                        ZIndex: =4
+
+                    RFTOLeaveCodeLabel As label:
+                        Color: =RGBA(0, 18, 107, 1)
+                        Height: =30
+                        Text: ="Leave Code"
+                        X: =RFTOLeaveCodeDropdown.X
+                        Y: =RFTOLeaveCodeDropdown.Y-Self.Height
+                        ZIndex: =5
+
+                    RFTOAdditionalCommentsInput As text:
+                        Default: =
+                        Height: =100
+                        HintText: ="Add your comments"
+                        Mode: =TextMode.MultiLine
+                        Width: =RFTOTitleInput.Width
+                        X: =28
+                        Y: =RFTOLeaveCodeDropdown.Y+RFTOLeaveCodeDropdown.Height+30
+                        ZIndex: =6
+
+                    RFTOAdditonalCommentsLabel As label:
+                        Color: =RGBA(0, 18, 107, 1)
+                        Height: =30
+                        Text: ="Additonal Comments"
+                        Width: =185
+                        X: =RFTOAdditionalCommentsInput.X
+                        Y: =RFTOAdditionalCommentsInput.Y-Self.Height
+                        ZIndex: =7
+
+                    RFTONumberOfHoursInput As text:
+                        Default: =
+                        Format: =TextFormat.Number
+                        Height: =RFTOTitle.Height
+                        HintText: ="Enter Hours"
+                        Width: =If('Request For Time Off Form'.Size=1,Parent.Width/1.15,Parent.Width/7.5)
+                        X: =If('Request For Time Off Form'.Size=1,RFTONumberOfDaysInput.X,RFTOEndingDayPicker.X+RFTOEndingDayPicker.Width)
+                        Y: =If('Request For Time Off Form'.Size=1, RFTOEndingDayPicker.Y+RFTOEndingDayPicker.Height+30 ,44)
+                        ZIndex: =8
+
+                    RFTONumberOfHoursLabel As label:
+                        Color: =RGBA(0, 18, 107, 1)
+                        Height: =30
+                        Text: |-
+                            ="# of hours"
+                        X: =RFTONumberOfHoursInput.X
+                        Y: =RFTONumberOfHoursInput.Y-Self.Height
+                        ZIndex: =9
+
+                    RFTOEndingDayPicker As datepicker:
+                        DefaultDate: =
+                        Height: =RFTOTitle.Height
+                        InputTextPlaceholder: =If(IsBlank(Self.SelectedDate), Text(DateValue("1/1/2023"), Self.Format, Self.Language))
+                        Width: =If('Request For Time Off Form'.Size=1,Parent.Width/1.15,Parent.Width/5)
+                        X: =If('Request For Time Off Form'.Size=1, RFTONumberOfDaysInput.X,RFTOStartingDatePicker.Width+RFTOStartingDatePicker.X)
+                        Y: =If('Request For Time Off Form'.Size=1, RFTOStartingDatePicker.Y+RFTOStartingDatePicker.Height+30 ,44)
+                        ZIndex: =10
+
+                    RFTOEndingDayLabel As label:
+                        Color: =RGBA(0, 18, 107, 1)
+                        Height: =30
+                        Text: ="Ending Day"
+                        X: =RFTOEndingDayPicker.X
+                        Y: =RFTOEndingDayPicker.Y -Self.Height
+                        ZIndex: =11
+
+                    RFTOStartingDatePicker As datepicker:
+                        DefaultDate: =
+                        Height: =RFTOTitle.Height
+                        InputTextPlaceholder: =If(IsBlank(Self.SelectedDate), Text(DateValue("1/1/2023"), Self.Format, Self.Language))
+                        Width: =If('Request For Time Off Form'.Size=1,Parent.Width/1.15,Parent.Width/5)
+                        X: =If('Request For Time Off Form'.Size=1, RFTONumberOfDaysInput.X,RFTONumberOfDaysInput.Width+RFTONumberOfDaysInput.X)
+                        Y: =If('Request For Time Off Form'.Size=1, RFTONumberOfDaysInput.Y+RFTONumberOfDaysInput.Height+30 ,44)
+                        ZIndex: =12
+
+                    RFTOStartingDayLabel As label:
+                        Color: =RGBA(0, 18, 107, 1)
+                        Height: =30
+                        Text: ="Starting Day"
+                        X: =RFTOStartingDatePicker.X
+                        Y: =RFTOStartingDatePicker.Y-Self.Height
+                        ZIndex: =13
+
+                    RFTONumberOfDaysInput As text:
+                        Default: =DateDiff(RFTOStartingDatePicker.SelectedDate,RFTOEndingDayPicker.SelectedDate,TimeUnit.Days)
+                        DisplayMode: =DisplayMode.View
+                        Format: =TextFormat.Number
+                        Height: =RFTOTitle.Height
+                        HintText: =""
+                        Width: =If('Request For Time Off Form'.Size=1,Parent.Width/1.15,Parent.Width/7.5)
+                        X: =28
+                        Y: =44
+                        ZIndex: =14
+
+                    RFTONumberOfDaysLabel As label:
+                        Color: =RGBA(0, 18, 107, 1)
+                        Height: =30
+                        Text: |-
+                            ="# of days"
+                        X: =RFTONumberOfDaysInput.X
+                        Y: =5
+                        ZIndex: =15
+
+                RFTOSpecificIssue_DataCard As typedDataCard.numberEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="subCategory"
+                    Default: =ThisItem.subCategory
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =127
+                    Required: =false
+                    Update: =
+                    Visible: |
+                        =If(IsBlank(RFTOSpecificIssueDropdown.Selected.Name), false, true)
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =5
+                    ZIndex: =1
+
+                    RFTOSpecificIssueLabel As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Specific Issue"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =1
+
+                    RFTOSpecificIssueError As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =RFTOSpecificIssueDropdown.Y + RFTOSpecificIssueDropdown.Height
+                        ZIndex: =3
+
+                    RFTOSpecificIssueStarVisible As label:
+                        Align: =Align.Center
+                        Height: =RFTOSpecificIssueLabel.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =RFTOSpecificIssueLabel.Y
+                        ZIndex: =4
+
+                    RFTOSpecificIssueDropdown As dropdown:
+                        Default: =TicketSpecificIssue
+                        Height: =Parent.Height/3.5
+                        Items: =Filter(Category, parentId = RFTOSubCategoryDropdown.Selected.ID)
+                        Width: =RFTOTitleInput.Width
+                        X: =30
+                        Y: =44
+                        ZIndex: =5
+
+                RFTODescription_DataCard As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="description"
+                    Default: =ThisItem.description
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =If( 'eDefender Adding/Coding Items TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                    MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                    Required: =false
+                    Update: =
+                    Visible: =false
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =6
+                    ZIndex: =1
+
+                    RFTOErrorMessage As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =RFTODescriptionInput.Y + RFTODescriptionInput.Height
+                        ZIndex: =1
+
+                    RFTODescriptionStarVisible As label:
+                        Align: =Align.Center
+                        Color: =RFTODescriptionLabel.Color
+                        Height: =RFTODescriptionLabel.Height
+                        Text: ="*"
+                        Width: =30
+                        Wrap: =false
+                        Y: =RFTODescriptionLabel.Y
+                        ZIndex: =2
+
+                    RFTODescriptionInput As text:
+                        Default: =TicketDescText
+                        Height: =Parent.Height/1.5
+                        HintText: ="Please Describe Your Issue"
+                        Mode: =TextMode.MultiLine
+                        Size: =15
+                        Visible: =RFTODescription_DataCard.Visible
+                        Width: =Parent.Width/1.05
+                        X: =30
+                        Y: =40
+                        ZIndex: =3
+
+                    RFTODescriptionLabel As label:
+                        AutoHeight: =true
+                        Color: =If(CreateTicketDescription = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                        Height: =34
+                        Text: =CreateTicketDescription
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =4
+
+                RFTOAttachments_DataCard As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =If( 'eDefender Adding/Coding Items TT'.Size = 1, Parent.Height/2, Parent.Height/3.5)
+                    Visible: =false
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =7
+                    ZIndex: =1
+
+                    RFTOAttachmentControl As attachments:
+                        BorderColor: =Color.Black
+                        Height: =If( 'eDefender Adding/Coding Items TT'.Size = 1, Parent.Height/1.5, Parent.Height/1.5)
+                        IsInDataCard: =true
+                        Items: =
+                        MaxAttachments: =10
+                        PaddingBottom: =5
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PaddingRight: =5
+                        PaddingTop: =5
+                        Width: =If('eDefender Adding/Coding Items TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =36
+                        ZIndex: =1
+
+                RFTOButtons_DataCard As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =If( 'eDefender Adding/Coding Items TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                    Width: =1366
+                    WidthFit: =true
+                    X: =0
+                    Y: =8
+                    ZIndex: =1
+
+                    RFTOSubmitButton As button:
+                        DisplayMode: |-
+                            =
+                            //could use this to enable/disable button behaviour
+                            //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                            
+                            DisplayMode.Edit
+                        Height: =RFTOCancelButton.Height
+                        OnSelect: |
+                            =
+                            If(!RFTODescriptionInput.Visible,
+                            UpdateContext({TicketDescText:Concatenate("Date submitted: ",Today(),"
+                            
+                            # of days requested: ",RFTONumberOfDaysInput.Text,"     From: ",RFTOStartingDatePicker.SelectedDate,"     To: ",RFTOEndingDayPicker.SelectedDate,"     
+                            
+                            # of Hours: ",RFTONumberOfHoursInput.Text,"     Leave Code: ",RFTOLeaveCodeDropdown.Selected.Code,"
+                            
+                            Additional Comments/Explanation:
+                            ",RFTOAdditionalCommentsInput.Text,"
+                            
+                            ",If(RFTOApprovedCheckBox.Value,"Approved [X] Denied []","Approved [] Denied [X]"),
+                            "
+                            
+                            Supervisor: ",RFTOSupervisorDropdown.Selected.RevFullName,"      Date: ",Today())}), Notify("Description is Blank"));
+                            
+                            //Check if the title or Description are empty, if they are the form will not be submitted
+                            If(
+                                Len(RFTOTitleInput.Text) > 0 And Len(RFTODescriptionInput.Text)> 0,
+                                UpdateContext({DataCardKey1_1: "Title"});
+                                UpdateContext({DataCardKey5: "Description"});
+                                //Set(DataCardKey5: "Description");
+                            Set(
+                                    //Temporary record
+                                    rec,
+                                    //DB operation, from Ticket table, new record, change these columns
+                                    Patch(
+                                        Tickets,
+                                        Defaults(Tickets),
+                                        {
+                                            Title: RFTOTitleInput.Text,
+                                            description: Trim(RFTODescriptionInput.Text),
+                                            creatorId: userData.id,
+                                            mainCategory: RFTOMainCategoryDropdown.Selected.ID,
+                                            category: RFTOSubCategoryDropdown.Selected.ID,
+                                            subCategory: RFTOSpecificIssueDropdown.Selected.ID,
+                                            locationId: RFTOLocationIDDropdown.Selected.ID,
+                                            status: "open",
+                                            metricDate: Concatenate(
+                                                Month(Today()),
+                                                "/",
+                                                Year(Today())
+                                            ),
+                                            hasAttachment: If(
+                                                IsEmpty(RFTOAttachmentControl.Attachments),
+                                                0,
+                                                1
+                                            ),
+                                            //Automation rules table is used to assign tickets
+                                            assignedTo: If(
+                                                IsEmpty(
+                                                    Filter(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = RFTOMainCategoryDropdown.Selected.ID && locationId = RFTOLocationIDDropdown.Selected.ID
+                                                    )
+                                                ),
+                                                0,
+                                                LookUp(
+                                                    'Ticket Automation Rules',
+                                                    categoryId = RFTOMainCategoryDropdown.Selected.ID && locationId = RFTOLocationIDDropdown.Selected.ID,
+                                                    userID
+                                                )
+                                            )
+                                        }
+                                    )
+                                );
+                            Patch(
+                                Tickets, 
+                                LookUp(Tickets,ID = rec.ID),
+                                {
+                                    Title: "#"&rec.ID&" "&RFTOTitleInput.Text
+                                });
+                            // for the attachments, run power automate flow for each attached file
+                                ForAll(
+                                    RFTOAttachmentControl.Attachments,
+                                           /*AttachFiles.Run(
+                                        rec.ID,
+                                        {
+                                            file: {
+                                                contentBytes: Value,
+                                                name: Name
+                                            }
+                                        }
+                                    )*/
+                                    AttachFiles.Run(
+                                        rec.ID,
+                                        {
+                                            file:{
+                                                contentBytes: Value,
+                                                name: Name
+                                            }
+                                        }
+                                    ) 
+                                );
+                                
+                                /*SMTP.SendEmailV3(
+                                    {
+                                        From: "sbpdhelpdesk@outlook.com",
+                                        To: userData.email,
+                                        Subject: "Help Desk Ticket Received",
+                                        Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                    }
+                                );*/
+                                /*If(
+                                    rec.assignedTo > 0,
+                                    SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: LookUp(
+                                                Users,
+                                                ID = rec.assignedTo,
+                                                email
+                                            ),
+                                            Subject: "Help Desk Ticket Assigned",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                        }
+                                    );
+                                );*/
+                            //Power automate flow, sends email to ticket creator 
+                            SendEmail.Run(
+                                    Concatenate(
+                                        "'",
+                                        userData.email,
+                                        "'"
+                                    ),
+                                    "Help Desk Ticket Recieved",
+                                    //Email Message body
+                                    TicketCreatorMessageRTE_2.HtmlText,
+                                    Text(Blank())
+                                );
+                                // If the ticket it assigned to someone, send them an email
+                                If(
+                                    rec.assignedTo > 0,
+                                    SendEmail.Run(
+                                        Concatenate(
+                                            "'",
+                                            LookUp(
+                                                Users,
+                                                ID = rec.assignedTo,
+                                                email
+                                            ),
+                                            "'"
+                                        ),
+                                        "Help Desk Ticket Assigned",
+                                        //Email message body
+                                        TechAssignMessageRTE_2.HtmlText,
+                                        Text(Blank())
+                                    )
+                                );
+                                //Reset the form upon completion
+                                AddTimeOffToCalendar.Run(userData.fullName,DateTimeValue(RFTOStartingDatePicker.SelectedDate & " " & "17"& ":" & "00"), Text(RFTOEndingDayPicker.SelectedDate & " " & "17"& ":" & "00"));
+                                ResetForm(RFTOForm);
+                                Navigate(Success);
+                            
+                                
+                            
+                            );
+                            // variables that control color elements
+                                UpdateContext({CreateTicketTitle: "Title is Required"});
+                                UpdateContext({CreateTicketDescription: "Description is Required"});
+                        Text: ="Submit"
+                        Width: =RFTOCancelButton.Width
+                        X: =RFTOCancelButton.X + (Self.Width*1.3)
+                        Y: =RFTOCancelButton.Y
+                        ZIndex: =1
+
+                    RFTOCancelButton As button:
+                        Fill: =RGBA(149, 149, 149, 1)
+                        OnSelect: |-
+                            =ResetForm(RFTOForm);
+                            Navigate(Home);
+                        Text: ="Cancel"
+                        Width: =Parent.Width/3
+                        X: =If('eDefender Adding/Coding Items TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                        Y: =Parent.Height - (Self.Height *2)
+                        ZIndex: =2
+
+        RFTOFooter As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Request For Time Off Form'.Size =1
+            Width: =Parent.Width
+            ZIndex: =4
+
+            RFTOMobileMenu As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    RFTOBackButton As icon.BackArrow:
+        Color: =ColorScheme.secondary
+        Height: =RFTOLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(RFTOHeaderContainer.Height-RFTOLabel.Height)/1.05
+        ZIndex: =2
+
+    RFTOWebMenu As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Request For Time Off Form'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    TechAssignMessageRTE_3 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            //Combine string as html body
+            Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+            , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/e12cb1de-24af-4d91-b752-ec3f9674aa55?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")
+        Height: =9
+        Visible: =false
+        Width: =0
+        X: =872
+        Y: =759
+        ZIndex: =4
+
+    TicketCreatorMessageRTE_3 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visi <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/e12cb1de-24af-4d91-b752-ec3f9674aa55?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket. 
+            <footer>
+              <p>Santa Barbara County Public Defender Office IT<br>
+              <img src='"&PUBDEF_IT__LOGO_Vector&"'/></p>
+            </footer>
+            </div> ")
+        Height: =99
+        Visible: =false
+        Width: =293
+        X: =968
+        Y: =15
+        ZIndex: =5
+
+    DebugTextSubmission As label:
+        FontWeight: =FontWeight.Bold
+        Height: =33
+        Text: |-
+            =Concatenate("Date submitted: ",Today(),"
+            
+            # of days requested: ",RFTONumberOfDaysInput.Text,"     From: ",RFTOStartingDatePicker.SelectedDate,"     To: ",RFTOEndingDayPicker.SelectedDate,"     
+            
+            # of Hours: ",RFTONumberOfHoursInput.Text,"     Leave Code: ",RFTOLeaveCodeDropdown.Selected.Code,"
+            
+            Additional Comments/Explanation:
+            ",RFTOAdditionalCommentsInput.Text,"
+            
+            ",If(RFTOApprovedCheckBox.Value,"Approved [X] Denied []","Approved [] Denied [X]"),
+            "
+            
+            Supervisor: ",RFTOSupervisorDropdown.Selected.RevFullName,"      Date: ",Today())
+        Visible: =false
+        Width: =76
+        X: =1288
+        Y: =732
+        ZIndex: =7
+

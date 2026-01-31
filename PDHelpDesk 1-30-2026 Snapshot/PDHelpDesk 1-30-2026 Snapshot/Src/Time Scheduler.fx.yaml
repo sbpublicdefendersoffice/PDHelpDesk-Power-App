@@ -1,0 +1,1053 @@
+"'Time Scheduler' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    Fill: =ColorScheme.screenBackground
+    OnVisible: |
+        =ClearCollect(
+            scheduleTimes,
+            {
+                Name:"Mark Perez",
+                Monday:"09:00 AM - 05:00 PM",
+                Tuesday:"08:15 AM - 05:00 PM",
+                Wednesday:"09:00 AM - 05:00 PM",
+                Thursday:"09:00 AM - 05:00 PM",
+                Friday:"09:00 AM - 05:00 PM",
+                Saturday:"09:00 AM - 05:00 PM",
+                Sunday:"09:00 AM - 05:00 PM"
+                
+            }
+        );
+        UpdateContext({showTimeTable:true});
+
+    TimeSchedulerContainer As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        TimeSchedulerHeaderContainer As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            TimeSchedulerWebHeader As compWebHeader:
+                CompScreenSize: ='Time Scheduler'.Size
+                EnableFeedback: =Set(varFeedback,true)
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                ZIndex: =1
+
+            TimeSchedulerLabel As label:
+                Align: =Align.Center
+                Color: =Color.White
+                Fill: =ColorScheme.primary
+                FillPortions: =1
+                Height: =48
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                Size: =If('Time Scheduler'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                Text: ="Time Scheduler"
+                Width: =Parent.Width
+                ZIndex: =2
+
+        TimeSchedulerMainSectionContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =3
+
+            Container6 As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =2
+
+                Form1 As form:
+                    DataSource: =scheduleTimes
+                    Height: =Parent.Height
+                    Item: =Gallery1.Selected
+                    NumberOfColumns: =1
+                    Visible: =!showTimeTable
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                    NameSelectionDropdown As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =57
+                        Width: =Parent.Width
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        NameSelectionLabel As label:
+                            Text: ="Name"
+                            ZIndex: =1
+
+                        NameDropDown As dropdown:
+                            Default: =Gallery1.Selected.Name
+                            Items: =Users
+                            X: =112
+                            ZIndex: =2
+
+                    Monday_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =25
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        EndTimeIndicator As dropdown:
+                            Default: =Text(Right(Gallery1.Selected.Monday,2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =1241
+                            ZIndex: =1
+
+                        EndHourDropdown As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Monday,8),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =921
+                            ZIndex: =2
+
+                        EndMinuteDropdown As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Monday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =1081
+                            ZIndex: =3
+
+                        EndTimeLabel As label:
+                            Text: ="End"
+                            Width: =80
+                            X: =841
+                            ZIndex: =4
+
+                        StartTimeIndicator As dropdown:
+                            Default: =Text(Right(Left(Gallery1.Selected.Monday,8),2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =507
+                            ZIndex: =5
+
+                        StartMinuteDropdown As dropdown:
+                            Default: =Text(Value(Right(Left(Gallery1.Selected.Monday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =347
+                            ZIndex: =6
+
+                        StartHourDropdown As dropdown:
+                            Default: =Text(Value(Left(Gallery1.Selected.Monday,2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =187
+                            ZIndex: =7
+
+                        StartTimeLabel As label:
+                            Text: ="Start"
+                            Width: =80
+                            X: =107
+                            ZIndex: =8
+
+                        MondayLabel As label:
+                            Text: ="Monday"
+                            ZIndex: =9
+
+                    Tuesday_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =32
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        EndTimeIndicator_1 As dropdown:
+                            Default: =Text(Right(Gallery1.Selected.Tuesday,2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =1241
+                            ZIndex: =1
+
+                        EndHourDropdown_1 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Tuesday,8),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =921
+                            ZIndex: =2
+
+                        EndMinuteDropdown_1 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Tuesday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =1081
+                            ZIndex: =3
+
+                        EndTimeLabel_1 As label:
+                            Text: ="End"
+                            Width: =80
+                            X: =842
+                            ZIndex: =4
+
+                        StartTimeIndicator_1 As dropdown:
+                            Default: =Text(Right(Left(Gallery1.Selected.Tuesday,8),2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =507
+                            ZIndex: =5
+
+                        StartMinuteDropdown_1 As dropdown:
+                            Default: =Text(Value(Right(Left(Gallery1.Selected.Tuesday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =347
+                            ZIndex: =6
+
+                        StartHourDropdown_1 As dropdown:
+                            Default: =Text(Value(Left(Gallery1.Selected.Tuesday,2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =187
+                            ZIndex: =7
+
+                        StartTimeLabel_1 As label:
+                            Text: ="Start"
+                            Width: =80
+                            X: =108
+                            ZIndex: =8
+
+                        TuesdayLabel As label:
+                            Text: ="Tuesday"
+                            ZIndex: =9
+
+                    Wednesday_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =40
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        EndTimeIndicator_2 As dropdown:
+                            Default: =Text(Right(Gallery1.Selected.Wednesday,2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =1241
+                            ZIndex: =1
+
+                        EndHourDropdown_2 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Wednesday,8),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =921
+                            ZIndex: =2
+
+                        EndMinuteDropdown_2 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Wednesday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =1081
+                            ZIndex: =3
+
+                        EndTimeLabel_2 As label:
+                            Text: ="End"
+                            Width: =80
+                            X: =841
+                            ZIndex: =4
+
+                        StartTimeIndicator_2 As dropdown:
+                            Default: =Text(Right(Left(Gallery1.Selected.Wednesday,8),2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =507
+                            ZIndex: =5
+
+                        StartMinuteDropdown_2 As dropdown:
+                            Default: =Text(Value(Right(Left(Gallery1.Selected.Wednesday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =347
+                            ZIndex: =6
+
+                        StartHourDropdown_2 As dropdown:
+                            Default: =Text(Value(Left(Gallery1.Selected.Wednesday,2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =187
+                            ZIndex: =7
+
+                        StartTimeLabel_2 As label:
+                            Text: ="Start"
+                            Width: =80
+                            X: =107
+                            ZIndex: =8
+
+                        WednesdayLabel As label:
+                            Text: ="Wednesday"
+                            ZIndex: =9
+
+                    Thursday_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =40
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        EndTimeIndicator_3 As dropdown:
+                            Default: =Text(Right(Gallery1.Selected.Thursday,2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =1241
+                            ZIndex: =1
+
+                        EndHourDropdown_3 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Thursday,8),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =921
+                            ZIndex: =2
+
+                        EndMinuteDropdown_3 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Thursday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =1081
+                            ZIndex: =3
+
+                        EndTimeLabel_3 As label:
+                            Text: ="End"
+                            Width: =80
+                            X: =841
+                            ZIndex: =4
+
+                        StartTimeIndicator_3 As dropdown:
+                            Default: =Text(Right(Left(Gallery1.Selected.Thursday,8),2))
+                            FontWeight: =FontWeight.Lighter
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =507
+                            ZIndex: =5
+
+                        StartMinuteDropdown_3 As dropdown:
+                            Default: =Text(Value(Right(Left(Gallery1.Selected.Thursday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =347
+                            ZIndex: =6
+
+                        StartHourDropdown_3 As dropdown:
+                            Default: =Text(Value(Left(Gallery1.Selected.Thursday,2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =187
+                            ZIndex: =7
+
+                        StartTimeLabel_3 As label:
+                            Text: ="Start"
+                            Width: =80
+                            X: =107
+                            ZIndex: =8
+
+                        ThursdayLabel As label:
+                            Text: ="Thursday"
+                            ZIndex: =9
+
+                    Friday_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =40
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        EndTimeIndicator_4 As dropdown:
+                            Default: =Text(Right(Gallery1.Selected.Friday,2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =1241
+                            ZIndex: =1
+
+                        EndHourDropdown_4 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Friday,8),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =921
+                            ZIndex: =2
+
+                        EndMinuteDropdown_4 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Friday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =1081
+                            ZIndex: =3
+
+                        EndTimeLabel_4 As label:
+                            Text: ="End"
+                            Width: =80
+                            X: =841
+                            ZIndex: =4
+
+                        StartTimeIndicator_4 As dropdown:
+                            Default: =Text(Right(Left(Gallery1.Selected.Friday,8),2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =507
+                            ZIndex: =5
+
+                        StartMinuteDropdown_4 As dropdown:
+                            Default: =Text(Value(Right(Left(Gallery1.Selected.Friday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =347
+                            ZIndex: =6
+
+                        StartHourDropdown_4 As dropdown:
+                            Default: =Text(Value(Left(Gallery1.Selected.Friday,2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =187
+                            ZIndex: =7
+
+                        StartTimeLabel_4 As label:
+                            Text: ="Start"
+                            Width: =80
+                            X: =107
+                            ZIndex: =8
+
+                        FridayLabel As label:
+                            Text: ="Friday"
+                            ZIndex: =9
+
+                    Saturday_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =40
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        EndTimeIndicator_5 As dropdown:
+                            Default: =Text(Right(Gallery1.Selected.Saturday,2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =1241
+                            ZIndex: =1
+
+                        EndHourDropdown_5 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Saturday,8),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =921
+                            ZIndex: =2
+
+                        EndMinuteDropdown_5 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Saturday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =1081
+                            ZIndex: =3
+
+                        EndTimeLabel_5 As label:
+                            Text: ="End"
+                            Width: =80
+                            X: =841
+                            ZIndex: =4
+
+                        StartTimeIndicator_5 As dropdown:
+                            Default: =Text(Right(Left(Gallery1.Selected.Saturday,8),2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =507
+                            ZIndex: =5
+
+                        StartMinuteDropdown_5 As dropdown:
+                            Default: =Text(Value(Right(Left(Gallery1.Selected.Saturday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =347
+                            ZIndex: =6
+
+                        StartHourDropdown_5 As dropdown:
+                            Default: =Text(Value(Left(Gallery1.Selected.Saturday,2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =187
+                            ZIndex: =7
+
+                        StartTimeLabel_5 As label:
+                            Text: ="Start"
+                            Width: =80
+                            X: =107
+                            ZIndex: =8
+
+                        SaturdayLabel As label:
+                            Text: ="Saturday"
+                            ZIndex: =9
+
+                    Sunday_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =40
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        EndTimeIndicator_6 As dropdown:
+                            Default: =Text(Right(Gallery1.Selected.Sunday,2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =1241
+                            ZIndex: =1
+
+                        EndHourDropdown_6 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Sunday,8),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =921
+                            ZIndex: =2
+
+                        EndMinuteDropdown_6 As dropdown:
+                            Default: =Text(Value(Left(Right(Gallery1.Selected.Sunday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =1081
+                            ZIndex: =3
+
+                        EndTimeLabel_6 As label:
+                            Text: ="End"
+                            Width: =80
+                            X: =841
+                            ZIndex: =4
+
+                        StartTimeIndicator_6 As dropdown:
+                            Default: =Text(Right(Left(Gallery1.Selected.Sunday,8),2))
+                            Items: =["AM","PM"]
+                            Width: =80
+                            X: =507
+                            ZIndex: =5
+
+                        StartMinuteDropdown_6 As dropdown:
+                            Default: =Text(Value(Right(Left(Gallery1.Selected.Sunday,5),2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                            Width: =160
+                            X: =347
+                            ZIndex: =6
+
+                        StartHourDropdown_6 As dropdown:
+                            Default: =Text(Value(Left(Gallery1.Selected.Sunday,2)),"[$-en-US]00")
+                            Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                            Width: =160
+                            X: =187
+                            ZIndex: =7
+
+                        StartTimeLabel_6 As label:
+                            Text: ="Start"
+                            Width: =80
+                            X: =107
+                            ZIndex: =8
+
+                        SundayLabel As label:
+                            Text: ="Monday"
+                            ZIndex: =9
+
+                    TSButtons_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =200
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        SubmitTimes As button:
+                            OnSelect: |-
+                                =Patch(scheduleTimes, Defaults(scheduleTimes),
+                                {
+                                    Name: NameDropDown.Selected.fullName,
+                                    Monday: Concatenate(StartHourDropdown.Selected.Value,":",StartMinuteDropdown.Selected.Value," ",StartTimeIndicator.Selected.Value," - ",EndHourDropdown.Selected.Value,":",EndMinuteDropdown.Selected.Value," ",EndTimeIndicator.Selected.Value),
+                                
+                                    Tuesday: Concatenate(StartHourDropdown_1.Selected.Value,":",StartMinuteDropdown_1.Selected.Value," ",StartTimeIndicator_1.Selected.Value," - ",EndHourDropdown_1.Selected.Value,":",EndMinuteDropdown_1.Selected.Value," ",EndTimeIndicator_1.Selected.Value),
+                                
+                                    Wednesday: Concatenate(StartHourDropdown_2.Selected.Value,":",StartMinuteDropdown_2.Selected.Value," ",StartTimeIndicator_2.Selected.Value," - ",EndHourDropdown_2.Selected.Value,":",EndMinuteDropdown_2.Selected.Value," ",EndTimeIndicator_2.Selected.Value),
+                                
+                                    Thursday: Concatenate(StartHourDropdown_3.Selected.Value,":",StartMinuteDropdown_3.Selected.Value," ",StartTimeIndicator_3.Selected.Value," - ",EndHourDropdown_3.Selected.Value,":",EndMinuteDropdown_3.Selected.Value," ",EndTimeIndicator_3.Selected.Value),
+                                
+                                    Friday: Concatenate(StartHourDropdown_4.Selected.Value,":",StartMinuteDropdown_4.Selected.Value," ",StartTimeIndicator_4.Selected.Value," - ",EndHourDropdown_4.Selected.Value,":",EndMinuteDropdown_4.Selected.Value," ",EndTimeIndicator_4.Selected.Value),
+                                
+                                    Saturday: Concatenate(StartHourDropdown_5.Selected.Value,":",StartMinuteDropdown_5.Selected.Value," ",StartTimeIndicator_5.Selected.Value," - ",EndHourDropdown_5.Selected.Value,":",EndMinuteDropdown_5.Selected.Value," ",EndTimeIndicator_5.Selected.Value),
+                                
+                                    Sunday: Concatenate(StartHourDropdown_6.Selected.Value,":",StartMinuteDropdown_6.Selected.Value," ",StartTimeIndicator_6.Selected.Value," - ",EndHourDropdown_6.Selected.Value,":",EndMinuteDropdown_6.Selected.Value," ",EndTimeIndicator_6.Selected.Value)
+                                });
+                                Notify("Meeting Time Schedule Created!");
+                                UpdateContext({showTimeTable:true});
+                            Text: =If(Form1.Mode = 0, "Update Times", "Submit Times")
+                            X: =40
+                            Y: =40
+                            ZIndex: =1
+
+                Container2 As groupContainer.manualLayoutContainer:
+                    Height: =Parent.Height
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    Visible: =showTimeTable
+                    Width: =Parent.Width
+                    ZIndex: =2
+
+                    Gallery1 As gallery.variableTemplateHeightGallery:
+                        '#CopilotOverlayLabel': ="Filtered"
+                        DelayItemLoading: =true
+                        Height: =Parent.Height
+                        Items: =scheduleTimes
+                        Layout: =Layout.Vertical
+                        LoadingSpinner: =LoadingSpinner.Data
+                        TemplatePadding: =0
+                        TemplateSize: =50
+                        Width: =Parent.Width
+                        Y: =39
+                        ZIndex: =10
+
+                        Container5 As groupContainer.horizontalAutoLayoutContainer:
+                            Height: =50
+                            LayoutGridColumns: =6
+                            LayoutGridRows: =6
+                            LayoutMode: =LayoutMode.Auto
+                            Width: =Parent.Width
+                            ZIndex: =9
+
+                            Label4 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                FillPortions: =1
+                                Height: =Parent.Height
+                                LayoutMaxHeight: =
+                                LayoutMaxWidth: =
+                                OnSelect: =
+                                Text: |
+                                    =ThisItem.Name
+                                Width: =Parent.Width
+                                ZIndex: =1
+
+                            Label4_1 As label:
+                                Align: =Align.Center
+                                BorderStyle: =BorderStyle.Dashed
+                                BorderThickness: =1
+                                FillPortions: =1
+                                Height: =Parent.Height
+                                LayoutMaxHeight: =
+                                LayoutMaxWidth: =
+                                OnSelect: =
+                                Text: =ThisItem.Monday
+                                Width: =Parent.Width
+                                X: =40
+                                ZIndex: =2
+
+                            Label4_2 As label:
+                                Align: =Align.Center
+                                BorderStyle: =BorderStyle.Dashed
+                                BorderThickness: =1
+                                FillPortions: =1
+                                Height: =Parent.Height
+                                LayoutMaxHeight: =
+                                LayoutMaxWidth: =
+                                OnSelect: =
+                                Text: =ThisItem.Tuesday
+                                Width: =Parent.Width
+                                X: =60
+                                ZIndex: =3
+
+                            Label4_3 As label:
+                                Align: =Align.Center
+                                BorderStyle: =BorderStyle.Dashed
+                                BorderThickness: =1
+                                FillPortions: =1
+                                Height: =Parent.Height
+                                LayoutMaxHeight: =
+                                LayoutMaxWidth: =
+                                OnSelect: =
+                                Text: =ThisItem.Wednesday
+                                Width: =Parent.Width
+                                X: =80
+                                ZIndex: =4
+
+                            Label4_4 As label:
+                                Align: =Align.Center
+                                BorderStyle: =BorderStyle.Dashed
+                                BorderThickness: =1
+                                FillPortions: =1
+                                Height: =Parent.Height
+                                LayoutMaxHeight: =
+                                LayoutMaxWidth: =
+                                OnSelect: =
+                                Text: =ThisItem.Thursday
+                                Width: =Parent.Width
+                                X: =100
+                                ZIndex: =5
+
+                            Label4_5 As label:
+                                Align: =Align.Center
+                                BorderStyle: =BorderStyle.Dashed
+                                BorderThickness: =1
+                                FillPortions: =1
+                                Height: =Parent.Height
+                                LayoutMaxHeight: =
+                                LayoutMaxWidth: =
+                                OnSelect: =
+                                Text: =ThisItem.Friday
+                                Width: =Parent.Width
+                                X: =120
+                                ZIndex: =6
+
+                            Label4_6 As label:
+                                Align: =Align.Center
+                                BorderStyle: =BorderStyle.Dashed
+                                BorderThickness: =1
+                                FillPortions: =1
+                                Height: =Parent.Height
+                                LayoutMaxHeight: =
+                                LayoutMaxWidth: =
+                                OnSelect: =
+                                Text: =ThisItem.Saturday
+                                Width: =Parent.Width
+                                X: =140
+                                ZIndex: =7
+
+                            Label4_7 As label:
+                                Align: =Align.Center
+                                BorderStyle: =BorderStyle.Dashed
+                                BorderThickness: =1
+                                FillPortions: =1
+                                Height: =Parent.Height
+                                LayoutMaxHeight: =
+                                LayoutMaxWidth: =
+                                OnSelect: =
+                                Text: =ThisItem.Sunday
+                                Width: =Parent.Width
+                                X: =160
+                                ZIndex: =8
+
+                        Button5 As button:
+                            Color: =RGBA(0, 0, 0, 0)
+                            Fill: =RGBA(0, 0, 0, 0)
+                            Height: =Parent.TemplateHeight
+                            HoverColor: =Color.WhiteSmoke
+                            HoverFill: =ColorScheme.secondaryPressedColor
+                            OnSelect: |-
+                                =UpdateContext({showTimeTable:false});
+                                EditForm(Form1)
+                            PaddingRight: =10
+                            Text: ="Edit Times"
+                            Width: =Parent.Width
+                            ZIndex: =10
+
+                    TableHeader As group:
+                        Height: =5
+                        Width: =5
+                        X: =40
+                        Y: =40
+                        ZIndex: =10
+
+                        TSTableHEader As rectangle:
+                            Fill: =ColorScheme.primary
+                            Height: =40
+                            Width: =Parent.Width
+                            ZIndex: =1
+
+                        TSPersonName As label:
+                            Align: =Align.Center
+                            FontWeight: =FontWeight.Semibold
+                            Height: =TSTableHEader.Height
+                            Size: =15
+                            Text: ="Name"
+                            Width: =TSTableHEader.Width/8
+                            ZIndex: =2
+
+                        TSMonday As label:
+                            Align: =Align.Center
+                            FontWeight: =FontWeight.Semibold
+                            Height: =TSTableHEader.Height
+                            Size: =15
+                            Text: ="Monday"
+                            Width: =TSPersonName.Width
+                            X: =TSPersonName.X+TSPersonName.Width
+                            ZIndex: =3
+
+                        TSTuesday As label:
+                            Align: =Align.Center
+                            FontWeight: =FontWeight.Semibold
+                            Height: =TSTableHEader.Height
+                            Size: =15
+                            Text: ="Tuesday"
+                            Width: =TSPersonName.Width
+                            X: =TSMonday.X + TSMonday.Width
+                            ZIndex: =4
+
+                        TSWednesday As label:
+                            Align: =Align.Center
+                            FontWeight: =FontWeight.Semibold
+                            Height: =TSTableHEader.Height
+                            Size: =15
+                            Text: ="Wednesday"
+                            Width: =TSPersonName.Width
+                            X: =TSTuesday.X + TSTuesday.Width
+                            ZIndex: =5
+
+                        TSThursday As label:
+                            Align: =Align.Center
+                            FontWeight: =FontWeight.Semibold
+                            Height: =TSTableHEader.Height
+                            Size: =15
+                            Text: ="Thursday"
+                            Width: =TSPersonName.Width
+                            X: =TSWednesday.X + TSWednesday.Width
+                            ZIndex: =6
+
+                        TSFriday As label:
+                            Align: =Align.Center
+                            FontWeight: =FontWeight.Semibold
+                            Height: =TSTableHEader.Height
+                            Size: =15
+                            Text: ="Friday"
+                            Width: =TSPersonName.Width
+                            X: =TSThursday.X + TSThursday.Width
+                            ZIndex: =7
+
+                        TSSaturday As label:
+                            Align: =Align.Center
+                            FontWeight: =FontWeight.Semibold
+                            Height: =TSTableHEader.Height
+                            Size: =15
+                            Text: ="Saturday"
+                            Width: =TSPersonName.Width
+                            X: =TSFriday.X + TSFriday.Width
+                            ZIndex: =8
+
+                        TSSunday As label:
+                            Align: =Align.Center
+                            FontWeight: =FontWeight.Semibold
+                            Height: =TSTableHEader.Height
+                            Size: =15
+                            Text: ="Sunday"
+                            Width: =TSPersonName.Width
+                            X: =TSSaturday.X + TSSaturday.Width
+                            ZIndex: =9
+
+                Dropdown3 As dropdown:
+                    Items: =Office365Outlook.CalendarGetTables().value
+                    X: =442
+                    Y: =520
+                    ZIndex: =3
+
+                "Gallery2 As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+                    '#CopilotOverlayLabel': ="Filtered"
+                    DelayItemLoading: =true
+                    Height: =130
+                    Items: =Filter(Office365Outlook.CalendarGetItems(Dropdown3.Selected.Name).value, "Times" in Subject)
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplatePadding: =0
+                    TemplateSize: =104
+                    Width: =422
+                    Y: =452
+                    ZIndex: =4
+
+                    Image1 As image:
+                        Height: =72
+                        Image: =ThisItem.WebLink
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Width: =72
+                        X: =16
+                        Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                        ZIndex: =1
+
+                    Title1 As label:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(71, 69, 64, 1)
+                        DisabledColor: =RGBA(186, 186, 186, 1)
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =Self.Size * 1.8
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =ThisItem.Subject
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =Parent.TemplateWidth - 173
+                        X: =103
+                        Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle1.Size * 1.8)) / 2
+                        ZIndex: =2
+
+                    Subtitle1 As label:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(71, 69, 64, 1)
+                        DisabledColor: =RGBA(186, 186, 186, 1)
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =Self.Size * 1.8
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =TimeValue(ThisItem.Start)
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =Title1.Width
+                        X: =Title1.X
+                        Y: =Title1.Y + Title1.Height
+                        ZIndex: =3
+
+                    NextArrow1 As icon.ChevronRight:
+                        AccessibleLabel: =Self.Tooltip
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(166, 166, 166, 1)
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        DisabledColor: =RGBA(119, 119, 119, 1)
+                        Height: =50
+                        Icon: =Icon.ChevronRight
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =16
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =16
+                        Tooltip: ="View item details"
+                        Width: =50
+                        X: =Parent.TemplateWidth - Self.Width - 12
+                        Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                        ZIndex: =4
+
+                    Separator1 As rectangle:
+                        BorderColor: =RGBA(0, 0, 255, 1)
+                        Fill: =RGBA(0, 176, 240, 1)
+                        Height: =8
+                        OnSelect: =Select(Parent)
+                        Width: =Parent.TemplateWidth
+                        Y: =96
+                        ZIndex: =5
+
+                    Rectangle4 As rectangle:
+                        Height: =Parent.TemplateHeight - Separator1.Height
+                        OnSelect: =Select(Parent)
+                        Visible: =If(ThisItem.IsSelected, true, false)
+                        Width: =4
+                        ZIndex: =6
+
+                    Label8 As label:
+                        OnSelect: =Select(Parent)
+                        Text: =TimeValue(ThisItem.End)
+                        X: =288
+                        Y: =52
+                        ZIndex: =7
+
+        TimeSchedulerFooter As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =Parent.Height/8
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Time Scheduler'.Size =1
+            Width: =Parent.Width
+            ZIndex: =4
+
+            TimeSchedulerWebMobileMenu As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    TimeSchedulerBackButton As icon.BackArrow:
+        Color: =ColorScheme.secondary
+        Height: =TimeSchedulerLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(TimeSchedulerHeaderContainer.Height-TimeSchedulerLabel.Height)/1.05
+        ZIndex: =2
+
+    TimeSchedulerWebMenu As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Time Scheduler'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    Icon1 As icon.Calendar:
+        Color: =ColorScheme.screenBackground
+        Height: =45
+        Icon: =Icon.AddToCalendar
+        OnSelect: |-
+            =UpdateContext({showTimeTable:false});
+            ResetForm(Form1);
+            NewForm(Form1);
+        Visible: =If(Form1.Mode=0,true,false)
+        Width: =66
+        X: =1300
+        Y: =78
+        ZIndex: =4
+

@@ -1,0 +1,1700 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  eDefender Charges and Statutes TT:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: |+
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+      OnVisible: |-
+        =ResetForm('eDefenderC&SForm');
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:"",chargeColCount:0});
+
+        ClearCollect(chargesColletion,
+        {
+            recNum:chargeColCount,
+            statuteCode:123456789,
+            statute: "hi",
+            class: "there",
+            description:"asdfasfasf"
+        });
+        Clear(chargesColletion);
+        UpdateContext({CnSPopUp:false,CnSRecord:Blank(),chargeColCount:1});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({usingCamera:false,altImagePopUp:false});
+        UpdateContext({'C&SPopup':false})
+    Children:
+      - eDefenderC&SMainContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: ='eDefender Charges and Statutes TT'.Height
+            LayoutDirection: =LayoutDirection.Horizontal
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: ='eDefender Charges and Statutes TT'.Width
+          Children:
+            - eDefenderC&SVerticalLayoutContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Height: =Parent.Height
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - eDefenderC&SHeaderContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.primary
+                        FillPortions: =0
+                        Height: |-
+                          =130
+                          //Parent.Height/11
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =//Home.Size<>1
+                          //This is the top most header container that houses the navbar links
+                          true
+                        Width: =Parent.Width
+                      Children:
+                        - ChargesAndStatutesHeaderElements:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - HomeBackgroundGradient_15:
+                                  Control: HtmlViewer@2.1.0
+                                  Properties:
+                                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height
+                                    HtmlText: =Home_Background_Gradient.HtmlText
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =11
+                                    Width: =Parent.Width
+                              - eDefenderC&SHeaderLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =Color.Transparent
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height-'eDefenderC&SWebHeader'.Height
+                                    Size: =If('eDefender Charges and Statutes TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                                    Text: ="Charges and Statutes Form"
+                                    Width: =Parent.Width
+                                    Y: ='eDefenderC&SWebHeader'.Height
+                              - eDefenderC&SWebHeader:
+                                  Control: CanvasComponent
+                                  ComponentName: compWebHeader
+                                  Properties:
+                                    BackgroundColor: =Color.Transparent
+                                    CompScreenSize: ='eDefender Charges and Statutes TT'.Size
+                                    EnableFeedback: =Set(varFeedback,true)
+                                    FeedbackBool: =varFeedback
+                                    Height: |-
+                                      =82
+                                      //Parent.Height
+                                    Width: =App.Width
+                  - eDefenderC&SMainContentContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                        Height: =Parent.Height/1.21
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutOverflowY: =LayoutOverflow.Scroll
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =true
+                          //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                        Width: =Parent.Width
+                      Children:
+                        - eDefenderC&SForm:
+                            Control: Form@2.4.4
+                            Variant: Classic
+                            Layout: Vertical
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataSource: =Tickets
+                              DefaultMode: =FormMode.New
+                              Height: =Parent.Height/1.21
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NumberOfColumns: =1
+                              Width: =Parent.Width
+                              Y: =Parent.Height/5.7
+                            Children:
+                              - DataCard1:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =ColorFade(RGBA(219, 219, 219, 1),-30%)
+                                    BorderStyle: =BorderStyle.Dashed
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =100
+                                    Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", false, true)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =0
+                                  Children:
+                                    - Label5:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =100
+                                          Size: =If('eDefender Charges and Statutes TT'.Size=1,13,30)
+                                          Text: ="Enter Items, or attach a screenshot of the DA complaint"
+                                          Width: =Parent.Width
+                                          Y: ='eDefenderAdding/CodingDisclaimerLabel_4'.Height
+                                    - eDefenderAdding/CodingDisclaimerLabel_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(221, 79, 14, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(221, 79, 14, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =If('eDefender Charges and Statutes TT'.Size=1,100,50)
+                                          Size: =If('eDefender Adding/Coding Items TT'.Size =1,13,16)
+                                          Text: ="When Submitting media, DO NOT SUBMIT DOCUMENTS CONTAINING SENSITIVE/RESTRICTED DATA. All case-related files should be uploaded to the Box File."
+                                          Width: =Parent.Width
+                              - eDefenderC&SSpecificIssue_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="subCategory"
+                                    Default: =ThisItem.subCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =80
+                                    Required: =false
+                                    Visible: |+
+                                      =If(IsBlank('eDefenderC&SSpecificIssueDropdown'.Selected.Name), false, true)
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =1
+                                  Children:
+                                    - eDefenderC&SSpecificIssueLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Specific Issue"
+                                          Width: =120
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - eDefenderC&SSpecificIssueError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='eDefenderC&SSpecificIssueDropdown'.Y + 'eDefenderC&SSpecificIssueDropdown'.Height
+                                    - eDefenderC&SSpecificIssueStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='eDefenderC&SSpecificIssueLabel'.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='eDefenderC&SSpecificIssueLabel'.Y
+                                    - eDefenderC&SSpecificIssueDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                                          DisplayMode: =DisplayMode.View
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = 'eDefenderC&SSubCategoryDropdown'.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =If('eDefender Charges and Statutes TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                                          X: =30
+                                          Y: =44
+                              - eDefenderC&STitle_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(219, 219, 219, 1)
+                                    BorderStyle: =BorderStyle.Dashed
+                                    BorderThickness: =1
+                                    DataField: ="title"
+                                    Default: =ThisItem.Title
+                                    DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =100
+                                    MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                                    Required: =false
+                                    Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", false, true)
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =2
+                                  Children:
+                                    - eDefenderC&STitleError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =false
+                                          Width: =Parent.Width - 60
+                                    - Label9:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =100
+                                          Size: =Label5.Size
+                                          Text: ="Make sure to select a location when submitting"
+                                          Width: =Parent.Width
+                                          Y: =(Parent.Height-Self.Height)/2
+                              - eDefenderC&SMainCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="mainCategory"
+                                    Default: =ThisItem.mainCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: =If( 'eDefender Charges and Statutes TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =3
+                                  Children:
+                                    - eDefenderC&SMainCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - eDefenderC&SMainCategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='eDefenderC&SMainCategoryDropdown'.Y + 'eDefenderC&SMainCategoryDropdown'.Height
+                                    - eDefenderC&SMainCategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='eDefenderC&SMainCategoryLabel'.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='eDefenderC&SMainCategoryLabel'.Y
+                                    - eDefenderC&SMainCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - eDefenderC&SSubCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="category"
+                                    Default: =ThisItem.category
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =If( 'eDefender Charges and Statutes TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =4
+                                  Children:
+                                    - eDefenderC&SSubCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Sub Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - eDefenderC&SSubcategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='eDefenderC&SSubCategoryDropdown'.Y + 'eDefenderC&SSubCategoryDropdown'.Height
+                                    - eDefenderC&SSubcategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='eDefenderC&SSubCategoryLabel'.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='eDefenderC&SSubCategoryLabel'.Y
+                                    - eDefenderC&SSubCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = 'eDefenderC&SMainCategoryDropdown'.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - eDefenderC&SFields:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =100
+                                    Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", false, true)
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =5
+                                  Children:
+                                    - Rectangle2:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Fill: =RGBA(241, 244, 249, 1)
+                                          Height: =Button6.Height+Button6.Y+ 25
+                                          Width: =Parent.Width/1.05
+                                          X: =15
+                                          Y: =1
+                                    - GalleryHeader:
+                                        Control: Rectangle@2.3.0
+                                        Group: Statute Header Group
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Fill: =ColorScheme.primary
+                                          Height: =50
+                                          Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                                          Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                                          X: ='eDefenderC&STitleInput'.X
+                                          Y: =Button6.Y+Button6.Height+15
+                                    - GallerySourceLabel:
+                                        Control: Label@2.5.1
+                                        Group: Statute Header Group
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =GalleryHeader.Height
+                                          Size: =GallerySourceLabel_1.Size
+                                          Text: ="Source"
+                                          Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                                          Width: =GalleryHeader.Width/4
+                                          X: =GallerySourceLabel_1.X+GallerySourceLabel_1.Width
+                                          Y: =GalleryHeader.Y
+                                    - GalleryCategoryClassLabel:
+                                        Control: Label@2.5.1
+                                        Group: Statute Header Group
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =GalleryHeader.Height
+                                          Size: =GallerySourceLabel_1.Size
+                                          Text: ="Category"
+                                          Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                                          Width: =GalleryHeader.Width/4
+                                          X: =GallerySourceLabel.Width+GallerySourceLabel.X
+                                          Y: =GalleryHeader.Y
+                                    - Button6:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =35
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: |+
+                                            =If(!IsBlank('eDefenderC&STitleInput'.Text) && !IsBlank(StatuteDescriptionInput.Text) && !IsBlank(SourceInput.Text) && !IsBlank(ClassDropdown.Selected.statuteClass), 
+                                            UpdateContext({chargeColCount:chargeColCount+1});
+                                            Patch(chargesColletion, Defaults(chargesColletion),
+                                            {
+                                                recNum:chargeColCount,
+                                                statuteCode:If(IsError(Value('eDefenderC&STitleInput'.Text)),0,Value('eDefenderC&STitleInput'.Text)),
+                                                statute: SourceInput.Text,
+                                                class: ClassDropdown.Selected.statuteClass,
+                                                description:StatuteDescriptionInput.Text
+                                            }
+                                            );
+                                            Reset('eDefenderC&STitleInput');
+                                            Reset(SourceInput);
+                                            Reset(ClassDropdown);
+                                            Reset(StatuteDescriptionInput);,
+
+
+                                            If(IsBlank(StatuteDescriptionInput.Text),Notify("Statute Description is Empty",NotificationType.Error));
+                                            If(IsBlank(ClassDropdown.Selected.statuteClass),Notify("No Category Selected", NotificationType.Error));
+                                            If(IsBlank(SourceInput.Text),Notify("No Source Provided",NotificationType.Error));
+                                            If(IsBlank('eDefenderC&STitleInput'.Text),Notify("No Status Code provided",NotificationType.Error));
+                                            );
+
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Size: =13
+                                          Text: ="Add"
+                                          X: =(Parent.Width-Self.Width)/2
+                                          Y: =StatuteDescriptionInput.Y+StatuteDescriptionInput.Height+20
+                                    - GalleryCategoryClassLabel_1:
+                                        Control: Label@2.5.1
+                                        Group: Statute Header Group
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =GalleryHeader.Height
+                                          Size: =GallerySourceLabel_1.Size
+                                          Text: ="Description"
+                                          Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                                          Width: =GalleryHeader.Width/4
+                                          X: =GalleryCategoryClassLabel.Width+GalleryCategoryClassLabel.X
+                                          Y: =GalleryHeader.Y
+                                    - Gallery3:
+                                        Control: Gallery@2.15.0
+                                        Variant: VariableHeight
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =If(CountRows(Gallery3.AllItems)*Self.TemplateHeight<500,CountRows(Gallery3.AllItems)*Self.TemplateHeight,500)
+                                          Items: =chargesColletion
+                                          TemplatePadding: =0
+                                          TemplateSize: =100
+                                          Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                                          Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                                          X: ='eDefenderC&STitleInput'.X
+                                          Y: =GalleryHeader.Y+GalleryHeader.Height
+                                        Children:
+                                          - GalleryStatuteLabel:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.TemplateHeight
+                                                OnSelect: =Select(Parent)
+                                                Size: =GalleryStatuteLabel_1.Size
+                                                Text: =ThisItem.statute
+                                                Width: =Parent.TemplateWidth/4
+                                                X: =GalleryStatuteLabel_1.Width
+                                          - GalleryClassLabel:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.TemplateHeight
+                                                OnSelect: =Select(Parent)
+                                                Size: =GalleryStatuteLabel_1.Size
+                                                Text: =ThisItem.class
+                                                Width: =Parent.TemplateWidth/4
+                                                X: =GalleryStatuteLabel.Width+GalleryStatuteLabel.X
+                                          - Button9:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =Color.Black
+                                                Color: =RGBA(0, 0, 0, 0)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =RGBA(0, 0, 0, 0)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.TemplateHeight
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =RGBA(255,0,0,.35)
+                                                OnSelect: =Remove(chargesColletion,ThisItem)
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =Self.Color
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Text: ="Remove entry"
+                                                Width: =Parent.TemplateWidth
+                                          - GalleryStatuteLabel_1:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.TemplateHeight
+                                                OnSelect: =Select(Parent)
+                                                Size: =If('eDefender Charges and Statutes TT'.Size=1,10,15)
+                                                Text: =ThisItem.statuteCode
+                                                Width: =Parent.TemplateWidth/4
+                                          - Icon17:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(0, 18, 107, 1)
+                                                Height: =Self.Width
+                                                Icon: =Icon.DocumentWithContent
+                                                OnSelect: =UpdateContext({CnSPopUp:true,CnSRecord:ThisItem});
+                                                Width: =If('eDefender Charges and Statutes TT'.Size=1,32,64)
+                                                X: =Parent.TemplateWidth-(Self.Width+GalleryCategoryClassLabel_1.Width)/2
+                                                Y: =18
+                                    - GallerySourceLabel_1:
+                                        Control: Label@2.5.1
+                                        Group: Statute Header Group
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =GalleryHeader.Height
+                                          Size: =If('eDefender Charges and Statutes TT'.Size=1,8,20)
+                                          Text: ="Statute Code"
+                                          Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size>1
+                                          Width: =GalleryHeader.Width/4
+                                          X: =GalleryHeader.X
+                                          Y: =GalleryHeader.Y
+                                    - CategoryClassLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Category"
+                                          Width: =90
+                                          X: =ClassDropdown.X
+                                          Y: =ClassDropdown.Y-Self.Height
+                                    - SourceInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          EnableSpellCheck: =true
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HintText: ="Enter source"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Width: ='eDefenderC&STitleInput'.Width
+                                          X: =If('eDefender Charges and Statutes TT'.Size=1,30,'eDefenderC&STitleInput'.X+'eDefenderC&STitleInput'.Width+15)
+                                          Y: =If('eDefender Charges and Statutes TT'.Size=1,'eDefenderC&STitleInput'.Y+'eDefenderC&STitleInput'.Height+40,'eDefenderC&STitleInput'.Y)
+                                    - SourceLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Source"
+                                          Width: =70
+                                          X: =SourceInput.X
+                                          Y: =SourceInput.Y-Self.Height
+                                    - ClassDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          AllowEmptySelection: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =ColorScheme.primary
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Blank()
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Table({statuteClass:"Misdemeanor"},{statuteClass:"Felony"},{statuteClass:"Infraction"})
+                                          Items.Value: =statuteClass
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: ='eDefenderC&STitleInput'.Width
+                                          X: =If('eDefender Charges and Statutes TT'.Size=1,30,SourceInput.X+SourceInput.Width+15)
+                                          Y: =If('eDefender Charges and Statutes TT'.Size=1,SourceInput.Y+SourceInput.Height+40,'eDefenderC&STitleInput'.Y)
+                                    - StatuteDescriptionInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          EnableSpellCheck: =true
+                                          Font: =Font.'Open Sans'
+                                          Height: =100
+                                          HintText: ="Enter statute description"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Mode: =TextMode.MultiLine
+                                          Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                                          X: =30
+                                          Y: =If('eDefender Charges and Statutes TT'.Size=1,ClassDropdown.Y+ClassDropdown.Height+40,SourceInput.Y+SourceInput.Height+50)
+                                    - SourceLabel_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Statute description"
+                                          Width: =180
+                                          X: =30
+                                          Y: =StatuteDescriptionInput.Y-Self.Height
+                                    - eDefenderC&STitleLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Statute Code"
+                                          Width: =120
+                                          Wrap: =false
+                                          X: =30
+                                          Y: ='eDefenderC&STitleInput'.Y-Self.Height
+                                    - eDefenderC&STitleStarVisible:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: ='eDefenderC&STitleLabel'.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: ='eDefenderC&STitleLabel'.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='eDefenderC&STitleLabel'.Y
+                                    - eDefenderC&STitleInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          EnableSpellCheck: =true
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HintText: ="Please enter statute code"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Width: =If('eDefender Charges and Statutes TT'.Size=1,'eDefenderC&SSpecificIssueDropdown'.Width,'eDefenderC&SSpecificIssueDropdown'.Width/3 -10)
+                                          X: =30
+                                          Y: =50
+                                    - GalleryMobileCardHeader:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Fill: =ColorScheme.primary
+                                          Height: =50
+                                          Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size=1
+                                          Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                                          X: ='eDefenderC&STitleInput'.X
+                                          Y: =Button6.Y+Button6.Height+15
+                                    - GalleryMobileCardHeaderLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =GalleryHeader.Height
+                                          Size: =20
+                                          Text: ="Statutes to Submit"
+                                          Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size=1
+                                          Width: =GalleryHeader.Width
+                                          X: =GalleryHeader.X
+                                          Y: =GalleryHeader.Y
+                                    - StatutesGalleryMobile:
+                                        Control: Gallery@2.15.0
+                                        Variant: Vertical
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Default: =//First(MyTicketsGallery.AllItems)
+                                          DelayItemLoading: |-
+                                            =//false
+                                            true
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =If(CountRows(chargesColletion)*250>=500,500,CountRows(chargesColletion)*250)
+                                          Items: =chargesColletion
+                                          LoadingSpinner: |-
+                                            =//LoadingSpinner.None
+                                            LoadingSpinner.Controls
+                                          TemplatePadding: =10
+                                          TemplateSize: |-
+                                            =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                            //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+
+                                            If(MyTickets.Size > 1, 250, 240)
+                                          Transition: =Transition.Push
+                                          Visible: =!IsEmpty(chargesColletion) && 'eDefender Charges and Statutes TT'.Size=1
+                                          Width: =GalleryMobileCardHeader.Width
+                                          WrapCount: =RoundDown((Parent.Width / 320), 0)
+                                          X: =30
+                                          Y: =GalleryMobileCardHeader.Y+GalleryMobileCardHeader.Height
+                                        Children:
+                                          - Rectangle6_3:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 0)
+                                                BorderThickness: =25
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =Image6_2.Height
+                                                OnSelect: =Select(Parent)
+                                                Width: =Image6_2.Width
+                                          - Image6_2:
+                                              Control: Image@2.2.3
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Height: |-
+                                                  =//250
+                                                  Parent.TemplateHeight
+                                                Image: "=\"data:image/svg+xml,\" & EncodeUrl(\r\n    \"<?xml version='1.0' encoding='UTF-8' standalone='no'?>\r\n<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>\r\n<svg version='1.1'\r\n    xmlns='http://www.w3.org/2000/svg'\r\n    xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 \" & Self.Width & \" \" & Self.Height & \"' width='\" & Self.Width & \"' height='\" & Self.Height & \"'>\r\n    <defs>\" &\r\n    // ----- Box for fill\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0,0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='box' stroke='\" & \"#ff0000\" & \"' stroke-width='\" & 0 & \"'></path>\r\n    </defs>\r\n    <g>\r\n        <g>\r\n            <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>\r\n                <feFlood></feFlood>\r\n                <feComposite in2='SourceAlpha' operator='in'></feComposite>\r\n                <feGaussianBlur stdDeviation='\" & 5 & \"'></feGaussianBlur>\r\n                <feOffset dx='\" & 0 & \"' dy='\" & 0 & \"' result='afterOffset'></feOffset>\r\n                <feFlood flood-color='\" & \"#000000\" & \"' flood-opacity='\" & Substitute(Text(0.5), \",\", \".\") & \"'></feFlood>\r\n                <feComposite in2='afterOffset' operator='in'></feComposite>\r\n                <feMorphology operator='dilate' radius='1'></feMorphology>\r\n                <feComposite in2='SourceAlpha' operator='out'></feComposite>\r\n            </filter>\" &\r\n            // ----- Box for shadow\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='Component1' filter='url(#shadow)'></path>\r\n        </g>\r\n        <use xlink:href='#box' opacity='1' fill='\" & \"#ffffff\" & \"' fill-opacity='\" & Substitute(Text(0), \",\", \".\") & \"'></use>\r\n    </g>\r\n    <g>\r\n        \" &\r\n        // ----- Edge\r\n If(\r\n        true,\r\n        Switch(\r\n            \"left\",\r\n            \"left\",// -- Position: left\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\",\r\n             \"right\",// -- Position: right\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\"\r\n           \r\n        )\r\n    ) & \"\r\n    </g>\r\n</svg>\"\r\n)"
+                                                OnSelect: =Select(Parent)
+                                                Width: |-
+                                                  =//329
+                                                  Parent.TemplateWidth
+                                          - btnBkg_2:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =ColorFade(Self.Fill, -15%)
+                                                Color: =RGBA(255, 255, 255, 1)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.TemplateHeight
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =Self.Fill
+                                                OnSelect: =Select(Parent)
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =Self.Fill
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Text: =""
+                                                Visible: =false
+                                                Width: =Parent.TemplateWidth
+                                          - TitleLabel_3:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =FontWeight.Semibold
+                                                Height: =54
+                                                OnSelect: =Select(Parent)
+                                                Size: =12
+                                                Text: |-
+                                                  ="Code: "&ThisItem.statuteCode
+                                                Width: |-
+                                                  =//208
+                                                  Parent.TemplateWidth - Icon18.Width - 47
+                                                X: =24
+                                                Y: =27
+                                          - DescriptionLabel_2:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =50
+                                                OnSelect: =Select(Parent)
+                                                Size: =10
+                                                Text: |-
+                                                  =//ThisItem.Description
+                                                  If(Len(ThisItem.description)>45, Concatenate(Left(ThisItem.description,45),"..."),ThisItem.description)
+                                                Width: |-
+                                                  =//282
+                                                  Parent.TemplateWidth - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =TitleLabel_3.Y + TitleLabel_3.Height
+                                          - DateExpiredLabel_2:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: |-
+                                                  =//25
+                                                  34
+                                                OnSelect: =Select(Parent)
+                                                Size: =10
+                                                Text: =ThisItem.class
+                                                Width: =StartedLabelTextValue_1.Width
+                                                X: =ExpiresLabelText_1.X+ExpiresLabelText_1.Width
+                                                Y: =ExpiresLabelText_1.Y
+                                          - ExpiresLabelText_1:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =34
+                                                OnSelect: =Select(Parent)
+                                                Size: =10
+                                                Text: ="Category"
+                                                Visible: |-
+                                                  =//is_admin
+                                                  true
+                                                Width: |-
+                                                  =//154
+                                                  StaratedLabelText_1.Width
+                                                X: |-
+                                                  =//67
+                                                  StaratedLabelText_1.X
+                                                Y: |-
+                                                  =//180
+                                                  Parent.TemplateHeight - Self.Height - 27
+                                          - StartedLabelTextValue_1:
+                                              Control: Label@2.5.1
+                                              Group: StartedLabelGroup_1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: |-
+                                                  =//25
+                                                  34
+                                                OnSelect: =Select(Parent)
+                                                Size: =10
+                                                Text: =ThisItem.statute
+                                                Width: |-
+                                                  =//143
+                                                  Parent.TemplateWidth - StaratedLabelText_1.Width - 47
+                                                Wrap: =false
+                                                X: |-
+                                                  =//89
+                                                  StaratedLabelText_1.X + StaratedLabelText_1.Width
+                                                Y: |+
+                                                  =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                  //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                  ((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                          - StaratedLabelText_1:
+                                              Control: Label@2.5.1
+                                              Group: StartedLabelGroup_1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: |-
+                                                  =//25
+                                                  34
+                                                OnSelect: =Select(Parent)
+                                                Size: =10
+                                                Text: ="Source"
+                                                Width: =67
+                                                X: =24
+                                                Y: |+
+                                                  =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                  //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                  ((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                          - OverlapButton_1:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =ColorFade(Self.Fill, -15%)
+                                                BorderThickness: =0
+                                                Color: =RGBA(255, 255, 255, 1)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =Color.Transparent
+                                                Font: =Font.'Open Sans'
+                                                Height: |-
+                                                  =//220
+                                                  Parent.TemplateHeight
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =Self.Fill
+                                                OnSelect: |-
+                                                  =
+
+                                                  // Sharepoint List
+                                                  UpdateContext({CnSPopUp:true,CnSRecord:ThisItem});
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =Self.Fill
+                                                Text: =""
+                                                Width: |-
+                                                  =//303
+                                                  Parent.TemplateWidth
+                                                X: |-
+                                                  =//24
+                                                  (Parent.TemplateWidth - Self.Width) / 2
+                                                Y: |-
+                                                  =//15
+                                                  (Parent.TemplateHeight - Self.Height) / 2
+                                          - Icon18:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(0, 18, 107, 1)
+                                                Height: =32
+                                                Icon: =Icon.CancelBadge
+                                                OnSelect: =Remove(chargesColletion,ThisItem)
+                                                Width: =32
+                                                X: =Parent.TemplateWidth - Self.Width - 23
+                                                Y: =27
+                              - eDefenderC&SDescription_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="description"
+                                    Default: =ThisItem.description
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: |-
+                                      =//If( 'eDefender Charges and Statutes TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                      300
+                                    MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                                    Required: =false
+                                    Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", true, false)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =6
+                                  Children:
+                                    - eDefenderC&SDescriptionLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =Color.White
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: =CreateTicketDescription
+                                          Width: =115
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - eDefenderC&SDescriptionErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='eDefenderC&SDescriptionTextInputArea'.Y + 'eDefenderC&SDescriptionTextInputArea'.Height
+                                    - eDefenderC&SDescriptionStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: ='eDefenderC&SDescriptionLabel'.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: ='eDefenderC&SDescriptionLabel'.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='eDefenderC&SDescriptionLabel'.Y
+                                    - eDefenderC&SDescriptionTextInputArea:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =TicketDescText
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/1.5
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Mode: =TextMode.MultiLine
+                                          Size: =15
+                                          Visible: ='eDefenderC&SDescription_DataCard'.Visible
+                                          Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                                          X: =30
+                                          Y: ='eDefenderC&SDescriptionLabel'.Y+'eDefenderC&SDescriptionLabel'.Height
+                              - eDefenderC&SLocationID_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="locationId"
+                                    Default: =ThisItem.locationId
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =127
+                                    Required: =false
+                                    Update: =//Value(DataCardValue6.Text)
+                                    Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", false, true)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =7
+                                  Children:
+                                    - eDefenderC&SLocationIDLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Requesting From"
+                                          Width: =170
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - eDefenderC&SLocationIDErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='eDefenderC&SLocationIDDropDown'.Y + 'eDefenderC&SLocationIDDropDown'.Height
+                                    - eDefenderC&SLocationIDStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='eDefenderC&SLocationIDLabel'.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='eDefenderC&SLocationIDLabel'.Y
+                                    - eDefenderC&SLocationIDDropDown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          AllowEmptySelection: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =ColorScheme.primary
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Blank()
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Locations
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: ='eDefenderC&SSpecificIssueDropdown'.Width
+                                          X: =30
+                                          Y: =44
+                              - eDefenderC&SAttatchments_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =50
+                                    Visible: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Fix Exisiting Statute", false, true)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =8
+                                  Children:
+                                    - AddMediaButton_8:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Add Media"
+                                          X: =(Parent.Width-Self.Width)/2
+                                          Y: =(Parent.Height-Self.Height)/2
+                              - eDefenderC&SButtons_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =If( 'eDefender Charges and Statutes TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =9
+                                  Children:
+                                    - eDefenderC&SSubmitButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          DisplayMode: |-
+                                            =
+                                            //could use this to enable/disable button behaviour
+                                            //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+
+                                            DisplayMode.Edit
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: ='eDefenderC&SCancelButton'.Height
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: "=\nIf(!'eDefenderC&SDescriptionTextInputArea'.Visible,\nUpdateContext({TicketDescText:If(!IsEmpty(chargesColletion),\"Statute Code: \"&'eDefenderC&STitleInput'.Text&Char(13)&Concatenate(Concat(chargesColletion,Char(13)&\"Statute: \"&statute&\"         Class: \"&class&Char(13)&\"Description:\"&Char(13)&description)),\"Check attachments for DA Complaint\")}), Notify(\"Description is Blank\"));\n\n//Check if the title or Description are empty, if they are the form will not be submitted\nIf(\n    (!IsEmpty(chargesColletion)|| !IsEmpty(JointAttachments) ) && If('eDefenderC&SSpecificIssueDropdown'.Selected.Name=\"Add New Statute\",!IsBlank('eDefenderC&SLocationIDDropDown'.Selected.Name),true) ,  \n    UpdateContext({DataCardKey1_1: \"Title\"});\n    UpdateContext({DataCardKey5: \"Description\"});\n    //Set(DataCardKey5: \"Description\");\nSet(\n        //Temporary record\n        rec,\n        //DB operation, from Ticket table, new record, change these columns\n        Patch(\n            Tickets,\n            Defaults(Tickets),\n            {\n                Title: \"Charges and Statutes Request\",\n                description: Trim('eDefenderC&SDescriptionTextInputArea'.Text),\n                creatorId: userData.id,\n                mainCategory: 'eDefenderC&SMainCategoryDropdown'.Selected.ID,\n                category: 'eDefenderC&SSubCategoryDropdown'.Selected.ID,\n                subCategory: 'eDefenderC&SSpecificIssueDropdown'.Selected.ID,\n                locationId: 'eDefenderC&SLocationIDDropDown'.Selected.ID,\n                status: \"open\",\n                metricDate: Concatenate(\n                    Month(Today()),\n                    \"/\",\n                    Year(Today())\n                ),\n                hasAttachment: If(\n                    IsEmpty(JointAttachments),\n                    0,\n                    1\n                ),\n                //Automation rules table is used to assign tickets\n                assignedTo: If(\n                    IsEmpty(\n                        Filter(\n                            'Ticket Automation Rules',\n                            categoryId = 'eDefenderC&SMainCategoryDropdown'.Selected.ID && locationId = 'eDefenderC&SLocationIDDropDown'.Selected.ID\n                        )\n                    ),\n                    0,\n                    LookUp(\n                        'Ticket Automation Rules',\n                        categoryId = 'eDefenderC&SMainCategoryDropdown'.Selected.ID && locationId = 'eDefenderC&SLocationIDDropDown'.Selected.ID,\n                        userID\n                    )\n                )\n            }\n        )\n    );\n\nPatch(\n    Tickets, \n    LookUp(Tickets,ID = rec.ID),\n    {\n        Title: \"# \"&rec.ID&\" Charges and Statutes Request\"\n    });\n// for the attachments, run power automate flow for each attached file\nForAll(\n    attItems As Attachment,\n            AttachFiles.Run(\n            rec.ID,\n            {\n                file:{\n                    contentBytes: Attachment.Value,\n                    name: Attachment.Name\n                }\n            }\n        ) \n);\nForAll(\n    RTEImages As RTEI,\n    With({varHTMLTable: Split(RTEI.base64Image , \"<img\")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find(\"<img\",RTEI.base64Image)+32},With({varB64End:Find(\"\"\"\",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &\".png\", rec.ID)\n))))\n        );\n    \n    /*SMTP.SendEmailV3(\n        {\n            From: \"sbpdhelpdesk@outlook.com\",\n            To: userData.email,\n            Subject: \"Help Desk Ticket Received\",\n            Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=\"https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a>.</div>\"\n        }\n    );*/\n    /*If(\n        rec.assignedTo > 0,\n        SMTP.SendEmailV3(\n            {\n                From: \"sbpdhelpdesk@outlook.com\",\n                To: LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n                Subject: \"Help Desk Ticket Assigned\",\n                Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a> to view more details for the ticket.</div>\"\n            }\n        );\n    );*/\nSet(rec,Patch(rec,{description:Substitute(rec.description,Char(13),\"<br>\")}));\n//Power automate flow, sends email to ticket creator \nSendEmail.Run(\n            userData.email,\n        \"Help Desk Ticket Recieved\",\n        //Email Message body\n        TicketCreatorMessageRTE_1.HtmlText,\n        Text(Blank())\n    );\n    // If the ticket it assigned to someone, send them an email\n    If(\n        rec.assignedTo > 0,\n        SendEmail.Run(\n                LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n            \"Help Desk Ticket Assigned\",\n            //Email message body\n            TechAssignMessageRTE_1.HtmlText,\n            Text(Blank())\n        );\nTicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,\"Ticket #\"&rec.ID&\" has been created. Touch this notification for more information.\"),    TicketCreatedUser.Run(userData.email,rec.ID,\"Ticket #\"&rec.ID&\" has been created on your behalf. Touch this notification for more information.\")\n\n    );\n    //Reset the form upon completion\n    ResetForm('eDefenderC&SForm');\n    Navigate(Success);\n\n);\n// variables that control color elements\n    UpdateContext({CreateTicketTitle: \"Title is Required\"});\n    UpdateContext({CreateTicketDescription: \"Description is Required\"});\n    UpdateContext({'C&SPopup':true})\n"
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Submit"
+                                          Width: ='eDefenderC&SCancelButton'.Width
+                                          X: ='eDefenderC&SCancelButton'.X + (Self.Width*1.3)
+                                          Y: ='eDefenderC&SCancelButton'.Y
+                                    - eDefenderC&SCancelButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.orange
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                                          OnSelect: |-
+                                            =ResetForm('eDefenderC&SForm');
+                                            Navigate(Home);
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Cancel"
+                                          Width: =Parent.Width/3
+                                          X: =If('eDefender Charges and Statutes TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                                          Y: =Parent.Height - (Self.Height *2)
+                  - eDefenderC&SFooter:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(255,255,255, 1)
+                        FillPortions: =0
+                        Height: =60
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |+
+                          ='eDefender Charges and Statutes TT'.Size =1
+                        Width: =Parent.Width
+                      Children:
+                        - eDefenderC&SMobileMenu:
+                            Control: CanvasComponent
+                            ComponentName: compMobileMenu
+                            Properties:
+                              BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                              ForegroundColor: |-
+                                =//RGBA(70, 130, 180, 1)
+                                ColorScheme.primary
+                              Height: =Parent.Height
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NavigationItems: |-
+                                =// IF adimn or tech show this table, if not show Staff table
+                                gblNavItems
+                              SelectedItemBackground: =Color.LightGray
+                              Width: =Parent.Width
+      - eDefenderC&SBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: ='eDefenderC&SHeaderLabel'.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =ResetForm('eDefenderC&SForm'); Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =('eDefenderC&SHeaderContainer'.Height-'eDefenderC&SHeaderLabel'.Height)/1.05
+      - eDefenderC&SWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, App.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='eDefender Charges and Statutes TT'.Size > 1
+            Width: =If(showMenu, App.Width, 80)
+      - Label12:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            Height: =58
+            Text: |-
+              =Concatenate(Concat(chargesColletion,Char(13)&"Statute: "&statute&"         Class: "&class&Char(13)))
+            Visible: =false
+            Width: =305
+            X: =970
+      - ChargesAndStatutesDetailsPopUp:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =CnSPopUp
+            Width: =Parent.Width
+          Children:
+            - PopupBackground_5:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, .25)
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - PopupRectangle_5:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height/1.125
+                  Width: =Parent.Width/1.125
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - Rectangle8_5:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Width: =PopupRectangle_5.Width
+                  X: =PopupRectangle_5.X
+                  Y: =PopupRectangle_5.Y
+            - Label10_16:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =100
+                  Size: =30
+                  Text: ="Details"
+                  Width: =Rectangle8_5.Width
+                  X: =Rectangle8_5.X
+                  Y: =Rectangle8_5.Y
+            - Button1_4:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =UpdateContext({CnSPopUp:false});
+                    Patch(chargesColletion,LookUp(chargesColletion, CnSRecord.recNum = recNum),
+                    {
+                        description:ContentOfInterestInput_2.Text
+                    });
+                    Reset(ContentOfInterestInput_2);
+                    UpdateContext({CnSRecord:Blank()})
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: ="Save & Close"
+                  X: =(PopupRectangle_5.Width-Self.Width)/2 +PopupRectangle_5.X
+                  Y: =PopupRectangle_5.Height-Self.Height
+            - Label18_4:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: ="View/Edit Details"
+                  Width: =PopupRectangle_5.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Rectangle8_5.Y+Rectangle8_5.Height
+            - ContentOfInterestInput_2:
+                Control: Classic/TextInput@2.3.2
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Default: =CnSRecord.description
+                  Font: =Font.'Open Sans'
+                  Height: =PopupRectangle_5.Height*.60
+                  HintText: ="Insert redacation  information here, content is saved on closing"
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(0, 0, 0, 0)
+                  Mode: =TextMode.MultiLine
+                  Width: =PopupRectangle_5.Width-40
+                  X: =(PopupRectangle_5.Width-Self.Width)/2 +PopupRectangle_5.X
+                  Y: =196
+      - C&SPopup:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: ='C&SPopup'
+            Width: =Parent.Width
+          Children:
+            - ACPopupBackground_9:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, .25)
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - ACPopupRectangle_9:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height/1.125
+                  Width: =Parent.Width/1.125
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - Rectangle8_16:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Width: =ACPopupRectangle_9.Width
+                  X: =ACPopupRectangle_9.X
+                  Y: =ACPopupRectangle_9.Y
+            - Label10_27:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =100
+                  Size: =30
+                  Text: ="Form Error"
+                  Width: =Rectangle8_16.Width
+                  X: =Rectangle8_16.X
+                  Y: =Rectangle8_16.Y
+            - Button1_15:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: =UpdateContext({'C&SPopup':false})
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: ="Close"
+                  X: =(ACPopupRectangle_9.Width-Self.Width)/2 +ACPopupRectangle_9.X
+                  Y: =ACPopupRectangle_9.Height-Self.Height
+            - Label18_37:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(IsBlank('eDefenderC&SLocationIDDropDown'.Selected.Name),Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: |+
+                    =If(IsBlank('eDefenderC&SLocationIDDropDown'.Selected.Name),"Location Missing", "Location OK")
+
+                  Visible: ='eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Add New Statute"
+                  Width: =ACPopupRectangle_9.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Rectangle8_16.Y+Rectangle8_16.Height+15
+            - Label18_38:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(IsEmpty(chargesColletion),If(IsEmpty(JointAttachments),Color.Red,Color.Green), Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If('eDefenderC&SSpecificIssueDropdown'.Selected.Name = "Add New Statute",If(IsEmpty(chargesColletion),If(IsEmpty(JointAttachments),"No List nor Screenshot","Screenshot OK"),"List OK"),If(Len(Trim('eDefenderC&SDescriptionTextInputArea'.Text))=0,"No Details","Details Provided"))
+                  Width: =ACPopupRectangle_9.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Label18_37.Y+Label18_37.Height+10
+      - FeedbackBugReportCS:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: ='eDefender Charges and Statutes TT'.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width
+      - AddMedia_9:
+          Control: CanvasComponent
+          ComponentName: AddMedia
+          Properties:
+            AMSize: ='eDefender Charges and Statutes TT'.Size
+            AttachCameraOff: =Set(AttachCamera,false);
+            AttachCameraOn: =Set(AttachCamera,true);
+            DisablePickMedia: =Set(AttachFiles,false)
+            EnablePickMedia: =Set(AttachFiles,true)
+            ForSTITickID: =0
+            Height: =App.Height
+            InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+            OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+            PhotoModeDisable: =Set(AttachPhoto,false)
+            PhotoModeEnable: =Set(AttachPhoto,true)
+            Visible: =varOpenMedia
+            Width: =App.Width

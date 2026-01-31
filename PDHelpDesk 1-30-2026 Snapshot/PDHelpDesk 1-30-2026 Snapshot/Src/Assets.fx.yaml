@@ -1,0 +1,1024 @@
+"Assets As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: =Reset(Dropdown14)
+    OnVisible: |-
+        =//Clear the collections
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({TemplateErrorPopup:false,assetScan:false,assetValue:Blank(),assetFilter:false});
+        Refresh('PubDef Computer Inventory_ Asset List_Computers');
+
+    AssetsContainer As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        AssetsHeaderContainer As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            AssetsHeaderGroup As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =3
+
+                AssetsWebHeader As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: =Assets.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    Fill: =Color.Transparent
+
+                HeaderBackgroundGradient_10 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =130
+                    HtmlText: |-
+                        ="<div style='
+                        height:"&Self.Height-1&"px;
+                        width:100%;
+                        background: rgb(53,89,137);
+                        background: linear-gradient(90deg, rgba(53,89,137,1) 0%, rgba(0,18,107,1) 100%);' ></div>"
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                AssetsLabel As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =48
+                    Size: =If(Assets.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: =If(amSelection = "Computer Assets", "Computer Assets","Equipment Assets")
+                    Width: =Parent.Width
+                    Y: =AssetsWebHeader.Height
+                    ZIndex: =3
+
+        MainSectionAssetsContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =6
+
+            AssetsContent1 As groupContainer.manualLayoutContainer:
+                FillPortions: =0
+                Height: =Parent.Height
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =Parent.Width
+                ZIndex: =3
+
+                AssetCardGallery_1 As gallery.variableTemplateHeightGallery:
+                    '#CopilotOverlayLabel': ="Filtered"
+                    DelayItemLoading: =true
+                    Height: =Parent.Height-AssetsTopBar.Height
+                    Items: |-
+                        =If(Len(TextInput24.Text)>0,Filter('PubDef Computer Inventory_ Asset List_Equipment',StartsWith('Office/Cubicle Number',TextInput24.Text) || (IsNumeric(TextInput24.Text) &&Value(TextInput24.Text)= SKU )),Filter('PubDef Computer Inventory_ Asset List_Equipment', IsBlank(Dropdown14.Selected.Value) || 'Asset Model'.Value = Dropdown14.Selected.Value, 
+                        IsBlank(Dropdown14_6.Selected.Value) || 'Asset Status'.Value = Dropdown14_6.Selected.Value))
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    ShowScrollbar: =false
+                    TemplateSize: =500
+                    Visible: =amSelection= "Equipment Assets"
+                    Width: =Parent.Width
+                    Y: =50
+                    ZIndex: =1
+
+                    Button37_2 As button:
+                        Fill: =RGBA(241, 244, 249, 1)
+                        Height: =500
+                        OnSelect: =Select(Parent)
+                        Text: =
+                        Width: =Parent.TemplateWidth
+                        ZIndex: =1
+
+                    Label94_9 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.SKU),"SKU Misssing",Text(ThisItem.SKU,"00000000000000"))
+                        Width: =210
+                        X: =(Parent.TemplateWidth-Self.Width)/2
+                        ZIndex: =2
+
+                    Label94_11 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Asset Status'.Value),"Status Unknown",ThisItem.'Asset Status'.Value)
+                        Width: =(Len(Self.Text))*(Self.Size)
+                        X: =(Parent.TemplateWidth-Self.Width)/2
+                        Y: =Parent.TemplateHeight-Self.Height
+                        ZIndex: =3
+
+                    Button37_3 As button:
+                        Fill: =RGBA(241, 244, 249, 1)
+                        Height: =Parent.TemplateHeight/1.2
+                        OnSelect: =Select(Parent)
+                        Text: =
+                        Width: =Parent.TemplateWidth/1.1
+                        X: =(Parent.TemplateWidth-Self.Width)/2
+                        Y: =(Parent.TemplateHeight-Self.Height)/2
+                        ZIndex: =4
+
+                    Label94_13 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.User.DisplayName),"No User",ThisItem.User.DisplayName)
+                        Width: =(Len(Self.Text)+2.5)*Self.Size
+                        X: =Button37_3.X+(Button37_3.Width-Self.Width)/2
+                        Y: =Button37_3.Y
+                        ZIndex: =5
+
+                    Icon34_5 As icon:
+                        Height: =32
+                        Icon: =Icon.Person
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_13.X
+                        Y: =Label94_13.Y
+                        ZIndex: =6
+
+                    Label94_14 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Asset Type'.Value),"Type Missing",ThisItem.'Asset Type'.Value)
+                        Width: =Len(Self.Text)*Self.Size +25
+                        X: =Label94_13.X
+                        Y: =Label94_13.Y+Label94_13.Height
+                        ZIndex: =7
+
+                    Icon34_6 As icon:
+                        Height: =32
+                        Icon: =Icon.Devices
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_13.X
+                        Y: =Label94_14.Y
+                        ZIndex: =8
+
+                    Label94_15 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Asset Model'.Value),"Model Not Specified",ThisItem.'Asset Model'.Value)
+                        Width: =250
+                        X: =Label94_13.X
+                        Y: =Label94_14.Y+Label94_14.Height
+                        ZIndex: =9
+
+                    Icon34_7 As icon:
+                        Height: =32
+                        Icon: =Icon.Manufacture
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_13.X
+                        Y: =Label94_15.Y
+                        ZIndex: =10
+
+                    Label94_16 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Office Site'.Value),"No Site Provided",ThisItem.'Office Site'.Value)
+                        Width: =Label94_13.Width
+                        X: =Label94_13.X
+                        Y: =Label94_15.Y+Label94_15.Height
+                        ZIndex: =11
+
+                    Icon34_8 As icon:
+                        Height: =32
+                        Icon: =Icon.OfficeBuilding
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_13.X
+                        Y: =Label94_16.Y
+                        ZIndex: =12
+
+                    Label94_17 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.Floor.Value),"Floor not Provided",ThisItem.Floor.Value&" Floor")
+                        Width: =Label94_13.Width
+                        X: =Label94_13.X
+                        Y: =Label94_16.Y+Label94_16.Height
+                        ZIndex: =13
+
+                    Icon34_9 As icon:
+                        Height: =32
+                        Icon: =Icon.LevelsLayersItems
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_13.X
+                        Y: =Label94_17.Y
+                        ZIndex: =14
+
+                    Label94_18 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Office/Cubicle Number'),"No Office or Cubicle",ThisItem.'Office/Cubicle Number')
+                        Width: =Button43_1.Width/2
+                        X: =Label94_13.X
+                        Y: =Label94_17.Y+Label94_17.Height
+                        ZIndex: =15
+
+                    Icon34_10 As icon:
+                        Height: =32
+                        Icon: =Icon.Items
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_13.X
+                        Y: =Label94_18.Y
+                        ZIndex: =16
+
+                    Label94_19 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Deployment Date'),"No Date",ThisItem.'Deployment Date')
+                        Width: =Len(Self.Text)*Self.Size +25
+                        X: =Label94_13.X
+                        Y: =Label94_18.Y+Label94_18.Height
+                        ZIndex: =17
+
+                    Icon34_11 As icon:
+                        Height: =32
+                        Icon: =Icon.CalendarBlank
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_13.X
+                        Y: =Label94_19.Y
+                        ZIndex: =18
+
+                    Button43_1 As button:
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =Parent.TemplateHeight
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, .25), -20%)
+                        OnSelect: |-
+                            =Navigate(AssetDetails,ScreenTransition.Cover,{equipmentAsset:ThisItem})
+                        PressedFill: =ColorFade(Self.HoverFill,-100%)
+                        Text: =
+                        Width: =Parent.TemplateWidth
+                        ZIndex: =19
+
+                AssetCardGallery As gallery.variableTemplateHeightGallery:
+                    DelayItemLoading: =true
+                    Height: =Parent.Height-AssetsTopBar.Height
+                    Items: |-
+                        =If(Len(TextInput24.Text)>0,Filter('PubDef Computer Inventory_ Asset List_Computers',StartsWith('Asset Name',TextInput24.Text) || (IsNumeric(TextInput24.Text) &&Value(TextInput24.Text)= AssetID )),Filter('PubDef Computer Inventory_ Asset List_Computers', IsBlank(Dropdown14.Selected.Value) || 'Asset Model'.Value = Dropdown14.Selected.Value, 
+                        IsBlank(Dropdown14_6.Selected.Value) || 'Asset Status'.Value = Dropdown14_6.Selected.Value))
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    ShowScrollbar: =false
+                    TemplateSize: =500
+                    Visible: =amSelection= "Computer Assets"
+                    Width: =Parent.Width
+                    Y: =60
+                    ZIndex: =2
+
+                    Button37 As button:
+                        Fill: =RGBA(241, 244, 249, 1)
+                        Height: =500
+                        OnSelect: =Select(Parent)
+                        Text: =
+                        Width: =Parent.TemplateWidth
+                        ZIndex: =1
+
+                    Label94 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.AssetID),"SKU Misssing",ThisItem.AssetID)
+                        Width: =210
+                        ZIndex: =2
+
+                    Label94_1 As label:
+                        Align: =Align.Right
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Connection Type'.Value),"N/A",ThisItem.'Connection Type'.Value)
+                        Width: =210
+                        X: =Parent.TemplateWidth-Self.Width
+                        ZIndex: =3
+
+                    Label94_2 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Asset Status'.Value),"Status Unknown",ThisItem.'Asset Status'.Value)
+                        Width: =(Len(Self.Text))*(Self.Size)
+                        Y: =Parent.TemplateHeight-Self.Height
+                        ZIndex: =4
+
+                    Label94_3 As label:
+                        Align: =Align.Right
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Asset Model'.Value),"Model Unknown",ThisItem.'Asset Model'.Value)
+                        Width: =220
+                        X: =Parent.TemplateWidth-Self.Width
+                        Y: =Parent.TemplateHeight-Self.Height
+                        ZIndex: =5
+
+                    Circle6 As circle:
+                        Fill: =Switch(ThisItem.'Asset Condition'.Value,"Red",Color.Red,"Green",Color.Green,"Blue",Color.Blue,"Yellow",Color.Yellow,Color.Gray)
+                        Height: =18
+                        OnSelect: =Select(Parent)
+                        Width: =18
+                        X: =Label94_2.Width
+                        Y: =Label94_2.Y+Self.Height/2
+                        ZIndex: =6
+
+                    Button37_1 As button:
+                        Fill: =RGBA(241, 244, 249, 1)
+                        Height: =Parent.TemplateHeight/1.2
+                        OnSelect: =Select(Parent)
+                        Text: =
+                        Width: =Parent.TemplateWidth/1.1
+                        X: =(Parent.TemplateWidth-Self.Width)/2
+                        Y: =(Parent.TemplateHeight-Self.Height)/2
+                        ZIndex: =7
+
+                    Label94_4 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Asset Name'),"Asset Name Missing",ThisItem.'Asset Name')
+                        Width: =(Len(Self.Text)+2)*Self.Size
+                        X: =Button37_1.X+(Button37_1.Width-Self.Width)/2
+                        Y: =Button37_1.Y
+                        ZIndex: =8
+
+                    "Icon34 As icon.'3DPrinting'":
+                        Height: =32
+                        Icon: =Icon.DocumentWithContent
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_4.X
+                        Y: =Label94_4.Y
+                        ZIndex: =9
+
+                    Label94_5 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Assigned User'.DisplayName),"Not Assigned",ThisItem.'Assigned User'.DisplayName)
+                        Width: =(Len(Self.Text)+2)*Self.Size
+                        X: =Label94_4.X
+                        Y: =Label94_4.Y+Label94_4.Height
+                        ZIndex: =10
+
+                    Icon34_1 As icon:
+                        Height: =32
+                        Icon: =Icon.Person
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_4.X
+                        Y: =Label94_5.Y
+                        ZIndex: =11
+
+                    Label94_6 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Asset Location'.Value),"Location Not Specified",ThisItem.'Asset Location'.Value)
+                        Width: =(Len(Self.Text)+2)*Self.Size
+                        X: =Label94_4.X
+                        Y: =Label94_5.Y+Label94_5.Height
+                        ZIndex: =12
+
+                    Icon34_2 As icon:
+                        Height: =32
+                        Icon: =Icon.Waypoint
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_4.X
+                        Y: =Label94_6.Y
+                        ZIndex: =13
+
+                    Label94_7 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Asset Type'.Value),"Type Not Specified",ThisItem.'Asset Type'.Value)
+                        Width: =(Len(Self.Text)+2)*Self.Size
+                        X: =Label94_4.X
+                        Y: =Label94_6.Y+Label94_6.Height
+                        ZIndex: =14
+
+                    Icon34_3 As icon:
+                        Height: =32
+                        Icon: =Icon.Laptop
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_4.X
+                        Y: =Label94_7.Y
+                        ZIndex: =15
+
+                    Label94_8 As label:
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =32
+                        Size: =14
+                        Text: =If(IsBlank(ThisItem.'Device Last Updated'),"Last Update Unknown",ThisItem.'Device Last Updated')
+                        Width: =Label94_4.Width
+                        X: =Label94_4.X
+                        Y: =Label94_7.Y+Label94_7.Height
+                        ZIndex: =16
+
+                    Icon34_4 As icon:
+                        Height: =32
+                        Icon: =Icon.CalendarBlank
+                        OnSelect: =Select(Parent)
+                        PaddingTop: =5
+                        Width: =32
+                        X: =Label94_4.X
+                        Y: =Label94_8.Y
+                        ZIndex: =17
+
+                    Button43 As button:
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =Parent.TemplateHeight
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, .25), -20%)
+                        OnSelect: |-
+                            =Navigate(AssetDetails,ScreenTransition.Cover,{computerAsset:ThisItem})
+                        PressedFill: =ColorFade(Self.HoverFill,-100%)
+                        Text: =
+                        Width: =Parent.TemplateWidth
+                        ZIndex: =18
+
+                Container33 As groupContainer.manualLayoutContainer:
+                    Fill: =ColorScheme.screenBackgroundSeeThroughDark
+                    Height: =Parent.Height
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    Visible: =IsEmpty(AssetCardGallery.AllItems)
+                    Width: =Parent.Width
+                    ZIndex: =3
+
+                    Label92 As label:
+                        Align: =Align.Center
+                        BorderThickness: =2
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Text: ="Data not found. Would you like to reset the filters?"
+                        Width: =Parent.Width/1.1
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =(Parent.Height-Self.Height)/2.5
+                        ZIndex: =1
+
+                    Button34 As button:
+                        OnSelect: |-
+                            =Reset(Dropdown14);
+                            Reset(Dropdown14_6);
+                        Text: ="Reset"
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =Label92.Y+Label92.Height+10
+                        ZIndex: =2
+
+                AssetsTopBar As groupContainer.manualLayoutContainer:
+                    Fill: =RGBA(241, 244, 249, 1)
+                    Height: =50
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    Width: =Parent.Width
+                    ZIndex: =4
+
+                    Icon32 As icon:
+                        Height: =50
+                        Icon: =Icon.LineWeight
+                        OnSelect: |-
+                            =UpdateContext({assetScan:true})
+                        X: =15
+                        ZIndex: =1
+
+                    TextInput24 As text:
+                        Default: =
+                        Height: =32
+                        HintText: ="Search Asset by Name or Full SKU"
+                        Width: =(Parent.Width/1.1) - Icon33.Width
+                        X: =Icon32.X+Icon32.Width
+                        Y: =(Parent.Height-Self.Height)/2
+                        ZIndex: =2
+
+                    Icon33 As icon:
+                        Height: =50
+                        Icon: =Icon.FilterFlat
+                        OnSelect: |-
+                            =UpdateContext({assetFilter:true})
+                        X: =Parent.Width-Self.Width
+                        ZIndex: =3
+
+                Container31 As groupContainer.manualLayoutContainer:
+                    Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                    Height: =Parent.Height
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    Visible: =assetScan
+                    Width: =Parent.Width
+                    ZIndex: =5
+
+                    BCodeBackground As rectangle:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderThickness: =2
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =Parent.Height/1.2
+                        Width: =Parent.Width/1.1
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =(Parent.Height-Self.Height)/2
+                        ZIndex: =1
+
+                    BCodeTitleBar As rectangle:
+                        Height: =50
+                        Width: =BCodeBackground.Width
+                        X: =BCodeBackground.X
+                        Y: =BCodeBackground.Y
+                        ZIndex: =2
+
+                    BCodeTitleBarLabel As label:
+                        Align: =Align.Center
+                        BorderThickness: =1
+                        Color: =RGBA(255, 255, 255, 1)
+                        Height: =BCodeTitleBar.Height
+                        Size: =18
+                        Text: ="Scan Barcode"
+                        Width: =BCodeTitleBar.Width
+                        X: =BCodeTitleBar.X
+                        Y: =BCodeTitleBar.Y
+                        ZIndex: =3
+
+                    "AssetBarcodeScanner As 'Barcode Reader'":
+                        BorderFillColor: =RGBA(47, 81, 151, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisabledContentColor: =RGBA(166, 166, 166, 1)
+                        DisabledFillColor: =RGBA(244, 244, 244, 1)
+                        DisplayMode: =DisplayMode.Edit
+                        FillColor: =RGBA(56, 96, 178, 1)
+                        FontWeight: =FontWeight.Bold
+                        Height: =70
+                        HoverBorderColor: =RGBA(88, 115, 171, 1)
+                        HoverContentColor: =RGBA(255, 255, 255, 1)
+                        HoverFillColor: =RGBA(47, 81, 151, 1)
+                        OnCancel: =false
+                        OnScan: |-
+                            =UpdateContext({assetValue:First(AssetBarcodeScanner.Barcodes)})
+                        PressedBorderColor: =RGBA(56, 96, 178, 1)
+                        PressedContentColor: =RGBA(56, 96, 178, 1)
+                        PressedFillColor: =RGBA(255, 255, 255, 1)
+                        ScanningMode: ='BarcodeReader.ScanningMode'.AutomaticallyScan
+                        TextColor: =RGBA(255, 255, 255, 1)
+                        Width: =280
+                        X: =BCodeBackground.X+(BCodeBackground.Width-Self.Width)/2
+                        Y: =BCodeTitleBar.Height+BCodeTitleBar.Y+25
+                        ZIndex: =4
+
+                    "Gallery18 As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+                        DelayItemLoading: =true
+                        Height: =BCodeBackground.Height/5
+                        Items: =If(!IsBlank(assetValue),LookUp('PubDef Computer Inventory_ Asset List_Computers',AssetID = assetValue.Value))
+                        Layout: =Layout.Vertical
+                        LoadingSpinner: =LoadingSpinner.Data
+                        TemplatePadding: =0
+                        TemplateSize: =104
+                        Visible: =amSelection= "Computer Assets"
+                        Width: =BCodeBackground.Width/1.1
+                        X: =BCodeBackground.X+(BCodeBackground.Width-Self.Width)/2
+                        Y: =BCodeBackground.Y+(BCodeBackground.Height+Self.Height)/2
+                        ZIndex: =5
+
+                        Image7 As image:
+                            Height: =72
+                            Image: =
+                            OnSelect: =Select(Parent)
+                            RadiusBottomLeft: =8
+                            RadiusBottomRight: =8
+                            RadiusTopLeft: =8
+                            RadiusTopRight: =8
+                            Width: =72
+                            X: =16
+                            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        Title2 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(71, 69, 64, 1)
+                            DisabledColor: =RGBA(186, 186, 186, 1)
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =Self.Size * 1.8
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =If(IsBlank(ThisItem.AssetID),"No SKU found",ThisItem.AssetID)
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =Parent.TemplateWidth - 173
+                            X: =103
+                            Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2.Size * 1.8)) / 2
+                            ZIndex: =2
+
+                        Subtitle2 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(71, 69, 64, 1)
+                            DisabledColor: =RGBA(186, 186, 186, 1)
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =Self.Size * 1.8
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =ThisItem.'Assigned User'.DisplayName
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =Title2.Width
+                            X: =Title2.X
+                            Y: =Title2.Y + Title2.Height
+                            ZIndex: =3
+
+                        NextArrow2 As icon.ChevronRight:
+                            AccessibleLabel: =Self.Tooltip
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(166, 166, 166, 1)
+                            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                            DisabledColor: =RGBA(119, 119, 119, 1)
+                            Height: =50
+                            Icon: =Icon.ChevronRight
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =16
+                            PaddingLeft: =16
+                            PaddingRight: =16
+                            PaddingTop: =16
+                            Tooltip: ="View item details"
+                            Width: =50
+                            X: =Parent.TemplateWidth - Self.Width - 12
+                            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                            ZIndex: =4
+
+                        Separator2 As rectangle:
+                            BorderColor: =RGBA(0, 0, 255, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =8
+                            OnSelect: =Select(Parent)
+                            Width: =Parent.TemplateWidth
+                            Y: =Parent.TemplateHeight - Self.Height
+                            ZIndex: =5
+
+                        Rectangle45 As rectangle:
+                            Height: =Parent.TemplateHeight - Separator2.Height
+                            OnSelect: =Select(Parent)
+                            Visible: =ThisItem.IsSelected
+                            Width: =4
+                            ZIndex: =6
+
+                        Button34_1 As button:
+                            Fill: =RGBA(0, 0, 0, 0)
+                            Height: =Parent.TemplateHeight
+                            HoverFill: =ColorFade(RGBA(56, 96, 178, .1), -20%)
+                            OnSelect: |-
+                                =Navigate(AssetDetails,ScreenTransition.Fade,{computerAsset:ThisItem});
+                            PressedColor: =
+                            PressedFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                            Text: =
+                            Width: =Parent.TemplateWidth
+                            ZIndex: =8
+
+                    "Gallery18_1 As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+                        '#CopilotOverlayLabel': ="Filtered"
+                        DelayItemLoading: =true
+                        Height: =BCodeBackground.Height/5
+                        Items: =If(!IsBlank(assetValue),LookUp('PubDef Computer Inventory_ Asset List_Equipment',SKU = assetValue.Value))
+                        Layout: =Layout.Vertical
+                        LoadingSpinner: =LoadingSpinner.Data
+                        TemplatePadding: =0
+                        TemplateSize: =104
+                        Visible: =amSelection = "Equipment Assets"
+                        Width: =BCodeBackground.Width/1.1
+                        X: =BCodeBackground.X+(BCodeBackground.Width-Self.Width)/2
+                        Y: =BCodeBackground.Y+(BCodeBackground.Height+Self.Height)/2
+                        ZIndex: =6
+
+                        Image7_1 As image:
+                            Height: =72
+                            Image: =
+                            OnSelect: =Select(Parent)
+                            RadiusBottomLeft: =8
+                            RadiusBottomRight: =8
+                            RadiusTopLeft: =8
+                            RadiusTopRight: =8
+                            Width: =72
+                            X: =16
+                            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        Title2_1 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(71, 69, 64, 1)
+                            DisabledColor: =RGBA(186, 186, 186, 1)
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =Self.Size * 1.8
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =If(IsBlank(ThisItem.SKU),"No SKU found",ThisItem.SKU)
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =Parent.TemplateWidth - 173
+                            X: =103
+                            Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_1.Size * 1.8)) / 2
+                            ZIndex: =2
+
+                        Subtitle2_1 As label:
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(71, 69, 64, 1)
+                            DisabledColor: =RGBA(186, 186, 186, 1)
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =Self.Size * 1.8
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =14
+                            Text: =ThisItem.User.DisplayName
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =Title2_1.Width
+                            X: =Title2_1.X
+                            Y: =Title2_1.Y + Title2_1.Height
+                            ZIndex: =3
+
+                        NextArrow2_1 As icon:
+                            AccessibleLabel: =Self.Tooltip
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(166, 166, 166, 1)
+                            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                            DisabledColor: =RGBA(119, 119, 119, 1)
+                            Height: =50
+                            Icon: =Icon.ChevronRight
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =16
+                            PaddingLeft: =16
+                            PaddingRight: =16
+                            PaddingTop: =16
+                            Tooltip: ="View item details"
+                            Width: =50
+                            X: =Parent.TemplateWidth - Self.Width - 12
+                            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                            ZIndex: =4
+
+                        Separator2_1 As rectangle:
+                            BorderColor: =RGBA(0, 0, 255, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =8
+                            OnSelect: =Select(Parent)
+                            Width: =Parent.TemplateWidth
+                            Y: =Parent.TemplateHeight - Self.Height
+                            ZIndex: =5
+
+                        Rectangle45_5 As rectangle:
+                            Fill: =RGBA(0, 18, 107, 1)
+                            Height: =Parent.TemplateHeight - Separator2_1.Height
+                            OnSelect: =Select(Parent)
+                            Visible: =ThisItem.IsSelected
+                            Width: =4
+                            ZIndex: =6
+
+                        Button34_2 As button:
+                            Fill: =RGBA(0, 0, 0, 0)
+                            Height: =Parent.TemplateHeight
+                            HoverFill: =ColorFade(RGBA(56, 96, 178, .1), -20%)
+                            OnSelect: |-
+                                =Navigate(AssetDetails,ScreenTransition.Fade,{equipmentAsset:ThisItem});
+                            PressedColor: =
+                            PressedFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                            Text: =
+                            Width: =Parent.TemplateWidth
+                            ZIndex: =7
+
+                    Button45 As button:
+                        OnSelect: |-
+                            =UpdateContext({testValue:11123423134123})
+                        Text: ="Button"
+                        Visible: =false
+                        X: =90
+                        Y: =128
+                        ZIndex: =7
+
+                    Icon28_2 As icon:
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =RGBA(203, 102, 102, 1)
+                        Height: =Self.Width
+                        Icon: =Icon.Cancel
+                        OnSelect: |-
+                            =UpdateContext({assetScan:false});
+                        Width: =BCodeTitleBar.Height
+                        X: =BCodeTitleBar.Width+ BCodeTitleBar.X-Self.Width
+                        Y: =BCodeTitleBar.Y
+                        ZIndex: =8
+
+                Container32 As groupContainer.manualLayoutContainer:
+                    Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                    Height: =Parent.Height
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    Visible: =assetFilter
+                    Width: =Parent.Width
+                    ZIndex: =6
+
+                    Rectangle47 As rectangle:
+                        BorderColor: =RGBA(173, 153, 95, 1)
+                        BorderThickness: =2
+                        Fill: =RGBA(9, 33, 98, 1)
+                        Height: =300
+                        Width: =300
+                        X: =Parent.Width-Self.Width
+                        ZIndex: =1
+
+                    Icon33_1 As icon:
+                        Color: =RGBA(149, 149, 149, 1)
+                        Height: =50
+                        Icon: =Icon.FilterFlatFilled
+                        OnSelect: |-
+                            =UpdateContext({assetFilter:false})
+                        X: =Parent.Width-Self.Width
+                        ZIndex: =19
+
+                    Dropdown14 As dropdown:
+                        AllowEmptySelection: =true
+                        Default: =Blank()
+                        Items: |-
+                            =Table({Value:""},Distinct('PubDef Computer Inventory_ Asset List_Computers','Asset Model'.Value))
+                        OnChange: |-
+                            =UpdateContext({assetFilter:false})
+                        Width: =Rectangle47.Width-10
+                        X: =Parent.Width-Self.Width-5
+                        Y: =Icon33_1.Y+Icon33_1.Height+36
+                        ZIndex: =20
+
+                    Label87 As label:
+                        BorderColor: =RGBA(173, 153, 95, 1)
+                        BorderThickness: =1
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =RGBA(9, 33, 98, 1)
+                        Height: =34
+                        Text: =If(amSelection = "Computer Assets", "Model","Asset Type")
+                        Width: =Rectangle47.Width
+                        X: =Rectangle47.X
+                        Y: =Dropdown14.Y-Self.Height-2
+                        ZIndex: =21
+
+                    Icon33_3 As icon:
+                        Color: =RGBA(128, 128, 128, 1)
+                        Height: =50
+                        Icon: =Icon.Reload
+                        OnSelect: |-
+                            =Reset(Dropdown14);
+                            Reset(Dropdown14_6)
+                        PaddingBottom: =2
+                        PaddingTop: =2
+                        X: =Parent.Width-Self.Width*2
+                        ZIndex: =23
+
+                    Dropdown14_6 As dropdown:
+                        AllowEmptySelection: =true
+                        Default: =Blank()
+                        Items: |-
+                            =Table({Value:""},Distinct('PubDef Computer Inventory_ Asset List_Computers','Asset Status'.Value))
+                        OnChange: |-
+                            =UpdateContext({assetFilter:false})
+                        Width: =Rectangle47.Width-10
+                        X: =Parent.Width-Self.Width-5
+                        Y: =Dropdown14.Y+Dropdown14.Height+36
+                        ZIndex: =24
+
+                    Label87_1 As label:
+                        BorderColor: =RGBA(173, 153, 95, 1)
+                        BorderThickness: =1
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =RGBA(9, 33, 98, 1)
+                        Height: =34
+                        Text: ="Status Filter"
+                        Width: =Rectangle47.Width
+                        X: =Rectangle47.X
+                        Y: =Dropdown14_6.Y-Self.Height-2
+                        ZIndex: =25
+
+        AssetsFooter As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                =Assets.Size=1
+            Width: =Parent.Width
+            ZIndex: =7
+
+            AssetsWebMobileMenu As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    AssetsWebMenu As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: =Assets.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    AssetsBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =AssetsLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Navigate('Asset Manager Menu',ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(AssetsHeaderContainer.Height-AssetsLabel.Height)/1.05
+        ZIndex: =3
+
+    FeedbackBugReportAssets As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =4
+

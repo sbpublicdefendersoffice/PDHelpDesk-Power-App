@@ -1,0 +1,583 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  AddMedia:
+    DefinitionType: CanvasComponent
+    AccessAppScope: true
+    CustomProperties:
+      AMSize:
+        PropertyKind: Input
+        DisplayName: AMSize
+        Description: A custom property
+        DataType: Number
+        Default: =100
+      AttachCameraOff:
+        PropertyKind: Event
+        DisplayName: AttachCameraOff
+        Description: A custom property
+        ReturnType: Boolean
+        Default: =Set(AttachCamera,false);
+      AttachCameraOn:
+        PropertyKind: Event
+        DisplayName: AttachCameraOn
+        Description: A custom property
+        ReturnType: Boolean
+        Default: =Set(AttachCamera,true);
+      DisablePickMedia:
+        PropertyKind: Event
+        DisplayName: DisablePickMedia
+        Description: A custom property
+        ReturnType: Boolean
+        Default: =Set(AttachFiles,false)
+      EnablePickMedia:
+        PropertyKind: Event
+        DisplayName: EnablePickMedia
+        Description: A custom property
+        ReturnType: Boolean
+        Default: =Set(AttachFiles,true)
+      ForSTITickID:
+        PropertyKind: Input
+        DisplayName: ForSTITickID
+        Description: A custom property
+        DataType: Number
+        Default: =0
+      InitiateMediaDelay:
+        PropertyKind: Event
+        DisplayName: InitiateMediaDelay
+        Description: A custom property
+        ReturnType: Boolean
+        Default: =Set(mediaDelay,!mediaDelay)
+      OpenMedia:
+        PropertyKind: Event
+        DisplayName: OpenMedia
+        Description: A custom property
+        ReturnType: Boolean
+        Default: =Set(varOpenMedia,!varOpenMedia)
+      PhotoModeDisable:
+        PropertyKind: Event
+        DisplayName: PhotoModeDisable
+        Description: A custom property
+        ReturnType: Boolean
+        Default: =Set(AttachPhoto,false)
+      PhotoModeEnable:
+        PropertyKind: Event
+        DisplayName: PhotoModeEnable
+        Description: A custom property
+        ReturnType: Boolean
+        Default: =Set(AttachPhoto,true)
+    Properties:
+      Height: =App.Height
+      Width: =App.Width
+    Children:
+      - AlternativeAddImageContainer_46:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =varOpenMedia
+            Width: =Parent.Width
+          Children:
+            - AddMediaBackgroundTint:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, .35)
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - AddMediaBackground:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(227, 234, 243, 1)
+                  Height: =Parent.Height/1.10
+                  Width: =Parent.Width/1.10
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - AddMediaBackgroundHeader:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Height: =80
+                  Width: =AddMediaBackground.Width
+                  X: =AddMediaBackground.X
+                  Y: =AddMediaBackground.Y
+            - AddMediaBackgroundHeaderLabel:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =AddMediaBackgroundHeader.Height
+                  Size: =18
+                  Text: ="Using "&If(AttachCamera, "Camera","Copy Paste")
+                  Width: =AddMediaBackgroundHeader.Width
+                  X: =AddMediaBackgroundHeader.X
+                  Y: =AddMediaBackgroundHeader.Y
+            - Rectangle36_1:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(241, 244, 249, 1)
+                  Height: =AddMediaBackground.Height
+                  Visible: =!AttachFiles
+                  Width: =AddMediaBackground.Width
+                  X: =AddMediaBackground.X
+                  Y: =AddMediaBackground.Y
+            - ClosePanelButton_45:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Color: =RGBA(255, 255, 255, 1)
+                  Fill: =RGBA(203, 102, 102, 1)
+                  Height: =40
+                  Icon: =Icon.Cancel
+                  OnSelect: |-
+                    =Reset(CopyPasteRTE_46);
+                    AddMedia.AttachCameraOff();
+                    AddMedia.DisablePickMedia();
+                    AddMedia.PhotoModeDisable();
+                  Width: =40
+                  X: =AddMediaBackgroundHeader.Width+AddMediaBackgroundHeader.X-Self.Width
+                  Y: =AddMediaBackgroundHeader.Y
+            - CopyPasteRTE_46:
+                Control: RichTextEditor@2.7.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Default: =
+                  Height: =AddMediaBackground.Height/1.5
+                  Visible: =AttachPhoto
+                  Width: =AddMediaBackground.Width
+                  X: =AddMediaBackground.X
+                  Y: =AddMediaBackground.Y+AddMediaBackgroundHeader.Height
+            - Camera_45:
+                Control: Camera@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Camera: |-
+                    =//Checks if there are anyback cameras, if there are none then default the camera to the first one otherwise use the first back camera
+                    If(IsBlank(LookUp(Camera_45.AvailableDevices, "back" in Name|| "Back" in Name).Id),0,LookUp(Camera_45.AvailableDevices, "back" in Name || "Back" in Name).Id)
+                  Height: =AddMediaBackground.Height/1.5
+                  OnSelect: |-
+                    =Collect(RTEImages,{copyName:App.ActiveScreen.Name&" Photo "&Text(Now(),DateTimeFormat.UTC),base64Image: "<img src="&JSON(Camera_45.Photo,JSONFormat.IncludeBinaryData)&" />"});
+                    Collect(JointAttachments,{Name:App.ActiveScreen.Name&" Photo "&Text(Now(),DateTimeFormat.UTC),Value: "<img src="&JSON(Camera_45.Photo,JSONFormat.IncludeBinaryData)&" />"});
+                    AddMedia.InitiateMediaDelay();
+                  Visible: =AttachCamera
+                  Width: =AddMediaBackground.Width
+                  X: =AddMediaBackground.X
+                  Y: =AddMediaBackground.Y+AddMediaBackgroundHeader.Height
+            - Button25_178:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =ColorScheme.primary
+                  Font: =Font.'Open Sans'
+                  Height: =Self.Width
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: =
+                  Visible: =!AttachFiles
+                  Width: =Icon11_48.Width+16
+                  X: =Icon11_48.X-8
+                  Y: =Icon11_48.Y-8
+            - Icon11_48:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Height: =Self.Width
+                  Icon: =Icon.Camera
+                  OnSelect: |+
+                    =AddMedia.AttachCameraOn();
+                    AddMedia.EnablePickMedia();
+                  Visible: =!AttachFiles
+                  Width: =If(AddMedia.AMSize = 1, 32,48)
+                  X: =AddMediaAttachmentControl.X-Self.Width-16
+                  Y: =AddMediaAttachmentControl.Y+5
+            - Button25_179:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(0, 0, 0, 0)
+                  Font: =Font.'Open Sans'
+                  Height: =Self.Width
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                  OnSelect: =Select(Icon11_48)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+                  Text: =
+                  Visible: =!AttachFiles
+                  Width: =Icon11_48.Width+16
+                  X: =Icon11_48.X-8
+                  Y: =Icon11_48.Y-8
+            - Button25_180:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =ColorScheme.primary
+                  Font: =Font.'Open Sans'
+                  Height: =Self.Width
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: =
+                  Visible: =!AttachFiles
+                  Width: =Icon11_48.Width+16
+                  X: =Icon11_49.X-8
+                  Y: =Icon11_49.Y-8
+            - Icon11_49:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Height: =Self.Width
+                  Icon: =Icon.Paste
+                  OnSelect: |-
+                    =AddMedia.AttachCameraOff();
+                    AddMedia.EnablePickMedia();
+                    AddMedia.PhotoModeEnable();
+                  Visible: =!AttachFiles
+                  Width: =Icon11_48.Width
+                  X: =AddMediaAttachmentControl.X+AddMediaAttachmentControl.Width+16
+                  Y: =AddMediaAttachmentControl.Y+5
+            - Button25_181:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(0, 0, 0, 0)
+                  Font: =Font.'Open Sans'
+                  Height: =Self.Width
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                  OnSelect: =Select(Icon11_49)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+                  Text: =
+                  Visible: =!AttachFiles
+                  Width: =Icon11_48.Width+16
+                  X: =Icon11_49.X-8
+                  Y: =Icon11_49.Y-8
+            - CameraInfoLabel_45:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =50
+                  Size: =10
+                  Text: |-
+                    =//"Tap or Click the camera to take a picture"
+                    Concat(Camera_45.AvailableDevices, Name&" "&Id)
+                  Visible: =AttachCamera
+                  Width: =Camera_45.Width
+                  X: =(AddMediaBackground.Width-Self.Width)/2 +AddMediaBackground.X
+                  Y: =AddMediaBackground.Height-Self.Height-7
+            - AddScreenshotButton_45:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: "=If( \"<img\" in CopyPasteRTE_46.HtmlText, Collect(RTEImages,{copyName:App.ActiveScreen.Name&\" ScreenShot \"&Text(Now(),DateTimeFormat.UTC), base64Image:CopyPasteRTE_46.HtmlText});Collect(JointAttachments,{Name:App.ActiveScreen.Name&\" ScreenShot \"&Text(Now(),DateTimeFormat.UTC), Value:CopyPasteRTE_42.HtmlText});\r\nReset(CopyPasteRTE_46);\r\n, Notify(\"No Valid Image\"));\r\n "
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: =If(AttachCamera,"Take Picture","Add ScreenShot")
+                  Visible: =AttachPhoto
+                  Width: =250
+                  X: =(AddMediaBackground.Width-Self.Width)/2 +AddMediaBackground.X
+                  Y: =AddMediaBackground.Height-Self.Height-7
+            - AddMediaAttachmentControl:
+                Control: Attachments@2.3.0
+                Properties:
+                  BorderColor: =Color.Transparent
+                  Font: =Font.'Open Sans'
+                  Height: =66
+                  HoverFill: =RGBA(0,0,0,.11)
+                  ItemColor: =RGBA(255, 255, 255, 1)
+                  ItemFill: =RGBA(56, 96, 178, 1)
+                  ItemHoverFill: =RGBA(186, 202, 226, 1)
+                  Items.Name: =Name
+                  Items.Value: =Value
+                  MaxAttachments: =10
+                  MaxAttachmentsText: =
+                  NoAttachmentsText: =
+                  OnAddFile: |+
+                    =ForAll
+                    (
+                        Self.Attachments As Attachment,
+                        If(Not(Attachment in JointAttachments),Collect(JointAttachments,{Name:Attachment.Name,Value:Attachment.Value}))
+                    );
+                    ClearCollect(attItems,Self.Attachments);
+                    Reset(AddMediaAttachmentControl);
+
+                  OnRemoveFile: =
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  Size: =10
+                  Visible: =!AttachFiles
+                  Width: =If(AddMedia.AMSize>1,Rectangle36_1.Width/1.2,Rectangle36_1.Width/1.6)
+                  X: =(Rectangle36_1.X+Rectangle36_1.Width-Self.Width)/2 +Rectangle36_1.X/2
+                  Y: =AttachmentGalleryView.Y+AttachmentGalleryView.Height+10
+            - SelectionBannerLabel:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Fill: =RGBA(39, 113, 194, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =80
+                  Size: =21
+                  Text: |-
+                    =//If(CountRows(FeedbackImages)>0,CountRows(FeedbackImages)&" Screenshot(s) or Photos Added","No Media Attached")
+                    "Add Media"
+                  Visible: =!AttachFiles
+                  Width: =AddMediaBackground.Width
+                  X: =AddMediaBackground.X
+                  Y: =34
+            - AttachmentGalleryView:
+                Control: Gallery@2.15.0
+                Variant: VariableHeight
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Height: =AddMediaBackground.Height-SelectionBannerLabel.Height-128
+                  Items: =JointAttachments
+                  TemplatePadding: =
+                  TemplateSize: =64
+                  Visible: =!AttachFiles
+                  Width: =AddMediaBackground.Width/1.1
+                  X: =(AddMediaBackground.Width-Self.Width)/2 +AddMediaBackground.X
+                  Y: =SelectionBannerLabel.Y+SelectionBannerLabel.Height
+                Children:
+                  - Label69_1:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =Parent.TemplateHeight
+                        OnSelect: =Select(Parent)
+                        Text: =ThisItem.Name
+                        Width: =Parent.TemplateWidth*.8
+                        X: =Icon26.Width+Icon26.X
+                  - Icon26:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Height: =Self.Width
+                        Icon: =Icon.Document
+                        OnSelect: =Select(Parent)
+                        Width: =If(AddMedia.AMSize = 1, 32,48)
+                        Y: =5
+                  - Icon27:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =RGBA(39, 113, 194, 1)
+                        Height: =Self.Width
+                        Icon: =Icon.Cancel
+                        OnSelect: |-
+                          =Set(workerVar,{copyName:ThisItem.Name,base64Image:ThisItem.Value});
+                          If(workerVar in RTEImages,Remove(RTEImages,LookUp(RTEImages, ThisItem.Value = base64Image)));
+                          Remove(attItems,LookUp(attItems,ThisItem.Value = Value));
+                          Remove(JointAttachments,ThisItem)
+                        Width: =If(AddMedia.AMSize = 1, 32,48)
+                        X: =Parent.TemplateWidth-Self.Width
+                        Y: =5
+            - ClosePanelButton_46:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Color: =RGBA(255, 255, 255, 1)
+                  Fill: =RGBA(203, 102, 102, 1)
+                  Height: =40
+                  Icon: =Icon.Cancel
+                  OnSelect: =AddMedia.OpenMedia()
+                  Visible: =!AttachFiles
+                  Width: =40
+                  X: =SelectionBannerLabel.X+SelectionBannerLabel.Width-Self.Width
+                  Y: =SelectionBannerLabel.Y
+            - Button29:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |+
+                    =ForAll(
+                        attItems As Attachment,
+                                AttachFiles.Run(
+                                AddMedia.ForSTITickID,
+                                {
+                                    file:{
+                                        contentBytes: Attachment.Value,
+                                        name: Attachment.Name
+                                    }
+                                }
+                            ) 
+                    );
+                    ForAll(
+                        RTEImages As RTEI,
+                        With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", AddMedia.ForSTITickID)
+                    ))))
+                            );
+                    Clear(RTEImages);
+                    Clear(JointAttachments);
+                    Clear(attItems);
+                    AddMedia.OpenMedia();
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: ="Submit"
+                  Visible: =App.ActiveScreen.Name = "Single Ticket Info"
+                  X: '=(Rectangle36_1.X+Rectangle36_1.Width-Self.Width)/2 '
+                  Y: =Rectangle36_1.Y+Rectangle36_1.Height-Self.Height-10
+            - Rectangle36_2:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(241, 244, 249, 1)
+                  Height: =AddMediaBackground.Height
+                  Visible: =mediaDelay
+                  Width: =AddMediaBackground.Width
+                  X: =AddMediaBackground.X
+                  Y: =AddMediaBackground.Y
+            - SelectionBannerLabel_1:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =80
+                  Italic: =true
+                  Size: =21
+                  Text: ="Processing Media..."
+                  Visible: =mediaDelay
+                  Width: =AddMediaBackground.Width
+                  X: =Rectangle36_2.X
+                  Y: =Rectangle36_2.Y+Rectangle36_2.Height/2 -Self.Height
+      - Button25_182:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =ColorScheme.primary
+            Font: =Font.'Open Sans'
+            Height: =64
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Visible: =!varOpenMedia
+            Width: =64
+            X: =Icon11_50.X-8
+            Y: =Icon11_50.Y-8
+      - Icon11_50:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =Self.Width
+            Icon: =Icon.AddLibrary
+            OnSelect: |-
+              =AddMedia.OpenMedia();
+              AddMedia.DisablePickMedia();
+            Visible: =!varOpenMedia
+            Width: =48
+      - Button25_183:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(0, 0, 0, 0)
+            Font: =Font.'Open Sans'
+            Height: =64
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+            OnSelect: =Select(Icon11_50)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =ColorFade(RGBA(56, 96, 178, .75), -20%)
+            Text: =
+            Visible: =!varOpenMedia
+            Width: =64
+            X: =Icon11_50.X-8
+            Y: =Icon11_50.Y-8
+      - Media Timer:
+          Control: Timer@2.1.0
+          Properties:
+            AutoPause: =false
+            AutoStart: =mediaDelay
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Duration: =300
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: =AddMedia.InitiateMediaDelay()
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Visible: =false
+            X: =40
+            Y: =40

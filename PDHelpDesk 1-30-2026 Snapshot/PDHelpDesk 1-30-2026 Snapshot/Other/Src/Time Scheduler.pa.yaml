@@ -1,0 +1,1724 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Time Scheduler:
+    Properties:
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: "=ClearCollect(\r\n    scheduleTimes,\r\n    {\r\n        Name:\"Mark Perez\",\r\n        Monday:\"09:00 AM - 05:00 PM\",\r\n        Tuesday:\"08:15 AM - 05:00 PM\",\r\n        Wednesday:\"09:00 AM - 05:00 PM\",\r\n        Thursday:\"09:00 AM - 05:00 PM\",\r\n        Friday:\"09:00 AM - 05:00 PM\",\r\n        Saturday:\"09:00 AM - 05:00 PM\",\r\n        Sunday:\"09:00 AM - 05:00 PM\"\r\n        \r\n    }\r\n);\r\nUpdateContext({showTimeTable:true});\r\n"
+    Children:
+      - TimeSchedulerContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - TimeSchedulerHeaderContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.primary
+                  FillPortions: =0
+                  Height: =130
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - TimeSchedulerWebHeader:
+                      Control: CanvasComponent
+                      ComponentName: compWebHeader
+                      Properties:
+                        BackgroundColor: =ColorScheme.primary
+                        CompScreenSize: ='Time Scheduler'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        FeedbackBool: =varFeedback
+                        Height: =82
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        Width: =App.Width
+                  - TimeSchedulerLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =Color.White
+                        Fill: =ColorScheme.primary
+                        FillPortions: =1
+                        Font: =Font.'Open Sans'
+                        Height: =48
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        Size: =If('Time Scheduler'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Time Scheduler"
+                        Width: =Parent.Width
+            - TimeSchedulerMainSectionContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - Container6:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - Form1:
+                            Control: Form@2.4.4
+                            Variant: Classic
+                            Layout: Vertical
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataSource: =scheduleTimes
+                              Height: =Parent.Height
+                              Item: =Gallery1.Selected
+                              NumberOfColumns: =1
+                              Visible: =!showTimeTable
+                              Width: =Parent.Width
+                            Children:
+                              - NameSelectionDropdown:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =57
+                                    Width: =Parent.Width
+                                    X: =0
+                                    Y: =0
+                                  Children:
+                                    - NameSelectionLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Name"
+                                    - NameDropDown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Gallery1.Selected.Name
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Users
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          X: =112
+                              - Monday_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =25
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =1
+                                  Children:
+                                    - EndTimeIndicator:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Gallery1.Selected.Monday,2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =1241
+                                    - EndHourDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Monday,8),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =921
+                                    - EndMinuteDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Monday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =1081
+                                    - EndTimeLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="End"
+                                          Width: =80
+                                          X: =841
+                                    - StartTimeIndicator:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Left(Gallery1.Selected.Monday,8),2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =507
+                                    - StartMinuteDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Right(Left(Gallery1.Selected.Monday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =347
+                                    - StartHourDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Gallery1.Selected.Monday,2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =187
+                                    - StartTimeLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Start"
+                                          Width: =80
+                                          X: =107
+                                    - MondayLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Monday"
+                              - Tuesday_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =2
+                                  Children:
+                                    - EndTimeIndicator_1:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Gallery1.Selected.Tuesday,2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =1241
+                                    - EndHourDropdown_1:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Tuesday,8),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =921
+                                    - EndMinuteDropdown_1:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Tuesday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =1081
+                                    - EndTimeLabel_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="End"
+                                          Width: =80
+                                          X: =842
+                                    - StartTimeIndicator_1:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Left(Gallery1.Selected.Tuesday,8),2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =507
+                                    - StartMinuteDropdown_1:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Right(Left(Gallery1.Selected.Tuesday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =347
+                                    - StartHourDropdown_1:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Gallery1.Selected.Tuesday,2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =187
+                                    - StartTimeLabel_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Start"
+                                          Width: =80
+                                          X: =108
+                                    - TuesdayLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Tuesday"
+                              - Wednesday_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =40
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =3
+                                  Children:
+                                    - EndTimeIndicator_2:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Gallery1.Selected.Wednesday,2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =1241
+                                    - EndHourDropdown_2:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Wednesday,8),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =921
+                                    - EndMinuteDropdown_2:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Wednesday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =1081
+                                    - EndTimeLabel_2:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="End"
+                                          Width: =80
+                                          X: =841
+                                    - StartTimeIndicator_2:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Left(Gallery1.Selected.Wednesday,8),2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =507
+                                    - StartMinuteDropdown_2:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Right(Left(Gallery1.Selected.Wednesday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =347
+                                    - StartHourDropdown_2:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Gallery1.Selected.Wednesday,2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =187
+                                    - StartTimeLabel_2:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Start"
+                                          Width: =80
+                                          X: =107
+                                    - WednesdayLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Wednesday"
+                              - Thursday_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =40
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =4
+                                  Children:
+                                    - EndTimeIndicator_3:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Gallery1.Selected.Thursday,2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =1241
+                                    - EndHourDropdown_3:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Thursday,8),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =921
+                                    - EndMinuteDropdown_3:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Thursday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =1081
+                                    - EndTimeLabel_3:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="End"
+                                          Width: =80
+                                          X: =841
+                                    - StartTimeIndicator_3:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Left(Gallery1.Selected.Thursday,8),2))
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Lighter
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =507
+                                    - StartMinuteDropdown_3:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Right(Left(Gallery1.Selected.Thursday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =347
+                                    - StartHourDropdown_3:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Gallery1.Selected.Thursday,2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =187
+                                    - StartTimeLabel_3:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Start"
+                                          Width: =80
+                                          X: =107
+                                    - ThursdayLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Thursday"
+                              - Friday_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =40
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =5
+                                  Children:
+                                    - EndTimeIndicator_4:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Gallery1.Selected.Friday,2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =1241
+                                    - EndHourDropdown_4:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Friday,8),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =921
+                                    - EndMinuteDropdown_4:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Friday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =1081
+                                    - EndTimeLabel_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="End"
+                                          Width: =80
+                                          X: =841
+                                    - StartTimeIndicator_4:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Left(Gallery1.Selected.Friday,8),2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =507
+                                    - StartMinuteDropdown_4:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Right(Left(Gallery1.Selected.Friday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =347
+                                    - StartHourDropdown_4:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Gallery1.Selected.Friday,2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =187
+                                    - StartTimeLabel_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Start"
+                                          Width: =80
+                                          X: =107
+                                    - FridayLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Friday"
+                              - Saturday_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =40
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =6
+                                  Children:
+                                    - EndTimeIndicator_5:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Gallery1.Selected.Saturday,2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =1241
+                                    - EndHourDropdown_5:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Saturday,8),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =921
+                                    - EndMinuteDropdown_5:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Saturday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =1081
+                                    - EndTimeLabel_5:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="End"
+                                          Width: =80
+                                          X: =841
+                                    - StartTimeIndicator_5:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Left(Gallery1.Selected.Saturday,8),2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =507
+                                    - StartMinuteDropdown_5:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Right(Left(Gallery1.Selected.Saturday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =347
+                                    - StartHourDropdown_5:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Gallery1.Selected.Saturday,2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =187
+                                    - StartTimeLabel_5:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Start"
+                                          Width: =80
+                                          X: =107
+                                    - SaturdayLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Saturday"
+                              - Sunday_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =40
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =7
+                                  Children:
+                                    - EndTimeIndicator_6:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Gallery1.Selected.Sunday,2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =1241
+                                    - EndHourDropdown_6:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Sunday,8),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =921
+                                    - EndMinuteDropdown_6:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Right(Gallery1.Selected.Sunday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =1081
+                                    - EndTimeLabel_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="End"
+                                          Width: =80
+                                          X: =841
+                                    - StartTimeIndicator_6:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Right(Left(Gallery1.Selected.Sunday,8),2))
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =["AM","PM"]
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =80
+                                          X: =507
+                                    - StartMinuteDropdown_6:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Right(Left(Gallery1.Selected.Sunday,5),2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =347
+                                    - StartHourDropdown_6:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Text(Value(Left(Gallery1.Selected.Sunday,2)),"[$-en-US]00")
+                                          Font: =Font.'Open Sans'
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =ForAll(Sequence(12), Text(Value,"[$-en-US]00"))
+                                          Items.Value: =Value
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =160
+                                          X: =187
+                                    - StartTimeLabel_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Start"
+                                          Width: =80
+                                          X: =107
+                                    - SundayLabel:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Text: ="Monday"
+                              - TSButtons_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =8
+                                  Children:
+                                    - SubmitTimes:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =RGBA(56, 96, 178, 1)
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: |-
+                                            =Patch(scheduleTimes, Defaults(scheduleTimes),
+                                            {
+                                                Name: NameDropDown.Selected.fullName,
+                                                Monday: Concatenate(StartHourDropdown.Selected.Value,":",StartMinuteDropdown.Selected.Value," ",StartTimeIndicator.Selected.Value," - ",EndHourDropdown.Selected.Value,":",EndMinuteDropdown.Selected.Value," ",EndTimeIndicator.Selected.Value),
+
+                                                Tuesday: Concatenate(StartHourDropdown_1.Selected.Value,":",StartMinuteDropdown_1.Selected.Value," ",StartTimeIndicator_1.Selected.Value," - ",EndHourDropdown_1.Selected.Value,":",EndMinuteDropdown_1.Selected.Value," ",EndTimeIndicator_1.Selected.Value),
+
+                                                Wednesday: Concatenate(StartHourDropdown_2.Selected.Value,":",StartMinuteDropdown_2.Selected.Value," ",StartTimeIndicator_2.Selected.Value," - ",EndHourDropdown_2.Selected.Value,":",EndMinuteDropdown_2.Selected.Value," ",EndTimeIndicator_2.Selected.Value),
+
+                                                Thursday: Concatenate(StartHourDropdown_3.Selected.Value,":",StartMinuteDropdown_3.Selected.Value," ",StartTimeIndicator_3.Selected.Value," - ",EndHourDropdown_3.Selected.Value,":",EndMinuteDropdown_3.Selected.Value," ",EndTimeIndicator_3.Selected.Value),
+
+                                                Friday: Concatenate(StartHourDropdown_4.Selected.Value,":",StartMinuteDropdown_4.Selected.Value," ",StartTimeIndicator_4.Selected.Value," - ",EndHourDropdown_4.Selected.Value,":",EndMinuteDropdown_4.Selected.Value," ",EndTimeIndicator_4.Selected.Value),
+
+                                                Saturday: Concatenate(StartHourDropdown_5.Selected.Value,":",StartMinuteDropdown_5.Selected.Value," ",StartTimeIndicator_5.Selected.Value," - ",EndHourDropdown_5.Selected.Value,":",EndMinuteDropdown_5.Selected.Value," ",EndTimeIndicator_5.Selected.Value),
+
+                                                Sunday: Concatenate(StartHourDropdown_6.Selected.Value,":",StartMinuteDropdown_6.Selected.Value," ",StartTimeIndicator_6.Selected.Value," - ",EndHourDropdown_6.Selected.Value,":",EndMinuteDropdown_6.Selected.Value," ",EndTimeIndicator_6.Selected.Value)
+                                            });
+                                            Notify("Meeting Time Schedule Created!");
+                                            UpdateContext({showTimeTable:true});
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: =If(Form1.Mode = 0, "Update Times", "Submit Times")
+                                          X: =40
+                                          Y: =40
+                        - Container2:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Visible: =showTimeTable
+                              Width: =Parent.Width
+                            Children:
+                              - TSTableHEader:
+                                  Control: Rectangle@2.3.0
+                                  Group: TableHeader
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Fill: =ColorScheme.primary
+                                    Height: =40
+                                    Width: =Parent.Width
+                              - TSPersonName:
+                                  Control: Label@2.5.1
+                                  Group: TableHeader
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =TSTableHEader.Height
+                                    Size: =15
+                                    Text: ="Name"
+                                    Width: =TSTableHEader.Width/8
+                              - TSMonday:
+                                  Control: Label@2.5.1
+                                  Group: TableHeader
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =TSTableHEader.Height
+                                    Size: =15
+                                    Text: ="Monday"
+                                    Width: =TSPersonName.Width
+                                    X: =TSPersonName.X+TSPersonName.Width
+                              - TSTuesday:
+                                  Control: Label@2.5.1
+                                  Group: TableHeader
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =TSTableHEader.Height
+                                    Size: =15
+                                    Text: ="Tuesday"
+                                    Width: =TSPersonName.Width
+                                    X: =TSMonday.X + TSMonday.Width
+                              - TSWednesday:
+                                  Control: Label@2.5.1
+                                  Group: TableHeader
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =TSTableHEader.Height
+                                    Size: =15
+                                    Text: ="Wednesday"
+                                    Width: =TSPersonName.Width
+                                    X: =TSTuesday.X + TSTuesday.Width
+                              - TSThursday:
+                                  Control: Label@2.5.1
+                                  Group: TableHeader
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =TSTableHEader.Height
+                                    Size: =15
+                                    Text: ="Thursday"
+                                    Width: =TSPersonName.Width
+                                    X: =TSWednesday.X + TSWednesday.Width
+                              - TSFriday:
+                                  Control: Label@2.5.1
+                                  Group: TableHeader
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =TSTableHEader.Height
+                                    Size: =15
+                                    Text: ="Friday"
+                                    Width: =TSPersonName.Width
+                                    X: =TSThursday.X + TSThursday.Width
+                              - TSSaturday:
+                                  Control: Label@2.5.1
+                                  Group: TableHeader
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =TSTableHEader.Height
+                                    Size: =15
+                                    Text: ="Saturday"
+                                    Width: =TSPersonName.Width
+                                    X: =TSFriday.X + TSFriday.Width
+                              - TSSunday:
+                                  Control: Label@2.5.1
+                                  Group: TableHeader
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =TSTableHEader.Height
+                                    Size: =15
+                                    Text: ="Sunday"
+                                    Width: =TSPersonName.Width
+                                    X: =TSSaturday.X + TSSaturday.Width
+                              - Gallery1:
+                                  Control: Gallery@2.15.0
+                                  Variant: VariableHeight
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =Parent.Height
+                                    Items: =scheduleTimes
+                                    TemplatePadding: =0
+                                    TemplateSize: =50
+                                    Width: =Parent.Width
+                                    Y: =39
+                                  Children:
+                                    - Container5:
+                                        Control: GroupContainer@1.4.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Height: =50
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Width: =Parent.Width
+                                        Children:
+                                          - Label4:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                FillPortions: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.Height
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                OnSelect: =
+                                                Text: |+
+                                                  =ThisItem.Name
+                                                Width: =Parent.Width
+                                          - Label4_1:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderStyle: =BorderStyle.Dashed
+                                                BorderThickness: =1
+                                                FillPortions: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.Height
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                OnSelect: =
+                                                Text: =ThisItem.Monday
+                                                Width: =Parent.Width
+                                                X: =40
+                                          - Label4_2:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderStyle: =BorderStyle.Dashed
+                                                BorderThickness: =1
+                                                FillPortions: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.Height
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                OnSelect: =
+                                                Text: =ThisItem.Tuesday
+                                                Width: =Parent.Width
+                                                X: =60
+                                          - Label4_3:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderStyle: =BorderStyle.Dashed
+                                                BorderThickness: =1
+                                                FillPortions: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.Height
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                OnSelect: =
+                                                Text: =ThisItem.Wednesday
+                                                Width: =Parent.Width
+                                                X: =80
+                                          - Label4_4:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderStyle: =BorderStyle.Dashed
+                                                BorderThickness: =1
+                                                FillPortions: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.Height
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                OnSelect: =
+                                                Text: =ThisItem.Thursday
+                                                Width: =Parent.Width
+                                                X: =100
+                                          - Label4_5:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderStyle: =BorderStyle.Dashed
+                                                BorderThickness: =1
+                                                FillPortions: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.Height
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                OnSelect: =
+                                                Text: =ThisItem.Friday
+                                                Width: =Parent.Width
+                                                X: =120
+                                          - Label4_6:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderStyle: =BorderStyle.Dashed
+                                                BorderThickness: =1
+                                                FillPortions: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.Height
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                OnSelect: =
+                                                Text: =ThisItem.Saturday
+                                                Width: =Parent.Width
+                                                X: =140
+                                          - Label4_7:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderStyle: =BorderStyle.Dashed
+                                                BorderThickness: =1
+                                                FillPortions: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.Height
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                OnSelect: =
+                                                Text: =ThisItem.Sunday
+                                                Width: =Parent.Width
+                                                X: =160
+                                    - Button5:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(0, 0, 0, 0)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =RGBA(0, 0, 0, 0)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =Color.WhiteSmoke
+                                          HoverFill: =ColorScheme.secondaryPressedColor
+                                          OnSelect: |-
+                                            =UpdateContext({showTimeTable:false});
+                                            EditForm(Form1)
+                                          PaddingRight: =10
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Edit Times"
+                                          Width: =Parent.Width
+                        - Dropdown3:
+                            Control: Classic/DropDown@2.3.1
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              ChevronBackground: =RGBA(56, 96, 178, 1)
+                              ChevronFill: =RGBA(255, 255, 255, 1)
+                              ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                              ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                              Font: =Font.'Open Sans'
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              Items: =Office365Outlook.CalendarGetTables().value
+                              Items.Value: =DisplayName
+                              PressedColor: =RGBA(255, 255, 255, 1)
+                              PressedFill: =RGBA(0, 18, 107, 1)
+                              SelectionColor: =RGBA(255, 255, 255, 1)
+                              SelectionFill: =RGBA(56, 96, 178, 1)
+                              X: =442
+                              Y: =520
+                        - Gallery2:
+                            Control: Gallery@2.15.0
+                            Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =130
+                              Items: =Filter(Office365Outlook.CalendarGetItems(Dropdown3.Selected.Name).value, "Times" in Subject)
+                              Width: =422
+                              Y: =452
+                            Children:
+                              - Image1:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =72
+                                    Image: =ThisItem.WebLink
+                                    OnSelect: =Select(Parent)
+                                    RadiusBottomLeft: =8
+                                    RadiusBottomRight: =8
+                                    RadiusTopLeft: =8
+                                    RadiusTopRight: =8
+                                    Width: =72
+                                    X: =16
+                                    Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                              - Title1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(71, 69, 64, 1)
+                                    DisabledColor: =RGBA(186, 186, 186, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                    Height: =Self.Size * 1.8
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =ThisItem.Subject
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =Parent.TemplateWidth - 173
+                                    X: =103
+                                    Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle1.Size * 1.8)) / 2
+                              - Subtitle1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(71, 69, 64, 1)
+                                    DisabledColor: =RGBA(186, 186, 186, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                    Height: =Self.Size * 1.8
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =TimeValue(ThisItem.Start)
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =Title1.Width
+                                    X: =Title1.X
+                                    Y: =Title1.Y + Title1.Height
+                              - NextArrow1:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    AccessibleLabel: =Self.Tooltip
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(166, 166, 166, 1)
+                                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                    DisabledColor: =RGBA(119, 119, 119, 1)
+                                    Height: =50
+                                    Icon: =Icon.ChevronRight
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =16
+                                    PaddingLeft: =16
+                                    PaddingRight: =16
+                                    PaddingTop: =16
+                                    Tooltip: ="View item details"
+                                    Width: =50
+                                    X: =Parent.TemplateWidth - Self.Width - 12
+                                    Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                              - Separator1:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 0, 255, 1)
+                                    Fill: =RGBA(0, 176, 240, 1)
+                                    Height: =8
+                                    OnSelect: =Select(Parent)
+                                    Width: =Parent.TemplateWidth
+                                    Y: =96
+                              - Rectangle4:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Fill: =RGBA(0, 18, 107, 1)
+                                    Height: =Parent.TemplateHeight - Separator1.Height
+                                    OnSelect: =Select(Parent)
+                                    Visible: =If(ThisItem.IsSelected, true, false)
+                                    Width: =4
+                              - Label8:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    OnSelect: =Select(Parent)
+                                    Text: =TimeValue(ThisItem.End)
+                                    X: =288
+                                    Y: =52
+            - TimeSchedulerFooter:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(255,255,255, 1)
+                  FillPortions: =0
+                  Height: =Parent.Height/8
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    ='Time Scheduler'.Size =1
+                  Width: =Parent.Width
+                Children:
+                  - TimeSchedulerWebMobileMenu:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Width: =Parent.Width
+      - TimeSchedulerBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =ColorScheme.secondary
+            Height: =TimeSchedulerLabel.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(TimeSchedulerHeaderContainer.Height-TimeSchedulerLabel.Height)/1.05
+      - TimeSchedulerWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, Parent.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Time Scheduler'.Size > 1
+            Width: =If(showMenu, Parent.Width, 80)
+      - Icon1:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =ColorScheme.screenBackground
+            Height: =45
+            Icon: =Icon.AddToCalendar
+            OnSelect: |-
+              =UpdateContext({showTimeTable:false});
+              ResetForm(Form1);
+              NewForm(Form1);
+            Visible: =If(Form1.Mode=0,true,false)
+            Width: =66
+            X: =1300
+            Y: =78

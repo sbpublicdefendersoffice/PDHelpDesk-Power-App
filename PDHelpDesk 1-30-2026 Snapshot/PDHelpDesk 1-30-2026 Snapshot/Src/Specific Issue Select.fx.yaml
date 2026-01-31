@@ -1,0 +1,302 @@
+"'Specific Issue Select' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnVisible: |-
+        =//Refresh the category list when navigating to this page
+        Refresh(Category);
+        //Feedback Bug Report clear collections
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+
+    Specific_Issue_Select_Main_Container As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        Specific_Issue_Select_Vertical_Layout_Container As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =Parent.Width
+            LayoutMode: =LayoutMode.Auto
+            LayoutOverflowX: =LayoutOverflow.Scroll
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            ZIndex: =3
+
+            Specific_Issue_Select_Header_Container As groupContainer.horizontalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/9.5
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Width: =Parent.Width
+                ZIndex: =1
+
+                Specific_Issue_Select_Header_Elements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =6
+
+                    Specific_Issue_Select_Header_Background_Gradient As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    Specific_Issue_Select_Header_Label As label:
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-Specific_Issue_Select_WebHeader.Height
+                        Size: =If('Specific Issue Select'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Select a Specific Issue"
+                        Width: =App.Width
+                        Y: =Specific_Issue_Select_WebHeader.Height
+                        ZIndex: =2
+
+                    Specific_Issue_Select_WebHeader As compWebHeader:
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='Specific Issue Select'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        Height: |-
+                            =82
+                            //Parent.Height
+                        ZIndex: =3
+
+            Specific_Issue_Select_Main_Content_Container As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                FillPortions: =10
+                Height: =Parent.Height
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =6
+
+                Specific_Issue_Select_Buttons_Container As groupContainer.verticalAutoLayoutContainer:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    FillPortions: =8
+                    Height: =Parent.Height
+                    LayoutDirection: =LayoutDirection.Vertical
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    LayoutMode: =LayoutMode.Auto
+                    LayoutWrap: =true
+                    Width: =Parent.Width
+                    ZIndex: =3
+
+                    Specific_Issue_Select_Gallery As gallery.galleryVertical:
+                        '#CopilotOverlayLabel': ="Filtered"
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        Height: =553
+                        Items: |-
+                            =//SortByColumns(Filter(Category, parentId = TicketSubCategoryID),"categoryHits",SortOrder.Descending)
+                            Sort(Filter(Category, parentId = TicketSubCategoryID),Name)
+                        Layout: =Layout.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =287
+                        LayoutMinWidth: =320
+                        OnSelect: =
+                        ShowScrollbar: =false
+                        TemplateSize: |-
+                            =//Parent.Height/3
+                            //If('Specific Issue Select'.Size > 1, Parent.Height/3, 200)
+                            200
+                        Width: =Parent.Width
+                        WrapCount: =Switch('Specific Issue Select'.Size, ScreenSize.Small, 2, ScreenSize.Medium, 3, ScreenSize.Large, 3, If(userData.role ="staff", 3, 4))
+                        Y: =215
+                        ZIndex: =2
+
+                        Specific_Issue_Select_Button_Gallery_Background As button:
+                            Color: =ColorScheme.secondary
+                            DisabledFill: =RGBA(0, 0, 0, 0)
+                            Fill: =ColorScheme.primary
+                            Height: |-
+                                =//If('Category Select'.Size = 1, Parent.TemplateHeight/2,Parent.TemplateHeight-50)
+                                Parent.TemplateHeight-50
+                            HoverColor: =RGBA(0, 0, 0,0)
+                            OnSelect: |-
+                                =Navigate('Create A Ticket', ScreenTransition.Fade, {FirstCategory: ThisItem.ID})
+                            PressedColor: =RGBA(0, 0, 0,0)
+                            PressedFill: =
+                            Text: =""
+                            Visible: =false
+                            Width: =If('Specific Issue Select'.Size = 1, Parent.Width/2.5, Parent.Width/5)
+                            X: =(Parent.TemplateWidth - Self.Width)/2
+                            Y: =(Parent.TemplateHeight - Self.Height)/2
+                            ZIndex: =1
+
+                        Specific_Issue_Select_Button_Gradient As htmlViewer:
+                            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                            Height: =Specific_Issue_Select_Button_Gallery_Background.Height
+                            HtmlText: =Home_Gallery_Button_Color_Gradient.HtmlText
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Width: =Specific_Issue_Select_Button_Gallery_Background.Width
+                            X: =Specific_Issue_Select_Button_Gallery_Background.X
+                            Y: =Specific_Issue_Select_Button_Gallery_Background.Y
+                            ZIndex: =2
+
+                        Specific_Issue_Select_Button_Label As label:
+                            Align: =Align.Center
+                            Color: =Color.White
+                            FontWeight: =FontWeight.Semibold
+                            Height: =Specific_Issue_Select_Button_Gallery_Background.Height
+                            HoverColor: =
+                            OnSelect: |-
+                                =Navigate('Create A Ticket', ScreenTransition.Fade, {FirstCategory: ThisItem.ID})
+                            Size: =If('Specific Issue Select'.Size =1,11,15)
+                            Text: |-
+                                =//ThisItem.name
+                                
+                                // If Screen is in mobile view and string contains / and cannot fit on one line, then move the second half to another line
+                                If('Specific Issue Select'.Size > 2, ThisItem.Name, If(Len(ThisItem.Name) > 15 && "/" in ThisItem.Name , Left(ThisItem.Name, Find("/", ThisItem.Name)) & Char(10) & Right(ThisItem.Name, Len(ThisItem.Name) - Find("/", ThisItem.Name)), ThisItem.Name))
+                            Width: =Specific_Issue_Select_Button_Gallery_Background.Width
+                            X: =Specific_Issue_Select_Button_Gallery_Background.X
+                            Y: =Specific_Issue_Select_Button_Gallery_Background.Y
+                            ZIndex: =3
+
+                        Specific_Issue_Select_Html_Shadow As htmlViewer:
+                            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                            DisplayMode: =DisplayMode.View
+                            Height: =If('Sub Category Select'.Size=1, Parent.TemplateHeight-Self.Y-10, Parent.TemplateHeight)
+                            HtmlText: |-
+                                =// you can use inline Css to create effects that can be found in modern webapps
+                                //you cannot link style sheets
+                                //some elements of html are not supported
+                                //you can include variables in the html string by adding "&PowerAppsVar&" 
+                                "<div style='box-shadow: 23px 21px 33px 13px rgba(0,0,0,.025);
+                                -webkit-box-shadow: 23px 21px 33px 13px rgba(0,0,0,.025);
+                                -moz-box-shadow: 23px 21px 33px 13px rgba(0,0,0,.025); height:"&Specific_Issue_Select_Button_Gallery_Background.Height-11&"px; width:"&Specific_Issue_Select_Button_Gallery_Background.Width-11&"px; border-style:none; border-radius:10px'></div>"
+                            OnSelect: =Select(Parent)
+                            Width: =If('Sub Category Select'.Size=1, Parent.TemplateWidth-Self.X, Parent.TemplateWidth)
+                            X: =Specific_Issue_Select_Button_Gallery_Background.X
+                            Y: =Specific_Issue_Select_Button_Gallery_Background.Y
+                            ZIndex: =4
+
+                        Specific_Issue_Select_Overlap_Button As button:
+                            BorderColor: =RGBA(0,0,0,0)
+                            Color: =RGBA(0, 0, 0,0)
+                            DisabledFill: =RGBA(0, 0, 0, 0)
+                            Fill: =RGBA(0, 0, 0,0)
+                            Height: =Specific_Issue_Select_Button_Gallery_Background.Height
+                            HoverColor: =RGBA(0, 0, 0,0)
+                            HoverFill: =ColorFade(RGBA(105,105,105,.35),-10%)
+                            OnSelect: |-
+                                =//Got to screen specified, type of transition, data to pass into screen
+                                Set(TicketSpecificIssue, ThisItem.ID);
+                                
+                                If(ThisItem.parentId =38, Set(CopierVar,false); Back(ScreenTransition.Cover)  , 
+                                
+                                If(IsBlank(LookUp(ticketTemplateScreens, ThisItem.parentId = NavID).ScreenTemplate)
+                                ,Navigate('Create A Ticket', ScreenTransition.Cover),If(IsBlank(LookUp(ticketTemplateScreens, ThisItem.ID=NavID).ScreenTemplate),Navigate(LookUp(ticketTemplateScreens, ThisItem.parentId = NavID).ScreenTemplate, ScreenTransition.Cover), Navigate(LookUp(ticketTemplateScreens, ThisItem.ID = NavID).ScreenTemplate, ScreenTransition.Cover))););
+                                
+                                
+                                IncrementCatHits.Run("",ThisItem.ID);
+                            PressedColor: =RGBA(0, 0, 0,0)
+                            PressedFill: =ColorFade(RGBA(255,255,255,.7),50%)
+                            Text: =""
+                            Width: =Specific_Issue_Select_Button_Gallery_Background.Width
+                            X: =Specific_Issue_Select_Button_Gallery_Background.X
+                            Y: =Specific_Issue_Select_Button_Gallery_Background.Y
+                            ZIndex: =5
+
+            Specific_Issue_Select_Footer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='Specific Issue Select'.Size =1
+                Width: =Parent.Width
+                ZIndex: =7
+
+                Specific_Issue_Select_MobileMenu As compMobileMenu:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    Specific_Issue_Select_Back_Button As icon.BackArrow:
+        AccessibleLabel: ="Back Navigation Button"
+        Color: =Color.White
+        Height: =Specific_Issue_Select_Header_Label.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.UnCoverRight)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(Specific_Issue_Select_Header_Container.Height-Specific_Issue_Select_Header_Label.Height)/1.05
+        ZIndex: =2
+
+    Specific_Issue_Select_WebMenu As compWebMenu:
+        Visible: ='Specific Issue Select'.Size > 1
+        ZIndex: =3
+
+    Specific_Issue_Select_Feedback_Bug_Report As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =4
+

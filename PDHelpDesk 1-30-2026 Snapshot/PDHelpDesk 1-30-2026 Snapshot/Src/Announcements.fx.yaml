@@ -1,0 +1,355 @@
+"Announcements As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnVisible: |-
+        =UpdateContext({AnnounceSuccess:false});
+        Clear(RTEImages);
+        UpdateContext({altImagePopUp:false,usingCamera:false});
+        //Set(EncodedPicture,JSON(Index(AnnouncementAttachmentControl.Attachments,1).Value,JSONFormat.IncludeBinaryData))
+
+    TemplateContainer_2 As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        TemplateHeaderContainer_2 As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =1
+
+            "'Announcements Header Container' As groupContainer.manualLayoutContainer":
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =4
+
+                HomeBackgroundGradient_72 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =130
+                    HtmlText: =Home_Background_Gradient.HtmlText
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                TemplateLabel_2 As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =48
+                    Size: =If(Announcements.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Create Announcement"
+                    Width: =Parent.Width
+                    Y: =TemplateWebHeader_2.Height
+                    ZIndex: =2
+
+                TemplateWebHeader_2 As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: =Announcements.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    ZIndex: =3
+
+        MainSectionTemplateContainer_2 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            FillPortions: =0
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =Parent.Width
+            LayoutMode: =LayoutMode.Auto
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            ZIndex: =2
+
+            Container17 As groupContainer.manualLayoutContainer:
+                FillPortions: =0
+                Height: =1100
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =800
+                LayoutMinWidth: =Parent.Width
+                Width: =Parent.Width
+                ZIndex: =1
+
+                Label40 As label:
+                    BorderThickness: =2
+                    Color: =RGBA(255, 255, 255, 1)
+                    Fill: =ColorScheme.primary
+                    Text: ="Email Subject"
+                    Width: =125
+                    X: =25
+                    Y: =40
+                    ZIndex: =1
+
+                TextInput14 As text:
+                    Default: =""
+                    Height: =35
+                    HintText: ="Subject"
+                    Width: =If(Announcements.Size=1,Parent.Width/1.2, Parent.Width/1.1)
+                    X: =25
+                    Y: =Label40.Height+Label40.Y
+                    ZIndex: =2
+
+                Label40_1 As label:
+                    BorderThickness: =2
+                    Color: =RGBA(255, 255, 255, 1)
+                    Fill: =ColorScheme.primary
+                    Text: ="Email Body"
+                    Width: =125
+                    X: =25
+                    Y: =TextInput14.Y+TextInput14.Height+20
+                    ZIndex: =3
+
+                Button18 As button:
+                    OnSelect: |
+                        =If(!IsBlank(Trim(TextInput14.Text)) && !IsBlank(Trim(RichTextEditor4.HtmlText)),
+                        SendEmail.Run("pdhelpdeskapp@countyofsb.org",TextInput14.Text, RichTextEditor4.HtmlText,"mperez@countyofsb.org");
+                        Reset(TextInput14);
+                        Reset(Checkbox1);
+                        Reset(RichTextEditor4);
+                        UpdateContext({AnnounceSuccess:true});
+                        
+                        
+                        , Notify("Subject or Email body is blank"));
+                        /*
+                            ForAll(
+                                CSForensicAnalysisAttachmentControl.Attachments As Attachment,
+                                       /*AttachFiles.Run(
+                                    rec.ID,
+                                    {
+                                        file: {
+                                            contentBytes: Value,
+                                            name: Name
+                                        }
+                                    }
+                                )//
+                                If(Left(Attachment.Value,6) = "appres", 
+                                AttachFiles.Run(
+                                    rec.ID,
+                                    {
+                                        file:{
+                                            contentBytes: Attachment.Value,
+                                            name: Attachment.Name
+                                        }
+                                    }
+                                ) ;,
+                        
+                        
+                        With({varHTMLTable: Split(Attachment.Name , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",Attachment.Name)+32},With({varB64End:Find("""",Mid(Attachment.Name,varB64Start))-1},CopyPasteTest.Run(Mid(Attachment.Name,varB64Start,varB64End),Attachment.Value & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                        ))))
+                                )
+                            );*/
+                    Text: ="Submit"
+                    X: =(Parent.Width-Self.Width)/2
+                    Y: |-
+                        =//AnnouncementAttachmentControl.Height+AnnouncementAttachmentControl.Y+10
+                        RichTextEditor4.Y+RichTextEditor4.Height+20
+                    ZIndex: =4
+
+                Checkbox1 As checkbox:
+                    BorderThickness: =2
+                    Fill: =RGBA(255, 255, 255, 1)
+                    FocusedBorderColor: =Color.Transparent
+                    Height: =40
+                    Size: =If(Announcements.Size=1,10,13)
+                    Text: ="Use Helpdesk Sender"
+                    Visible: =false
+                    Width: =250
+                    X: =40
+                    Y: =40
+                    ZIndex: =6
+
+                RichTextEditor4 As richTextEditor:
+                    BorderColor: =RGBA(39, 67, 125, 1)
+                    Default: =
+                    EnableSpellCheck: =false
+                    Height: =If(Announcements.Size=1,Parent.Height/1.75, Min(600,Parent.Height/1.5))
+                    Width: =If(Announcements.Size=1,Parent.Width/1.15, Parent.Width/1.1)
+                    X: =25
+                    Y: =Label40_1.Height+Label40_1.Y
+                    ZIndex: =8
+
+                AnnouncementAttachmentControl As attachments:
+                    BorderColor: =Color.Black
+                    Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, 150, 200)
+                    IsInDataCard: =true
+                    Items: =RTEImages
+                    MaxAttachments: =10
+                    PaddingBottom: =5
+                    PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                    PaddingRight: =5
+                    PaddingTop: =5
+                    Visible: =false
+                    Width: =If('Case Support Forensic Analysis TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                    X: =(Parent.Width-Self.Width)/2
+                    Y: =RichTextEditor4.Height+RichTextEditor4.Y+80
+                    ZIndex: =9
+
+                Icon11_43 As icon.Camera:
+                    Icon: =Icon.Camera
+                    OnSelect: |-
+                        =UpdateContext({altImagePopUp:true,usingCamera:true})
+                    Visible: =false
+                    X: =If('Case Support Forensic Analysis TT'.Size=1,(AnnouncementAttachmentControl.Width-Self.Width)/2+Self.Width,AnnouncementAttachmentControl.X+AnnouncementAttachmentControl.Width+Self.Width)
+                    Y: =If('Case Support Forensic Analysis TT'.Size=1,(AnnouncementAttachmentControl.Y+AnnouncementAttachmentControl.Height+20),(Parent.Height-Self.Height)/2)
+                    ZIndex: =10
+
+                Icon12_43 As icon.Copy:
+                    Icon: =Icon.Copy
+                    OnSelect: |-
+                        =UpdateContext({altImagePopUp:true,usingCamera:false})
+                    Visible: =false
+                    X: =If('Case Support Forensic Analysis TT'.Size=1,(AnnouncementAttachmentControl.Width-Self.Width)/2-Self.Width,(AnnouncementAttachmentControl.X-Self.Width)/2)
+                    Y: =If('Case Support Forensic Analysis TT'.Size=1,(AnnouncementAttachmentControl.Y+AnnouncementAttachmentControl.Height+20),(Parent.Height-Self.Height)/2)
+                    ZIndex: =11
+
+                Label65 As label:
+                    BorderThickness: =2
+                    Color: =RGBA(255, 255, 255, 1)
+                    Fill: =ColorScheme.primary
+                    Size: =15
+                    Text: ="Attachments"
+                    Visible: =false
+                    X: =AnnouncementAttachmentControl.X
+                    Y: =AnnouncementAttachmentControl.Y-Self.Height
+                    ZIndex: =12
+
+        TemplateFooter_2 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                =Announcements.Size=1
+            Width: =Parent.Width
+            ZIndex: =3
+
+            TemplateWebMobileMenu_2 As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    TemplateBackButton_3 As icon.BackArrow:
+        Color: =Color.White
+        Height: =TemplateLabel_2.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(TemplateHeaderContainer_2.Height-TemplateLabel_2.Height)/1.05
+        ZIndex: =2
+
+    TemplateWebMenu_3 As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: =Announcements.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    AnnouncementSuccess As groupContainer.manualLayoutContainer:
+        Fill: =ColorScheme.screenBackgroundSeeThroughLight
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =AnnounceSuccess
+        Width: =Parent.Width
+        ZIndex: =4
+
+        ASuccessBackground As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.1
+            Width: =Parent.Width/1.1
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =1
+
+        ASuccessHeader As rectangle:
+            BorderThickness: =2
+            Width: =ASuccessBackground.Width
+            X: =ASuccessBackground.X
+            Y: =ASuccessBackground.Y
+            ZIndex: =2
+
+        ASuccessHeaderLabel As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =ASuccessHeader.Height
+            Size: =16
+            Text: ="Announcement Submission"
+            Width: =ASuccessHeader.Width
+            X: =ASuccessHeader.X
+            Y: =ASuccessHeader.Y
+            ZIndex: =3
+
+        ASuccessMessageLabel As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =20
+            Text: ="Announcement has been submitted, please wait for the message to propagate."
+            Width: =ASuccessBackground.Width
+            X: =(ASuccessBackground.Width-Self.Width)/2 + ASuccessBackground.X
+            Y: =(ASuccessBackground.Height-Self.Height)/2 + ASuccessHeader.Height
+            ZIndex: =4
+
+    AnnouncementTimer As timer:
+        Duration: =4000
+        OnTimerEnd: |-
+            =UpdateContext({AnnounceSuccess:false});
+        Start: =AnnounceSuccess
+        Visible: =false
+        X: =40
+        Y: =40
+        ZIndex: =5
+
+    FeedbackBugReportA As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =8
+

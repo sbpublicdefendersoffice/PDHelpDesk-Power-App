@@ -1,0 +1,358 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Services Status:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |+
+        =
+        UpdateContext({recentTime:Text(DateValue(Today())&" "&Text(Now(),DateTimeFormat.LongTime))});
+        UpdateContext({serviceDown:Blank()});
+    Children:
+      - TemplateContainer_1:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - TemplateHeaderContainer_1:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.primary
+                  FillPortions: =0
+                  Height: =130
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - Container23:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - HomeBackgroundGradient_68:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =130
+                              HtmlText: =Home_Background_Gradient.HtmlText
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =Parent.Width
+                        - TemplateLabel_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =Parent.Height-TemplateWebHeader_1.Height
+                              Size: =If('Services Status'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                              Text: ="Services Status"
+                              Width: =Parent.Width
+                              Y: =TemplateWebHeader_1.Height
+                        - TemplateWebHeader_1:
+                            Control: CanvasComponent
+                            ComponentName: compWebHeader
+                            Properties:
+                              BackgroundColor: =Color.Transparent
+                              CompScreenSize: ='Services Status'.Size
+                              EnableFeedback: =Set(varFeedback,true)
+                              FeedbackBool: =varFeedback
+                              Height: =82
+                              Width: =App.Width
+            - MainSectionTemplateContainer_1:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.screenBackgroundSeeThroughDark
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - Container13:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - Gallery4:
+                            Control: Gallery@2.15.0
+                            Variant: Vertical
+                            Properties:
+                              BorderColor: =RGBA(219, 219, 219, 1)
+                              BorderThickness: =2
+                              Height: =Parent.Height-Label63.Height-Label63_1.Height-1
+                              Items: ='Services Active'
+                              TemplateSize: =100
+                              Width: =Parent.Width-2
+                              X: =1
+                              Y: =100
+                            Children:
+                              - Rectangle27:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(219, 219, 219, 1)
+                                    BorderThickness: =2
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Parent.TemplateHeight
+                                    OnSelect: =Select(Parent)
+                                    Width: =Parent.TemplateWidth
+                              - Label59:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =Circle4.Height
+                                    OnSelect: =Select(Parent)
+                                    Size: =If('Services Status'.Size=1,16,25)
+                                    Text: =ThisItem.Name
+                                    Width: =200
+                                    X: =Circle4.X+Circle4.Width+If('Services Status'.Size=1,10,20)
+                                    Y: =Circle4.Y
+                              - Circle4:
+                                  Control: Circle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Fill: =If(ThisItem.Active= true,Color.Green,Color.Red)
+                                    Height: =Self.Width
+                                    OnSelect: =Select(Parent)
+                                    Width: =If('Services Status'.Size=1,32,64)
+                                    X: =Parent.TemplateWidth/Self.Height
+                                    Y: =If('Services Status'.Size=1,(Parent.TemplateHeight-Self.Height)/4,(Parent.TemplateHeight-Self.Height)/2)
+                              - Toggle1:
+                                  Control: Classic/Toggle@2.1.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 0, 0, 0)
+                                    Default: =ThisItem.Active
+                                    FalseText: ="Down"
+                                    Font: =Font.'Open Sans'
+                                    Height: =If('Services Status'.Size=1,Parent.TemplateHeight/4,Parent.TemplateHeight/2)
+                                    LabelPaddingLeft: =0
+                                    OnSelect: |+
+                                      =Patch('Services Active',LookUp('Services Active',Title = ThisItem.Name),
+                                      {
+                                          Active:Self.Value,
+                                          lastDown: If(Self.Value = false,Now())
+                                      });
+                                      UpdateContext({serviceDown: ThisItem.Title});
+
+                                      //Check if service is set to down, send out email, replace last parameter with allEmails
+                                      If(ThisItem.Active = true, SendEmail.Run("pdhelpdeskapp@countyofsb.org","Service Down",ServiceDownBody.HtmlText,"mperez@countyofsb.org"));
+
+                                      //Check if service is set to up, send out email, replace last parameter with allEmails
+                                      If(ThisItem.Active = false, SendEmail.Run("pdhelpdeskapp@countyofsb.org","Service Restored",ServiceUpBody.HtmlText,"mperez@countyofsb.org"))
+
+                                    OnUncheck: |+
+                                      =false
+                                    Size: =If('Services Status'.Size=1,13,25)
+                                    TrueFill: =RGBA(56, 96, 178, 1)
+                                    TrueText: ="UP"
+                                    Visible: =userData.role= "admin" || userData.role="tech"
+                                    Width: =4*Self.Height
+                                    X: =Parent.TemplateWidth-Self.Width
+                                    Y: =(Parent.TemplateHeight-Self.Height)/2
+                              - Label59_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =Circle4.Height
+                                    OnSelect: =Select(Parent)
+                                    Size: =If('Services Status'.Size=1,10,13)
+                                    Text: |-
+                                      ="Last Known Uptime: "&ThisItem.lastDown
+                                    Visible: =ThisItem.Active = false
+                                    Width: =400
+                                    X: =If('Services Status'.Size=1,Circle4.X+(Circle4.Width/2),(Parent.TemplateWidth-Self.Width)/2)
+                                    Y: =If('Services Status'.Size=1,Circle4.Y+Circle4.Height+5,Circle4.Y)
+                        - Label63:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Font: =Font.'Open Sans'
+                              FontWeight: =FontWeight.Bold
+                              Text: ="Last Updated "&recentTime
+                              Width: =Parent.Width
+                        - Label63_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Font: =Font.'Open Sans'
+                              FontWeight: =FontWeight.Bold
+                              Height: =50
+                              Text: ="Next Update in "&Timer1.Text&" seconds"
+                              Width: =Parent.Width
+                              Y: =40
+            - TemplateFooter_1:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(255,255,255, 1)
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    ='Services Status'.Size =1
+                  Width: =Parent.Width
+                Children:
+                  - TemplateWebMobileMenu_1:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Width: =Parent.Width
+      - TemplateBackButton_1:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =TemplateLabel_1.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(TemplateHeaderContainer_1.Height-TemplateLabel_1.Height)/1.05
+      - TemplateWebMenu_1:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, Parent.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Services Status'.Size > 1
+            Width: =If(showMenu, Parent.Width, 80)
+      - Timer1:
+          Control: Timer@2.1.0
+          Properties:
+            AutoPause: =false
+            AutoStart: =true
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Duration: =30000
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: |-
+              =//Refresh('Services Active');
+              UpdateContext({recentTime:Text(DateValue(Today())&" "&Text(Now(),DateTimeFormat.LongTime))})
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Repeat: =true
+            Text: =Text(Time(0, 0, (Self.Duration-Self.Value)/1000), "ss")
+            Visible: =false
+            X: =40
+            Y: =40
+      - FeedbackBugReportSS:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width
+      - ServiceUpBody:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: "=\"<table style='border-style: double ; width:100% '>\r\n    <tr>\r\n    <td>\r\n        <Table style='width:100%'>\r\n        <tr>\r\n        <th style='border-bottom-style: solid;'>\r\n	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>\r\n	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!\r\n	</div>\r\n	<br>\r\n	<div style='text-align:center;'>\r\n	This email is to inform you that the Service \"&serviceDown&\" has been restored. We thank you for your continued patience.\r\n	</div>\r\n        </th>\r\n        </tr>\r\n        <tr>\r\n        <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>\r\n	<div>\r\n	\"&serviceDown&\" Restored\r\n        </tr>\r\n        </td>\r\n        <tr>\r\n        <td style='font-family: monospace; font-size: 20px '>\r\n        </tr>\r\n        </td>\r\n    \r\n    <tr>\r\n    <td style='font-family: monospace; font-size: 20px; border-bottom-style: solid '>\r\n    \r\n    </td>\r\n    </tr>\r\n    \r\n	</div>\r\n        </td>\r\n        </tr>\r\n    </td>\r\n    </tr>\r\n    </Table>\r\n</table>\""
+            Visible: =false
+            X: =60
+            Y: =60
+      - ServiceDownBody:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =404
+            HtmlText: "=\"<table style='border-style: double ; width:100% '>\r\n    <tr>\r\n    <td>\r\n        <Table style='width:100%'>\r\n        <tr>\r\n        <th style='border-bottom-style: solid;'>\r\n	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>\r\n	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!\r\n	</div>\r\n	<br>\r\n	<div style='text-align:center;'>\r\n	This email is to inform you that the Service \"&serviceDown&\" has gone down. We are working to get it back up. Be on the lookout for a follow up email when the service has been restored.\r\n	</div>\r\n        </th>\r\n        </tr>\r\n        <tr>\r\n        <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>\r\n	<div>\r\n	\"&serviceDown&\" is Down\r\n        </tr>\r\n        </td>\r\n        <tr>\r\n        <td style='font-family: monospace; font-size: 20px '>\r\n        </tr>\r\n        </td>\r\n    \r\n    <tr>\r\n    <td style='font-family: monospace; font-size: 20px; border-bottom-style: solid '>\r\n    \r\n    </td>\r\n    </tr>\r\n    \r\n	</div>\r\n        </td>\r\n        </tr>\r\n    </td>\r\n    </tr>\r\n    </Table>\r\n</table>\""
+            Visible: =false
+            Width: =1055
+            X: =102
+            Y: =210

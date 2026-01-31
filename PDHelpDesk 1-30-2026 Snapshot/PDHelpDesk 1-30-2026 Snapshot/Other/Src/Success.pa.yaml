@@ -1,0 +1,283 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Success:
+    Properties:
+      BackgroundImage: =SantaBarabaraBuilding
+      Fill: =ColorScheme.screenBackground
+      ImagePosition: =ImagePosition.Fill
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =UpdateContext({NDrop:false,MGallery:false,HambIconChange:false,CloseAlertRibbon:false});
+        Set(TicketCategoryID,1); Set(TicketSubCategoryID,9); Set(TicketSpecificIssue,1);
+    Children:
+      - SuccessMainContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Success.Height
+            LayoutDirection: =LayoutDirection.Horizontal
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: |-
+              =true
+              //This is the Main container
+            Width: =Success.Width
+          Children:
+            - SuccessVerticalLayoutContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  FillPortions: =9
+                  Height: =Parent.Height
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |-
+                    =true
+                    // This is the main Vertical container of the screen
+                  Width: =Parent.Width
+                Children:
+                  - SuccessHeaderContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.primary
+                        FillPortions: =0
+                        Height: |-
+                          =130
+                          //Parent.Height/11
+                          //82
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =true
+                          //Success.Size<>1
+                          //This is the top most header container that houses the navbar links
+                        Width: =Parent.Width
+                      Children:
+                        - SuccessHeaderElements:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - HomeBackgroundGradient_23:
+                                  Control: HtmlViewer@2.1.0
+                                  Properties:
+                                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height
+                                    HtmlText: =Home_Background_Gradient.HtmlText
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =11
+                                    Width: =Parent.Width
+                              - SuccessWebHeader:
+                                  Control: CanvasComponent
+                                  ComponentName: compWebHeader
+                                  Properties:
+                                    BackgroundColor: =Color.Transparent
+                                    CompScreenSize: =Success.Size
+                                    EnableFeedback: =Set(varFeedback,true)
+                                    FeedbackBool: =varFeedback
+                                    Height: |-
+                                      =//Parent.Height
+                                      82
+                                    Width: =App.Width
+                  - SuccessMainContentContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                        FillPortions: =10
+                        Height: =Parent.Height
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =true
+                          //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                        Width: =Parent.Width
+                      Children:
+                        - ButtonsContainer_1:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutWrap: =true
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Parent.Width
+                            Children:
+                              - Container3:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Start
+                                    DropShadow: =DropShadow.None
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinWidth: =Parent.Width
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Width: =Parent.Width
+                                  Children:
+                                    - Image1_1:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Image: |-
+                                            ="data:image/svg+xml;utf8, "&EncodeUrl("
+                                            <svg
+                                              width='200'
+                                              height='200'
+                                              viewBox='0 0 200 200'
+                                              color='#355989'
+                                              fill='none'
+                                              xmlns='http://www.w3.org/2000/svg'
+                                            >
+                                              <defs>
+                                                <linearGradient id='spinner-secondHalf'>
+                                                  <stop offset='0%' stop-opacity='0' stop-color='currentColor' />
+                                                  <stop offset='100%' stop-opacity='0.5' stop-color='currentColor' />
+                                                </linearGradient>
+                                                <linearGradient id='spinner-firstHalf'>
+                                                  <stop offset='0%' stop-opacity='1' stop-color='currentColor' />
+                                                  <stop offset='100%' stop-opacity='0.5' stop-color='currentColor' />
+                                                </linearGradient>
+                                              </defs>
+
+                                              <g stroke-width='8'>
+                                                <path stroke='url(#spinner-secondHalf)' d='M 4 100 A 96 96 0 0 1 196 100' />
+                                                <path stroke='url(#spinner-firstHalf)' d='M 196 100 A 96 96 0 0 1 4 100' />
+
+                                                <!-- 1deg extra path to have the round end cap -->
+                                                <path
+                                                  stroke='currentColor'
+                                                  stroke-linecap='round'
+                                                  d='M 4 100 A 96 96 0 0 1 4 98'
+                                                />
+                                              </g>
+
+                                              <animateTransform
+                                                from='0 0 0'
+                                                to='360 0 0'
+                                                attributeName='transform'
+                                                type='rotate'
+                                                repeatCount='indefinite'
+                                                dur='700ms'
+                                              />
+                                            </svg>
+                                            ")
+                                          Visible: =false
+                                          X: =(Parent.Width-Self.Width)/2
+                                          Y: =Splash_Logo.Height+Splash_Logo.Y
+                                    - SuccessComponent:
+                                        Control: CanvasComponent
+                                        ComponentName: SuccessSigns
+                                        Properties:
+                                          Height: =Parent.Height
+                                          SuccessColor: =ColorScheme.primary
+                                          Visible: =false
+                                          Width: =Parent.Width
+                                    - Image1_2:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Image: |-
+                                            ="data:image/svg+xml;utf8, "&EncodeUrl("
+
+                                                <svg xmlns='http://www.w3.org/2000/svg'  width='100%' height='100%' fill='RGBA(53,89,137, 1)' class='bi bi-check-circle-fill' viewBox='0 0 16 16'>
+
+                                              <path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'/>
+
+                                              <animateTransform
+                                                from='0 1000'
+                                                to='0 0'
+                                                attributeName='transform'
+                                                type='translate'
+                                                dur='1s'
+                                              />
+
+                                                </svg>
+
+                                            ")
+                                          X: =(Parent.Width-Self.Width)/2
+                                          Y: =(Parent.Height-Self.Height)/4
+                                    - Image1_3:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Image: "=\r\n//Svg using power apps image, similar to html or rte\r\n// the basic form is \"data:image/svg+xml;utf8,\"&EncodeUrl(\"\")\r\n\"data:image/svg+xml;utf8, \"&EncodeUrl(\"\r\n<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'  viewBox='0 0 400 15'>\r\n  \r\n  <style>\r\n    .main-group{\r\n      font-family: Open Sans;\r\n      font-size: 100 em;\r\n      text-anchor: middle;\r\n      transform:translate(50%,0%);\r\n    }\r\n    \r\n    \r\n  </style>\r\n  \r\n\r\n  <g  class='main-group'>\r\n  <text y='75%'>Your ticket has been submitted</text>\r\n  </g>\r\n\r\n  <animateTransform\r\n    from='0 1000'\r\n    to='0 0'\r\n    attributeName='transform'\r\n    type='translate'\r\n    dur='1s'\r\n  />\r\n\r\n</svg>\r\n\r\n\")"
+                                          Width: =Parent.Width
+                                          Y: =Image1_2.Height+Image1_2.Y+5
+      - NavigateTimer:
+          Control: Timer@2.1.0
+          Properties:
+            AutoStart: =true
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Duration: =3000
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: |-
+              =//Navigate when the timer expires
+              Navigate(MyTickets);
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Visible: =false
+            Y: =131

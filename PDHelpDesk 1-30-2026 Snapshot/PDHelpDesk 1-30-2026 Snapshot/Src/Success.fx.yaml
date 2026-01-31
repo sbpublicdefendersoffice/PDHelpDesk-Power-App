@@ -1,0 +1,262 @@
+Success As screen:
+    BackgroundImage: =SantaBarabaraBuilding
+    Fill: =ColorScheme.screenBackground
+    ImagePosition: =ImagePosition.Fill
+    OnHidden: =
+    OnVisible: |-
+        =UpdateContext({NDrop:false,MGallery:false,HambIconChange:false,CloseAlertRibbon:false});
+        Set(TicketCategoryID,1); Set(TicketSubCategoryID,9); Set(TicketSpecificIssue,1);
+
+    SuccessMainContainer As groupContainer.horizontalAutoLayoutContainer:
+        Height: =Success.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Visible: |-
+            =true
+            //This is the Main container
+        Width: =Success.Width
+        ZIndex: =3
+
+        SuccessVerticalLayoutContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            FillPortions: =9
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |-
+                =true
+                // This is the main Vertical container of the screen
+            Width: =Parent.Width
+            ZIndex: =2
+
+            SuccessHeaderContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                    //82
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =true
+                    //Success.Size<>1
+                    //This is the top most header container that houses the navbar links
+                Width: =Parent.Width
+                ZIndex: =1
+
+                SuccessHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =9
+
+                    SuccessWebHeader As compWebHeader:
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: =Success.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        Height: |-
+                            =//Parent.Height
+                            82
+
+                    HomeBackgroundGradient_23 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+            SuccessMainContentContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                FillPortions: =10
+                Height: =Parent.Height
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =4
+
+                ButtonsContainer_1 As groupContainer.verticalAutoLayoutContainer:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    Height: =Parent.Height
+                    LayoutDirection: =LayoutDirection.Vertical
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    LayoutMode: =LayoutMode.Auto
+                    LayoutWrap: =true
+                    Width: =Parent.Width
+                    ZIndex: =3
+
+                    Container3 As groupContainer.manualLayoutContainer:
+                        AlignInContainer: =AlignInContainer.Start
+                        LayoutGridColumns: =6
+                        LayoutGridRows: =6
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =100
+                        LayoutMinWidth: =Parent.Width
+                        Width: =Parent.Width
+                        ZIndex: =2
+
+                        Image1_1 As image:
+                            Image: |-
+                                ="data:image/svg+xml;utf8, "&EncodeUrl("
+                                <svg
+                                  width='200'
+                                  height='200'
+                                  viewBox='0 0 200 200'
+                                  color='#355989'
+                                  fill='none'
+                                  xmlns='http://www.w3.org/2000/svg'
+                                >
+                                  <defs>
+                                    <linearGradient id='spinner-secondHalf'>
+                                      <stop offset='0%' stop-opacity='0' stop-color='currentColor' />
+                                      <stop offset='100%' stop-opacity='0.5' stop-color='currentColor' />
+                                    </linearGradient>
+                                    <linearGradient id='spinner-firstHalf'>
+                                      <stop offset='0%' stop-opacity='1' stop-color='currentColor' />
+                                      <stop offset='100%' stop-opacity='0.5' stop-color='currentColor' />
+                                    </linearGradient>
+                                  </defs>
+                                
+                                  <g stroke-width='8'>
+                                    <path stroke='url(#spinner-secondHalf)' d='M 4 100 A 96 96 0 0 1 196 100' />
+                                    <path stroke='url(#spinner-firstHalf)' d='M 196 100 A 96 96 0 0 1 4 100' />
+                                
+                                    <!-- 1deg extra path to have the round end cap -->
+                                    <path
+                                      stroke='currentColor'
+                                      stroke-linecap='round'
+                                      d='M 4 100 A 96 96 0 0 1 4 98'
+                                    />
+                                  </g>
+                                
+                                  <animateTransform
+                                    from='0 0 0'
+                                    to='360 0 0'
+                                    attributeName='transform'
+                                    type='rotate'
+                                    repeatCount='indefinite'
+                                    dur='700ms'
+                                  />
+                                </svg>
+                                ")
+                            Visible: =false
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =Splash_Logo.Height+Splash_Logo.Y
+                            ZIndex: =1
+
+                        SuccessComponent As SuccessSigns:
+                            Height: =Parent.Height
+                            Visible: =false
+                            Width: =Parent.Width
+                            ZIndex: =3
+
+                        Image1_2 As image:
+                            Image: |-
+                                ="data:image/svg+xml;utf8, "&EncodeUrl("
+                                
+                                    <svg xmlns='http://www.w3.org/2000/svg'  width='100%' height='100%' fill='RGBA(53,89,137, 1)' class='bi bi-check-circle-fill' viewBox='0 0 16 16'>
+                                
+                                  <path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'/>
+                                
+                                  <animateTransform
+                                    from='0 1000'
+                                    to='0 0'
+                                    attributeName='transform'
+                                    type='translate'
+                                    dur='1s'
+                                  />
+                                
+                                    </svg>
+                                
+                                ")
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =(Parent.Height-Self.Height)/4
+                            ZIndex: =4
+
+                        Image1_3 As image:
+                            Image: |-
+                                =
+                                //Svg using power apps image, similar to html or rte
+                                // the basic form is "data:image/svg+xml;utf8,"&EncodeUrl("")
+                                "data:image/svg+xml;utf8, "&EncodeUrl("
+                                <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'  viewBox='0 0 400 15'>
+                                  
+                                  <style>
+                                    .main-group{
+                                      font-family: Open Sans;
+                                      font-size: 100 em;
+                                      text-anchor: middle;
+                                      transform:translate(50%,0%);
+                                    }
+                                    
+                                    
+                                  </style>
+                                  
+                                
+                                  <g  class='main-group'>
+                                  <text y='75%'>Your ticket has been submitted</text>
+                                  </g>
+                                
+                                  <animateTransform
+                                    from='0 1000'
+                                    to='0 0'
+                                    attributeName='transform'
+                                    type='translate'
+                                    dur='1s'
+                                  />
+                                
+                                </svg>
+                                
+                                ")
+                            Width: =Parent.Width
+                            Y: =Image1_2.Height+Image1_2.Y+5
+                            ZIndex: =5
+
+    NavigateTimer As timer:
+        AutoStart: =true
+        Duration: =3000
+        OnTimerEnd: |-
+            =//Navigate when the timer expires
+            Navigate(MyTickets);
+        Visible: =false
+        Y: =131
+        ZIndex: =8
+

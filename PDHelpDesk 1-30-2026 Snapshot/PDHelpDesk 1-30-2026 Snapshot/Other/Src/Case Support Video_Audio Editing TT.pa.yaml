@@ -1,0 +1,2543 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Case Support Video/Audio Editing TT:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: |+
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+      OnVisible: |-
+        =ResetForm('CSVideo/AudioForm');
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        ClearCollect(AVTimes,
+        {
+            startTime:"", 
+            endTime:""
+        });
+        ClearCollect(AVEditCol,
+        {
+            fileName:"",
+            filePath:"",
+            times:AVTimes
+        });
+
+        Clear(AVEditCol);
+        UpdateContext({videoRecord:Blank()})
+    Children:
+      - CSVideo/AudioMainContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: ='Case Support Video/Audio Editing TT'.Height
+            LayoutDirection: =LayoutDirection.Horizontal
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: ='Case Support Video/Audio Editing TT'.Width
+          Children:
+            - CSVideo/AudioVerticalLayoutContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Height: =Parent.Height
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - CSVideo/AudioHeaderContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.primary
+                        FillPortions: =0
+                        Height: |-
+                          =130
+                          //Parent.Height/11
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =//Home.Size<>1
+                          //This is the top most header container that houses the navbar links
+                          true
+                        Width: =Parent.Width
+                      Children:
+                        - Audio/VideoEditingHeaderElements:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - HomeBackgroundGradient_50:
+                                  Control: HtmlViewer@2.1.0
+                                  Properties:
+                                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height
+                                    HtmlText: =Home_Background_Gradient.HtmlText
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =11
+                                    Width: =Parent.Width
+                              - CSVideo/AudioHeaderLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =Color.Transparent
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height-'CSVideo/AudioWebHeader'.Height
+                                    Size: =If('Case Support Video/Audio Editing TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                                    Text: ="Video/Audio Editing Form"
+                                    Width: =Parent.Width
+                                    Y: ='CSVideo/AudioWebHeader'.Height
+                              - CSVideo/AudioWebHeader:
+                                  Control: CanvasComponent
+                                  ComponentName: compWebHeader
+                                  Properties:
+                                    BackgroundColor: =Color.Transparent
+                                    CompScreenSize: ='Case Support Video/Audio Editing TT'.Size
+                                    EnableFeedback: =Set(varFeedback,true)
+                                    FeedbackBool: =varFeedback
+                                    Height: =82
+                                    Width: =App.Width
+                  - CSVideo/AudioMainContentContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                        Height: =Parent.Height/1.21
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutOverflowY: =LayoutOverflow.Scroll
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =true
+                          //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                        Width: =Parent.Width
+                      Children:
+                        - CSVideo/AudioForm:
+                            Control: Form@2.4.4
+                            Variant: Classic
+                            Layout: Vertical
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataSource: =Tickets
+                              DefaultMode: =FormMode.New
+                              Height: =Parent.Height/1.21
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NumberOfColumns: =1
+                              Width: =Parent.Width
+                              Y: =Parent.Height/5.7
+                            Children:
+                              - CSVideo/AudioTitle_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="title"
+                                    Default: =ThisItem.Title
+                                    DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                                    Height: =150
+                                    MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                                    Required: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =0
+                                  Children:
+                                    - CSVideo/AudioTitleLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Case Number"
+                                          Width: =140
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSVideo/AudioTitleError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =65
+                                    - CSVideo/AudioTitleStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: ='CSVideo/AudioTitleLabel'.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: ='CSVideo/AudioTitleLabel'.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='CSVideo/AudioTitleLabel'.Y
+                                    - CSVideo/AudioTitleInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =""
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HintText: ="Enter the case number"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Width: =If('Case Support Video/Audio Editing TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                                          X: =30
+                                          Y: =44
+                                    - Label21_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          Size: =16
+                                          Text: ="Keep in mind longer videos means longer render times, Ex. 30s of video can take 1hr to enhance."
+                                          Width: =Parent.Width
+                                          Y: ='CSVideo/AudioTitle_DataCard'.Height-Self.Height
+                              - CSVideo/AudioMainCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="mainCategory"
+                                    Default: =ThisItem.mainCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: =If( 'Case Support Video/Audio Editing TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =1
+                                  Children:
+                                    - CSVideo/AudioMainCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSVideo/AudioMainCategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='CSVideo/AudioMainCategoryDropdown'.Y + 'CSVideo/AudioMainCategoryDropdown'.Height
+                                    - CSVideo/AudioMainCategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='CSVideo/AudioMainCategoryLabel'.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: =10
+                                    - CSVideo/AudioMainCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - CSVideo/AudioSubCategory_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="category"
+                                    Default: =ThisItem.category
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =If( 'Case Support Video/Audio Editing TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    Required: =true
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =2
+                                  Children:
+                                    - CSVideo/AudioSubCategoryLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Sub Category"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSVideo/AudioSubcategoryError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: =73
+                                    - CSVideo/AudioSubcategoryStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='CSVideo/AudioSubCategoryLabel'.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='CSVideo/AudioSubCategoryLabel'.Y
+                                    - CSVideo/AudioSubCategoryDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = 'CSVideo/AudioMainCategoryDropdown'.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =44
+                              - CSVideo/AudioFields:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =400
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =3
+                                  Children:
+                                    - VideoEnhancementGallery_2:
+                                        Control: Gallery@2.15.0
+                                        Variant: VariableHeight
+                                        Group: Group13
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Default: ={}
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =150
+                                          Items: =AVEditCol
+                                          TemplatePadding: =0
+                                          TemplateSize: =50
+                                          Visible: =!IsEmpty(AVEditCol) && 'Case Support Video/Audio Editing TT'.Size>1
+                                          Width: =Gallery1Header_10.Width
+                                          X: =Gallery1Header_10.X
+                                          Y: =Gallery1FileName_10.Y+Gallery1FileName_10.Height
+                                        Children:
+                                          - Container7_5:
+                                              Control: GroupContainer@1.4.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                BorderThickness: =1
+                                                DropShadow: =DropShadow.None
+                                                Height: =50
+                                                LayoutDirection: =LayoutDirection.Vertical
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Width: =Parent.TemplateWidth
+                                              Children:
+                                                - Container8_5:
+                                                    Control: GroupContainer@1.4.0
+                                                    Variant: AutoLayout
+                                                    Properties:
+                                                      DropShadow: =DropShadow.None
+                                                      FillPortions: =0
+                                                      Height: =Parent.Height
+                                                      LayoutDirection: =LayoutDirection.Horizontal
+                                                      LayoutMaxHeight: =
+                                                      LayoutMaxWidth: =
+                                                      RadiusBottomLeft: =0
+                                                      RadiusBottomRight: =0
+                                                      RadiusTopLeft: =0
+                                                      RadiusTopRight: =0
+                                                    Children:
+                                                      - NestedColFileName_5:
+                                                          Control: Label@2.5.1
+                                                          Properties:
+                                                            Align: =Align.Center
+                                                            BorderColor: =RGBA(0, 18, 107, 1)
+                                                            BorderThickness: =2
+                                                            Fill: =If(ThisItem.IsSelected,ColorScheme.secondary,Color.Transparent)
+                                                            FillPortions: =2
+                                                            Font: =Font.'Open Sans'
+                                                            Height: '=Parent.Height   '
+                                                            LayoutMaxHeight: =
+                                                            LayoutMaxWidth: =
+                                                            Size: =15
+                                                            Text: =ThisItem.fileName
+                                                      - NestedColFilePath_5:
+                                                          Control: Label@2.5.1
+                                                          Properties:
+                                                            Align: =Align.Center
+                                                            BorderColor: =RGBA(0, 18, 107, 1)
+                                                            BorderThickness: =2
+                                                            Fill: =If(ThisItem.IsSelected,ColorScheme.secondary,Color.Transparent)
+                                                            FillPortions: =2
+                                                            Font: =Font.'Open Sans'
+                                                            Height: '=Parent.Height   '
+                                                            LayoutMaxHeight: =
+                                                            LayoutMaxWidth: =
+                                                            Size: =15
+                                                            Text: =ThisItem.filePath
+                                          - Button12_4:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =Color.Transparent
+                                                Color: =RGBA(0, 0, 0, 0)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =RGBA(0,0,0,0)
+                                                Font: =Font.'Open Sans'
+                                                Height: =50
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =RGBA(0, 16, 96, .35)
+                                                OnSelect: =UpdateContext({videoRecord:ThisItem})
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =RGBA(0, 16, 96, .50)
+                                                Text: ="Select"
+                                                Width: =Gallery1Header_10.Width/2
+                                          - Button12_7:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =Color.Transparent
+                                                Color: =RGBA(0, 0, 0, 0)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =RGBA(0,0,0,0)
+                                                Font: =Font.'Open Sans'
+                                                Height: =50
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =RGBA(151, 0, 0, .35)
+                                                OnSelect: |-
+                                                  =Remove(AVEditCol,ThisItem);
+                                                  UpdateContext({videoRecord:Blank()})
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =RGBA(151, 0, 0, .50)
+                                                Text: ="Delete"
+                                                Width: =Gallery1Header_10.Width/2
+                                                X: =Button12_4.Width
+                                    - Gallery1Header_10:
+                                        Control: Rectangle@2.3.0
+                                        Group: Group13
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Fill: =ColorScheme.primary
+                                          Height: =50
+                                          Visible: =!IsEmpty(AVEditCol)
+                                          Width: ='CSVideo/AudioTitleInput'.Width
+                                          X: =30
+                                          Y: ='Video/AudioEntryAdd Button'.Y+'Video/AudioEntryAdd Button'.Height+20
+                                    - Gallery1Title_16:
+                                        Control: Label@2.5.1
+                                        Group: Group13
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Gallery1Header_10.Height
+                                          Size: ='Video/AudioEntryHeaderTitle'.Size
+                                          Text: ="Files to Edit"
+                                          Visible: =!IsEmpty(AVEditCol)
+                                          Width: =Gallery1Header_10.Width
+                                          X: =Gallery1Header_10.X
+                                          Y: =Gallery1Header_10.Y
+                                    - Gallery1FileName_10:
+                                        Control: Label@2.5.1
+                                        Group: Group13
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =50
+                                          Size: ='Video/AudioEntryFileName'.Size
+                                          Text: ="File Name"
+                                          Visible: =!IsEmpty(AVEditCol) && 'Case Support Video/Audio Editing TT'.Size>1
+                                          Width: =(Gallery1Header_10.Width)/2
+                                          X: =Gallery1Header_10.X
+                                          Y: =Gallery1Header_10.Height+Gallery1Header_10.Y
+                                    - Gallery1FilePath_10:
+                                        Control: Label@2.5.1
+                                        Group: Group13
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =50
+                                          Size: ='Video/AudioEntryFileName'.Size
+                                          Text: ="File Path"
+                                          Visible: =!IsEmpty(AVEditCol) && 'Case Support Video/Audio Editing TT'.Size>1
+                                          Width: =(Gallery1Header_10.Width)/2
+                                          X: =Gallery1FileName_10.X+Gallery1FileName_10.Width
+                                          Y: =Gallery1Header_10.Height+Gallery1Header_10.Y
+                                    - Video/AudioEntryHeaderRectangle:
+                                        Control: Rectangle@2.3.0
+                                        Group: Group9
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Fill: =ColorScheme.primary
+                                          Height: =50
+                                          Width: ='CSVideo/AudioTitleInput'.Width
+                                          X: =30
+                                          Y: =20
+                                    - Video/AudioEntryBorderRectangle:
+                                        Control: Rectangle@2.3.0
+                                        Group: Group9
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =If('Case Support Video/Audio Editing TT'.Size=1,220,50)
+                                          Width: ='CSVideo/AudioTitleInput'.Width
+                                          X: =30
+                                          Y: ='Video/AudioEntryFileName'.Height+'Video/AudioEntryFileName'.Y
+                                    - Video/AudioEntryHeaderTitle:
+                                        Control: Label@2.5.1
+                                        Group: Group9
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='Video/AudioEntryHeaderRectangle'.Height
+                                          Size: =If('Case Support Video/Audio Editing TT'.Size=1,17,20)
+                                          Text: ="Video/Audio Entry"
+                                          Width: ='Video/AudioEntryHeaderRectangle'.Width
+                                          X: ='Video/AudioEntryHeaderRectangle'.X
+                                          Y: ='Video/AudioEntryHeaderRectangle'.Y
+                                    - Video/AudioEntryFileName:
+                                        Control: Label@2.5.1
+                                        Group: Group9
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =50
+                                          Size: =If('Case Support Video/Audio Editing TT'.Size=1,15,20)
+                                          Text: ="File Name"
+                                          Width: =If('Case Support Video/Audio Editing TT'.Size=1,'Video/AudioEntryHeaderRectangle'.Width,('Video/AudioEntryHeaderRectangle'.Width)/2)
+                                          X: ='Video/AudioEntryHeaderRectangle'.X
+                                          Y: ='Video/AudioEntryHeaderRectangle'.Height+'Video/AudioEntryHeaderRectangle'.Y
+                                    - Video/AudioEntryFilePath:
+                                        Control: Label@2.5.1
+                                        Group: Group9
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =2
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =50
+                                          Size: ='Video/AudioEntryFileName'.Size
+                                          Text: ="File Path"
+                                          Width: ='Video/AudioEntryFileName'.Width
+                                          X: =If('Case Support Video/Audio Editing TT'.Size=1,'Video/AudioEntryFileName'.X,'Video/AudioEntryFileName'.X +'Video/AudioEntryFileName'.Width)
+                                          Y: =If('Case Support Video/Audio Editing TT'.Size=1,'Video/AudioEntryFileNameInput'.Y+'Video/AudioEntryFileNameInput'.Height+10,'Video/AudioEntryHeaderRectangle'.Height+'Video/AudioEntryHeaderRectangle'.Y)
+                                    - Video/AudioEntryFileNameInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Group: Group9
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =If(IsBlank(videoRecord),Blank(),videoRecord.fileName)
+                                          Font: =Font.'Open Sans'
+                                          HintText: ="Enter File Name"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Width: =If('Case Support Video/Audio Editing TT'.Size=1,'Video/AudioEntryHeaderRectangle'.Width-10,'Video/AudioEntryFileName'.Width-10)
+                                          X: =35
+                                          Y: =If('Case Support Video/Audio Editing TT'.Size=1,'Video/AudioEntryFileName'.Height+'Video/AudioEntryFileName'.Y+5,'Video/AudioEntryBorderRectangle'.Y+'Video/AudioEntryBorderRectangle'.Height-Self.Height-5)
+                                    - Video/AudioEntryFilePathInput:
+                                        Control: Classic/TextInput@2.3.2
+                                        Group: Group9
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =If(IsBlank(videoRecord),Blank(),videoRecord.filePath)
+                                          Font: =Font.'Open Sans'
+                                          HintText: ="Enter File Path"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Width: ='Video/AudioEntryFileNameInput'.Width
+                                          X: =If('Case Support Video/Audio Editing TT'.Size=1,'Video/AudioEntryFileNameInput'.X,'Video/AudioEntryFileNameInput'.X+'Video/AudioEntryFileNameInput'.Width+10)
+                                          Y: =If('Case Support Video/Audio Editing TT'.Size=1,'Video/AudioEntryFilePath'.Y+'Video/AudioEntryFilePath'.Height+10,'Video/AudioEntryBorderRectangle'.Y+'Video/AudioEntryBorderRectangle'.Height-Self.Height-5)
+                                    - Video/AudioEntryAdd Button:
+                                        Control: Classic/Button@2.2.0
+                                        Group: Group9
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: |-
+                                            =If(IsBlank(videoRecord),
+                                            Patch(
+                                                AVEditCol,
+                                                Defaults(AVEditCol),
+                                                {
+                                                    fileName: 'Video/AudioEntryFileNameInput'.Text,
+                                                    filePath: 'Video/AudioEntryFilePathInput'.Text
+                                                }
+                                            );
+
+                                            Reset('Video/AudioEntryFileNameInput');
+                                            Reset('Video/AudioEntryFilePathInput');
+                                            UpdateContext({videoRecord:Blank()});,
+                                            Patch(
+                                                AVEditCol,
+                                                LookUp(AVEditCol, fileName = videoRecord.fileName),
+                                                {
+                                                    fileName: 'Video/AudioEntryFileNameInput'.Text,
+                                                    filePath: 'Video/AudioEntryFilePathInput'.Text
+                                                }
+                                            );
+
+                                            Reset('Video/AudioEntryFileNameInput');
+                                            Reset('Video/AudioEntryFilePathInput');
+                                            UpdateContext({videoRecord:Blank()});)
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: =If(IsBlank(videoRecord),"Add", "Update")
+                                          Width: =If('Case Support Video/Audio Editing TT'.Size =1, 100,160)
+                                          X: ='Video/AudioEntryBorderRectangle'.Width/6
+                                          Y: =If('Case Support Video/Audio Editing TT'.Size=1,'Video/AudioEntryFilePathInput'.Y+'Video/AudioEntryFilePathInput'.Height+20,'Video/AudioEntryBorderRectangle'.Y+'Video/AudioEntryBorderRectangle'.Height+20)
+                                    - Container9_1:
+                                        Control: GroupContainer@1.4.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Height: =810
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Visible: =If(IsBlank(videoRecord),false,true)
+                                          Width: =Parent.Width
+                                          Y: =EstimatedDate_2.Y+EstimatedDate_2.Height+20
+                                        Children:
+                                          - Gallery1Header_8:
+                                              Control: Rectangle@2.3.0
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =ColorScheme.primary
+                                                Height: =50
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: ='CSVideo/AudioTitleInput'.Width
+                                                X: =30
+                                          - Gallery1Title_12:
+                                              Control: Label@2.5.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Color: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Gallery1Header_8.Height
+                                                Size: ='Video/AudioEntryHeaderTitle'.Size
+                                                Text: =videoRecord.fileName&" Time Snippet Entry"
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1Header_8.Width
+                                                X: =Gallery1Header_8.X
+                                                Y: =Gallery1Header_8.Y
+                                          - Gallery1FileName_8:
+                                              Control: Label@2.5.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =30
+                                                Size: ='Video/AudioEntryFileName'.Size
+                                                Text: ="Hour"
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1Header_8.Width/3
+                                                X: =Gallery1Header_8.X
+                                                Y: =Gallery1Title_13.Y+Gallery1Title_13.Height
+                                          - Gallery1FilePath_8:
+                                              Control: Label@2.5.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =30
+                                                Size: ='Video/AudioEntryFileName'.Size
+                                                Text: |-
+                                                  ="Minute
+                                                  "
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1Header_8.Width/3
+                                                X: =Gallery1FileName_8.X+Gallery1FileName_8.Width
+                                                Y: =Gallery1Title_13.Y+Gallery1Title_13.Height
+                                          - Gallery1VideoOption_7:
+                                              Control: Label@2.5.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =30
+                                                Size: ='Video/AudioEntryFileName'.Size
+                                                Text: |-
+                                                  ="Seconds
+                                                  "
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1Header_8.Width/3
+                                                X: =Gallery1FilePath_8.X+Gallery1FilePath_8.Width
+                                                Y: =Gallery1Title_13.Y+Gallery1Title_13.Height
+                                          - FileEntryRectangle_4:
+                                              Control: Rectangle@2.3.0
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =If('Case Support Video/Audio Editing TT'.Size=1,320,270)
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: ='CSVideo/AudioTitleInput'.Width
+                                                X: =30
+                                                Y: =Gallery1Header_8.Y+Gallery1Header_8.Height
+                                          - Dropdown1_12:
+                                              Control: Classic/DropDown@2.3.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                ChevronBackground: =ColorScheme.primary
+                                                ChevronFill: =RGBA(255, 255, 255, 1)
+                                                ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                                ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                                Default: |+
+                                                  =If(Gallery4_3.Visible,If(IsBlank(Gallery4_3.Selected),"0",Left(Gallery4_3.Selected.startTime,2)),If(IsBlank('Video/AudioEditingMobileGallery_1'.Selected),"0",Left('Video/AudioEditingMobileGallery_1'.Selected.startTime,2)))
+                                                Font: =Font.'Open Sans'
+                                                HoverFill: =RGBA(186, 202, 226, 1)
+                                                Items: =ForAll(Sequence(100), Text(Value-1,"[$-en-US]00"))
+                                                Items.Value: =Value
+                                                PressedColor: =RGBA(255, 255, 255, 1)
+                                                PressedFill: =RGBA(0, 18, 107, 1)
+                                                SelectionColor: =RGBA(255, 255, 255, 1)
+                                                SelectionFill: =RGBA(56, 96, 178, 1)
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1FileName_8.Width-10
+                                                X: =35
+                                                Y: =Gallery1FileName_8.Y+Gallery1FileName_8.Height+5
+                                          - AddEntryButton_8:
+                                              Control: Classic/Button@2.2.0
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                BorderColor: =ColorFade(Self.Fill, -15%)
+                                                Color: =RGBA(255, 255, 255, 1)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =ColorScheme.primary
+                                                Font: =Font.'Open Sans'
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                                OnSelect: |-
+                                                  =Clear(AVTimes);
+                                                  Collect(AVTimes,LookUp(AVEditCol,videoRecord.fileName = fileName).times);
+
+
+                                                  If(Gallery4_3.Visible,
+                                                      If(IsBlank(Gallery4_3.Selected),
+
+                                                      Patch(AVTimes, Defaults(AVTimes), 
+                                                      {
+                                                          startTime: Dropdown1_12.Selected.Value&":"&Dropdown1_13.Selected.Value&":"&Dropdown1_14.Selected.Value,
+                                                          endTime:Dropdown1_15.Selected.Value&":"&Dropdown1_16.Selected.Value&":"&Dropdown1_17.Selected.Value
+                                                      });,
+
+                                                      Patch(AVTimes, LookUp(AVTimes, Gallery4_3.Selected.startTime = startTime && Gallery4_3.Selected.endTime = endTime),
+                                                      {
+                                                          startTime: Dropdown1_12.Selected.Value&":"&Dropdown1_13.Selected.Value&":"&Dropdown1_14.Selected.Value,
+                                                          endTime:Dropdown1_15.Selected.Value&":"&Dropdown1_16.Selected.Value&":"&Dropdown1_17.Selected.Value
+                                                      });
+
+                                                      Reset(Gallery4_3);
+                                                      );
+
+                                                      Patch(AVEditCol,LookUp(AVEditCol, videoRecord.fileName = fileName),
+                                                      {
+                                                          times:AVTimes
+                                                      }
+                                                      );,
+
+                                                      If(IsBlank('Video/AudioEditingMobileGallery_1'.Selected),
+
+                                                      Patch(AVTimes, Defaults(AVTimes), 
+                                                      {
+                                                          startTime: Dropdown1_12.Selected.Value&":"&Dropdown1_13.Selected.Value&":"&Dropdown1_14.Selected.Value,
+                                                          endTime:Dropdown1_15.Selected.Value&":"&Dropdown1_16.Selected.Value&":"&Dropdown1_17.Selected.Value
+                                                      });,
+
+                                                      Patch(AVTimes, LookUp(AVTimes, 'Video/AudioEditingMobileGallery_1'.Selected.startTime = startTime && 'Video/AudioEditingMobileGallery_1'.Selected.endTime = endTime),
+                                                      {
+                                                          startTime: Dropdown1_12.Selected.Value&":"&Dropdown1_13.Selected.Value&":"&Dropdown1_14.Selected.Value,
+                                                          endTime:Dropdown1_15.Selected.Value&":"&Dropdown1_16.Selected.Value&":"&Dropdown1_17.Selected.Value
+                                                      });
+
+                                                      Reset('Video/AudioEditingMobileGallery_1');
+                                                      );
+
+                                                      Patch(AVEditCol,LookUp(AVEditCol, videoRecord.fileName = fileName),
+                                                      {
+                                                          times:AVTimes
+                                                      }
+                                                      );
+
+                                                      );
+
+
+                                                  Reset(Dropdown1_12);
+                                                  Reset(Dropdown1_13);
+                                                  Reset(Dropdown1_14);
+                                                  Reset(Dropdown1_15);
+                                                  Reset(Dropdown1_16);
+                                                  Reset(Dropdown1_17);
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =Self.Color
+                                                Size: =13
+                                                Text: |+
+                                                  =If(IsBlank(Gallery4_3.Visible),If(IsBlank(Gallery4_3.Selected), "Add time","Update Time"),If(IsBlank('Video/AudioEditingMobileGallery_1'.Selected), "Add time","Update Time"))
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: ='Video/AudioEntryAdd Button'.Width
+                                                X: =FileEntryRectangle_4.Width/6
+                                                Y: =If('Case Support Video/Audio Editing TT'.Size=1,Dropdown1_17.Y+Dropdown1_17.Height+20,FileEntryRectangle_4.Y+FileEntryRectangle_4.Height+20)
+                                          - Gallery1FileName_9:
+                                              Control: Label@2.5.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =30
+                                                Size: ='Video/AudioEntryFileName'.Size
+                                                Text: ="Hour"
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1Header_8.Width/3
+                                                X: =Gallery1Header_8.X
+                                                Y: =Gallery1Title_14.Y+Gallery1Title_14.Height
+                                          - Gallery1FilePath_9:
+                                              Control: Label@2.5.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =30
+                                                Size: ='Video/AudioEntryFileName'.Size
+                                                Text: |-
+                                                  ="Minute
+                                                  "
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1Header_8.Width/3
+                                                X: =Gallery1FileName_9.X+Gallery1FileName_9.Width
+                                                Y: =Gallery1Title_14.Y+Gallery1Title_14.Height
+                                          - Gallery1VideoOption_8:
+                                              Control: Label@2.5.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =30
+                                                Size: ='Video/AudioEntryFileName'.Size
+                                                Text: |-
+                                                  ="Seconds
+                                                  "
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1Header_8.Width/3
+                                                X: =Gallery1FilePath_9.X+Gallery1FilePath_9.Width
+                                                Y: =Gallery1Title_14.Y+Gallery1Title_14.Height
+                                          - Dropdown1_13:
+                                              Control: Classic/DropDown@2.3.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                ChevronBackground: =ColorScheme.primary
+                                                ChevronFill: =RGBA(255, 255, 255, 1)
+                                                ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                                ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                                Default: |+
+                                                  =If(Gallery4_3.Visible,If(IsBlank(Gallery4_3.Selected),"0",Right(Left(Gallery4_3.Selected.startTime,5),2)),If(IsBlank('Video/AudioEditingMobileGallery_1'.Selected),"0",Right(Left('Video/AudioEditingMobileGallery_1'.Selected.startTime,5),2)))
+
+                                                Font: =Font.'Open Sans'
+                                                HoverFill: =RGBA(186, 202, 226, 1)
+                                                Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                                Items.Value: =Value
+                                                PressedColor: =RGBA(255, 255, 255, 1)
+                                                PressedFill: =RGBA(0, 18, 107, 1)
+                                                SelectionColor: =RGBA(255, 255, 255, 1)
+                                                SelectionFill: =RGBA(56, 96, 178, 1)
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1FileName_8.Width-10
+                                                X: =Dropdown1_12.X+Dropdown1_12.Width+10
+                                                Y: =Gallery1FileName_8.Y+Gallery1FileName_8.Height+5
+                                          - Dropdown1_14:
+                                              Control: Classic/DropDown@2.3.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                ChevronBackground: =ColorScheme.primary
+                                                ChevronFill: =RGBA(255, 255, 255, 1)
+                                                ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                                ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                                Default: |+
+                                                  =If(Gallery4_3.Visible,If(IsBlank(Gallery4_3.Selected),"0",Right(Gallery4_3.Selected.startTime,2)),If(IsBlank('Video/AudioEditingMobileGallery_1'.Selected),"0",Right('Video/AudioEditingMobileGallery_1'.Selected.startTime,2)))
+
+                                                Font: =Font.'Open Sans'
+                                                HoverFill: =RGBA(186, 202, 226, 1)
+                                                Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                                Items.Value: =Value
+                                                PressedColor: =RGBA(255, 255, 255, 1)
+                                                PressedFill: =RGBA(0, 18, 107, 1)
+                                                SelectionColor: =RGBA(255, 255, 255, 1)
+                                                SelectionFill: =RGBA(56, 96, 178, 1)
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1FileName_8.Width-10
+                                                X: =Dropdown1_13.X+Dropdown1_13.Width+10
+                                                Y: =Gallery1FileName_8.Y+Gallery1FileName_8.Height+5
+                                          - Gallery1Title_13:
+                                              Control: Label@2.5.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =2
+                                                Fill: =RGBA(209, 232, 178, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Gallery1Header_8.Height
+                                                Size: =20
+                                                Text: ="Start"
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1Header_8.Width
+                                                X: =Gallery1Header_8.X
+                                                Y: =Gallery1Header_8.Y+Self.Height
+                                          - Gallery1Title_14:
+                                              Control: Label@2.5.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =2
+                                                Fill: =RGBA(238, 204, 204, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Gallery1Header_8.Height
+                                                Size: =20
+                                                Text: ="End"
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1Header_8.Width
+                                                X: =Gallery1Header_8.X
+                                                Y: =Dropdown1_12.Y+Dropdown1_12.Height+5
+                                          - Dropdown1_15:
+                                              Control: Classic/DropDown@2.3.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                ChevronBackground: =ColorScheme.primary
+                                                ChevronFill: =RGBA(255, 255, 255, 1)
+                                                ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                                ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                                Default: =If(Gallery4_3.Visible,If(IsBlank(Gallery4_3.Selected),"0",Left(Gallery4_3.Selected.endTime,2)),If(IsBlank('Video/AudioEditingMobileGallery_1'.Selected),"0",Left('Video/AudioEditingMobileGallery_1'.Selected.endTime,2)))
+                                                Font: =Font.'Open Sans'
+                                                HoverFill: =RGBA(186, 202, 226, 1)
+                                                Items: =ForAll(Sequence(100), Text(Value-1,"[$-en-US]00"))
+                                                Items.Value: =Value
+                                                PressedColor: =RGBA(255, 255, 255, 1)
+                                                PressedFill: =RGBA(0, 18, 107, 1)
+                                                SelectionColor: =RGBA(255, 255, 255, 1)
+                                                SelectionFill: =RGBA(56, 96, 178, 1)
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1FileName_8.Width-10
+                                                X: =35
+                                                Y: =Gallery1FileName_9.Y+Gallery1FileName_9.Height+5
+                                          - Dropdown1_16:
+                                              Control: Classic/DropDown@2.3.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                ChevronBackground: =ColorScheme.primary
+                                                ChevronFill: =RGBA(255, 255, 255, 1)
+                                                ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                                ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                                Default: |+
+                                                  =If(Gallery4_3.Visible,If(IsBlank(Gallery4_3.Selected),"0",Right(Left(Gallery4_3.Selected.endTime,5),2)),If(IsBlank('Video/AudioEditingMobileGallery_1'.Selected),"0",Right(Left('Video/AudioEditingMobileGallery_1'.Selected.endTime,5),2)))
+
+                                                Font: =Font.'Open Sans'
+                                                HoverFill: =RGBA(186, 202, 226, 1)
+                                                Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                                Items.Value: =Value
+                                                PressedColor: =RGBA(255, 255, 255, 1)
+                                                PressedFill: =RGBA(0, 18, 107, 1)
+                                                SelectionColor: =RGBA(255, 255, 255, 1)
+                                                SelectionFill: =RGBA(56, 96, 178, 1)
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1FileName_8.Width-10
+                                                X: =Dropdown1_15.X+Dropdown1_15.Width+10
+                                                Y: =Gallery1FileName_9.Y+Gallery1FileName_9.Height+5
+                                          - Dropdown1_17:
+                                              Control: Classic/DropDown@2.3.1
+                                              Group: Time Entry Group_2
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                ChevronBackground: =ColorScheme.primary
+                                                ChevronFill: =RGBA(255, 255, 255, 1)
+                                                ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                                ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                                Default: |+
+                                                  =If(Gallery4_3.Visible,If(IsBlank(Gallery4_3.Selected),"0",Right(Gallery4_3.Selected.endTime,2)),If(IsBlank('Video/AudioEditingMobileGallery_1'.Selected),"0",Right('Video/AudioEditingMobileGallery_1'.Selected.endTime,2)))
+
+                                                Font: =Font.'Open Sans'
+                                                HoverFill: =RGBA(186, 202, 226, 1)
+                                                Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                                Items.Value: =Value
+                                                PressedColor: =RGBA(255, 255, 255, 1)
+                                                PressedFill: =RGBA(0, 18, 107, 1)
+                                                SelectionColor: =RGBA(255, 255, 255, 1)
+                                                SelectionFill: =RGBA(56, 96, 178, 1)
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: =Gallery1FileName_8.Width-10
+                                                X: =Dropdown1_16.X+Dropdown1_16.Width+10
+                                                Y: =Gallery1FileName_9.Y+Gallery1FileName_9.Height+5
+                                          - Gallery4_3:
+                                              Control: Gallery@2.15.0
+                                              Variant: VariableHeight
+                                              Group: Group14
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Default: ={}
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =300
+                                                Items: =VideoEnhancementGallery_2.Selected.times
+                                                TemplatePadding: =0
+                                                TemplateSize: =50
+                                                Visible: =If(IsBlank(videoRecord),false,true)&& 'Case Support Video/Audio Editing TT'.Size>1 && !IsEmpty(Gallery4_3.AllItems)
+                                                Width: =Gallery1Header_10.Width
+                                                X: =30
+                                                Y: =Label10_13.Y+Label10_13.Height
+                                              Children:
+                                                - Container7_4:
+                                                    Control: GroupContainer@1.4.0
+                                                    Variant: AutoLayout
+                                                    Properties:
+                                                      BorderThickness: =1
+                                                      DropShadow: =DropShadow.None
+                                                      Height: =50
+                                                      LayoutDirection: =LayoutDirection.Vertical
+                                                      RadiusBottomLeft: =0
+                                                      RadiusBottomRight: =0
+                                                      RadiusTopLeft: =0
+                                                      RadiusTopRight: =0
+                                                      Width: =Parent.TemplateWidth
+                                                    Children:
+                                                      - Container8_4:
+                                                          Control: GroupContainer@1.4.0
+                                                          Variant: AutoLayout
+                                                          Properties:
+                                                            DropShadow: =DropShadow.None
+                                                            FillPortions: =0
+                                                            Height: =Parent.Height
+                                                            LayoutDirection: =LayoutDirection.Horizontal
+                                                            LayoutMaxHeight: =
+                                                            LayoutMaxWidth: =
+                                                            RadiusBottomLeft: =0
+                                                            RadiusBottomRight: =0
+                                                            RadiusTopLeft: =0
+                                                            RadiusTopRight: =0
+                                                          Children:
+                                                            - NestedColFileName_4:
+                                                                Control: Label@2.5.1
+                                                                Properties:
+                                                                  Align: =Align.Center
+                                                                  BorderColor: =RGBA(0, 18, 107, 1)
+                                                                  BorderThickness: =If(ThisItem.IsSelected,6,2)
+                                                                  FillPortions: =1
+                                                                  Font: =Font.'Open Sans'
+                                                                  Height: '=Parent.Height   '
+                                                                  LayoutMaxHeight: =
+                                                                  LayoutMaxWidth: =
+                                                                  Size: =15
+                                                                  Text: =ThisItem.startTime
+                                                            - NestedColFilePath_4:
+                                                                Control: Label@2.5.1
+                                                                Properties:
+                                                                  Align: =Align.Center
+                                                                  BorderColor: =RGBA(0, 18, 107, 1)
+                                                                  BorderThickness: =If(ThisItem.IsSelected,6,2)
+                                                                  FillPortions: =1
+                                                                  Font: =Font.'Open Sans'
+                                                                  Height: '=Parent.Height   '
+                                                                  LayoutMaxHeight: =
+                                                                  LayoutMaxWidth: =
+                                                                  Size: =15
+                                                                  Text: =ThisItem.endTime
+                                                - Button11_4:
+                                                    Control: Classic/Button@2.2.0
+                                                    Properties:
+                                                      BorderColor: =ColorFade(Self.Fill, -15%)
+                                                      Color: =RGBA(0, 0, 0, 0)
+                                                      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                      Fill: =RGBA(0, 0, 0, 0)
+                                                      Font: =Font.'Open Sans'
+                                                      Height: =50
+                                                      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                      HoverColor: =RGBA(255, 255, 255, 1)
+                                                      HoverFill: =RGBA(99, 139, 44, .35)
+                                                      OnSelect: =Select(Parent)
+                                                      PressedBorderColor: =Self.Fill
+                                                      PressedColor: =Self.Fill
+                                                      PressedFill: =RGBA(99, 139, 44, .5)
+                                                      Text: ="Edit Times"
+                                                      Width: =Parent.TemplateWidth/2
+                                                - Button11_5:
+                                                    Control: Classic/Button@2.2.0
+                                                    Properties:
+                                                      BorderColor: =ColorFade(Self.Fill, -15%)
+                                                      Color: =RGBA(0, 0, 0, 0)
+                                                      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                      Fill: =RGBA(0, 0, 0, 0)
+                                                      Font: =Font.'Open Sans'
+                                                      Height: =50
+                                                      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                      HoverColor: =RGBA(255, 255, 255, 1)
+                                                      HoverFill: =RGBA(151, 0, 0, .35)
+                                                      OnSelect: |-
+                                                        =Clear(AVTimes);
+                                                        Collect(AVTimes, LookUp(AVEditCol, videoRecord.fileName=fileName).times);
+                                                        Remove(AVTimes,ThisItem);
+                                                        Patch(AVEditCol, LookUp(AVEditCol,videoRecord.fileName=fileName), 
+                                                        {
+                                                            times:AVTimes
+                                                        });
+                                                      PressedBorderColor: =Self.Fill
+                                                      PressedColor: =Self.Fill
+                                                      PressedFill: =RGBA(151, 0, 0, .50)
+                                                      Text: ="Remove Entry"
+                                                      Width: =Parent.TemplateWidth/2
+                                                      X: =Button11_4.X+Button11_4.Width
+                                          - Label10_14:
+                                              Control: Label@2.5.1
+                                              Group: Group14
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =2
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =50
+                                                Size: =17
+                                                Text: ="End Time"
+                                                Visible: =If(IsBlank(videoRecord),false,true) &&(If(VideoEnhancementGallery_2.Visible,!IsEmpty(VideoEnhancementGallery_2.Selected.times),!IsEmpty('Video/AudioEditingMobileGallery'.Selected.times)))
+                                                Width: =Gallery1Header_9.Width/2
+                                                X: =Label10_13.X+Label10_13.Width
+                                                Y: =Label10_13.Y
+                                          - Label10_13:
+                                              Control: Label@2.5.1
+                                              Group: Group14
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =2
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =50
+                                                Size: =17
+                                                Text: ="Start Time"
+                                                Visible: =If(IsBlank(videoRecord),false,true) &&(If(VideoEnhancementGallery_2.Visible,!IsEmpty(VideoEnhancementGallery_2.Selected.times),!IsEmpty('Video/AudioEditingMobileGallery'.Selected.times)))
+                                                Width: =Gallery1Header_9.Width/2
+                                                X: =30
+                                                Y: =Gallery1Header_9.Y+Gallery1Header_9.Height
+                                          - Gallery1Header_9:
+                                              Control: Rectangle@2.3.0
+                                              Group: Group14
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Fill: =ColorScheme.primary
+                                                Height: =50
+                                                Visible: =If(IsBlank(videoRecord),false,true) &&(If(VideoEnhancementGallery_2.Visible,!IsEmpty(VideoEnhancementGallery_2.Selected.times),!IsEmpty('Video/AudioEditingMobileGallery'.Selected.times)))
+                                                Width: ='CSVideo/AudioTitleInput'.Width
+                                                X: =30
+                                                Y: |+
+                                                  =AddEntryButton_8.Y+AddEntryButton_8.Height+20
+                                          - Gallery1Title_15:
+                                              Control: Label@2.5.1
+                                              Group: Group14
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Color: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Gallery1Header_9.Height
+                                                Size: ='Video/AudioEntryHeaderTitle'.Size
+                                                Text: ="Clips to be made for "& videoRecord.fileName
+                                                Visible: =If(IsBlank(videoRecord),false,true) &&(If(VideoEnhancementGallery_2.Visible,!IsEmpty(VideoEnhancementGallery_2.Selected.times),!IsEmpty('Video/AudioEditingMobileGallery'.Selected.times)))
+                                                Width: =Gallery1Header_9.Width
+                                                X: =Gallery1Header_9.X
+                                                Y: =Gallery1Header_9.Y
+                                          - AddEntryButton_9:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =ColorFade(Self.Fill, -15%)
+                                                Color: =RGBA(255, 255, 255, 1)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =ColorScheme.primary
+                                                Font: =Font.'Open Sans'
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                                OnSelect: |+
+                                                  =If(Gallery4_3.Visible,Reset(Gallery4_3);,Reset('Video/AudioEditingMobileGallery_1'))
+
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =Self.Color
+                                                Size: =13
+                                                Text: ="Clear"
+                                                Visible: =If(IsBlank(videoRecord),false,true)
+                                                Width: ='Video/AudioEntryAdd Button'.Width
+                                                X: =If('Case Support Video/Audio Editing TT'.Size=1,FileEntryRectangle_4.Width/1.35,FileEntryRectangle_4.Width/1.25)
+                                                Y: =AddEntryButton_8.Y
+                                          - Video/AudioEditingMobileGallery_1:
+                                              Control: Gallery@2.15.0
+                                              Variant: Vertical
+                                              Group: Group14
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Default: |-
+                                                  =//First(MyTicketsGallery.AllItems)
+                                                  {}
+                                                DelayItemLoading: |-
+                                                  =//false
+                                                  true
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =300
+                                                Items: ='Video/AudioEditingMobileGallery'.Selected.times
+                                                LoadingSpinner: |-
+                                                  =//LoadingSpinner.None
+                                                  LoadingSpinner.Controls
+                                                TemplatePadding: =10
+                                                TemplateSize: |-
+                                                  =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                                  //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+
+                                                  If(MyTickets.Size > 1, 250, 240)
+                                                Transition: =Transition.Push
+                                                Visible: =If(IsBlank(videoRecord),false,true)&& 'Case Support Video/Audio Editing TT'.Size=1 && !IsEmpty('Video/AudioEditingMobileGallery'.Selected.times)
+                                                Width: =Gallery1Header_10.Width
+                                                WrapCount: =RoundDown((Parent.Width / 320), 0)
+                                                X: =Rectangle10_1.X
+                                                Y: =Gallery1Header_9.Y+Gallery1Header_9.Height
+                                              Children:
+                                                - Rectangle6_6:
+                                                    Control: Rectangle@2.3.0
+                                                    Properties:
+                                                      BorderColor: =RGBA(0, 0, 0, 0)
+                                                      BorderThickness: =25
+                                                      Fill: =RGBA(255, 255, 255, 1)
+                                                      Height: =Image6_6.Height
+                                                      OnSelect: =Select(Parent)
+                                                      Width: =Image6_6.Width
+                                                - Image6_6:
+                                                    Control: Image@2.2.3
+                                                    Properties:
+                                                      BorderColor: =RGBA(0, 18, 107, 1)
+                                                      Height: |-
+                                                        =//250
+                                                        Parent.TemplateHeight
+                                                      Image: "=\"data:image/svg+xml,\" & EncodeUrl(\r\n    \"<?xml version='1.0' encoding='UTF-8' standalone='no'?>\r\n<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>\r\n<svg version='1.1'\r\n    xmlns='http://www.w3.org/2000/svg'\r\n    xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 \" & Self.Width & \" \" & Self.Height & \"' width='\" & Self.Width & \"' height='\" & Self.Height & \"'>\r\n    <defs>\" &\r\n    // ----- Box for fill\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0,0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='box' stroke='\" & \"#ff0000\" & \"' stroke-width='\" & 0 & \"'></path>\r\n    </defs>\r\n    <g>\r\n        <g>\r\n            <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>\r\n                <feFlood></feFlood>\r\n                <feComposite in2='SourceAlpha' operator='in'></feComposite>\r\n                <feGaussianBlur stdDeviation='\" & 5 & \"'></feGaussianBlur>\r\n                <feOffset dx='\" & 0 & \"' dy='\" & 0 & \"' result='afterOffset'></feOffset>\r\n                <feFlood flood-color='\" & \"#000000\" & \"' flood-opacity='\" & Substitute(Text(0.5), \",\", \".\") & \"'></feFlood>\r\n                <feComposite in2='afterOffset' operator='in'></feComposite>\r\n                <feMorphology operator='dilate' radius='1'></feMorphology>\r\n                <feComposite in2='SourceAlpha' operator='out'></feComposite>\r\n            </filter>\" &\r\n            // ----- Box for shadow\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='Component1' filter='url(#shadow)'></path>\r\n        </g>\r\n        <use xlink:href='#box' opacity='1' fill='\" & \"#ffffff\" & \"' fill-opacity='\" & Substitute(Text(0), \",\", \".\") & \"'></use>\r\n    </g>\r\n    <g>\r\n        \" &\r\n        // ----- Edge\r\n If(\r\n        true,\r\n        Switch(\r\n            \"left\",\r\n            \"left\",// -- Position: left\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\",\r\n             \"right\",// -- Position: right\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\"\r\n           \r\n        )\r\n    ) & \"\r\n    </g>\r\n</svg>\"\r\n)"
+                                                      OnSelect: =Select(Parent)
+                                                      Width: |-
+                                                        =//329
+                                                        Parent.TemplateWidth
+                                                - btnBkg_6:
+                                                    Control: Classic/Button@2.2.0
+                                                    Properties:
+                                                      BorderColor: =ColorFade(Self.Fill, -15%)
+                                                      Color: =RGBA(255, 255, 255, 1)
+                                                      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                      Fill: =RGBA(255, 255, 255, 1)
+                                                      Font: =Font.'Open Sans'
+                                                      Height: =Parent.TemplateHeight
+                                                      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                      HoverColor: =RGBA(255, 255, 255, 1)
+                                                      HoverFill: =Self.Fill
+                                                      OnSelect: =Select(Parent)
+                                                      PressedBorderColor: =Self.Fill
+                                                      PressedColor: =Self.Fill
+                                                      PressedFill: =Self.Fill
+                                                      RadiusBottomLeft: =0
+                                                      RadiusBottomRight: =0
+                                                      RadiusTopLeft: =0
+                                                      RadiusTopRight: =0
+                                                      Text: =""
+                                                      Visible: =false
+                                                      Width: =Parent.TemplateWidth
+                                                - TitleLabel_6:
+                                                    Control: Label@2.5.1
+                                                    Properties:
+                                                      BorderColor: =RGBA(0, 18, 107, 1)
+                                                      Font: =Font.'Open Sans'
+                                                      FontWeight: =FontWeight.Semibold
+                                                      Height: =54
+                                                      OnSelect: =Select(Parent)
+                                                      Size: =12
+                                                      Text: =If(ThisItem.IsSelected,"Selected","")
+                                                      Width: |-
+                                                        =//208
+                                                        Parent.TemplateWidth - Icon18_3.Width - 47
+                                                      X: =24
+                                                      Y: =27
+                                                - DateExpiredLabel_5:
+                                                    Control: Label@2.5.1
+                                                    Properties:
+                                                      Align: =Align.Center
+                                                      BorderColor: =RGBA(0, 18, 107, 1)
+                                                      Font: =Font.'Open Sans'
+                                                      Height: |-
+                                                        =//25
+                                                        34
+                                                      OnSelect: =Select(Parent)
+                                                      Size: =11
+                                                      Text: =ThisItem.endTime
+                                                      Width: =StartedLabelTextValue_4.Width
+                                                      X: =ExpiresLabelText_4.X
+                                                      Y: =ExpiresLabelText_4.Y+ExpiresLabelText_4.Height
+                                                - ExpiresLabelText_4:
+                                                    Control: Label@2.5.1
+                                                    Properties:
+                                                      Align: =Align.Center
+                                                      BorderColor: =RGBA(0, 18, 107, 1)
+                                                      BorderThickness: =1
+                                                      Color: =RGBA(255, 255, 255, 1)
+                                                      Fill: =RGBA(203, 102, 102, 1)
+                                                      Font: =Font.'Open Sans'
+                                                      Height: =25
+                                                      OnSelect: =Select(Parent)
+                                                      Size: =10
+                                                      Text: ="End"
+                                                      Visible: |-
+                                                        =//is_admin
+                                                        true
+                                                      Width: =60
+                                                      X: |-
+                                                        =//67
+                                                        StaratedLabelText_4.X
+                                                      Y: |-
+                                                        =//180
+                                                        //Parent.TemplateHeight - Self.Height - 27
+                                                        Rectangle19_2.Y+Rectangle19_2.Height+10
+                                                - StartedLabelTextValue_4:
+                                                    Control: Label@2.5.1
+                                                    Group: Group11_2
+                                                    Properties:
+                                                      Align: =Align.Center
+                                                      BorderColor: =RGBA(0, 18, 107, 1)
+                                                      Font: =Font.'Open Sans'
+                                                      Height: |-
+                                                        =//25
+                                                        34
+                                                      OnSelect: =Select(Parent)
+                                                      Size: =11
+                                                      Text: =ThisItem.startTime
+                                                      Width: |-
+                                                        =//143
+                                                        Parent.TemplateWidth - StaratedLabelText_4.Width - 47
+                                                      Wrap: =false
+                                                      X: |-
+                                                        =//89
+                                                        StaratedLabelText_4.X
+                                                      Y: |+
+                                                        =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                        //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                        //((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                                        StaratedLabelText_4.Y+StaratedLabelText_4.Height
+                                                - StaratedLabelText_4:
+                                                    Control: Label@2.5.1
+                                                    Group: Group11_2
+                                                    Properties:
+                                                      Align: =Align.Center
+                                                      BorderColor: =RGBA(0, 18, 107, 1)
+                                                      BorderThickness: =1
+                                                      Color: =RGBA(255, 255, 255, 1)
+                                                      Fill: =RGBA(127, 178, 57, 1)
+                                                      Font: =Font.'Open Sans'
+                                                      Height: =25
+                                                      OnSelect: =Select(Parent)
+                                                      Size: =10
+                                                      Text: ="Start"
+                                                      Width: =60
+                                                      X: =(Parent.TemplateWidth-Self.Width)/4
+                                                      Y: |+
+                                                        =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                        //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                        ((Parent.TemplateHeight - Self.Height) / 2.8) 
+                                                - OverlapButton_4:
+                                                    Control: Classic/Button@2.2.0
+                                                    Properties:
+                                                      BorderColor: =ColorFade(Self.Fill, -15%)
+                                                      BorderThickness: =0
+                                                      Color: =RGBA(255, 255, 255, 1)
+                                                      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                      Fill: =Color.Transparent
+                                                      Font: =Font.'Open Sans'
+                                                      Height: |-
+                                                        =//220
+                                                        Parent.TemplateHeight
+                                                      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                      HoverColor: =RGBA(255, 255, 255, 1)
+                                                      HoverFill: =Self.Fill
+                                                      OnSelect: |-
+                                                        =
+
+                                                        // Sharepoint List
+                                                        Select(Parent)
+                                                      PressedBorderColor: =Self.Fill
+                                                      PressedColor: =Self.Fill
+                                                      PressedFill: =Self.Fill
+                                                      Text: =""
+                                                      Width: |-
+                                                        =//303
+                                                        Parent.TemplateWidth
+                                                      X: |-
+                                                        =//24
+                                                        (Parent.TemplateWidth - Self.Width) / 2
+                                                      Y: |-
+                                                        =//15
+                                                        (Parent.TemplateHeight - Self.Height) / 2
+                                                - Icon18_3:
+                                                    Control: Classic/Icon@2.5.0
+                                                    Properties:
+                                                      BorderColor: =RGBA(0, 18, 107, 1)
+                                                      Color: =RGBA(0, 18, 107, 1)
+                                                      Height: =32
+                                                      Icon: =Icon.CancelBadge
+                                                      OnSelect: |-
+                                                        =Clear(AVTimes);
+                                                        Collect(AVTimes, LookUp(AVEditCol, videoRecord.fileName=fileName).times);
+                                                        Remove(AVTimes,ThisItem);
+                                                        Patch(AVEditCol, LookUp(AVEditCol,videoRecord.fileName=fileName), 
+                                                        {
+                                                            times:AVTimes
+                                                        });
+                                                      Width: =32
+                                                      X: =Parent.TemplateWidth - Self.Width - 23
+                                                      Y: =27
+                                                - Rectangle19_2:
+                                                    Control: Rectangle@2.3.0
+                                                    Group: Group11_2
+                                                    Properties:
+                                                      BorderColor: =RGBA(0, 18, 107, 1)
+                                                      BorderThickness: =1
+                                                      Fill: =RGBA(0, 0, 0, 0)
+                                                      Height: =StaratedLabelText_4.Height+StartedLabelTextValue_4.Height
+                                                      OnSelect: =Select(Parent)
+                                                      Width: =Parent.TemplateWidth/1.5
+                                                      X: =StaratedLabelText_4.X
+                                                      Y: =StaratedLabelText_4.Y
+                                                - Rectangle20_2:
+                                                    Control: Rectangle@2.3.0
+                                                    Properties:
+                                                      BorderColor: =RGBA(0, 18, 107, 1)
+                                                      BorderThickness: =1
+                                                      Fill: =RGBA(0, 0, 0, 0)
+                                                      Height: =ExpiresLabelText_4.Height+DateExpiredLabel_5.Height
+                                                      OnSelect: =Select(Parent)
+                                                      Width: =Parent.TemplateWidth/1.5
+                                                      X: =ExpiresLabelText_4.X
+                                                      Y: =ExpiresLabelText_4.Y
+                                    - AddEntryButton_10:
+                                        Control: Classic/Button@2.2.0
+                                        Group: Group9
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: =UpdateContext({videoRecord:Blank()});
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Clear"
+                                          Width: ='Video/AudioEntryAdd Button'.Width
+                                          X: =If('Case Support Video/Audio Editing TT'.Size=1,'Video/AudioEntryBorderRectangle'.Width/1.35,'Video/AudioEntryBorderRectangle'.Width/1.25)
+                                          Y: =If('Case Support Video/Audio Editing TT'.Size=1,'Video/AudioEntryFilePathInput'.Y+'Video/AudioEntryFilePathInput'.Height+20,'Video/AudioEntryBorderRectangle'.Y+'Video/AudioEntryBorderRectangle'.Height+20)
+                                    - EstimatedDate_2:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =50
+                                          Size: =16
+                                          Text: ="When adding times, remember to reference the times in the video player. DO NOT USE THE TIMES PROVIDED BY THE SURVAILLENCE FOOTAGE!"
+                                          Visible: =If(IsBlank(videoRecord),false,true)
+                                          Width: =Parent.Width
+                                          Y: =If('Case Support Video/Audio Editing TT'.Size=1,'Video/AudioEditingMobileGallery'.Y+'Video/AudioEditingMobileGallery'.Height+20,VideoEnhancementGallery_2.Y+VideoEnhancementGallery_2.Height+20)
+                                    - Video/AudioEditingMobileGallery:
+                                        Control: Gallery@2.15.0
+                                        Variant: Vertical
+                                        Group: Group13
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Default: |-
+                                            =//First(MyTicketsGallery.AllItems)
+                                            {}
+                                          DelayItemLoading: |-
+                                            =//false
+                                            true
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =300
+                                          Items: =AVEditCol
+                                          LoadingSpinner: |-
+                                            =//LoadingSpinner.None
+                                            LoadingSpinner.Controls
+                                          TemplatePadding: =10
+                                          TemplateSize: |-
+                                            =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                            //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+
+                                            If(MyTickets.Size > 1, 250, 240)
+                                          Transition: =Transition.Push
+                                          Visible: =!IsEmpty(AVEditCol) && 'Case Support Video/Audio Editing TT'.Size=1
+                                          Width: =Gallery1Header_10.Width
+                                          WrapCount: =RoundDown((Parent.Width / 320), 0)
+                                          X: =Rectangle10_1.X
+                                          Y: =Gallery1Header_10.Y+Gallery1Header_10.Height
+                                        Children:
+                                          - Rectangle6_5:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 0)
+                                                BorderThickness: =25
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =Image6_5.Height
+                                                OnSelect: =Select(Parent)
+                                                Width: =Image6_5.Width
+                                          - Image6_5:
+                                              Control: Image@2.2.3
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Height: |-
+                                                  =//250
+                                                  Parent.TemplateHeight
+                                                Image: "=\"data:image/svg+xml,\" & EncodeUrl(\r\n    \"<?xml version='1.0' encoding='UTF-8' standalone='no'?>\r\n<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>\r\n<svg version='1.1'\r\n    xmlns='http://www.w3.org/2000/svg'\r\n    xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 \" & Self.Width & \" \" & Self.Height & \"' width='\" & Self.Width & \"' height='\" & Self.Height & \"'>\r\n    <defs>\" &\r\n    // ----- Box for fill\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0,0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='box' stroke='\" & \"#ff0000\" & \"' stroke-width='\" & 0 & \"'></path>\r\n    </defs>\r\n    <g>\r\n        <g>\r\n            <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>\r\n                <feFlood></feFlood>\r\n                <feComposite in2='SourceAlpha' operator='in'></feComposite>\r\n                <feGaussianBlur stdDeviation='\" & 5 & \"'></feGaussianBlur>\r\n                <feOffset dx='\" & 0 & \"' dy='\" & 0 & \"' result='afterOffset'></feOffset>\r\n                <feFlood flood-color='\" & \"#000000\" & \"' flood-opacity='\" & Substitute(Text(0.5), \",\", \".\") & \"'></feFlood>\r\n                <feComposite in2='afterOffset' operator='in'></feComposite>\r\n                <feMorphology operator='dilate' radius='1'></feMorphology>\r\n                <feComposite in2='SourceAlpha' operator='out'></feComposite>\r\n            </filter>\" &\r\n            // ----- Box for shadow\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='Component1' filter='url(#shadow)'></path>\r\n        </g>\r\n        <use xlink:href='#box' opacity='1' fill='\" & \"#ffffff\" & \"' fill-opacity='\" & Substitute(Text(0), \",\", \".\") & \"'></use>\r\n    </g>\r\n    <g>\r\n        \" &\r\n        // ----- Edge\r\n If(\r\n        true,\r\n        Switch(\r\n            \"left\",\r\n            \"left\",// -- Position: left\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\",\r\n             \"right\",// -- Position: right\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\"\r\n           \r\n        )\r\n    ) & \"\r\n    </g>\r\n</svg>\"\r\n)"
+                                                OnSelect: =Select(Parent)
+                                                Width: |-
+                                                  =//329
+                                                  Parent.TemplateWidth
+                                          - btnBkg_5:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =ColorFade(Self.Fill, -15%)
+                                                Color: =RGBA(255, 255, 255, 1)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.TemplateHeight
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =Self.Fill
+                                                OnSelect: =Select(Parent)
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =Self.Fill
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Text: =""
+                                                Visible: =false
+                                                Width: =Parent.TemplateWidth
+                                          - TitleLabel_5:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =FontWeight.Semibold
+                                                Height: =54
+                                                OnSelect: =Select(Parent)
+                                                Size: =12
+                                                Text: =If(ThisItem.IsSelected,"Selected","")
+                                                Width: |-
+                                                  =//208
+                                                  Parent.TemplateWidth - Icon18_2.Width - 47
+                                                X: =24
+                                                Y: =27
+                                          - DateExpiredLabel_4:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: |-
+                                                  =//25
+                                                  34
+                                                OnSelect: =Select(Parent)
+                                                Size: =11
+                                                Text: =ThisItem.filePath
+                                                Width: =StartedLabelTextValue_3.Width
+                                                X: =ExpiresLabelText_3.X
+                                                Y: =ExpiresLabelText_3.Y+ExpiresLabelText_3.Height
+                                          - ExpiresLabelText_3:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =25
+                                                OnSelect: =Select(Parent)
+                                                Size: =10
+                                                Text: ="File Path"
+                                                Visible: |-
+                                                  =//is_admin
+                                                  true
+                                                Width: |-
+                                                  =//154
+                                                  80
+                                                X: |-
+                                                  =//67
+                                                  StaratedLabelText_3.X
+                                                Y: |-
+                                                  =//180
+                                                  //Parent.TemplateHeight - Self.Height - 27
+                                                  Rectangle19_1.Y+Rectangle19_1.Height+10
+                                          - StartedLabelTextValue_3:
+                                              Control: Label@2.5.1
+                                              Group: Group11_1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: |-
+                                                  =//25
+                                                  34
+                                                OnSelect: =Select(Parent)
+                                                Size: =11
+                                                Text: =ThisItem.fileName
+                                                Width: |-
+                                                  =//143
+                                                  Parent.TemplateWidth - StaratedLabelText_3.Width - 47
+                                                Wrap: =false
+                                                X: |-
+                                                  =//89
+                                                  StaratedLabelText_3.X
+                                                Y: |+
+                                                  =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                  //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                  //((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                                  StaratedLabelText_3.Y+StaratedLabelText_3.Height
+                                          - StaratedLabelText_3:
+                                              Control: Label@2.5.1
+                                              Group: Group11_1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Font: =Font.'Open Sans'
+                                                Height: =25
+                                                OnSelect: =Select(Parent)
+                                                Size: =10
+                                                Text: ="File Name"
+                                                Width: =80
+                                                X: =(Parent.TemplateWidth-Self.Width)/4
+                                                Y: |+
+                                                  =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                  //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                  ((Parent.TemplateHeight - Self.Height) / 2.8) 
+                                          - Rectangle19_1:
+                                              Control: Rectangle@2.3.0
+                                              Group: Group11_1
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(0, 0, 0, 0)
+                                                Height: =StaratedLabelText_3.Height+StartedLabelTextValue_3.Height
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth/1.5
+                                                X: =StaratedLabelText_3.X
+                                                Y: =StaratedLabelText_3.Y
+                                          - Rectangle20_1:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(0, 0, 0, 0)
+                                                Height: =ExpiresLabelText_3.Height+DateExpiredLabel_4.Height
+                                                OnSelect: =Select(Parent)
+                                                Width: =Parent.TemplateWidth/1.5
+                                                X: =ExpiresLabelText_3.X
+                                                Y: =ExpiresLabelText_3.Y
+                                          - OverlapButton_3:
+                                              Control: Classic/Button@2.2.0
+                                              Properties:
+                                                BorderColor: =ColorFade(Self.Fill, -15%)
+                                                BorderThickness: =0
+                                                Color: =RGBA(255, 255, 255, 1)
+                                                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                                Fill: =Color.Transparent
+                                                Font: =Font.'Open Sans'
+                                                Height: |-
+                                                  =//220
+                                                  Parent.TemplateHeight
+                                                HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =Self.Fill
+                                                OnSelect: |-
+                                                  =
+
+                                                  // Sharepoint List
+                                                  UpdateContext({videoRecord:ThisItem})
+                                                PressedBorderColor: =Self.Fill
+                                                PressedColor: =Self.Fill
+                                                PressedFill: =Self.Fill
+                                                Text: =""
+                                                Width: |-
+                                                  =//303
+                                                  Parent.TemplateWidth
+                                                X: |-
+                                                  =//24
+                                                  (Parent.TemplateWidth - Self.Width) / 2
+                                                Y: |-
+                                                  =//15
+                                                  (Parent.TemplateHeight - Self.Height) / 2
+                                          - Icon18_2:
+                                              Control: Classic/Icon@2.5.0
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Color: =RGBA(0, 18, 107, 1)
+                                                Height: =32
+                                                Icon: =Icon.CancelBadge
+                                                OnSelect: |-
+                                                  =Remove(AVEditCol,ThisItem);
+                                                  UpdateContext({videoRecord:Blank()})
+                                                Width: =32
+                                                X: =Parent.TemplateWidth - Self.Width - 23
+                                                Y: =27
+                              - CSVideo/AudioSpecificIssue_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="subCategory"
+                                    Default: =ThisItem.subCategory
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =127
+                                    Required: =false
+                                    Visible: |+
+                                      =If(IsBlank('CSVideo/AudioSpecificIssueDropdown'.Selected.Name), false, true)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =4
+                                  Children:
+                                    - CSVideo/AudioSpecificIssueLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Specific Issue"
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSVideo/AudioSpecificIssueError:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='CSVideo/AudioSpecificIssueDropdown'.Y + 'CSVideo/AudioSpecificIssueDropdown'.Height
+                                    - CSVideo/AudioSpecificIssueStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='CSVideo/AudioSpecificIssueLabel'.Height
+                                          Text: ="*"
+                                          Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='CSVideo/AudioSpecificIssueLabel'.Y
+                                    - CSVideo/AudioSpecificIssueDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =RGBA(56, 96, 178, 1)
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/3.5
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Filter(Category, parentId = 'CSVideo/AudioSubCategoryDropdown'.Selected.ID)
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: ='CSVideo/AudioTitleInput'.Width
+                                          X: =30
+                                          Y: =44
+                              - CSVideo/AudioDescription_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicTextualEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="description"
+                                    Default: =ThisItem.description
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                                    Height: =If( 'Case Support Video/Audio Editing TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                                    MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                                    Required: =false
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =5
+                                  Children:
+                                    - CSVideo/AudioDescriptionLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: =CreateTicketDescription
+                                          Width: =Parent.Width - 60
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSVideo/AudioDescriptionErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='CSVideo/AudioDescriptionTextInputArea'.Y + 'CSVideo/AudioDescriptionTextInputArea'.Height
+                                    - CSVideo/AudioDescriptionStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: ='CSVideo/AudioDescriptionLabel'.Color
+                                          Font: =Font.'Open Sans'
+                                          Height: ='CSVideo/AudioDescriptionLabel'.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='CSVideo/AudioDescriptionLabel'.Y
+                                    - CSVideo/AudioDescriptionTextInputArea:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Default: =TicketDescText
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.Height/1.5
+                                          HintText: ="Please Describe Your Issue"
+                                          HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Mode: =TextMode.MultiLine
+                                          Size: =15
+                                          Visible: ='CSVideo/AudioDescription_DataCard'.Visible
+                                          Width: =Parent.Width/1.05
+                                          X: =30
+                                          Y: =40
+                              - CSVideo/AudioLocationID_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: ClassicNumberEdit
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DataField: ="locationId"
+                                    Default: =ThisItem.locationId
+                                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                                    Height: =80
+                                    Required: =false
+                                    Update: =//Value(DataCardValue6.Text)
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =6
+                                  Children:
+                                    - CSVideo/AudioLocationIDLabel:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldName
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          BorderThickness: =1
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: =34
+                                          Text: ="Requesting From"
+                                          Width: =170
+                                          Wrap: =false
+                                          X: =30
+                                          Y: =10
+                                    - CSVideo/AudioLocationIDErrorMessage:
+                                        Control: Label@2.5.1
+                                        MetadataKey: ErrorMessage
+                                        Properties:
+                                          AutoHeight: =true
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(168, 0, 0, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =10
+                                          Live: =Live.Assertive
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =Parent.Error
+                                          Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                          Width: =Parent.Width - 60
+                                          X: =30
+                                          Y: ='CSVideo/AudioLocationIDDropdown'.Y + 'CSVideo/AudioLocationIDDropdown'.Height
+                                    - CSVideo/AudioLocationIDStarVisible:
+                                        Control: Label@2.5.1
+                                        MetadataKey: FieldRequired
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(0, 18, 107, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: ='CSVideo/AudioLocationIDLabel'.Height
+                                          Text: ="*"
+                                          Width: =30
+                                          Wrap: =false
+                                          Y: ='CSVideo/AudioLocationIDLabel'.Y
+                                    - CSVideo/AudioLocationIDDropdown:
+                                        Control: Classic/DropDown@2.3.1
+                                        Properties:
+                                          AllowEmptySelection: =true
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          ChevronBackground: =ColorScheme.primary
+                                          ChevronFill: =RGBA(255, 255, 255, 1)
+                                          ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                          Default: =Blank()
+                                          Font: =Font.'Open Sans'
+                                          Height: =35
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          Items: =Locations
+                                          Items.Value: =Title
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          SelectionColor: =RGBA(255, 255, 255, 1)
+                                          SelectionFill: =RGBA(56, 96, 178, 1)
+                                          Width: ='CSVideo/AudioTitleInput'.Width
+                                          X: =30
+                                          Y: =44
+                              - CSVideo/AudioAttatchments_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =If( 'Case Support Video/Audio Editing TT'.Size = 1, Parent.Height/2, Parent.Height/3.5)
+                                    Visible: =false
+                                    Width: =1366
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =7
+                                  Children:
+                                    - CSVideo/AudioAttachmentControl:
+                                        Control: Attachments@2.3.0
+                                        Properties:
+                                          BorderColor: =Color.Black
+                                          Font: =Font.'Open Sans'
+                                          Height: =If( 'Case Support Video/Audio Editing TT'.Size = 1, Parent.Height/1.5, Parent.Height/1.5)
+                                          HoverFill: =RGBA(186, 202, 226, 1)
+                                          ItemColor: =RGBA(255, 255, 255, 1)
+                                          ItemFill: =RGBA(56, 96, 178, 1)
+                                          ItemHoverFill: =RGBA(186, 202, 226, 1)
+                                          MaxAttachments: =10
+                                          PaddingBottom: =5
+                                          PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                                          PaddingRight: =5
+                                          PaddingTop: =5
+                                          PressedColor: =RGBA(255, 255, 255, 1)
+                                          PressedFill: =RGBA(0, 18, 107, 1)
+                                          Width: =If('Case Support Video/Audio Editing TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                                          X: =228
+                                          Y: =28
+                              - CSVideo/AudioButtons_DataCard:
+                                  Control: TypedDataCard@1.0.7
+                                  Variant: BlankCard
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =If( 'Case Support Video/Audio Editing TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                                    Width: =Parent.Width
+                                    WidthFit: =true
+                                    X: =0
+                                    Y: =8
+                                  Children:
+                                    - CSVideo/AudioSubmitButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          DisplayMode: |-
+                                            =
+                                            //could use this to enable/disable button behaviour
+                                            //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+
+                                            DisplayMode.Edit
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: ='CSVideo/AudioCancelButton'.Height
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: "=\nIf(!'CSVideo/AudioDescriptionTextInputArea'.Visible,\nUpdateContext({TicketDescText:Concatenate(Concat(AVEditCol,\"File Name: \"&fileName&Char(13)&\"File Path: \"&filePath&Char(13)&Char(13)&\"Times\"&Char(13)&Concat(times,\"Start: \"&startTime&\" End: \"&endTime,Char(13)),Char(13)&Char(13)))}),Notify(\"Description is Blank\"));\n\n//Check if the title or Description are empty, if they are the form will not be submitted\nIf(\n    !IsBlank('CSVideo/AudioLocationIDDropdown'.Selected.Name) And !IsEmpty(AVEditCol) And IfError(!IsEmpty(Index(AVEditCol,1).times),false) And Len(Trim('CSVideo/AudioTitleInput'.Text))>0,\n    UpdateContext({DataCardKey1_1: \"Title\"});\n    UpdateContext({DataCardKey5: \"Description\"});\n    //Set(DataCardKey5: \"Description\");\nSet(\n        //Temporary record\n        rec,\n        //DB operation, from Ticket table, new record, change these columns\n        Patch(\n            Tickets,\n            Defaults(Tickets),\n            {\n                Title: 'CSVideo/AudioTitleInput'.Text,\n                description: Trim('CSVideo/AudioDescriptionTextInputArea'.Text),\n                creatorId: userData.id,\n                mainCategory: 'CSVideo/AudioMainCategoryDropdown'.Selected.ID,\n                category: 'CSVideo/AudioSubCategoryDropdown'.Selected.ID,\n                subCategory: 'CSVideo/AudioSpecificIssueDropdown'.Selected.ID,\n                locationId: 'CSVideo/AudioLocationIDDropdown'.Selected.ID,\n                status: \"open\",\n                metricDate: Concatenate(\n                    Month(Today()),\n                    \"/\",\n                    Year(Today())\n                ),\n                hasAttachment: If(\n                    IsEmpty('CSVideo/AudioAttachmentControl'.Attachments),\n                    0,\n                    1\n                ),\n                //Automation rules table is used to assign tickets\n                assignedTo: If(\n                    IsEmpty(\n                        Filter(\n                            'Ticket Automation Rules',\n                            categoryId = 'CSVideo/AudioMainCategoryDropdown'.Selected.ID && locationId = 'CSVideo/AudioLocationIDDropdown'.Selected.ID\n                        )\n                    ),\n                    0,\n                    LookUp(\n                        'Ticket Automation Rules',\n                        categoryId = 'CSVideo/AudioMainCategoryDropdown'.Selected.ID && locationId = 'CSVideo/AudioLocationIDDropdown'.Selected.ID,\n                        userID\n                    )\n                )\n            }\n        )\n    );\n\nPatch(\n    Tickets, \n    LookUp(Tickets,ID = rec.ID),\n    { \n        Title: \"# \"&rec.ID&\" Video/Audio Edit Request\"\n    });\n// for the attachments, run power automate flow for each attached file\n    ForAll(\n        'CSVideo/AudioAttachmentControl'.Attachments As Attachment,\n               /*AttachFiles.Run(\n            rec.ID,\n            {\n                file: {\n                    contentBytes: Value,\n                    name: Name\n                }\n            }\n        )*/\n        If(Left(Attachment.Value,6) = \"appres\", \n        AttachFiles.Run(\n            rec.ID,\n            {\n                file:{\n                    contentBytes: Attachment.Value,\n                    name: Attachment.Name\n                }\n            }\n        ) ;,\n\n\nWith({varHTMLTable: Split(Attachment.Name , \"<img\")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find(\"<img\",Attachment.Name)+32},With({varB64End:Find(\"\"\"\",Mid(Attachment.Name,varB64Start))-1},CopyPasteTest.Run(Mid(Attachment.Name,varB64Start,varB64End),Attachment.Value & Text(Now(),DateTimeFormat.UTC) &\".png\", rec.ID)\n))))\n        )  \n    );\n    \n    /*SMTP.SendEmailV3(\n        {\n            From: \"sbpdhelpdesk@outlook.com\",\n            To: userData.email,\n            Subject: \"Help Desk Ticket Received\",\n            Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=\"https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a>.</div>\"\n        }\n    );*/\n    /*If(\n        rec.assignedTo > 0,\n        SMTP.SendEmailV3(\n            {\n                From: \"sbpdhelpdesk@outlook.com\",\n                To: LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n                Subject: \"Help Desk Ticket Assigned\",\n                Body: \"<div>Hello, this is an automated response. An IT Help Desk ticket # \" & rec.ID & \" was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=\" & rec.ID & \"'>here</a> to view more details for the ticket.</div>\"\n            }\n        );\n    );*/\nSet(rec,Patch(rec,{description:Substitute(rec.description,Char(13),\"<br>\")}));\n//Power automate flow, sends email to ticket creator \nSendEmail.Run(\n            userData.email,\n        \"Help Desk Ticket Recieved\",\n        //Email Message body\n        TicketCreatorMessageRTE_1.HtmlText,\n        Text(Blank())\n    );\n    // If the ticket it assigned to someone, send them an email\n    If(\n        rec.assignedTo > 0,\n        SendEmail.Run(\n                LookUp(\n                    Users,\n                    ID = rec.assignedTo,\n                    email\n                ),\n            \"Help Desk Ticket Assigned\",\n            //Email message body\n            TechAssignMessageRTE_1.HtmlText,\n            Text(Blank())\n        ); \nTicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,\"Ticket #\"&rec.ID&\" has been created. Touch this notification for more information.\"),    TicketCreatedUser.Run(userData.email,rec.ID,\"Ticket #\"&rec.ID&\" has been created on your behalf. Touch this notification for more information.\")\n\n    );\n\n    //Reset the form upon completion\n    ResetForm('CSVideo/AudioForm');\n    Navigate(Success);\n\n);\n// variables that control color elements\n    UpdateContext({CreateTicketTitle: \"Title is Required\"});\n    UpdateContext({CreateTicketDescription: \"Description is Required\"});\n    UpdateContext({CSAudioVideoPopup:true});\n    \n"
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Submit"
+                                          Width: ='CSVideo/AudioCancelButton'.Width
+                                          X: ='CSVideo/AudioCancelButton'.X + (Self.Width*1.3)
+                                          Y: ='CSVideo/AudioCancelButton'.Y
+                                    - CSVideo/AudioCancelButton:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.orange
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                                          OnSelect: |-
+                                            =ResetForm('CSVideo/AudioForm');
+                                            Navigate(Home);
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Text: ="Cancel"
+                                          Width: =Parent.Width/3
+                                          X: =If('Case Support Video/Audio Editing TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                                          Y: =Parent.Height - (Self.Height *2)
+                  - CSVideo/AudioFooter:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(255,255,255, 1)
+                        FillPortions: =0
+                        Height: =60
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |+
+                          ='Case Support Video/Audio Editing TT'.Size =1
+                        Width: =Parent.Width
+                      Children:
+                        - CSVideo/AudioMobileMenu:
+                            Control: CanvasComponent
+                            ComponentName: compMobileMenu_3
+                            Properties:
+                              BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                              ForegroundColor: |-
+                                =//RGBA(70, 130, 180, 1)
+                                ColorScheme.primary
+                              Height: =Parent.Height
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NavigationItems: |-
+                                =// IF adimn or tech show this table, if not show Staff table
+                                gblNavItems
+                              SelectedItemBackground: =Color.LightGray
+                              Width: =Parent.Width
+      - CSVideo/AudioBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: ='CSVideo/AudioHeaderLabel'.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =ResetForm('CSVideo/AudioForm'); Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =('CSVideo/AudioHeaderContainer'.Height-'CSVideo/AudioHeaderLabel'.Height)/1.05
+      - CSVideo/AudioWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu_3
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, App.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Case Support Video/Audio Editing TT'.Size > 1
+            Width: =If(showMenu, App.Width, 80)
+      - TechAssignMessageRTE_44:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: |-
+              =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+              //Combine string as html body
+              /*
+              Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+              , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")*/
+
+              "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                  <tr>
+                  <td>
+                      <Table style="&Char(34)&"width:100% "&Char(34)&">
+                      <tr>
+                      <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+              	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+              	</div>
+              	<br>
+              	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+              	A ticket has been asssigned to you, to check additional ticket details: 
+                  <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+              	</div>
+                      </th>
+                      </tr>
+              	<br>
+                      <tr>
+                      <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+              	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                  <br>
+                  Ticket # "&rec.ID&"
+                  <br>
+                  Status: "&rec.status&"
+                  <br>
+                  <br>
+                  "&rec.description&"
+              	</div>
+                      </td>
+                      </tr>
+                  </td>
+                  </tr>
+                  </Table>
+              </table>"
+            Height: =9
+            Visible: =false
+            Width: =0
+            X: =892
+            Y: =759
+      - TicketCreatorMessageRTE_44:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: |-
+              =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+              /*
+              Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.</div>")*/
+
+              "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                  <tr>
+                  <td>
+                      <Table style="&Char(34)&"width:100% "&Char(34)&">
+                      <tr>
+                      <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+              	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+              	</div>
+              	<br>
+              	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+              	Your ticket has been created, a technician will be assigned to your case, if you would like to see additional details about your ticket: 
+                  <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+              	</div>
+                      </th>
+                      </tr>
+              	<br>
+                      <tr>
+                      <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+              	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+              	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                  <br>
+                  Ticket # "&rec.ID&"
+                  <br>
+                  Status: "&rec.status&"
+                  <br>
+                  <br>
+                  "&rec.description&"
+              	</div>
+                      </td>
+                      </tr>
+                  </td>
+                  </tr>
+                  </Table>
+              </table>"
+            Height: =99
+            Visible: =false
+            Width: =293
+            X: =988
+            Y: =40
+      - RichTextEditor2_43:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: =
+            Height: =20
+            Visible: =false
+            Width: =208
+            X: =40
+            Y: =40
+      - CSAudioVideoPopup:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =CSAudioVideoPopup
+            Width: =Parent.Width
+          Children:
+            - ACPopupBackground_41:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, .25)
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - ACPopupRectangle_41:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height/1.125
+                  Width: =Parent.Width/1.125
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - Rectangle8_48:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Width: =ACPopupRectangle_41.Width
+                  X: =ACPopupRectangle_41.X
+                  Y: =ACPopupRectangle_41.Y
+            - Label10_59:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =100
+                  Size: =30
+                  Text: ="Form Error"
+                  Width: =Rectangle8_48.Width
+                  X: =Rectangle8_48.X
+                  Y: =Rectangle8_48.Y
+            - Button1_47:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: =UpdateContext({CSAudioVideoPopup:false});
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: ="Close"
+                  X: =(ACPopupRectangle_41.Width-Self.Width)/2 +ACPopupRectangle_41.X
+                  Y: =ACPopupRectangle_41.Height-Self.Height
+            - Label18_136:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(IsBlank('CSVideo/AudioLocationIDDropdown'.Selected.Name),Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(IsBlank('CSVideo/AudioLocationIDDropdown'.Selected.Name),"Location Missing", "Location OK")
+                  Width: =ACPopupRectangle_41.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Rectangle8_48.Y+Rectangle8_48.Height+15
+            - Label18_137:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(Len(Trim('CSVideo/AudioTitleInput'.Text))=0,Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(Len(Trim('CSVideo/AudioTitleInput'.Text))=0, "Case Number Blank","Case Number OK" )
+                  Width: =ACPopupRectangle_41.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Label18_136.Y+Label18_136.Height+10
+            - Label18_138:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: |-
+                    =If(IsEmpty(AVEditCol) And 
+                    IfError(!IsEmpty(Index(AVEditCol,1).times),false),Color.Green, Color.Red)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: |-
+                    =If(IsEmpty(AVEditCol) And 
+                    IfError(!IsEmpty(Index(AVEditCol,1).times),false), "List Ok","List Missing Entries" )
+                  Width: =ACPopupRectangle_41.Width
+                  X: =PopupRectangle_5.X
+                  Y: =Label18_137.Y+Label18_137.Height+10
+      - FeedbackBugReportVAE:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

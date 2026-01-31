@@ -1,0 +1,944 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Alert Manager:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =Refresh(Alerts);
+        UpdateContext({varShowResPopUp:false});
+        Set(selectedAlert, Defaults(Alerts));
+    Children:
+      - AlertManagerTextsizeFormatter:
+          Control: CanvasComponent
+          ComponentName: compPageTextSizeFormatter
+          Properties:
+            Height: =0
+            PageSizeVariable: ='Alert Manager'.Size
+            TextSize1: =14
+            TextSize2: =12
+            TextSize3: =15
+            TextSize4: =17
+            Width: =0
+      - AlertManagerMainContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - Alert_Manager_Header_Container:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: =130
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - AlertManagerHeaderElements:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - HomeBackgroundGradient_65:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =130
+                              HtmlText: =Home_Background_Gradient.HtmlText
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =Parent.Width
+                        - AlertManagerLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(255, 255, 255, 1)
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =Parent.Height-AlertManagerWebHeader.Height
+                              Size: =If('Alert Manager'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                              Text: ="Alert Manager"
+                              Width: =Parent.Width
+                              Y: =AlertManagerWebHeader.Height
+                        - AlertManagerWebHeader:
+                            Control: CanvasComponent
+                            ComponentName: compWebHeader
+                            Properties:
+                              BackgroundColor: =Color.Transparent
+                              CompScreenSize: ='Alert Manager'.Size
+                              EnableFeedback: =Set(varFeedback,true)
+                              FeedbackBool: =varFeedback
+                              Height: =82
+                              Width: =App.Width
+            - AlertManagerMainContentContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                  LayoutDirection: =If(ScreenSize<600, LayoutDirection.Vertical, LayoutDirection.Horizontal)
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - AlertsTable:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |+
+                          ='Alert Manager'.Size>1 && !IsEmpty(AlertsGallery.AllItems)
+
+                        Width: =Parent.Width
+                      Children:
+                        - AlertsGallery:
+                            Control: Gallery@2.15.0
+                            Variant: BrowseLayout_Vertical_ThreeTextVariant_ver4.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              BorderThickness: =1
+                              DelayItemLoading: =true
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =Parent.Height/1.4
+                              Items: =Filter(Alerts,alertStatus = Blank() || alertStatus = false)
+                              LoadingSpinner: =LoadingSpinner.Data
+                              ShowScrollbar: =false
+                              TemplateFill: =Color.WhiteSmoke
+                              TemplateSize: =150
+                              Width: =Parent.Width/1.2
+                              X: =(Parent.Width-Self.Width)/2
+                              Y: =(Parent.Height-Self.Height)/1.25
+                            Children:
+                              - Rectangle1:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Fill: =RGBA(227, 234, 243, 1)
+                                    Height: =Parent.TemplateHeight-Gallery_Vertical_Container.Height
+                                    OnSelect: =Select(Parent)
+                                    Visible: =false
+                                    Width: =Parent.Width
+                                    Y: =Gallery_Vertical_Container.Height
+                              - AlertsDescription:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    BorderThickness: =1
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.TemplateHeight-Gallery_Column_Container.Height
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =10
+                                    PaddingRight: =0
+                                    Size: |-
+                                      =//If there are more than 20 words, make it size 10, else make it 15
+                                      If(CountRows(Filter(MatchAll(AlertsDescription.Text, "\S*(\s|\n?)"), !IsBlank(FullMatch)))>=20, 10, 15)
+                                    Text: =ThisItem.messageText
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =Parent.TemplateWidth
+                                    Y: =Gallery_Column_Container.Height
+                              - Separator4:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Fill: =RGBA(0, 18, 107, 1)
+                                    Height: =5
+                                    OnSelect: =Select(Parent)
+                                    Visible: =false
+                                    Width: =Parent.TemplateWidth
+                                    Y: =Parent.TemplateHeight-5
+                              - Alert_Details_Label:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =1
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.TemplateHeight-Gallery_Column_Container.Height
+                                    OnSelect: =Select(Parent)
+                                    Size: =18
+                                    Text: |-
+                                      ="Details: "
+                                    Visible: =false
+                                    Width: =Parent.TemplateWidth
+                                    Y: =Gallery_Column_Container.Height
+                              - Gallery_Vertical_Container:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Height: =Gallery_Column_Container.Height
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Width: =Parent.Width
+                                  Children:
+                                    - Gallery_Column_Container:
+                                        Control: GroupContainer@1.4.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.SetByContainer
+                                          DropShadow: =DropShadow.None
+                                          FillPortions: =0
+                                          Height: =Alert_TitleText_Label.Height
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          PaddingTop: =1
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Width: =Parent.Width
+                                        Children:
+                                          - Alert_TitleText_Label:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AlignInContainer: =AlignInContainer.Start
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                BorderThickness: =1
+                                                Font: =Font.'Open Sans'
+                                                FontWeight: =FontWeight.Semibold
+                                                Height: =55
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                Size: =AlertManagerTextsizeFormatter.FinalTextSize
+                                                Text: =ThisItem.Title
+                                                Width: =Parent.Width/2
+                                                X: =38
+                                                Y: =16
+                                          - Alert_Date_Time_created_Label:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AlignInContainer: =AlignInContainer.Start
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                BorderThickness: =1
+                                                Fill: =RGBA(0, 127, 187, .09)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.Height
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                OnSelect: |+
+                                                  =false
+                                                Size: =Alert_TitleText_Label.Size
+                                                Text: =ThisItem.dateCreated
+                                                Width: =Parent.Width/4
+                                                X: =172
+                                                Y: =12
+                                          - Alert_Date_Time_Expire_Label:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                AlignInContainer: =AlignInContainer.Start
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                BorderThickness: =1
+                                                Fill: |+
+                                                  =RGBA(221, 79, 14,.09)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.Height
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                OnSelect: |+
+                                                  =false
+                                                Size: =Alert_TitleText_Label.Size
+                                                Text: =ThisItem.dateExpired
+                                                Width: =Parent.Width/4
+                                                X: =547
+                                                Y: =3
+                                          - Alert_Status_Label:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Font: =Font.'Open Sans'
+                                                Height: =Parent.Height-5
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                Size: =Alert_TitleText_Label.Size
+                                                Text: =If(ThisItem.dateExpired >= Today(), "Active", "Expired")
+                                                Visible: =false
+                                                Width: =Parent.Width/5
+                                                X: =773
+                                                Y: =1
+                              - EditAlertOverlapButton:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(0, 0, 0, 0)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.TemplateHeight
+                                    HoverBorderColor: =
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: |+
+                                      =RGBA(126,149,180,.35) 
+                                    OnSelect: |+
+                                      =EditForm(CreateAlertForm);
+                                      Navigate(CreateAlertForm, ScreenTransition.None, {recordVar: ThisItem});
+                                      Set(Editing, true)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =ColorFade(ColorScheme.secondaryPressedColor, -30%)
+                                    Text: ="Edit Alert"
+                                    Tooltip: ="Edit Alert"
+                                    Width: =Parent.TemplateWidth/2
+                                    X: |-
+                                      =//(Parent.TemplateWidth - Self.Width) -20
+                                      0
+                              - ResolveAlertOverlapButton:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(0, 0, 0, 0)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.TemplateHeight
+                                    HoverBorderColor: =
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =RGBA(99, 139, 44, .35)
+                                    OnSelect: |-
+                                      =UpdateContext({varShowResPopup:true});
+                                      Set(selectedAlert, ThisItem);
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =ColorFade(ColorScheme.secondaryPressedColor, -30%)
+                                    Text: ="Resolve Alert"
+                                    Tooltip: ="Edit Alert"
+                                    Width: =Parent.TemplateWidth/2
+                                    X: |-
+                                      =//(Parent.TemplateWidth - Self.Width) -20
+                                      EditAlertOverlapButton.X+EditAlertOverlapButton.Width
+                        - AlertsTableHeaderRectangle:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Fill: =RGBA(56, 96, 178, 1)
+                              Height: =40
+                              Width: =AlertsGallery.Width+2
+                              X: =AlertsGallery.X-1
+                              Y: =AlertsGallery.Y-Self.Height
+                        - Gallery_Expires_label:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(255, 255, 255, 1)
+                              Fill: =ColorScheme.primary
+                              Font: =Font.'Open Sans'
+                              Size: =17
+                              Text: ="Expires"
+                              Width: =AlertsTableHeaderRectangle.Width/4
+                              X: =AlertsTableHeaderRectangle.X+Gallery_Title_label.Width+Gallery_Created_label.Width
+                              Y: =AlertsTableHeaderRectangle.Y
+                        - Gallery_Created_label:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(255, 255, 255, 1)
+                              Fill: =ColorScheme.primary
+                              Font: =Font.'Open Sans'
+                              Size: =17
+                              Text: ="Created"
+                              Width: =AlertsTableHeaderRectangle.Width/4
+                              X: =AlertsTableHeaderRectangle.X+Gallery_Title_label.Width
+                              Y: =AlertsTableHeaderRectangle.Y
+                        - Gallery_Title_label:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(255, 255, 255, 1)
+                              Fill: =ColorScheme.primary
+                              Font: =Font.'Open Sans'
+                              Size: =17
+                              Text: ="Title"
+                              Width: =AlertsTableHeaderRectangle.Width/2
+                              X: =AlertsTableHeaderRectangle.X
+                              Y: =AlertsTableHeaderRectangle.Y
+                  - AlertsGalleryMobileContainer:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |+
+                          ='Alert Manager'.Size=1 && !IsEmpty(AlertsGalleryMobile.AllItems)
+                        Width: =Parent.Width
+                      Children:
+                        - AlertsGalleryMobile:
+                            Control: Gallery@2.15.0
+                            Variant: Vertical
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Default: =//First(MyTicketsGallery.AllItems)
+                              DelayItemLoading: |-
+                                =//false
+                                true
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =Parent.Height-70
+                              Items: =Filter(Alerts, dateExpired >= Now() || IsBlank(dateExpired))
+                              LoadingSpinner: |-
+                                =//LoadingSpinner.None
+                                LoadingSpinner.Controls
+                              TemplatePadding: =10
+                              TemplateSize: |-
+                                =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+
+                                If(MyTickets.Size > 1, 250, 240)
+                              Transition: =Transition.Push
+                              Visible: =!IsEmpty(AlertsGalleryMobile.AllItems)
+                              Width: =Parent.Width
+                              WrapCount: =RoundDown((Parent.Width / 320), 0)
+                              Y: =(Self.Height)/8
+                            Children:
+                              - Rectangle6_2:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 0, 0, 0)
+                                    BorderThickness: =25
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Image6_1.Height
+                                    OnSelect: =Select(Parent)
+                                    Width: =Image6_1.Width
+                              - Image6_1:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: |-
+                                      =//250
+                                      Parent.TemplateHeight
+                                    Image: "=\"data:image/svg+xml,\" & EncodeUrl(\r\n    \"<?xml version='1.0' encoding='UTF-8' standalone='no'?>\r\n<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>\r\n<svg version='1.1'\r\n    xmlns='http://www.w3.org/2000/svg'\r\n    xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 \" & Self.Width & \" \" & Self.Height & \"' width='\" & Self.Width & \"' height='\" & Self.Height & \"'>\r\n    <defs>\" &\r\n    // ----- Box for fill\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0,0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='box' stroke='\" & \"#ff0000\" & \"' stroke-width='\" & 0 & \"'></path>\r\n    </defs>\r\n    <g>\r\n        <g>\r\n            <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>\r\n                <feFlood></feFlood>\r\n                <feComposite in2='SourceAlpha' operator='in'></feComposite>\r\n                <feGaussianBlur stdDeviation='\" & 5 & \"'></feGaussianBlur>\r\n                <feOffset dx='\" & 0 & \"' dy='\" & 0 & \"' result='afterOffset'></feOffset>\r\n                <feFlood flood-color='\" & \"#000000\" & \"' flood-opacity='\" & Substitute(Text(0.5), \",\", \".\") & \"'></feFlood>\r\n                <feComposite in2='afterOffset' operator='in'></feComposite>\r\n                <feMorphology operator='dilate' radius='1'></feMorphology>\r\n                <feComposite in2='SourceAlpha' operator='out'></feComposite>\r\n            </filter>\" &\r\n            // ----- Box for shadow\r\n \"<path d='\" &\r\n // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Max(5 * 3 - 0, 0) &\r\n    // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) &\r\n    // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) & \" \" & Self.Height - Max(5 * 3 + 0, 0) & \r\n \"Z' id='Component1' filter='url(#shadow)'></path>\r\n        </g>\r\n        <use xlink:href='#box' opacity='1' fill='\" & \"#ffffff\" & \"' fill-opacity='\" & Substitute(Text(0), \",\", \".\") & \"'></use>\r\n    </g>\r\n    <g>\r\n        \" &\r\n        // ----- Edge\r\n If(\r\n        true,\r\n        Switch(\r\n            \"left\",\r\n            \"left\",// -- Position: left\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 + 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Max(5 * 3 - 0, 0) + 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\",\r\n             \"right\",// -- Position: right\r\n            \"<path d='\" &\r\n        // Upper left\r\n \"M\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Upper right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Max(5 * 3 - 0, 0) + 0 &\r\n        // Lower right\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 &\r\n        // Lower left\r\n \"L\" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & \" \" & Self.Height - Max(5 * 3 + 0, 0) - 0 & \r\n \"Z' id='box' stroke-width='0' fill='\" & \"#ffffff\" & \"'></path>\"\r\n           \r\n        )\r\n    ) & \"\r\n    </g>\r\n</svg>\"\r\n)"
+                                    OnSelect: =Select(Parent)
+                                    Width: |-
+                                      =//329
+                                      Parent.TemplateWidth
+                              - btnBkg_1:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.TemplateHeight
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =Self.Fill
+                                    OnSelect: =Select(Parent)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Fill
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: =""
+                                    Visible: =false
+                                    Width: =Parent.TemplateWidth
+                              - TitleLabel_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =54
+                                    OnSelect: =Select(Parent)
+                                    Size: =12
+                                    Text: =ThisItem.Title
+                                    Width: |-
+                                      =//208
+                                      Parent.TemplateWidth - Icon21.Width - 47
+                                    X: =24
+                                    Y: =27
+                              - DescriptionLabel_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =37
+                                    OnSelect: =Select(Parent)
+                                    Size: =10
+                                    Text: |-
+                                      =//ThisItem.Description
+                                      If(Len(ThisItem.messageText)>45, Concatenate(Left(ThisItem.messageText,45),"..."),ThisItem.messageText)
+                                    Width: |-
+                                      =//282
+                                      Parent.TemplateWidth - 48
+                                    Wrap: =false
+                                    X: =24
+                                    Y: =TitleLabel_1.Y + TitleLabel_1.Height
+                              - DateExpiredLabel_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: |-
+                                      =//25
+                                      34
+                                    OnSelect: =Select(Parent)
+                                    Size: =12
+                                    Text: =ThisItem.dateExpired
+                                    Width: =StartedLabelTextValue.Width
+                                    X: =ExpiresLabelText.X+ExpiresLabelText.Width
+                                    Y: =ExpiresLabelText.Y
+                              - ExpiresLabelText:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    OnSelect: =Select(Parent)
+                                    Size: =10
+                                    Text: ="Expires:"
+                                    Visible: |-
+                                      =//is_admin
+                                      true
+                                    Width: |-
+                                      =//154
+                                      StaratedLabelText.Width
+                                    X: |-
+                                      =//67
+                                      StaratedLabelText.X
+                                    Y: |-
+                                      =//180
+                                      Parent.TemplateHeight - Self.Height - 27
+                              - StartedLabelTextValue:
+                                  Control: Label@2.5.1
+                                  Group: StartedLabelGroup
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: |-
+                                      =//25
+                                      34
+                                    OnSelect: =Select(Parent)
+                                    Size: =12
+                                    Text: =DateValue(ThisItem.dateCreated)
+                                    Width: |-
+                                      =//143
+                                      Parent.TemplateWidth - StaratedLabelText.Width - 47
+                                    Wrap: =false
+                                    X: |-
+                                      =//89
+                                      StaratedLabelText.X + StaratedLabelText.Width
+                                    Y: |+
+                                      =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                      //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                      ((Parent.TemplateHeight - Self.Height) / 2) + 20
+                              - StaratedLabelText:
+                                  Control: Label@2.5.1
+                                  Group: StartedLabelGroup
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: |-
+                                      =//25
+                                      34
+                                    OnSelect: =Select(Parent)
+                                    Size: =10
+                                    Text: ="Started:"
+                                    Width: =67
+                                    X: =24
+                                    Y: |+
+                                      =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                      //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                      ((Parent.TemplateHeight - Self.Height) / 2) + 20
+                              - OverlapButton:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    BorderThickness: =0
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =Color.Transparent
+                                    Font: =Font.'Open Sans'
+                                    Height: |-
+                                      =//220
+                                      Parent.TemplateHeight
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =Self.Fill
+                                    OnSelect: |-
+                                      =
+
+                                      // Sharepoint List
+                                      EditForm(CreateAlertForm);
+                                      Navigate(CreateAlertForm, ScreenTransition.None, {recordVar: ThisItem});
+                                      Set(Editing, true)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Fill
+                                    Text: =""
+                                    Width: |-
+                                      =//303
+                                      Parent.TemplateWidth
+                                    X: |-
+                                      =//24
+                                      (Parent.TemplateWidth - Self.Width) / 2
+                                    Y: |-
+                                      =//15
+                                      (Parent.TemplateHeight - Self.Height) / 2
+                              - Icon21:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.Leave
+                                    OnSelect: |-
+                                      =UpdateContext({varShowResPopup:true});
+                                      Set(selectedAlert, ThisItem);
+                                    Width: =32
+                                    X: =Parent.TemplateWidth - Self.Width - 23
+                                    Y: =27
+                  - NoAlertsFoundLable:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        FillPortions: =1
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        Size: =40
+                        Text: ="No alerts active, create a new alert!"
+                        Visible: =If(!AlertsTable.Visible || !AlertsGalleryMobileContainer.Visible,true,false)
+            - AlertManagerFooter:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(255,255,255, 1)
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    ='Alert Manager'.Size =1
+                  Width: =Parent.Width
+                Children:
+                  - AlertManagerMobileMenu:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Width: =Parent.Width
+      - AlertManagerBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: |-
+              =Color.White
+              //RGBA(232, 244, 217, 1)
+            Height: =AlertManagerLabel.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: |-
+              =//ResetForm(Form3); Navigate('Create Alert Admin (Redesign)', ScreenTransition.Fade)
+              ResetForm(CreateAlertForm); Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(Alert_Manager_Header_Container.Height-AlertManagerLabel.Height)/1.05
+      - AlertManagerWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, App.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Alert Manager'.Size > 1
+            Width: =If(showMenu, App.Width, 80)
+      - CreateNewAlertButton:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: |-
+              =//RGBA(241, 244, 249, 1)
+              ColorScheme.primary
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =Color.White
+            HoverFill: |-
+              =///RGBA(219, 219, 219, 1)
+              ColorFade(ColorScheme.primary,-20%)
+            OnSelect: |+
+              =NewForm(CreateAlertForm);
+              Set(Editing, false);
+              Navigate('Create Alert', ScreenTransition.Fade)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =If('Alert Manager'.Size=1,13,AlertManagerTextsizeFormatter.FinalTextSize)
+            Text: ="Create a new alert +"
+            Width: =If('Alert Manager'.Size=1,Parent.Width/1.5,Parent.Width/5)
+            X: =(Parent.Width-Self.Width)/2
+            Y: =Parent.Height/5
+      - SingleTicketInfo_Resolution_Container_1:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: |-
+              =//If('Single Ticket Info'.Size>1,Parent.Height/1.5)
+              Parent.Height/1.25
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =varShowResPopup
+            Width: =If('Single Ticket Info'.Size>1,Parent.Width/1.25, Parent.Width/1.05)
+            X: =(Parent.Width/2 - Self.Width/2)
+            Y: =(Parent.Height/2 - Self.Height/2)
+          Children:
+            - Rectangle_Resolution_2:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =1
+                  Fill: =RGBA(241, 244, 249, 1)
+                  Height: =Parent.Height
+                  Visible: =varShowResPopup
+                  Width: =Parent.Width
+                  X: =Parent.Width/2 - Self.Width/2
+                  Y: =
+            - Title_Resolution_2:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(130, 141, 158, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =Parent.Height/8
+                  Text: ="Resolve Alert"
+                  Visible: =varShowResPopup
+                  Width: =Parent.Width
+                  X: =Parent.Width/2 - Self.Width/2
+            - Prompt_Resolution_2:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(Self.Text = "*Resolution Required" ,Color.Red,RGBA(0, 0, 0, 1))
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =50
+                  Size: |-
+                    =//If('Single Ticket Info'.Size<=2,10,13)
+                    15
+                  Text: ="Provide these details to end the alert"
+                  Visible: =varShowResPopup
+                  Width: =Parent.Width
+                  X: =Parent.Width/2 - Self.Width/2
+                  Y: =Title_Resolution_2.Height
+            - Cancel_Resolution_Button_1:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(130, 141, 158, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: =UpdateContext({varShowResPopup:false});
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =If('Single Ticket Info'.Size<=2,10,15)
+                  Text: |-
+                    ="Cancel
+                    "
+                  Visible: =varShowResPopup
+                  Width: =If('Single Ticket Info'.Size<=2,100,160)
+                  X: =(Parent.Width-Self.Width)/4
+                  Y: =(Parent.Height/1.15 - Self.Height/1.15)
+            - Close_Ticket_Resolution_Button_1:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(116, 116, 116, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =Patch(Alerts,LookUp(Alerts,ID=selectedAlert.ID),
+                    {
+                        dateExpired:DateTimeValue(Now()),
+                        lastUpdated:DateTimeValue(Now()),
+                        alertStatus: true
+                    });
+
+                    SendEmail.Run(
+                        //From
+                        Concatenate("pdhelpdesk@countyofsb.org"),
+                                //Subject
+                                TextInput2.Text,
+                                //Email Body
+                                RichTextEditor3.HtmlText,
+                                //BCC
+                                //replace with all emails
+                                "mperez@countyofsb.org"
+
+                    );
+
+                    Refresh(Alerts);
+                    UpdateContext({varShowResPopup:false});
+                    Reset(TextInput2);
+                    Reset(RichTextEditor3);
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =Cancel_Resolution_Button_1.Size
+                  Text: |-
+                    ="Resolve Alert
+                    "
+                  Visible: =varShowResPopup
+                  Width: =Cancel_Resolution_Button_1.Width
+                  X: =(3*(Parent.Width-Self.Width))/4
+                  Y: =Cancel_Resolution_Button_1.Y
+            - RichTextEditor3:
+                Control: RichTextEditor@2.7.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Default: ="Write your email body here"
+                  Height: =250
+                  Width: =Parent.Width*.90
+                  X: =(Parent.Width/2 - Self.Width/2)
+                  Y: =Parent.Height/2 - Self.Height/3.5
+            - TextInput2:
+                Control: Classic/TextInput@2.3.2
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Default: =""
+                  Font: =Font.'Open Sans'
+                  HintText: ="Enter Email Subject"
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  Width: =RichTextEditor3.Width
+                  X: =RichTextEditor3.X
+                  Y: =Prompt_Resolution_2.Y+Prompt_Resolution_2.Height+40
+            - Label6:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =30
+                  Text: ="Subject:"
+                  X: =RichTextEditor3.X
+                  Y: =TextInput2.Y-Self.Height
+            - Label6_1:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =30
+                  Text: ="Resolution Message"
+                  Width: =200
+                  X: =RichTextEditor3.X
+                  Y: =RichTextEditor3.Y-Self.Height
+      - FeedbackBugReportAM:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

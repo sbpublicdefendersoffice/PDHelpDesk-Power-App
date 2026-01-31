@@ -1,0 +1,191 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  compMobileMenu:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      BackgroundMenuColor:
+        PropertyKind: Input
+        DisplayName: Background Menu Color
+        Description: A custom property
+        DataType: Color
+        Default: =RGBA(227, 234, 243, 1)
+      ForegroundColor:
+        PropertyKind: Input
+        DisplayName: Foreground Color
+        Description: ForegroundColor
+        DataType: Color
+        Default: |-
+          =//RGBA(70, 130, 180, 1)
+          ColorScheme.primary
+      NavigationItems:
+        PropertyKind: Input
+        DisplayName: Navigation Items
+        Description: A custom property
+        DataType: Table
+        Default: |-
+          =// IF adimn or tech show this table, if not show Staff table
+          gblNavItems
+      SelectedItemBackground:
+        PropertyKind: Input
+        DisplayName: Selected Item Background
+        Description: A custom property
+        DataType: Color
+        Default: =Color.LightGray
+    Properties:
+      Height: =60
+      Width: =App.DesignWidth
+    Children:
+      - Gallery1_1:
+          Control: Gallery@2.15.0
+          Variant: Horizontal
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            BorderThickness: =1
+            Default: |+
+              =Switch(
+                  true,
+                  App.ActiveScreen.Name = "Create A Ticket" || App.ActiveScreen.Name = "Category Select", 
+                  LookUp(compMobileMenu.NavigationItems, ScreenToGoTo.Name = "Category Select"),
+
+                  App.ActiveScreen.Name = "Tag Manager" 
+                  || App.ActiveScreen.Name = "Alert Manager" 
+                  || App.ActiveScreen.Name = "Assign Role - Admin"
+                  || App.ActiveScreen.Name = "All Tickets"
+                  || App.ActiveScreen.Name = "Admin Manager"
+                  || App.ActiveScreen.Name = "Create Alert"
+                  || App.ActiveScreen.Name = "Create Alert Admin (Redisgn)"
+                  || App.ActiveScreen.Name = "Ticket Metrics - Admin Tech", 
+                  LookUp(compMobileMenu.NavigationItems, ScreenToGoTo.Name = "Admin Manager"),
+
+                  App.ActiveScreen.Name = "Knowledge Base", 
+                  LookUp(compMobileMenu.NavigationItems, ScreenToGoTo.Name = "Knowledge Base"),
+
+                  App.ActiveScreen.Name = "MyTickets" || App.ActiveScreen.Name = "Single Ticket Info", 
+                  LookUp(compMobileMenu.NavigationItems, ScreenToGoTo.Name = "MyTickets"),
+
+                  App.ActiveScreen.Name = "Home", 
+                  LookUp(compMobileMenu.NavigationItems, ScreenToGoTo.Name = "Home")
+              )
+              /*  
+              LookUp(compMobileMenu.NavigationItems, ScreenToGoTo.Name = App.ActiveScreen.Name)*/
+            Fill: =
+            Height: =Parent.Height
+            Items: =compMobileMenu.NavigationItems
+            OnSelect: =
+            TemplateFill: |-
+              =If(
+                  ThisItem.IsSelected, 
+                  compMobileMenu.ForegroundColor,
+                  compMobileMenu.BackgroundMenuColor
+              )
+            TemplatePadding: =0
+            TemplateSize: =IfError(Self.Width / CountRows(compMobileMenu.NavigationItems), 1,Self.Width / CountRows(compMobileMenu.NavigationItems))
+            Width: =Parent.Width
+          Children:
+            - HtmlText4:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =Parent.TemplateHeight
+                  HtmlText: |-
+                    ="<div style=
+                    '
+                    height:"&Self.Height-11&"px;
+                    width:"&Self.Width-10&"px;
+                    border-radius: 0px;
+                    "&If(!ThisItem.IsSelected,"background: #ffffff;
+                    -webkit-box-shadow: 12px 12px 24px #d9d9d9, -12px -12px 24px #ffffff40;
+                    box-shadow: 12px 12px 24px #d9d9d9, -12px -12px 24px #ffffff40;","background: #355989;
+                    -webkit-box-shadow: 12px 12px 24px #2d4c74, -12px -12px 24px #3d669e;
+                    box-shadow: 12px 12px 24px #2d4c74, -12px -12px 24px #3d669e;")&"
+                    margin:5px;
+                    '></div>"
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =11
+                  Width: =Parent.TemplateWidth
+                  Y: =1
+            - Icon1_5:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: |-
+                    =If(
+                        ThisItem.IsSelected, 
+                        compMobileMenu.BackgroundMenuColor,
+                        compMobileMenu.ForegroundColor
+                    )
+                  DisplayMode: =DisplayMode.View
+                  Height: =Parent.Height/3
+                  Icon: =ThisItem.MenuIcon
+                  OnSelect: =Select(Parent)
+                  Width: =Parent.Width/5
+                  X: =(Parent.TemplateWidth-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2 -10
+            - Label1_2:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: |-
+                    =If(
+                        ThisItem.IsSelected, 
+                        compMobileMenu.BackgroundMenuColor,
+                        compMobileMenu.ForegroundColor
+                    )
+                  Font: =Font.'Open Sans'
+                  Height: =Parent.Height/3
+                  OnSelect: =Select(Parent)
+                  Size: =8
+                  Text: =ThisItem.MenuText
+                  Width: =Parent.Width/5
+                  X: =(Parent.TemplateWidth-Self.Width)/2
+                  Y: =Icon1_5.Y+Icon1_5.Height+2
+            - Icon1_1:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =Color.Transparent
+                  DisplayMode: =DisplayMode.View
+                  Height: =Parent.Height/2
+                  Icon: =ThisItem.MenuIcon
+                  OnSelect: =Navigate(ThisItem.ScreenToGoTo);
+                  PaddingBottom: =8
+                  Width: =Parent.Width/5
+            - Button7:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(0, 0, 0, 0)
+                  Font: =Font.'Open Sans'
+                  Height: =Parent.TemplateHeight
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, .25), -20%)
+                  OnSelect: =Navigate(ThisItem.ScreenToGoTo,ScreenTransition.Fade);
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =ColorFade(RGBA(56, 96, 178, .45), -50%)
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Text: =""
+                  Width: =Parent.TemplateWidth-2

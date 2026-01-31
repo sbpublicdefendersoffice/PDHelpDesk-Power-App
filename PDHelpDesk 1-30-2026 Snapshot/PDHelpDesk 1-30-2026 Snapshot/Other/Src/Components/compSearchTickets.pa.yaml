@@ -1,0 +1,624 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  compSearchTickets:
+    DefinitionType: CanvasComponent
+    AccessAppScope: true
+    CustomProperties:
+      BackgroundColor:
+        PropertyKind: Input
+        DisplayName: BackgroundColor
+        Description: A custom property
+        DataType: Color
+        Default: =ColorScheme.backgroundDark
+      CloseSearch:
+        PropertyKind: Event
+        DisplayName: CloseSearch
+        Description: Makes search bar not visible in mobile view
+        ReturnType: Boolean
+        Default: =Set(varSearchVisible, false)
+      GetIconSearchOpenWidth:
+        PropertyKind: Output
+        DisplayName: GetIconSearchOpenWidth
+        Description: Returns the width of the search open icon
+        DataType: Number
+      IconSearchOpenNewX:
+        PropertyKind: Input
+        DisplayName: IconSearchOpenNewX
+        Description: Sets a new x position for the open search icon
+        DataType: Number
+        Default: =
+      NewHintText:
+        PropertyKind: Input
+        DisplayName: NewHintText
+        Description: Sets the new hint text for search bar
+        DataType: Text
+        Default: =
+      OffColor:
+        PropertyKind: Input
+        DisplayName: OffColor
+        Description: A custom property
+        DataType: Color
+        Default: =ColorScheme.offColor
+      OpenSearch:
+        PropertyKind: Event
+        DisplayName: OpenSearch
+        Description: Makes search bar visible in mobile view
+        ReturnType: Boolean
+        Default: =Set(varSearchVisible, true)
+      PrimaryColor:
+        PropertyKind: Input
+        DisplayName: PrimaryColor
+        Description: A custom property
+        DataType: Color
+        Default: =ColorScheme.primary
+      SearchVisible:
+        PropertyKind: Input
+        DisplayName: SearchVisible
+        Description: Determines if search bar is visible in mobile view
+        DataType: Boolean
+        Default: =varSearchVisible
+      SecondaryColor:
+        PropertyKind: Input
+        DisplayName: SecondaryColor
+        Description: A custom property
+        DataType: Color
+        Default: =ColorScheme.secondary
+    Properties:
+      GetIconSearchOpenWidth: =IconSearchOpen.Width
+      Height: =40
+      OnReset: |-
+        =Set(
+            SearchQuery,
+            ""
+        );
+        Set(
+            SearchAllTicketsQuery,
+            ""
+        );
+        Reset(searchBox_1);
+        Set(
+            varSearchText,
+            ""
+        );
+        compSearchTickets.CloseSearch();
+
+        If(
+            App.ActiveScreen.Name = "MyTickets",
+        // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+            ClearCollect(
+                colTickets,
+                ForAll(
+                    Table(
+                        ParseJSON(
+                            SearchFilterTicketsSPListV2.Run(
+                                If(
+                                    IsBlank(SearchQuery),
+                                    "___",
+                                    SearchQuery
+                                ),
+                                StatusChoice,
+                                TagChoice,
+                                userData.id,
+                                TicketsChoice,
+                                DateAdd(
+                                    Today(),
+                                    -varSubtractDate,
+                                    varTimeUnits
+                                )
+                            ).searchresults
+                        )
+                    ),
+                    {
+                        ID: Value(Value.ID),
+                        Title: Text(Value.title),
+                        Description: Text(Value.description),
+                        MainCategory: Value(Value.mainCategory),
+                        Category: Value(Value.category),
+                        SubCategory: Value(Value.subCategory),
+                        DateCreated: DateTimeValue(Value.dateCreated),
+                        DateClosed: DateTimeValue(Value.dateClosed),
+                        CreatorId: Value(Value.creatorId),
+                        Status: Text(Value.status),
+                        AssignedTo: Value(Value.assignedTo),
+                        LastUpdated: DateTimeValue(Value.lastUpdated),
+                        UpdatedBy: Value(Value.updatedBy),
+                        ParentId: Value(Value.parentId),
+                        LocationId: Value(Value.locationId),
+                        Tags: Text(Value.tags),
+                        AddAssignees: Text(Value.addAssignees)
+                    }
+                )
+            ),
+        // Used with RecentTicketsSPListV2
+            ClearCollect(
+                colAllTickets,
+                ForAll(
+                    Table(
+                        ParseJSON(
+                            RecentTicketsSPListV2.Run(
+                                DateAdd(
+                                    Today(),
+                                    -1,
+                                    TimeUnit.Months
+                                ),
+                                If(
+                                    IsBlank(SearchAllTicketsQuery),
+                                    "___",
+                                    SearchAllTicketsQuery
+                                ),
+                                StatusChoice,
+                                AssignmentChoice
+                            ).searchresults
+                        )
+                    ),
+                    {
+                        ID: Value(Value.ID),
+                        Title: Text(Value.title),
+                        Description: Text(Value.description),
+                        MainCategory: Value(Value.mainCategory),
+                        Category: Value(Value.category),
+                        SubCategory: Value(Value.subCategory),
+                        DateCreated: DateTimeValue(Value.dateCreated),
+                        DateClosed: DateTimeValue(Value.dateClosed),
+                        CreatorId: Value(Value.creatorId),
+                        Status: Text(Value.status),
+                        AssignedTo: Value(Value.assignedTo),
+                        LastUpdated: DateTimeValue(Value.lastUpdated),
+                        UpdatedBy: Value(Value.updatedBy),
+                        ParentId: Value(Value.parentId),
+                        LocationId: Value(Value.locationId),
+                        Tags: Text(Value.tags),
+                        AddAssignees: Text(Value.addAssignees)
+                    }
+                )
+            )
+        )
+      Width: =If(App.Width > 1200, 800, App.Width > 900, 600, App.Width > 600, App.Width * 0.65, App.Width - 40)
+    Children:
+      - TextInputSlider:
+          Control: Classic/Slider@2.1.0
+          Properties:
+            AccessibleLabel: ="Ticket Search Bar Component"
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: =Len(searchBox_1.Text)
+            OnChange: |-
+              =Set(varSearchText, searchBox_1.Text);
+
+              // Check if Enter was pressed.
+              If(Find(Char(10), varSearchText)>0,
+
+                  // Remove newline character
+                  Set(varSearchText, Left(varSearchText, Len(varSearchText)-1));
+
+                  // Select search button
+                  Select(searchIcon_1);
+              )
+            ValueFill: =RGBA(0, 18, 107, 1)
+            Visible: =false
+            X: =40
+      - IconSearchOpen:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =compSearchTickets.SecondaryColor
+            Height: =Parent.Height
+            HoverColor: =RGBA(0, 18, 107, 1)
+            Icon: =Icon.Search
+            OnSelect: =compSearchTickets.OpenSearch(); SetFocus(searchBox_1)
+            Rotation: =90
+            Tooltip: ="Open Search Bar"
+            Visible: =App.Width <= 600
+            Width: =40
+            X: =If(IsBlank(compSearchTickets.IconSearchOpenNewX), If(App.Width < 500, searchBox_1.Width - Self.Width * 2, searchBox_1.Width - Self.Width * 2.5), compSearchTickets.IconSearchOpenNewX)
+            Y: =(Parent.Height - Self.Height) / 2
+      - searchBox_1:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            AccessibleLabel: ="Search Tickets Text Input"
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: =varSearchText
+            Font: =Font.'Open Sans'
+            Height: =Parent.Height
+            HintText: =If(IsBlank(compSearchTickets.NewHintText), If(searchBox_1.Width < 450, "Search", "Search by ticket title or exact ticket id"), compSearchTickets.NewHintText)
+            HoverBorderColor: =RGBA(0, 18, 107, 1)
+            HoverFill: =RGBA(186, 202, 226, 1)
+            Mode: =TextMode.MultiLine
+            PaddingLeft: =45
+            PaddingRight: =80
+            PaddingTop: =10
+            Tooltip: ="Search"
+            Visible: =If(App.Width > 600, true, compSearchTickets.SearchVisible)
+            Width: =Parent.Width
+            X: =(Parent.Width - Self.Width) / 2
+            Y: =(Parent.Height - Self.Height) / 2
+      - bgSearch:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =compSearchTickets.SecondaryColor
+            Font: =Font.'Open Sans'
+            Height: =38
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: |-
+              =If(
+                  App.ActiveScreen.Name = "MyTickets",
+                  Set(
+                      SearchQuery,
+                      searchBox_1.Text
+                  );
+                  ,
+                  Set(
+                      SearchAllTicketsQuery,
+                      searchBox_1.Text
+                  )
+              );
+              compSearchTickets.CloseSearch();
+              If(
+                  App.ActiveScreen.Name = "MyTickets",
+              // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+                  ClearCollect(
+                      colTickets,
+                      ForAll(
+                          Table(
+                              ParseJSON(
+                                  SearchFilterTicketsSPListV2.Run(
+                                      If(
+                                          IsBlank(SearchQuery),
+                                          "___",
+                                          SearchQuery
+                                      ),
+                                      StatusChoice,
+                                      TagChoice,
+                                      userData.id,
+                                      TicketsChoice,
+                                      DateAdd(
+                                          Today(),
+                                          -varSubtractDate,
+                                          varTimeUnits
+                                      )
+                                  ).searchresults
+                              )
+                          ),
+                          {
+                              ID: Value(Value.ID),
+                              Title: Text(Value.Title),
+                              Description: Text(Value.description),
+                              MainCategory: Value(Value.mainCategory),
+                              Category: Value(Value.category),
+                              SubCategory: Value(Value.subCategory),
+                              DateCreated: DateTimeValue(Value.dateCreated),
+                              DateClosed: DateTimeValue(Value.dateClosed),
+                              CreatorId: Value(Value.creatorId),
+                              Status: Text(Value.status),
+                              AssignedTo: Value(Value.assignedTo),
+                              LastUpdated: DateTimeValue(Value.lastUpdated),
+                              UpdatedBy: Value(Value.updatedBy),
+                              ParentId: Value(Value.parentId),
+                              LocationId: Value(Value.locationId),
+                              Tags: Text(Value.tags),
+                              AddAssignees: Text(Value.addAssignees)
+                          }
+                      )
+                  ),
+              // Used with RecentTicketsSPListV2
+                  ClearCollect(
+                      colAllTickets,
+                      ForAll(
+                          Table(
+                              ParseJSON(
+                                  RecentTicketsSPListV2.Run(
+                                      DateAdd(
+                                          Today(),
+                                          -1,
+                                          TimeUnit.Months
+                                      ),
+                                      If(
+                                          IsBlank(SearchAllTicketsQuery),
+                                          "___",
+                                          SearchAllTicketsQuery
+                                      ),
+                                      StatusChoice,
+                                      AssignmentChoice
+                                  ).searchresults
+                              )
+                          ),
+                          {
+                              ID: Value(Value.ID),
+                              Title: Text(Value.Title),
+                              Description: Text(Value.description),
+                              MainCategory: Value(Value.mainCategory),
+                              Category: Value(Value.category),
+                              SubCategory: Value(Value.subCategory),
+                              DateCreated: DateTimeValue(Value.dateCreated),
+                              DateClosed: DateTimeValue(Value.dateClosed),
+                              CreatorId: Value(Value.creatorId),
+                              Status: Text(Value.status),
+                              AssignedTo: Value(Value.assignedTo),
+                              LastUpdated: DateTimeValue(Value.lastUpdated),
+                              UpdatedBy: Value(Value.updatedBy),
+                              ParentId: Value(Value.parentId),
+                              LocationId: Value(Value.locationId),
+                              Tags: Text(Value.tags),
+                              AddAssignees: Text(Value.addAssignees)
+                          }
+                      )
+                  )
+              )
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =5
+            RadiusTopLeft: =0
+            RadiusTopRight: =5
+            Text: =
+            Tooltip: ="Search"
+            Visible: =!IsBlank(searchBox_1.Text) && (App.Width > 600 || compSearchTickets.SearchVisible)
+            Width: =38
+            X: =searchBox_1.X + searchBox_1.Width - Self.Width
+            Y: =(Parent.Height - Self.Height) / 2
+      - searchIcon_1:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =Color.Transparent
+            Height: =Parent.Height
+            HoverFill: =ColorFade(ColorScheme.secondary, 30%)
+            Icon: =Icon.ArrowRight
+            OnSelect: |-
+              =If(
+                  App.ActiveScreen.Name = "MyTickets",
+                  Set(
+                      SearchQuery,
+                      searchBox_1.Text
+                  );
+                  ,
+                  Set(
+                      SearchAllTicketsQuery,
+                      searchBox_1.Text
+                  )
+              );
+              compSearchTickets.CloseSearch();
+              If(
+                  App.ActiveScreen.Name = "MyTickets",
+              // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+                  ClearCollect(
+                      colTickets,
+                      ForAll(
+                          Table(
+                              ParseJSON(
+                                  SearchFilterTicketsSPListV2.Run(
+                                      If(
+                                          IsBlank(SearchQuery),
+                                          "___",
+                                          SearchQuery
+                                      ),
+                                      StatusChoice,
+                                      TagChoice,
+                                      userData.id,
+                                      TicketsChoice,
+                                      DateAdd(
+                                          Today(),
+                                          -varSubtractDate,
+                                          varTimeUnits
+                                      )
+                                  ).searchresults
+                              )
+                          ),
+                          {
+                              ID: Value(Value.ID),
+                              Title: Text(Value.Title),
+                              Description: Text(Value.description),
+                              MainCategory: Value(Value.mainCategory),
+                              Category: Value(Value.category),
+                              SubCategory: Value(Value.subCategory),
+                              DateCreated: DateTimeValue(Value.dateCreated),
+                              DateClosed: DateTimeValue(Value.dateClosed),
+                              CreatorId: Value(Value.creatorId),
+                              Status: Text(Value.status),
+                              AssignedTo: Value(Value.assignedTo),
+                              LastUpdated: DateTimeValue(Value.lastUpdated),
+                              UpdatedBy: Value(Value.updatedBy),
+                              ParentId: Value(Value.parentId),
+                              LocationId: Value(Value.locationId),
+                              Tags: Text(Value.tags),
+                              AddAssignees: Text(Value.addAssignees)
+                          }
+                      )
+                  ),
+              // Used with RecentTicketsSPListV2
+                  ClearCollect(
+                      colAllTickets,
+                      ForAll(
+                          Table(
+                              ParseJSON(
+                                  RecentTicketsSPListV2.Run(
+                                      DateAdd(
+                                          Today(),
+                                          -1,
+                                          TimeUnit.Months
+                                      ),
+                                      If(
+                                          IsBlank(SearchAllTicketsQuery),
+                                          "___",
+                                          SearchAllTicketsQuery
+                                      ),
+                                      StatusChoice,
+                                      AssignmentChoice
+                                  ).searchresults
+                              )
+                          ),
+                          {
+                              ID: Value(Value.ID),
+                              Title: Text(Value.title),
+                              Description: Text(Value.description),
+                              MainCategory: Value(Value.mainCategory),
+                              Category: Value(Value.category),
+                              SubCategory: Value(Value.subCategory),
+                              DateCreated: DateTimeValue(Value.dateCreated),
+                              DateClosed: DateTimeValue(Value.dateClosed),
+                              CreatorId: Value(Value.creatorId),
+                              Status: Text(Value.status),
+                              AssignedTo: Value(Value.assignedTo),
+                              LastUpdated: DateTimeValue(Value.lastUpdated),
+                              UpdatedBy: Value(Value.updatedBy),
+                              ParentId: Value(Value.parentId),
+                              LocationId: Value(Value.locationId),
+                              Tags: Text(Value.tags),
+                              AddAssignees: Text(Value.addAssignees)
+                          }
+                      )
+                  )
+              )
+            PaddingLeft: =5
+            PaddingRight: =5
+            Tooltip: ="Search"
+            Visible: =!IsBlank(searchBox_1.Text) && (App.Width > 600 || compSearchTickets.SearchVisible)
+            Width: =38
+            X: =searchBox_1.X + searchBox_1.Width - Self.Width
+            Y: =(Parent.Height - Self.Height) / 2
+      - cancelIcon_1:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(116, 116, 116, 1)
+            Height: =36
+            HoverColor: =ColorScheme.secondaryPressedColor
+            Icon: =Icon.Cancel
+            OnSelect: |-
+              =Set(
+                  SearchQuery,
+                  ""
+              );
+              Set(
+                  SearchAllTicketsQuery,
+                  ""
+              );
+              Reset(searchBox_1);
+              Set(
+                  varSearchText,
+                  ""
+              );
+              SetFocus(searchBox_1);
+
+              If(
+                  App.ActiveScreen.Name = "MyTickets",
+              // Used with SearchFilterTicktesSPListV2 (passes string to search, status, tag, user id, tickets selection, date to get tickets starting from to power automate and return the filtered results)
+                  ClearCollect(
+                      colTickets,
+                      ForAll(
+                          Table(
+                              ParseJSON(
+                                  SearchFilterTicketsSPListV2.Run(
+                                      If(
+                                          IsBlank(SearchQuery),
+                                          "___",
+                                          SearchQuery
+                                      ),
+                                      StatusChoice,
+                                      TagChoice,
+                                      userData.id,
+                                      TicketsChoice,
+                                      DateAdd(
+                                          Today(),
+                                          -varSubtractDate,
+                                          varTimeUnits
+                                      )
+                                  ).searchresults
+                              )
+                          ),
+                          {
+                              ID: Value(Value.ID),
+                              Title: Text(Value.Title),
+                              Description: Text(Value.description),
+                              MainCategory: Value(Value.mainCategory),
+                              Category: Value(Value.category),
+                              SubCategory: Value(Value.subCategory),
+                              DateCreated: DateTimeValue(Value.dateCreated),
+                              DateClosed: DateTimeValue(Value.dateClosed),
+                              CreatorId: Value(Value.creatorId),
+                              Status: Text(Value.status),
+                              AssignedTo: Value(Value.assignedTo),
+                              LastUpdated: DateTimeValue(Value.lastUpdated),
+                              UpdatedBy: Value(Value.updatedBy),
+                              ParentId: Value(Value.parentId),
+                              LocationId: Value(Value.locationId),
+                              Tags: Text(Value.tags),
+                              AddAssignees: Text(Value.addAssignees)
+                          }
+                      )
+                  ),
+              // Used with RecentTicketsSPListV2
+                  ClearCollect(
+                      colAllTickets,
+                      ForAll(
+                          Table(
+                              ParseJSON(
+                                  RecentTicketsSPListV2.Run(
+                                      DateAdd(
+                                          Today(),
+                                          -1,
+                                          TimeUnit.Months
+                                      ),
+                                      If(
+                                          IsBlank(SearchAllTicketsQuery),
+                                          "___",
+                                          SearchAllTicketsQuery
+                                      ),
+                                      StatusChoice,
+                                      AssignmentChoice
+                                  ).searchresults
+                              )
+                          ),
+                          {
+                              ID: Value(Value.ID),
+                              Title: Text(Value.Title),
+                              Description: Text(Value.description),
+                              MainCategory: Value(Value.mainCategory),
+                              Category: Value(Value.category),
+                              SubCategory: Value(Value.subCategory),
+                              DateCreated: DateTimeValue(Value.dateCreated),
+                              DateClosed: DateTimeValue(Value.dateClosed),
+                              CreatorId: Value(Value.creatorId),
+                              Status: Text(Value.status),
+                              AssignedTo: Value(Value.assignedTo),
+                              LastUpdated: DateTimeValue(Value.lastUpdated),
+                              UpdatedBy: Value(Value.updatedBy),
+                              ParentId: Value(Value.parentId),
+                              LocationId: Value(Value.locationId),
+                              Tags: Text(Value.tags),
+                              AddAssignees: Text(Value.addAssignees)
+                          }
+                      )
+                  )
+              )
+            Tooltip: ="Cancel"
+            Visible: =!IsBlank(searchBox_1.Text) && (App.Width > 600 || compSearchTickets.SearchVisible)
+            Width: =38
+            X: =If(searchIcon_1.Visible, searchBox_1.X + searchBox_1.Width - searchIcon_1.Width - Self.Width, searchBox_1.X + searchBox_1.Width - Self.Width)
+            Y: =(Parent.Height - Self.Height) / 2
+      - IconSearch:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =compSearchTickets.PrimaryColor
+            DisplayMode: =DisplayMode.View
+            Height: =36
+            Icon: =Icon.Search
+            Rotation: =90
+            Visible: =App.Width > 600 || compSearchTickets.SearchVisible
+            Width: =38
+            X: =searchBox_1.X + 5
+            Y: =(Parent.Height - Self.Height) / 2

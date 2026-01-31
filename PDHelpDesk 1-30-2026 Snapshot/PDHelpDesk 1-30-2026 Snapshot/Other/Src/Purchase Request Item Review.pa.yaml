@@ -1,0 +1,790 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Purchase Request Item Review:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: =Reset(AddMediaButton1)
+      OnVisible: |-
+        =//Clear the collections
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({ReviewItemRecord:Blank(),ReviewItemPopup:false});
+        ClearCollect(PRAttachments,{AttachmentName:"",AttachmentValue:Blank()});
+        Clear(PRAttachments);
+        Set(WorkingPR,LookUp('Purchase Requests',ID=PRID));
+    Children:
+      - TemplateContainer_10:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - TemplateHeaderContainer_10:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.primary
+                  FillPortions: =0
+                  Height: =130
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - TemplateHeaderGroup_8:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - HeaderBackgroundGradient_9:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =130
+                              HtmlText: |-
+                                ="<div style='
+                                height:"&Self.Height-1&"px;
+                                width:100%;
+                                background: rgb(53,89,137);
+                                background: linear-gradient(90deg, rgba(53,89,137,1) 0%, rgba(0,18,107,1) 100%);' ></div>"
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =Parent.Width
+                        - TemplateWebHeader_10:
+                            Control: CanvasComponent
+                            ComponentName: compWebHeader
+                            Properties:
+                              BackgroundColor: =Color.Transparent
+                              CompScreenSize: ='Purchase Request Item Review'.Size
+                              EnableFeedback: =Set(varFeedback,true)
+                              FeedbackBool: =varFeedback
+                              Fill: =Color.Transparent
+                              Height: =82
+                              Width: =App.Width
+                        - TemplateLabel_9:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =48
+                              Size: =If('Purchase Request Item Review'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                              Text: ="Review Purchase Items"
+                              Width: =Parent.Width
+                              Y: =TemplateWebHeader_10.Height
+            - MainSectionTemplateContainer_10:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - Container28:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.End
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =Parent.Width
+                      Children:
+                        - Gallery16:
+                            Control: Gallery@2.15.0
+                            Variant: VariableHeight
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =638
+                              Items: =Filter('Purchase Request Items',PRId = PRID And ItemStatus.Value = Blank())
+                              TemplatePadding: =
+                              TemplateSize: =50
+                              Width: =Parent.Width
+                            Children:
+                              - Button40:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(56, 96, 178, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =50
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: |-
+                                      =UpdateContext({ReviewItemRecord:ThisItem,ReviewItemPopup:true});
+                                      If(!ThisItem.Viewed, Patch('Purchase Request Items',LookUp('Purchase Request Items',ID=ThisItem.ID),{Viewed:true}));
+                                      If(!IsEmpty(Filter('Purchase Request Items',PRId = PRID And ItemStatus.Value=Blank())) And WorkingPR.Status.Value <> "Reviewing Items",Patch('Purchase Requests',WorkingPR,{Status:{Value:"Reviewing Items"}}),SendEmail.Run("'mperez@countyofsb.org'","Purchase Request Update",RIHtmlText.HtmlText,"'bomdell@countyofsb.org'"&Concatenate("'",User().Email,"'")));
+                                      If(CountRows(Filter('Purchase Request Items',PRId = PRID And ItemStatus.Value=Blank()))=1,Patch('Purchase Requests',WorkingPR,{Status:{Value:"Waiting For Receipts"}});SendEmail.Run("'mperez@countyofsb.org'","Purchase Request Update",RecieptHtmlText.HtmlText,"'bomdell@countyofsb.org'"&Concatenate("'",User().Email,"'")));
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: =ThisItem.Title
+                                    Width: =Parent.TemplateWidth
+                        - Container30:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Visible: =ReviewItemPopup
+                              Width: =Parent.Width
+                            Children:
+                              - Rectangle43:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Fill: =RGBA(56, 96, 178, .5)
+                                    Height: =Parent.Height
+                                    Width: =Parent.Width
+                              - Rectangle44:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(214, 223, 238, 1)
+                                    Fill: =RGBA(227, 234, 243, 1)
+                                    Height: =Parent.Height/1.1
+                                    Width: =Parent.Width/1.1
+                                    X: =62
+                                    Y: =29
+                              - Label80:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =50
+                                    Size: =16
+                                    Text: ="Review Item"
+                                    Width: =Rectangle44.Width
+                                    X: =Rectangle44.X
+                                    Y: =Rectangle44.Y
+                              - Label80_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Item"
+                                    Width: =Rectangle44.Width/2
+                                    X: =62
+                                    Y: =79
+                              - Label80_2:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Quantity"
+                                    Width: =Rectangle44.Width/2
+                                    X: =Label80_1.X+Label80_1.Width
+                                    Y: =79
+                              - Label80_3:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Deployment Site"
+                                    Width: =Rectangle44.Width/2
+                                    X: =62
+                                    Y: =153
+                              - Label80_4:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Requestors"
+                                    Width: =Rectangle44.Width/2
+                                    X: =Label80_2.X
+                                    Y: =153
+                              - Label80_5:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Delivery Information"
+                                    Width: =Rectangle44.Width
+                                    X: =Rectangle44.X
+                                    Y: =227
+                              - HtmlText14:
+                                  Control: HtmlViewer@2.1.0
+                                  Properties:
+                                    Color: =RGBA(0, 121, 187, 1)
+                                    Font: =Font.'Open Sans'
+                                    HtmlText: |-
+                                      ="<div style = 'text-align: center'><a href='"&ReviewItemRecord.ItemLink&"'>"&ReviewItemRecord.Title&"</a></div>"
+                                    PaddingLeft: =15
+                                    Width: =Rectangle44.Width/2
+                                    X: =62
+                                    Y: =113
+                              - Label82:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Font: =Font.'Open Sans'
+                                    Text: =ReviewItemRecord.Quantity
+                                    Width: =Rectangle44.Width/2
+                                    X: =Label80_2.X
+                                    Y: =113
+                              - Label82_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Font: =Font.'Open Sans'
+                                    Text: =ReviewItemRecord.DeploymentSite
+                                    Width: =Rectangle44.Width/2
+                                    X: =62
+                                    Y: =187
+                              - Label82_2:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Font: =Font.'Open Sans'
+                                    Text: =ReviewItemRecord.Requestors
+                                    Width: =Rectangle44.Width/2
+                                    X: =Label80_2.X
+                                    Y: =187
+                              - Label82_3:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Font: =Font.'Open Sans'
+                                    Text: =ReviewItemRecord.DeliveryInformation
+                                    Width: =Rectangle44.Width
+                                    X: =62
+                                    Y: =261
+                              - Button38:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(56, 96, 178, 1)
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: |-
+                                      =Patch('Purchase Request Items',LookUp('Purchase Request Items',ID = ReviewItemRecord.ID),{ItemStatus:{Value:"Approved", ETA:TextInput21.Text}});
+                                      Reset(TextInput21);
+                                      UpdateContext({ReviewItemPopup:false});
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Approve"
+                                    X: =292
+                                    Y: =521
+                              - Button38_1:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(56, 96, 178, 1)
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: |-
+                                      =Patch('Purchase Request Items',LookUp('Purchase Request Items',ID = ReviewItemRecord.ID),{ItemStatus:{Value:"Denied"}});
+                                      UpdateContext({ReviewItemPopup:false})
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Deny"
+                                    X: =913
+                                    Y: =510
+                              - Icon28_1:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(203, 102, 102, 1)
+                                    Height: =32
+                                    Icon: =Icon.Cancel
+                                    OnSelect: =UpdateContext({ReviewItemPopup:false})
+                                    Width: =32
+                                    X: =Label80.Width+Label80.X-Self.Width
+                                    Y: =29
+                              - Label80_6:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Estimated Time of Delivery (ETA)"
+                                    Width: =Rectangle44.Width
+                                    X: =62
+                                    Y: =302
+                              - TextInput21:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    Font: =Font.'Open Sans'
+                                    Height: =33
+                                    HintText: ="If approving, provide expected delivery date 'e.g. 4/24/2025'"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Width: =Rectangle44.Width/1.03
+                                    X: =76
+                                    Y: =354
+                        - Container35:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height/1.1
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Visible: =false
+                              Width: =Parent.Width/1.1
+                              X: =40
+                              Y: =40
+                            Children:
+                              - Rectangle46:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =1
+                                    Fill: =RGBA(227, 234, 243, 1)
+                                    Height: =Parent.Height/1.1
+                                    Visible: =IsEmpty(Gallery16.AllItems) And LookUp('Purchase Requests',ID=PRID).Status.Value <> "Complete"
+                                    Width: =Parent.Width/1.1
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: =(Parent.Height-Self.Height)/2
+                              - Label83:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =50
+                                    Size: =16
+                                    Text: ="Submit Receipts"
+                                    Visible: =IsEmpty(Gallery16.AllItems) And LookUp('Purchase Requests',ID=PRID).Status.Value <> "Complete"
+                                    Width: =Rectangle46.Width
+                                    X: =Rectangle46.X
+                                    Y: =29
+                              - Icon14:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 121, 187, 1)
+                                    Height: =108
+                                    Icon: =Icon.Add
+                                    OnSelect: =
+                                    Visible: =IsEmpty(Gallery16.AllItems) And LookUp('Purchase Requests',ID=PRID).Status.Value <> "Complete"
+                                    Width: =108
+                                    X: =AddMediaButton1.X
+                                    Y: =(Rectangle46.Height-Self.Height)/2 +Rectangle46.Y
+                              - Button41:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(56, 96, 178, 1)
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: |-
+                                      =If(!IsBlank(UploadedImage1.Image),Patch('Purchase Requests',LookUp('Purchase Requests',ID=PRID),{Attachments:PRItemsAttachment, Status:{Value:"Complete"}}));
+                                      SendEmail.Run("'mperez@countyofsb.org'","Completed Purchase Request",CompleteHtmlText.HtmlText,"'bmodell@countyofsb.org,'"&Concatenate("'",User().Email,"'"));
+                                      Navigate('Purchase Request List');
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Submit"
+                                    Visible: =IsEmpty(Gallery16.AllItems) And LookUp('Purchase Requests',ID=PRID).Status.Value <> "Complete"
+                                    X: =(Rectangle46.Width-Self.Width)/2 +Rectangle46.X
+                                    Y: =514
+                              - Label83_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Fill: =RGBA(241, 244, 249, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =75
+                                    Size: =23
+                                    Text: ="This Purchase Request has been completed"
+                                    Visible: =LookUp('Purchase Requests',ID=PRID).Status.Value = "Complete"
+                                    Width: =Parent.Width
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: =(Parent.Height-Self.Height)/2
+                              - UploadedImage1:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =420
+                                    Image: =AddMediaButton1.Media
+                                    ImagePosition: =ImagePosition.Fill
+                                    Visible: =IsEmpty(Gallery16.AllItems) And !IsBlank(AddMediaButton1.Media)
+                                    Width: =Rectangle46.Width
+                                    X: =Rectangle46.X
+                                    Y: =Label83.Y+Label83.Height
+                              - ClosePanelButton_47:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =1
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(203, 102, 102, 1)
+                                    Height: =40
+                                    Icon: =Icon.Cancel
+                                    OnSelect: |+
+                                      =Clear(PRAttachments);
+                                      Reset(AddMediaButton1);
+
+                                    Visible: =UploadedImage1.Visible
+                                    Width: =40
+                                    X: =Rectangle46.Width+Rectangle46.X-Self.Width
+                                    Y: =UploadedImage1.Y
+            - TemplateFooter_10:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(255,255,255, 1)
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    ='Purchase Request Item Review'.Size=1
+                  Width: =Parent.Width
+                Children:
+                  - TemplateWebMobileMenu_10:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Width: =Parent.Width
+      - TemplateErrorPopup_5:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =
+            Width: =Parent.Width
+          Children:
+            - TemplateErrorBackground_5:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(56, 96, 178, .25)
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - TemplateErrorWindow_5:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height/1.125
+                  Width: =Parent.Width/1.125
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - TemplateErrorHeaderRectangle_5:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Width: =TemplateErrorWindow_5.Width
+                  X: =TemplateErrorWindow_5.X
+                  Y: =TemplateErrorWindow_5.Y
+            - TemplateErrorHeader_5:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =100
+                  Size: =30
+                  Text: ="Form Error"
+                  Width: =TemplateErrorHeaderRectangle_5.Width
+                  X: =TemplateErrorHeaderRectangle_5.X
+                  Y: =TemplateErrorHeaderRectangle_5.Y
+            - TemplateField1Label_5:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =If(IsBlank('S/APowerAppLocationIDDropdown'.Selected.Name),Color.Red, Color.Green)
+                  Font: =Font.'Open Sans'
+                  Size: =20
+                  Text: =If(IsBlank('S/APowerAppLocationIDDropdown'.Selected.Name),"Location Missing", "Location OK")
+                  Width: =TemplateErrorWindow_5.Width
+                  X: =PopupRectangle_5.X
+                  Y: =TemplateErrorHeaderRectangle_5.Y+TemplateErrorHeaderRectangle_5.Height+15
+            - CloseTemplateErrorButton_5:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: =UpdateContext({TemplateErrorPopup:false});
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Text: ="Close"
+                  X: =(TemplateErrorWindow_5.Width-Self.Width)/2 +TemplateErrorWindow_5.X
+                  Y: =TemplateErrorWindow_5.Height-Self.Height
+      - TemplateWebMenu_10:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, Parent.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Purchase Request Item Review'.Size > 1
+            Width: =If(showMenu, Parent.Width, 80)
+      - TemplateBackButton_11:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =TemplateLabel_9.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(TemplateHeaderContainer_10.Height-TemplateLabel_9.Height)/1.05
+      - FeedbackBugReportTemp_7:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width
+      - EnableTemplateFormError_5:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: =UpdateContext({TemplateErrorPopup:true})
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: ="Error Popup"
+            Visible: =false
+            X: =80
+            Y: =123
+      - AddMediaButton1:
+          Control: AddMedia@2.2.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            ChangePictureText: =
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =108
+            OnSelect: =Collect(PRAttachments,{AttachmentName:"PRReceipt",AttachmentValue:UploadedImage1.Image})
+            Size: =25
+            Text: =
+            Visible: =IsEmpty(Gallery16.AllItems)
+            Width: =108
+            X: =(Rectangle46.Width-Self.Width)/2 +Rectangle46.X
+            Y: =400
+      - PRItemsAttachment:
+          Control: Attachments@2.3.0
+          Properties:
+            BorderColor: =Color.Black
+            Font: =Font.'Open Sans'
+            Height: =100
+            HoverFill: =RGBA(186, 202, 226, 1)
+            ItemColor: =RGBA(255, 255, 255, 1)
+            ItemFill: =RGBA(56, 96, 178, 1)
+            ItemHoverFill: =RGBA(186, 202, 226, 1)
+            Items: =PRAttachments
+            Items.Name: =AttachmentName
+            Items.Value: =AttachmentName
+            MaxAttachments: =10
+            OnAddFile: =
+            PaddingBottom: =5
+            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+            PaddingRight: =5
+            PaddingTop: =5
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 18, 107, 1)
+            Visible: =false
+            Width: =If('eDefender Document Generation/Templates TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+            X: =If('eDefender Document Generation/Templates TT'.Size=1,30,(Parent.Width-Self.Width)/2)
+            Y: =Label35.Height+10
+      - RIHtmlText:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =433
+            HtmlText: "=\"<table style='border-style: double ; width:100% '>\n    <tr>\n    <td>\n        <Table style='width:100%'>\n        <tr>\n        <th style='border-bottom-style: solid;'>\n	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>\n	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!\n	</div>\n	<br>\n	<div style='text-align:center;'>\n	The Purchase Request has now been viewed, below you will find the current progress of the request.\n	</div>\n        </th>\n        </tr>\n        <tr>\n        <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>\n	<div>\n	Purchase Request\n        </tr>\n        </td>\n        <tr>\n        <td style='font-family: monospace; font-size: 20px '>\n        <div style='border:1px solid #ccc; border-radius:8px; padding:20px; max-width:100%; background:#fff;'>\n\n    <!---- Step labels -->\n    <div style='display:flex; justify-content:space-between; font-size:14px; margin-bottom:10px;'>\n      <span style='flex:1; text-align:center;'>New Request</span>\n      <span style='flex:1; text-align:center;'>Request Viewed</span>\n      <span style='flex:1; text-align:center;'>Reviewing Items</span>\n      <span style='flex:1; text-align:center;'>Waiting For Receipts</span>\n      <span style='flex:1; text-align:center;'>Complete</span>\n    </div>\n\n    <!---- Track bar -->\n    <div style='position:relative; height:8px; background:#e0e0e0; border-radius:4px;'>\n      <!---- FILLED WIDTH: edit the % to match overall progress ---->\n      <div style='width:50%; height:100%; background:#355989; border-radius:4px; transition:width .3s;'></div>\n\n      <!---- STEP DOTS: change background / border colors to mark completed (+) current step ---->\n      <span style='position:absolute; top:50%; left:0%;   transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>\n      <span style='position:absolute; top:50%; left:25%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>\n      <span style='position:absolute; top:50%; left:50%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#fff;    border:2px solid #355989;'></span> <!-- current -->\n      <span style='position:absolute; top:50%; left:75%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#fff;    border:2px solid #e0e0e0;'></span>\n      <span style='position:absolute; top:50%; left:100%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#fff;    border:2px solid #e0e0e0;'></span>\n    </div>\n\n    <!---- Percentage read-out -->\n    <p style='text-align:right; margin-top:10px; font-size:14px;'>\n      <strong>50%</strong> complete\n    </p>\n  </div>\n        </tr>\n        </td>\n\n        <br>\n\n        <tr>\n        <td>\n        Request Items are being Reviewed, as the process continues the tracker will reflect the stage the request is in along with providing email updates.\n        </tr>\n        </td>\n    \n	</div>\n        </td>\n        </tr>\n    </td>\n    </tr>\n    </Table>\n</table>\""
+            Visible: =false
+            Width: =1043
+            X: =69
+            Y: =210
+      - RecieptHtmlText:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =363
+            HtmlText: "=\"<table style='border-style: double ; width:100% '>\n    <tr>\n    <td>\n        <Table style='width:100%'>\n        <tr>\n        <th style='border-bottom-style: solid;'>\n	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>\n	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!\n	</div>\n	<br>\n	<div style='text-align:center;'>\n	The Purchase Request has now been viewed, below you will find the current progress of the request.\n	</div>\n        </th>\n        </tr>\n        <tr>\n        <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>\n	<div>\n	Purchase Request\n        </tr>\n        </td>\n        <tr>\n        <td style='font-family: monospace; font-size: 20px '>\n        <div style='border:1px solid #ccc; border-radius:8px; padding:20px; max-width:100%; background:#fff;'>\n\n    <!---- Step labels -->\n    <div style='display:flex; justify-content:space-between; font-size:14px; margin-bottom:10px;'>\n      <span style='flex:1; text-align:center;'>New Request</span>\n      <span style='flex:1; text-align:center;'>Request Viewed</span>\n      <span style='flex:1; text-align:center;'>Reviewing Items</span>\n      <span style='flex:1; text-align:center;'>Waiting For Receipts</span>\n      <span style='flex:1; text-align:center;'>Complete</span>\n    </div>\n\n    <!---- Track bar -->\n    <div style='position:relative; height:8px; background:#e0e0e0; border-radius:4px;'>\n      <!---- FILLED WIDTH: edit the % to match overall progress ---->\n      <div style='width:75%; height:100%; background:#355989; border-radius:4px; transition:width .3s;'></div>\n\n      <!---- STEP DOTS: change background / border colors to mark completed (+) current step ---->\n      <span style='position:absolute; top:50%; left:0%;   transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>\n      <span style='position:absolute; top:50%; left:25%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>\n      <span style='position:absolute; top:50%; left:50%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989;    border:2px solid #fff;'></span> <!-- current -->\n      <span style='position:absolute; top:50%; left:75%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989;    border:2px solid #fff;'></span>\n      <span style='position:absolute; top:50%; left:100%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#fff;    border:2px solid #e0e0e0;'></span>\n    </div>\n\n    <!---- Percentage read-out -->\n    <p style='text-align:right; margin-top:10px; font-size:14px;'>\n      <strong>75%</strong> complete\n    </p>\n  </div>\n        </tr>\n        </td>\n\n        <br>\n\n        <tr>\n        <td>\n        Your Request is almost complete, only the receipt(s) are needed to complete the request, as the process continues the tracker will reflect the stage the request is in along with providing email updates.\n        </tr>\n        </td>\n    \n	</div>\n        </td>\n        </tr>\n    </td>\n    </tr>\n    </Table>\n</table>\""
+            Visible: =false
+            Width: =907
+            X: =69
+            Y: =210
+      - CompleteHtmlText:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =363
+            HtmlText: "=\"<table style='border-style: double ; width:100% '>\n    <tr>\n    <td>\n        <Table style='width:100%'>\n        <tr>\n        <th style='border-bottom-style: solid;'>\n	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>\n	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!\n	</div>\n	<br>\n	<div style='text-align:center;'>\n	The Purchase Request has now been viewed, below you will find the current progress of the request.\n	</div>\n        </th>\n        </tr>\n        <tr>\n        <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>\n	<div>\n	Purchase Request\n        </tr>\n        </td>\n        <tr>\n        <td style='font-family: monospace; font-size: 20px '>\n        <div style='border:1px solid #ccc; border-radius:8px; padding:20px; max-width:100%; background:#fff;'>\n\n    <!---- Step labels -->\n    <div style='display:flex; justify-content:space-between; font-size:14px; margin-bottom:10px;'>\n      <span style='flex:1; text-align:center;'>New Request</span>\n      <span style='flex:1; text-align:center;'>Request Viewed</span>\n      <span style='flex:1; text-align:center;'>Reviewing Items</span>\n      <span style='flex:1; text-align:center;'>Waiting For Receipts</span>\n      <span style='flex:1; text-align:center;'>Complete</span>\n    </div>\n\n    <!---- Track bar -->\n    <div style='position:relative; height:8px; background:#e0e0e0; border-radius:4px;'>\n      <!---- FILLED WIDTH: edit the % to match overall progress ---->\n      <div style='width:100%; height:100%; background:#355989; border-radius:4px; transition:width .3s;'></div>\n\n      <!---- STEP DOTS: change background / border colors to mark completed (+) current step ---->\n      <span style='position:absolute; top:50%; left:0%;   transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>\n      <span style='position:absolute; top:50%; left:25%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989; border:2px solid #fff;'></span>\n      <span style='position:absolute; top:50%; left:50%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989;    border:2px solid #fff;'></span> <!-- current -->\n      <span style='position:absolute; top:50%; left:75%;  transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989;    border:2px solid #fff;'></span>\n      <span style='position:absolute; top:50%; left:100%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#355989;    border:2px solid #fff;'></span>\n    </div>\n\n    <!---- Percentage read-out -->\n    <p style='text-align:right; margin-top:10px; font-size:14px;'>\n      <strong>100%</strong> complete\n    </p>\n  </div>\n        </tr>\n        </td>\n\n        <br>\n\n        <tr>\n        <td>\n        Your Request has been completed!\n        </tr>\n        </td>\n    \n	</div>\n        </td>\n        </tr>\n    </td>\n    </tr>\n    </Table>\n</table>\""
+            Visible: =false
+            Width: =907
+            X: =89
+            Y: =230

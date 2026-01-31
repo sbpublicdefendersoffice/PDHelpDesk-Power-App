@@ -1,0 +1,821 @@
+"'eDefender Zoom Links TT' As screen":
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |-
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm(eDefenderZoomLinksForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+
+    eDefenderZoomLinksMainContainer As groupContainer.horizontalAutoLayoutContainer:
+        Height: ='eDefender Zoom Links TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='eDefender Zoom Links TT'.Width
+        ZIndex: =2
+
+        eDefenderZoomLinksVerticalLayoutContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            eDefenderZoomLinksHeaderContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                eDefenderZoomLinksWebHeader As compWebHeader:
+                    CompScreenSize: ='eDefender Zoom Links TT'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    Height: |-
+                        =82
+                        //Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    ZIndex: =8
+
+                eDefenderZoomLinksHeaderLabel As label:
+                    Align: =Align.Center
+                    Color: =RGBA(255, 255, 255, 1)
+                    Fill: =ColorScheme.primary
+                    FillPortions: =1
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    Size: =If('eDefender Zoom Links TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Zoom Links Form"
+                    Width: =Parent.Width
+                    ZIndex: =9
+
+            eDefenderZoomLinksMainContentContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                eDefenderZoomLinksForm As form:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    eDefenderZoomLinksTitle_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        eDefenderZoomLinksTitleLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Zoom meeting ID"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderZoomLinksTitleError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderZoomLinksTitleInput.Y + eDefenderZoomLinksTitleInput.Height
+                            ZIndex: =3
+
+                        eDefenderZoomLinksTitleStarVisible As label:
+                            Align: =Align.Center
+                            Color: =eDefenderZoomLinksTitleLabel.Color
+                            Height: =eDefenderZoomLinksTitleLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderZoomLinksTitleLabel.Y
+                            ZIndex: =4
+
+                        eDefenderZoomLinksTitleInput As text:
+                            Default: =""
+                            Height: =Parent.Height/3.5
+                            HintText: ="Enter Zoom ID"
+                            Width: =Parent.Width/1.10
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderZoomLinksMainCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Zoom Links TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        eDefenderZoomLinksMainCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderZoomLinksMainCategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderZoomLinksMainCategoryDropdown.Y + eDefenderZoomLinksMainCategoryDropdown.Height
+                            ZIndex: =3
+
+                        eDefenderZoomLinksMainCategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderZoomLinksMainCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderZoomLinksMainCategoryLabel.Y
+                            ZIndex: =4
+
+                        eDefenderZoomLinksMainCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderZoomLinksSubCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Zoom Links TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        eDefenderZoomLinksSubCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderZoomLinksSubcategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderZoomLinksSubCategoryDropdown.Y + eDefenderZoomLinksSubCategoryDropdown.Height
+                            ZIndex: =3
+
+                        eDefenderZoomLinksSubcategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderZoomLinksSubCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderZoomLinksSubCategoryLabel.Y
+                            ZIndex: =4
+
+                        eDefenderZoomLinksSubCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = eDefenderZoomLinksMainCategoryDropdown.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderZoomLinksFields As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =100
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        ExField1_13 As label:
+                            Text: ="NewField1"
+                            X: =28
+                            Y: =4
+                            ZIndex: =1
+
+                        ExFieldInput1_13 As text:
+                            Default: =""
+                            Height: =28
+                            HintText: ="Enter Information"
+                            Width: =eDefenderZoomLinksTitleInput.Width/3
+                            X: =28
+                            Y: =44
+                            ZIndex: =2
+
+                        ExField2_13 As label:
+                            Text: ="NewField2"
+                            X: =ExFieldInput2_13.X
+                            Y: =7
+                            ZIndex: =3
+
+                        ExFieldInput2_13 As text:
+                            Default: =""
+                            Height: =28
+                            HintText: ="Enter Information"
+                            Width: =ExFieldInput1_13.Width
+                            X: =ExFieldInput1_13.X+ExFieldInput1_13.Width
+                            Y: =44
+                            ZIndex: =4
+
+                        ExField3_13 As label:
+                            Text: ="NewField3"
+                            X: =ExFieldInput3_13.X
+                            Y: =7
+                            ZIndex: =5
+
+                        ExFieldInput3_13 As text:
+                            Default: =""
+                            Height: =28
+                            HintText: ="Enter Information"
+                            Width: =ExFieldInput1_13.Width
+                            X: =ExFieldInput2_13.X+ExFieldInput2_13.Width
+                            Y: =44
+                            ZIndex: =6
+
+                    eDefenderZoomLinksSpecificIssue_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank(eDefenderZoomLinksSpecificIssueDropdown.Selected.Name), false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        eDefenderZoomLinksSpecificIssueLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderZoomLinksSpecificIssueError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderZoomLinksSpecificIssueDropdown.Y + eDefenderZoomLinksSpecificIssueDropdown.Height
+                            ZIndex: =3
+
+                        eDefenderZoomLinksSpecificIssueStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderZoomLinksSpecificIssueLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderZoomLinksSpecificIssueLabel.Y
+                            ZIndex: =4
+
+                        eDefenderZoomLinksSpecificIssueDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = eDefenderZoomLinksSubCategoryDropdown.Selected.ID)
+                            Width: =eDefenderZoomLinksTitleInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderZoomLinksDescription_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Zoom Links TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        eDefenderZoomLinksDescriptionLabel As label:
+                            AutoHeight: =true
+                            Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderZoomLinksDescriptionErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderZoomLinksDescriptionTextInputArea.Y + eDefenderZoomLinksDescriptionTextInputArea.Height
+                            ZIndex: =3
+
+                        eDefenderZoomLinksDescriptionStarVisible As label:
+                            Align: =Align.Center
+                            Color: =eDefenderZoomLinksDescriptionLabel.Color
+                            Height: =eDefenderZoomLinksDescriptionLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderZoomLinksDescriptionLabel.Y
+                            ZIndex: =4
+
+                        eDefenderZoomLinksDescriptionTextInputArea As text:
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: ="Please Describe Your Issue"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: =eDefenderZoomLinksDescription_DataCard.Visible
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    eDefenderZoomLinksLocationID_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        eDefenderZoomLinksLocationIDLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Location"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderZoomLinksLocationIDErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderZoomLinksLocationIDDropDown.Y + eDefenderZoomLinksLocationIDDropDown.Height
+                            ZIndex: =3
+
+                        eDefenderZoomLinksLocationIDStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderZoomLinksLocationIDLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderZoomLinksLocationIDLabel.Y
+                            ZIndex: =4
+
+                        eDefenderZoomLinksLocationIDDropDown As dropdown:
+                            AllowEmptySelection: =true
+                            Default: =Blank()
+                            Height: =Parent.Height/3.5
+                            Items: =Locations
+                            Width: =eDefenderZoomLinksTitleInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderZoomLinksAttatchments_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Zoom Links TT'.Size = 1, Parent.Height/2, Parent.Height/3.5)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        "'eDefenderAdding/CodingAttachmentControl_12' As attachments":
+                            BorderColor: =Color.Black
+                            Height: =If( 'eDefender Zoom Links TT'.Size = 1, Parent.Height/1.5, Parent.Height/1.5)
+                            IsInDataCard: =true
+                            Items: =
+                            MaxAttachments: =10
+                            PaddingBottom: =5
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            Width: =If('eDefender Zoom Links TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =36
+                            ZIndex: =1
+
+                    eDefenderZoomLinksButtons_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Zoom Links TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        eDefenderZoomLinksSubmitButton As button:
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Height: =eDefenderZoomLinksCancelButton.Height
+                            OnSelect: |
+                                =
+                                If(!eDefenderZoomLinksDescriptionTextInputArea.Visible,
+                                UpdateContext({TicketDescText:Concatenate("Adding Coding Items Template",Char(13),Char(13),ExFieldInput1_13.Text,Char(13),ExFieldInput2_13.Text,Char(13),ExFieldInput3_13.Text)}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    Len(eDefenderZoomLinksTitleInput.Text) > 0 And Len(eDefenderZoomLinksDescriptionTextInputArea.Text)> 0,
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: eDefenderZoomLinksTitleInput.Text,
+                                                description: Trim(eDefenderZoomLinksDescriptionTextInputArea.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: eDefenderZoomLinksMainCategoryDropdown.Selected.ID,
+                                                category: eDefenderZoomLinksSubCategoryDropdown.Selected.ID,
+                                                subCategory: eDefenderZoomLinksSpecificIssueDropdown.Selected.ID,
+                                                locationId: eDefenderZoomLinksLocationIDDropDown.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty('eDefenderAdding/CodingAttachmentControl_12'.Attachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = eDefenderZoomLinksMainCategoryDropdown.Selected.ID && locationId = eDefenderZoomLinksLocationIDDropDown.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = eDefenderZoomLinksMainCategoryDropdown.Selected.ID && locationId = eDefenderZoomLinksLocationIDDropDown.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "#"&rec.ID&" "&eDefenderZoomLinksTitleInput.Text&" (Coding/Items Request)"
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                    ForAll(
+                                        'eDefenderAdding/CodingAttachmentControl_12'.Attachments,
+                                               /*AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file: {
+                                                    contentBytes: Value,
+                                                    name: Name
+                                                }
+                                            }
+                                        )*/
+                                        AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Value,
+                                                    name: Name
+                                                }
+                                            }
+                                        ) 
+                                    );
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                        Concatenate(
+                                            "'",
+                                            userData.email,
+                                            "'"
+                                        ),
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_15.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                            Concatenate(
+                                                "'",
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                "'"
+                                            ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_15.HtmlText,
+                                            Text(Blank())
+                                        )
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm(eDefenderZoomLinksForm);
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                            Text: ="Submit"
+                            Width: =eDefenderZoomLinksCancelButton.Width
+                            X: =eDefenderZoomLinksCancelButton.X + (Self.Width*1.3)
+                            Y: =eDefenderZoomLinksCancelButton.Y
+                            ZIndex: =1
+
+                        eDefenderZoomLinksCancelButton As button:
+                            Fill: =RGBA(149, 149, 149, 1)
+                            OnSelect: |-
+                                =ResetForm(eDefenderZoomLinksForm);
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('eDefender Zoom Links TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            eDefenderZoomLinksFooter As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =Parent.Height/8
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='eDefender Zoom Links TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                eDefenderZoomLinksMobileMenu As compMobileMenu:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    eDefenderZoomLinksBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =eDefenderZoomLinksHeaderLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm(eDefenderZoomLinksForm); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(eDefenderZoomLinksHeaderContainer.Height-eDefenderZoomLinksHeaderLabel.Height)/1.05
+        ZIndex: =3
+
+    eDefenderZoomLinksWebMenu As compWebMenu:
+        Visible: ='eDefender Zoom Links TT'.Size > 1
+        ZIndex: =4
+
+    TechAssignMessageRTE_15 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            //Combine string as html body
+            Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+            , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")
+        Height: =9
+        Visible: =false
+        Width: =0
+        X: =852
+        Y: =744
+        ZIndex: =5
+
+    TicketCreatorMessageRTE_15 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visi <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.</div>")
+        Height: =99
+        Visible: =false
+        Width: =293
+        X: =948
+        ZIndex: =6
+
+    RichTextEditor2_14 As richTextEditor:
+        Default: |-
+            ="<h1><strong>Statute Template</strong></h1><br><h2>Field 1:&nbsp; "&ExFieldInput1_13.Text&"<br><br>Field 2: "&ExFieldInput2_13.Text&"<br><br>Field 3: "&ExFieldInput3_13.Text&"<br><br></h2>"
+        Height: =20
+        Visible: =false
+        Width: =208
+        ZIndex: =7
+

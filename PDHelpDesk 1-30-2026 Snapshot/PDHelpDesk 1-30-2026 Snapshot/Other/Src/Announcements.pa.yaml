@@ -1,0 +1,471 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Announcements:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =UpdateContext({AnnounceSuccess:false});
+        Clear(RTEImages);
+        UpdateContext({altImagePopUp:false,usingCamera:false});
+        //Set(EncodedPicture,JSON(Index(AnnouncementAttachmentControl.Attachments,1).Value,JSONFormat.IncludeBinaryData))
+    Children:
+      - TemplateContainer_2:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - TemplateHeaderContainer_2:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.primary
+                  FillPortions: =0
+                  Height: =130
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - Announcements Header Container:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - HomeBackgroundGradient_72:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =130
+                              HtmlText: =Home_Background_Gradient.HtmlText
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =Parent.Width
+                        - TemplateLabel_2:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =48
+                              Size: =If(Announcements.Size=1, titleText.mobileSize, titleText.desktopSize)
+                              Text: ="Create Announcement"
+                              Width: =Parent.Width
+                              Y: =TemplateWebHeader_2.Height
+                        - TemplateWebHeader_2:
+                            Control: CanvasComponent
+                            ComponentName: compWebHeader
+                            Properties:
+                              BackgroundColor: =Color.Transparent
+                              CompScreenSize: =Announcements.Size
+                              EnableFeedback: =Set(varFeedback,true)
+                              FeedbackBool: =varFeedback
+                              Height: =82
+                              Width: =App.Width
+            - MainSectionTemplateContainer_2:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                  FillPortions: =0
+                  Height: =Parent.Height
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinWidth: =Parent.Width
+                  LayoutOverflowY: =LayoutOverflow.Scroll
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - Container17:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =1100
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =800
+                        LayoutMinWidth: =Parent.Width
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =Parent.Width
+                      Children:
+                        - Label40:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              BorderThickness: =2
+                              Color: =RGBA(255, 255, 255, 1)
+                              Fill: =ColorScheme.primary
+                              Font: =Font.'Open Sans'
+                              Text: ="Email Subject"
+                              Width: =125
+                              X: =25
+                              Y: =40
+                        - TextInput14:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Default: =""
+                              Font: =Font.'Open Sans'
+                              Height: =35
+                              HintText: ="Subject"
+                              HoverBorderColor: =RGBA(0, 18, 107, 1)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              Width: =If(Announcements.Size=1,Parent.Width/1.2, Parent.Width/1.1)
+                              X: =25
+                              Y: =Label40.Height+Label40.Y
+                        - Label40_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              BorderThickness: =2
+                              Color: =RGBA(255, 255, 255, 1)
+                              Fill: =ColorScheme.primary
+                              Font: =Font.'Open Sans'
+                              Text: ="Email Body"
+                              Width: =125
+                              X: =25
+                              Y: =TextInput14.Y+TextInput14.Height+20
+                        - Button18:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -15%)
+                              Color: =RGBA(255, 255, 255, 1)
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              Fill: =RGBA(56, 96, 178, 1)
+                              Font: =Font.'Open Sans'
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                              OnSelect: |+
+                                =If(!IsBlank(Trim(TextInput14.Text)) && !IsBlank(Trim(RichTextEditor4.HtmlText)),
+                                SendEmail.Run("pdhelpdeskapp@countyofsb.org",TextInput14.Text, RichTextEditor4.HtmlText,"mperez@countyofsb.org");
+                                Reset(TextInput14);
+                                Reset(Checkbox1);
+                                Reset(RichTextEditor4);
+                                UpdateContext({AnnounceSuccess:true});
+
+
+                                , Notify("Subject or Email body is blank"));
+                                /*
+                                    ForAll(
+                                        CSForensicAnalysisAttachmentControl.Attachments As Attachment,
+                                               /*AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file: {
+                                                    contentBytes: Value,
+                                                    name: Name
+                                                }
+                                            }
+                                        )//
+                                        If(Left(Attachment.Value,6) = "appres", 
+                                        AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) ;,
+
+
+                                With({varHTMLTable: Split(Attachment.Name , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",Attachment.Name)+32},With({varB64End:Find("""",Mid(Attachment.Name,varB64Start))-1},CopyPasteTest.Run(Mid(Attachment.Name,varB64Start,varB64End),Attachment.Value & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        )
+                                    );*/
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =Self.Color
+                              Text: ="Submit"
+                              X: =(Parent.Width-Self.Width)/2
+                              Y: |-
+                                =//AnnouncementAttachmentControl.Height+AnnouncementAttachmentControl.Y+10
+                                RichTextEditor4.Y+RichTextEditor4.Height+20
+                        - Checkbox1:
+                            Control: Classic/CheckBox@2.1.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              BorderThickness: =2
+                              CheckboxBorderColor: =RGBA(0, 18, 107, 1)
+                              CheckmarkFill: =RGBA(0, 0, 0, 1)
+                              Fill: =RGBA(255, 255, 255, 1)
+                              FocusedBorderColor: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =40
+                              HoverColor: =RGBA(0, 18, 107, 1)
+                              Size: =If(Announcements.Size=1,10,13)
+                              Text: ="Use Helpdesk Sender"
+                              Visible: =false
+                              Width: =250
+                              X: =40
+                              Y: =40
+                        - RichTextEditor4:
+                            Control: RichTextEditor@2.7.0
+                            Properties:
+                              BorderColor: =RGBA(39, 67, 125, 1)
+                              Default: =
+                              EnableSpellCheck: =false
+                              Height: =If(Announcements.Size=1,Parent.Height/1.75, Min(600,Parent.Height/1.5))
+                              Width: =If(Announcements.Size=1,Parent.Width/1.15, Parent.Width/1.1)
+                              X: =25
+                              Y: =Label40_1.Height+Label40_1.Y
+                        - AnnouncementAttachmentControl:
+                            Control: Attachments@2.3.0
+                            Properties:
+                              BorderColor: =Color.Black
+                              Font: =Font.'Open Sans'
+                              Height: =If( 'Case Support Forensic Analysis TT'.Size = 1, 150, 200)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              ItemColor: =RGBA(255, 255, 255, 1)
+                              ItemFill: =RGBA(56, 96, 178, 1)
+                              ItemHoverFill: =RGBA(186, 202, 226, 1)
+                              Items: =RTEImages
+                              Items.Name: =copyName
+                              Items.Value: =copyName
+                              MaxAttachments: =10
+                              PaddingBottom: =5
+                              PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                              PaddingRight: =5
+                              PaddingTop: =5
+                              PressedColor: =RGBA(255, 255, 255, 1)
+                              PressedFill: =RGBA(0, 18, 107, 1)
+                              Visible: =false
+                              Width: =If('Case Support Forensic Analysis TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                              X: =(Parent.Width-Self.Width)/2
+                              Y: =RichTextEditor4.Height+RichTextEditor4.Y+80
+                        - Icon11_43:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(0, 18, 107, 1)
+                              Icon: =Icon.Camera
+                              OnSelect: =UpdateContext({altImagePopUp:true,usingCamera:true})
+                              Visible: =false
+                              X: =If('Case Support Forensic Analysis TT'.Size=1,(AnnouncementAttachmentControl.Width-Self.Width)/2+Self.Width,AnnouncementAttachmentControl.X+AnnouncementAttachmentControl.Width+Self.Width)
+                              Y: =If('Case Support Forensic Analysis TT'.Size=1,(AnnouncementAttachmentControl.Y+AnnouncementAttachmentControl.Height+20),(Parent.Height-Self.Height)/2)
+                        - Icon12_43:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(0, 18, 107, 1)
+                              Icon: =Icon.Copy
+                              OnSelect: =UpdateContext({altImagePopUp:true,usingCamera:false})
+                              Visible: =false
+                              X: =If('Case Support Forensic Analysis TT'.Size=1,(AnnouncementAttachmentControl.Width-Self.Width)/2-Self.Width,(AnnouncementAttachmentControl.X-Self.Width)/2)
+                              Y: =If('Case Support Forensic Analysis TT'.Size=1,(AnnouncementAttachmentControl.Y+AnnouncementAttachmentControl.Height+20),(Parent.Height-Self.Height)/2)
+                        - Label65:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              BorderThickness: =2
+                              Color: =RGBA(255, 255, 255, 1)
+                              Fill: =ColorScheme.primary
+                              Font: =Font.'Open Sans'
+                              Size: =15
+                              Text: ="Attachments"
+                              Visible: =false
+                              X: =AnnouncementAttachmentControl.X
+                              Y: =AnnouncementAttachmentControl.Y-Self.Height
+            - TemplateFooter_2:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(255,255,255, 1)
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    =Announcements.Size=1
+                  Width: =Parent.Width
+                Children:
+                  - TemplateWebMobileMenu_2:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Width: =Parent.Width
+      - TemplateBackButton_3:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =TemplateLabel_2.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(TemplateHeaderContainer_2.Height-TemplateLabel_2.Height)/1.05
+      - TemplateWebMenu_3:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, Parent.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: =Announcements.Size > 1
+            Width: =If(showMenu, Parent.Width, 80)
+      - AnnouncementSuccess:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =ColorScheme.screenBackgroundSeeThroughLight
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =AnnounceSuccess
+            Width: =Parent.Width
+          Children:
+            - ASuccessBackground:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height/1.1
+                  Width: =Parent.Width/1.1
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - ASuccessHeader:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Width: =ASuccessBackground.Width
+                  X: =ASuccessBackground.X
+                  Y: =ASuccessBackground.Y
+            - ASuccessHeaderLabel:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =ASuccessHeader.Height
+                  Size: =16
+                  Text: ="Announcement Submission"
+                  Width: =ASuccessHeader.Width
+                  X: =ASuccessHeader.X
+                  Y: =ASuccessHeader.Y
+            - ASuccessMessageLabel:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =100
+                  Size: =20
+                  Text: ="Announcement has been submitted, please wait for the message to propagate."
+                  Width: =ASuccessBackground.Width
+                  X: =(ASuccessBackground.Width-Self.Width)/2 + ASuccessBackground.X
+                  Y: =(ASuccessBackground.Height-Self.Height)/2 + ASuccessHeader.Height
+      - AnnouncementTimer:
+          Control: Timer@2.1.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Duration: =4000
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: =UpdateContext({AnnounceSuccess:false});
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Start: =AnnounceSuccess
+            Visible: =false
+            X: =40
+            Y: =40
+      - FeedbackBugReportA:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

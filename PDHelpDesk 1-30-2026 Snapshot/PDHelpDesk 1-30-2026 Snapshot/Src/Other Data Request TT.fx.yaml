@@ -1,0 +1,1095 @@
+"'Other Data Request TT' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnVisible: |-
+        =ResetForm(eDefenderBFPForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({usingCamera:false,altImagePopUp:false});
+        UpdateContext({DRFPopup:false});
+
+    DRFContainer_4 As groupContainer.verticalAutoLayoutContainer:
+        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        DRFHeaderContainer_4 As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            DRFHeaderGroup_4 As groupContainer.manualLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                FillPortions: =0
+                Height: =Parent.Height
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                Width: =Parent.Width
+                ZIndex: =3
+
+                DRFWebHeader_4 As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: ='Other Data Request TT'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    Fill: =Color.Transparent
+
+                HomeBackgroundGradient_76 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =130
+                    HtmlText: =Home_Background_Gradient.HtmlText
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                DRFLabel_4 As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =48
+                    Size: =If('Other Data Request TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Other Data Request"
+                    Width: =Parent.Width
+                    Y: =DRFWebHeader_4.Height
+                    ZIndex: =3
+
+        DRFFooter_4 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Other Data Request TT'.Size=1
+            Width: =Parent.Width
+            ZIndex: =6
+
+            DRFWebMobileMenu_4 As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+        DRFMainSectionContainer_4 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =7
+
+            DRFForm_4 As form:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                DataSource: =Tickets
+                DefaultMode: =FormMode.New
+                Height: =Parent.Height/1.21
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =250
+                LayoutMinWidth: =400
+                NumberOfColumns: =1
+                Width: =Parent.Width
+                Y: =Parent.Height/5.7
+                ZIndex: =8
+
+                DRFTitleDataCard_4 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="title"
+                    Default: =ThisItem.Title
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =80
+                    MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                    Required: =false
+                    Update: =
+                    Width: =500
+                    WidthFit: =true
+                    X: =0
+                    Y: =0
+                    ZIndex: =9
+
+                    DRFTitleStarVisible_4 As label:
+                        Align: =Align.Center
+                        Color: =ColorScheme.primary
+                        Fill: =Color.Transparent
+                        Height: =DRFTitleLabel_4.Height
+                        Text: ="*"
+                        Width: =30
+                        Wrap: =false
+                        Y: =DRFTitleLabel_4.Y
+                        ZIndex: =10
+
+                    DRFTitleLabel_4 As label:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =30
+                        Text: ="Requesting Department"
+                        Width: =220
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =11
+
+                    Dropdown10_5 As dropdown:
+                        AllowEmptySelection: =true
+                        ChevronBackground: =ColorScheme.primary
+                        Default: =""
+                        Items: |-
+                            =Table(
+                                {
+                                    Department:"Leadership"
+                                }
+                                ,
+                                {
+                                    Department:"Attorney"
+                                },
+                                {
+                                    Department:"LOP"
+                                }
+                                ,
+                                {
+                                    Department:"Investigator"
+                                }
+                                ,
+                                {
+                                    Department:"CDD"
+                                },
+                                {
+                                    Department:"IT"
+                                },
+                                {
+                                    Department:"HR"
+                                }
+                            )
+                        Width: =If('Other Data Request TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                        X: =DRFSelectLabel_4.X
+                        Y: =DRFTitleLabel_4.Y+DRFTitleLabel_4.Height
+                        ZIndex: =14
+
+                DRFMainCategory_DataCard_4 As typedDataCard.numberEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="mainCategory"
+                    Default: =ThisItem.mainCategory
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =If( 'eDefender Broken File Paths TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                    Required: =true
+                    Update: =
+                    Visible: =false
+                    Width: =500
+                    WidthFit: =true
+                    X: =0
+                    Y: =1
+                    ZIndex: =14
+
+                    DRFMainCategoryStarVisible_4 As label:
+                        Align: =Align.Center
+                        Height: =DRFMainCategoryLabel_4.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DRFMainCategoryLabel_4.Y
+                        ZIndex: =15
+
+                    DRFMainCategoryLabel_4 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Category"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =16
+
+                    DRFMainCategoryDropdown_4 As dropdown:
+                        Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                        Height: =Parent.Height/3.5
+                        Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                        Width: =Parent.Width/1.05
+                        X: =30
+                        Y: =44
+                        ZIndex: =17
+
+                    DRFMainCategoryError_4 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DRFMainCategoryDropdown_4.Y + DRFMainCategoryDropdown_4.Height
+                        ZIndex: =18
+
+                DRFSubCategory_DataCard_4 As typedDataCard.numberEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="category"
+                    Default: =ThisItem.category
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =If( 'eDefender Broken File Paths TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                    Required: =true
+                    Update: =
+                    Visible: =false
+                    Width: =500
+                    WidthFit: =true
+                    X: =0
+                    Y: =2
+                    ZIndex: =19
+
+                    eDefenderBFPSubcategoryStarVisible_5 As label:
+                        Align: =Align.Center
+                        Height: =eDefenderBFPSubCategoryLabel_5.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =eDefenderBFPSubCategoryLabel_5.Y
+                        ZIndex: =20
+
+                    eDefenderBFPSubCategoryLabel_5 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Sub Category"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =21
+
+                    eDefenderBFPSubCategoryDropdown_5 As dropdown:
+                        Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                        Height: =Parent.Height/3.5
+                        Items: =Filter(Category, parentId = DRFMainCategoryDropdown_4.Selected.ID)
+                        Width: =Parent.Width/1.05
+                        X: =30
+                        Y: =44
+                        ZIndex: =22
+
+                    eDefenderBFPSubcategoryError_5 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =eDefenderBFPSubCategoryDropdown_5.Y + eDefenderBFPSubCategoryDropdown_5.Height
+                        ZIndex: =23
+
+                DRFFields_4 As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =100
+                    Width: =500
+                    WidthFit: =true
+                    X: =0
+                    Y: =3
+                    ZIndex: =24
+
+                    DRFSelectLabel_4 As label:
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Description of Data Request"
+                        Width: =250
+                        X: =30
+                        Y: =10
+                        ZIndex: =25
+
+                    TextInput7_4 As text:
+                        Default: =
+                        EnableSpellCheck: =true
+                        Height: =100
+                        HintText: ="Please describe your data request in detail"
+                        Mode: =TextMode.MultiLine
+                        Width: =Dropdown10_5.Width
+                        X: =DRFSelectLabel_4.X
+                        Y: =DRFSelectLabel_4.Y+DRFSelectLabel_4.Height
+                        ZIndex: =28
+
+                    DRFSelectLabel_8 As label:
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Intended Use"
+                        Width: =140
+                        X: =30
+                        Y: =TextInput7_4.Y+TextInput7_4.Height+25
+                        ZIndex: =29
+
+                    TextInput7_6 As text:
+                        Default: =
+                        EnableSpellCheck: =true
+                        Height: =34
+                        HintText: ="Clarify how  the data will be used"
+                        Width: =Dropdown10_5.Width
+                        X: =DRFSelectLabel_4.X
+                        Y: =DRFSelectLabel_8.Y+DRFSelectLabel_8.Height
+                        ZIndex: =30
+
+                    DRFSelectLabel_9 As label:
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Analysis or Reporting Requirements"
+                        Width: =320
+                        X: =30
+                        Y: =TextInput7_6.Y+TextInput7_6.Height+25
+                        ZIndex: =31
+
+                    TextInput7_7 As text:
+                        Default: =
+                        EnableSpellCheck: =true
+                        Height: =34
+                        HintText: ="Do  you need any specific analyses or reports based on the data? "
+                        Width: =Dropdown10_5.Width
+                        X: =DRFSelectLabel_9.X
+                        Y: =DRFSelectLabel_9.Y+DRFSelectLabel_9.Height
+                        ZIndex: =32
+
+                DRFSpecificIssueDataCard_4 As typedDataCard.numberEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="subCategory"
+                    Default: =ThisItem.subCategory
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =127
+                    Required: =false
+                    Update: =
+                    Visible: |-
+                        =//If(IsBlank(eDefenderBFPSpecificIssueDropdown.Selected.Name), false, true)
+                        false
+                    Width: =500
+                    WidthFit: =true
+                    X: =0
+                    Y: =4
+                    ZIndex: =29
+
+                    DRFSpecificIssueStarVisible_4 As label:
+                        Align: =Align.Center
+                        Height: =DRFSpecificIssueLabel_4.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DRFSpecificIssueLabel_4.Y
+                        ZIndex: =30
+
+                    DRFSpecificIssueLabel_4 As label:
+                        AutoHeight: =true
+                        Height: =34
+                        Text: ="Specific Issue"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                        ZIndex: =31
+
+                    DRFSpecificIssueDropdown_4 As dropdown:
+                        Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                        Height: =Parent.Height/3.5
+                        Items: =Filter(Category, parentId = eDefenderBFPSubCategoryDropdown_5.Selected.ID)
+                        Width: =Dropdown10_5.Width
+                        X: =30
+                        Y: =44
+                        ZIndex: =32
+
+                    DRFSpecificIssueError_4 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DRFSpecificIssueDropdown_4.Y + DRFSpecificIssueDropdown_4.Height
+                        ZIndex: =33
+
+                DRFDescription_DataCard_4 As typedDataCard.textualEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="description"
+                    Default: =ThisItem.description
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =250
+                    MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                    Required: =false
+                    Update: =
+                    Visible: =true
+                    Width: =500
+                    WidthFit: =true
+                    X: =0
+                    Y: =5
+                    ZIndex: =34
+
+                    DRFDescriptionStarVisible_4 As label:
+                        Align: =Align.Center
+                        Color: =Color.Transparent
+                        Height: =DRFDescriptionLabel_12.Height
+                        Text: ="*"
+                        Width: =30
+                        Wrap: =false
+                        Y: =DRFDescriptionLabel_12.Y
+                        ZIndex: =35
+
+                    DRFDescriptionLabel_12 As label:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(9, 33, 98, 1)
+                        BorderThickness: =2
+                        Color: =Color.White
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Additional Details"
+                        Width: =170
+                        Wrap: =false
+                        X: =30
+                        Y: =DatePicker6_4.Y+DatePicker6_4.Height+25
+                        ZIndex: =37
+
+                    DRFDescriptionTextInputArea_4 As text:
+                        Default: =
+                        Height: =100
+                        HintText: ="Any special instructions or details related to the request"
+                        Mode: =TextMode.MultiLine
+                        Size: =15
+                        Visible: =DRFDescription_DataCard_4.Visible
+                        Width: =Dropdown10_5.Width
+                        X: =30
+                        Y: =DRFDescriptionLabel_12.Y+DRFDescriptionLabel_12.Height
+                        ZIndex: =38
+
+                    DRFDescriptionErrorMessage_4 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DRFDescriptionTextInputArea_4.Y + DRFDescriptionTextInputArea_4.Height
+                        ZIndex: =39
+
+                    DRFDescriptionLabel_13 As label:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(255, 0, 0, 1)
+                        BorderThickness: =2
+                        Color: =RGBA(255, 0, 0, 1)
+                        Fill: =Color.White
+                        Height: =34
+                        Text: ="Data requests may take days to complete"
+                        Visible: =false
+                        Width: =Parent.Width
+                        Wrap: =false
+                        Y: =Dropdown14_3.Height+Dropdown14_3.Y+10
+                        ZIndex: =40
+
+                    DRFDescriptionLabel_14 As label:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(9, 33, 98, 1)
+                        BorderThickness: =2
+                        Color: =Color.White
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Requested Date"
+                        Width: =170
+                        Wrap: =false
+                        X: =30
+                        Y: =DRFDescriptionLabel_13.Y+DRFDescriptionLabel_13.Height+10
+                        ZIndex: =41
+
+                    DatePicker6_4 As datepicker:
+                        Height: =34
+                        IconBackground: =ColorScheme.primary
+                        X: =30
+                        Y: =DRFDescriptionLabel_14.Y+DRFDescriptionLabel_14.Height
+                        ZIndex: =42
+
+                    DRFDescriptionLabel_20 As label:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(9, 33, 98, 1)
+                        BorderThickness: =2
+                        Color: =Color.White
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Priority Level"
+                        Width: =170
+                        Wrap: =false
+                        X: =30
+                        Y: =25
+                        ZIndex: =43
+
+                    Dropdown14_3 As dropdown:
+                        AllowEmptySelection: =true
+                        ChevronBackground: =ColorScheme.primary
+                        Default: =0
+                        Height: =34
+                        Items: |-
+                            =Table({Priority:"High"},{Priority:"Medium"},{Priority:"Low"})
+                        X: =30
+                        Y: =DRFDescriptionLabel_20.Y+DRFDescriptionLabel_20.Height
+                        ZIndex: =44
+
+                DRFLocationID_DataCard_4 As typedDataCard.numberEditCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DataField: ="locationId"
+                    Default: =ThisItem.locationId
+                    DisplayMode: =Parent.DisplayMode
+                    DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =127
+                    Required: =false
+                    Update: =//Value(DataCardValue6.Text)
+                    Width: =500
+                    WidthFit: =true
+                    X: =0
+                    Y: =6
+                    ZIndex: =43
+
+                    DRFLocationIDStarVisible_9 As label:
+                        Align: =Align.Center
+                        Height: =DRFLocationIDLabel_4.Height
+                        Text: ="*"
+                        Width: =30
+                        Wrap: =false
+                        Y: =DRFLocationIDLabel_4.Y
+                        ZIndex: =44
+
+                    DRFLocationIDLabel_4 As label:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =2
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =ColorScheme.primary
+                        Height: =34
+                        Text: ="Requesting From"
+                        Width: =170
+                        Wrap: =false
+                        X: =30
+                        Y: =20
+                        ZIndex: =45
+
+                    DRFLocationIDDropDown_4 As dropdown:
+                        AllowEmptySelection: =true
+                        ChevronBackground: =ColorScheme.primary
+                        Default: =Blank()
+                        Height: =35
+                        Items: =Locations
+                        Width: =Dropdown10_5.Width
+                        X: =30
+                        Y: =DRFLocationIDLabel_4.Y+DRFLocationIDLabel_4.Height
+                        ZIndex: =46
+
+                    DRFLocationIDErrorMessage_4 As label:
+                        AutoHeight: =true
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DRFLocationIDDropDown_4.Y + DRFLocationIDDropDown_4.Height
+                        ZIndex: =47
+
+                DRFAttatchments_DataCard_4 As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: =40
+                    Width: =500
+                    WidthFit: =true
+                    X: =0
+                    Y: =7
+                    ZIndex: =48
+
+                    AddMediaButton_46 As button:
+                        Fill: =ColorScheme.primary
+                        OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                        Text: ="Add Media"
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =(Parent.Height-Self.Height)/2
+                        ZIndex: =49
+
+                DRFButtons_DataCard_4 As typedDataCard.blankCard:
+                    BorderStyle: =BorderStyle.Solid
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    Height: |-
+                        =//If( 'eDefender Broken File Paths TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        125
+                    Width: =500
+                    WidthFit: =true
+                    X: =0
+                    Y: =8
+                    ZIndex: =50
+
+                    DRFCancelButton_4 As button:
+                        Fill: =ColorScheme.orange
+                        HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                        OnSelect: |-
+                            =ResetForm(DRFForm_4);
+                            Navigate(Home);
+                        Text: ="Cancel"
+                        Width: =Parent.Width/3
+                        X: =If('eDefender Broken File Paths TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                        Y: =Parent.Height - (Self.Height *2)
+                        ZIndex: =51
+
+                    DRFSubmitButton_4 As button:
+                        Fill: =ColorScheme.primary
+                        Height: =DRFCancelButton_4.Height
+                        OnSelect: |
+                            =//
+                            If(DRFDescriptionTextInputArea_4.Visible,
+                            UpdateContext({TicketDescText:Concatenate("Requesting Department: "&Dropdown10_5.Selected.Department&Char(13)&Char(13),
+                            "Description of Data Request: "&TextInput7_4.Text&Char(13)&Char(13),
+                            "Intended Use: "&TextInput7_6.Text&Char(13)&Char(13),
+                            "Analysis or Reporting Requirements: "&TextInput7_7.Text&Char(13)&Char(13),
+                            "Priority Level: "&Dropdown14_3.Selected.Priority&Char(13)&Char(13),
+                            "Desired Date: "&DatePicker6_4.SelectedDate&Char(13)&Char(13),
+                            "Additional Details: "&DRFDescriptionTextInputArea_4.Text)}), Notify("Description is Blank"));
+                            
+                            //Check if the title or Description are empty, if they are the form will not be submitted
+                            If(
+                                 true,
+                                UpdateContext({DataCardKey1_1: "Title"});
+                                UpdateContext({DataCardKey5: "Description"});
+                                //Set(DataCardKey5: "Description");
+                            Set(
+                                    //Temporary record
+                                    rec,
+                                    //DB operation, from Ticket table, new record, change these columns
+                                    Patch(
+                                        Tickets,
+                                        Defaults(Tickets),
+                                        {
+                                            Title: "Other Data Request",
+                                            description: Trim(TicketDescText),
+                                            creatorId: userData.id,
+                                            mainCategory: DRFMainCategoryDropdown_4.Selected.ID,
+                                            category: eDefenderBFPSubCategoryDropdown_5.Selected.ID,
+                                            subCategory: DRFSpecificIssueDropdown_4.Selected.ID,
+                                            locationId: DRFLocationIDDropDown_4.Selected.ID,
+                                            status: "pending",
+                                            metricDate: Concatenate(
+                                                Month(Today()),
+                                                "/",
+                                                Year(Today())
+                                            ),
+                                            hasAttachment: If(
+                                                IsEmpty(attItems),
+                                                0,
+                                                1
+                                            ),
+                                            //Automation rules table is used to assign tickets
+                                            assignedTo: If(
+                                                IsEmpty(
+                                                    Filter(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = DRFMainCategoryDropdown_4.Selected.ID && locationId = DRFLocationIDDropDown_4.Selected.ID
+                                                    )
+                                                ),
+                                                0,
+                                                LookUp(
+                                                    'Ticket Automation Rules',
+                                                    categoryId = DRFMainCategoryDropdown_4.Selected.ID && locationId = DRFLocationIDDropDown_4.Selected.ID,
+                                                    userID
+                                                )
+                                            )
+                                        }
+                                    )
+                                );
+                            
+                            Patch(
+                                Tickets, 
+                                LookUp(Tickets,ID = rec.ID),
+                                {
+                                    Title: "#"&rec.ID&" Other Data Request"
+                                });
+                            // for the attachments, run power automate flow for each attached file
+                            ForAll(
+                                attItems As Attachment,
+                                        AttachFiles.Run(
+                                        rec.ID,
+                                        {
+                                            file:{
+                                                contentBytes: Attachment.Value,
+                                                name: Attachment.Name
+                                            }
+                                        }
+                                    ) 
+                            );
+                            //Now do it for the camera and screenshots
+                            ForAll(
+                                RTEImages As RTEI,
+                                With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                            ))))
+                                    );
+                                
+                                /*SMTP.SendEmailV3(
+                                    {
+                                        From: "sbpdhelpdesk@outlook.com",
+                                        To: userData.email,
+                                        Subject: "Help Desk Ticket Received",
+                                        Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                    }
+                                );*/
+                                /*If(
+                                    rec.assignedTo > 0,
+                                    SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: LookUp(
+                                                Users,
+                                                ID = rec.assignedTo,
+                                                email
+                                            ),
+                                            Subject: "Help Desk Ticket Assigned",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                        }
+                                    );
+                                );*/
+                            Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                            //Power automate flow, sends email to ticket creator 
+                            SendEmail.Run(
+                                        userData.email,
+                                    "Help Desk Ticket Recieved",
+                                    //Email Message body
+                                    TicketCreatorMessageRTE_1.HtmlText,
+                                    Text(Blank())
+                                );
+                                // If the ticket it assigned to someone, send them an email
+                                If(
+                                    rec.assignedTo > 0,
+                                    SendEmail.Run(
+                                            LookUp(
+                                                Users,
+                                                ID = rec.assignedTo,
+                                                email
+                                            ),
+                                        "Help Desk Ticket Assigned",
+                                        //Email message body
+                                        TechAssignMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                            TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                );
+                                //Reset the form upon completion
+                                ResetForm(DRFForm_4);
+                                Navigate(Success);
+                            
+                            );
+                            // variables that control color elements
+                                UpdateContext({CreateTicketTitle: "Title is Required"});
+                                UpdateContext({CreateTicketDescription: "Description is Required"});
+                                UpdateContext({BFPPopup:true})
+                        Text: ="Submit"
+                        Width: =DRFCancelButton_4.Width
+                        X: =DRFCancelButton_4.X + (Self.Width*1.3)
+                        Y: =DRFCancelButton_4.Y
+                        ZIndex: =52
+
+    DRFErrorPopUp_4 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =DRFPopup
+        Width: =Parent.Width
+        ZIndex: =2
+
+        ACPopupBackground_52 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =53
+
+        ACPopupRectangle_52 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =54
+
+        Rectangle8_59 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_52.Width
+            X: =ACPopupRectangle_52.X
+            Y: =ACPopupRectangle_52.Y
+            ZIndex: =55
+
+        Label10_70 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_59.Width
+            X: =Rectangle8_59.X
+            Y: =Rectangle8_59.Y
+            ZIndex: =56
+
+        Label18_176 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(eDefenderBFPLocationIDDropDown.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: |+
+                =If(IsBlank(eDefenderBFPLocationIDDropDown.Selected.Name),"Location Missing", "Location OK")
+                
+            Width: =ACPopupRectangle_52.Width
+            X: =ACPopupRectangle_52.X
+            Y: =Rectangle8_59.Y+Rectangle8_59.Height+15
+            ZIndex: =57
+
+        Label18_177 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(eDefenderBFPTitleInput.Text)) = 0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(eDefenderBFPTitleInput.Text)) = 0,"Case Number Blank", "Case Number OK")
+            Width: =ACPopupRectangle_52.Width
+            X: =ACPopupRectangle_52.X
+            Y: =Label18_176.Y+Label18_176.Height+10
+            ZIndex: =58
+
+        Label18_178 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(FilePathinput.Text))=0,Color.Red,Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(FilePathinput.Text))=0,"File Path Blank","File Path OK")
+            Width: =ACPopupRectangle_52.Width
+            X: =ACPopupRectangle_52.X
+            Y: =Label18_177.Y+Label18_177.Height+10
+            ZIndex: =59
+
+        Button1_58 As button:
+            OnSelect: |-
+                =UpdateContext({BFPPopup:false})
+            Text: ="Close"
+            X: =(ACPopupRectangle_52.Width-Self.Width)/2 +ACPopupRectangle_52.X
+            Y: =ACPopupRectangle_52.Height-Self.Height
+            ZIndex: =60
+
+    DRFWebMenu_4 As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Other Data Request TT'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    TicketCreatorMessageRTE_57 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            /*
+            Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35aceace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.</div>")*/
+            
+            "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                <tr>
+                <td>
+                    <Table style="&Char(34)&"width:100% "&Char(34)&">
+                    <tr>
+                    <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+            	Your ticket has been created, a technician will be assigned to your case, if you would like to see additional details about your ticket: 
+                <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+            	</div>
+                    </th>
+                    </tr>
+            	<br>
+                    <tr>
+                    <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+            	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                <br>
+                Ticket # "&rec.ID&"
+                <br>
+                Status: "&rec.status&"
+                <br>
+                <br>
+                "&rec.description&"
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Height: =99
+        Visible: =false
+        Width: =293
+        X: =948
+        ZIndex: =3
+
+    DRFBackButton_4 As icon.BackArrow:
+        Color: =Color.White
+        Height: =DRFLabel_4.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(DRFHeaderContainer_4.Height-DRFLabel_4.Height)/1.05
+        ZIndex: =4
+
+    Label2_15 As label:
+        Height: =172
+        Text: |-
+            =Concatenate("File Path Link:",Char(13),FilePathinput.Text,Char(13),Char(13),"Last Known Access Date:",Char(13),LastKnownDatepicker.SelectedDate,Char(13),Char(13), "Date of Attempted Access:",Char(13),DateAccessedDatepicker.SelectedDate)
+        Visible: =false
+        Width: =260
+        Y: =594
+        ZIndex: =6
+
+    TechAssignMessageRTE_57 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            //Combine string as html body
+            /*
+            Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+            , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")
+            */
+            
+            "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                <tr>
+                <td>
+                    <Table style="&Char(34)&"width:100% "&Char(34)&">
+                    <tr>
+                    <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+            	A ticket has been asssigned to you, to check additional ticket details: 
+                <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+            	</div>
+                    </th>
+                    </tr>
+            	<br>
+                    <tr>
+                    <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+            	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                <br>
+                Ticket # "&rec.ID&"
+                <br>
+                Status: "&rec.status&"
+                <br>
+                <br>
+                "&rec.description&"
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Height: =9
+        Visible: =false
+        Width: =0
+        X: =852
+        Y: =744
+        ZIndex: =7
+
+    AddMedia_46 As AddMedia:
+        AMSize: ='Other Data Request TT'.Size
+        AttachCameraOff: =Set(AttachCamera,false);
+        AttachCameraOn: =Set(AttachCamera,true);
+        DisablePickMedia: =Set(AttachFiles,false)
+        EnablePickMedia: =Set(AttachFiles,true)
+        InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+        OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+        PhotoModeDisable: =Set(AttachPhoto,false)
+        PhotoModeEnable: =Set(AttachPhoto,true)
+        Visible: =varOpenMedia
+        ZIndex: =10
+
+    FeedbackBugReport_7 As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='Other Data Request TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =11
+

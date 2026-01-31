@@ -1,0 +1,1268 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Assets:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: =Reset(Dropdown14)
+      OnVisible: |-
+        =//Clear the collections
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({TemplateErrorPopup:false,assetScan:false,assetValue:Blank(),assetFilter:false});
+        Refresh('PubDef Computer Inventory_ Asset List_Computers');
+    Children:
+      - AssetsContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - AssetsHeaderContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.primary
+                  FillPortions: =0
+                  Height: =130
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - AssetsHeaderGroup:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - HeaderBackgroundGradient_10:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =130
+                              HtmlText: |-
+                                ="<div style='
+                                height:"&Self.Height-1&"px;
+                                width:100%;
+                                background: rgb(53,89,137);
+                                background: linear-gradient(90deg, rgba(53,89,137,1) 0%, rgba(0,18,107,1) 100%);' ></div>"
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =Parent.Width
+                        - AssetsWebHeader:
+                            Control: CanvasComponent
+                            ComponentName: compWebHeader
+                            Properties:
+                              BackgroundColor: =Color.Transparent
+                              CompScreenSize: =Assets.Size
+                              EnableFeedback: =Set(varFeedback,true)
+                              FeedbackBool: =varFeedback
+                              Fill: =Color.Transparent
+                              Height: =82
+                              Width: =App.Width
+                        - AssetsLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =48
+                              Size: =If(Assets.Size=1, titleText.mobileSize, titleText.desktopSize)
+                              Text: =If(amSelection = "Computer Assets", "Computer Assets","Equipment Assets")
+                              Width: =Parent.Width
+                              Y: =AssetsWebHeader.Height
+            - MainSectionAssetsContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - AssetsContent1:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinWidth: =Parent.Width
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - AssetCardGallery_1:
+                            Control: Gallery@2.15.0
+                            Variant: VariableHeight
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =Parent.Height-AssetsTopBar.Height
+                              Items: |-
+                                =If(Len(TextInput24.Text)>0,Filter('PubDef Computer Inventory_ Asset List_Equipment',StartsWith('Office/Cubicle Number',TextInput24.Text) || (IsNumeric(TextInput24.Text) &&Value(TextInput24.Text)= SKU )),Filter('PubDef Computer Inventory_ Asset List_Equipment', IsBlank(Dropdown14.Selected.Value) || 'Asset Model'.Value = Dropdown14.Selected.Value, 
+                                IsBlank(Dropdown14_6.Selected.Value) || 'Asset Status'.Value = Dropdown14_6.Selected.Value))
+                              ShowScrollbar: =false
+                              TemplateSize: =500
+                              Visible: =amSelection= "Equipment Assets"
+                              Width: =Parent.Width
+                              Y: =50
+                            Children:
+                              - Button37_2:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(241, 244, 249, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =500
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: =Select(Parent)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: =
+                                    Width: =Parent.TemplateWidth
+                              - Label94_9:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.SKU),"SKU Misssing",Text(ThisItem.SKU,"00000000000000"))
+                                    Width: =210
+                                    X: =(Parent.TemplateWidth-Self.Width)/2
+                              - Label94_11:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Asset Status'.Value),"Status Unknown",ThisItem.'Asset Status'.Value)
+                                    Width: =(Len(Self.Text))*(Self.Size)
+                                    X: =(Parent.TemplateWidth-Self.Width)/2
+                                    Y: =Parent.TemplateHeight-Self.Height
+                              - Button37_3:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(241, 244, 249, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.TemplateHeight/1.2
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: =Select(Parent)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: =
+                                    Width: =Parent.TemplateWidth/1.1
+                                    X: =(Parent.TemplateWidth-Self.Width)/2
+                                    Y: =(Parent.TemplateHeight-Self.Height)/2
+                              - Label94_13:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.User.DisplayName),"No User",ThisItem.User.DisplayName)
+                                    Width: =(Len(Self.Text)+2.5)*Self.Size
+                                    X: =Button37_3.X+(Button37_3.Width-Self.Width)/2
+                                    Y: =Button37_3.Y
+                              - Icon34_5:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.Person
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_13.X
+                                    Y: =Label94_13.Y
+                              - Label94_14:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Asset Type'.Value),"Type Missing",ThisItem.'Asset Type'.Value)
+                                    Width: =Len(Self.Text)*Self.Size +25
+                                    X: =Label94_13.X
+                                    Y: =Label94_13.Y+Label94_13.Height
+                              - Icon34_6:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.Devices
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_13.X
+                                    Y: =Label94_14.Y
+                              - Label94_15:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Asset Model'.Value),"Model Not Specified",ThisItem.'Asset Model'.Value)
+                                    Width: =250
+                                    X: =Label94_13.X
+                                    Y: =Label94_14.Y+Label94_14.Height
+                              - Icon34_7:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.Manufacture
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_13.X
+                                    Y: =Label94_15.Y
+                              - Label94_16:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Office Site'.Value),"No Site Provided",ThisItem.'Office Site'.Value)
+                                    Width: =Label94_13.Width
+                                    X: =Label94_13.X
+                                    Y: =Label94_15.Y+Label94_15.Height
+                              - Icon34_8:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.OfficeBuilding
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_13.X
+                                    Y: =Label94_16.Y
+                              - Label94_17:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.Floor.Value),"Floor not Provided",ThisItem.Floor.Value&" Floor")
+                                    Width: =Label94_13.Width
+                                    X: =Label94_13.X
+                                    Y: =Label94_16.Y+Label94_16.Height
+                              - Icon34_9:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.LevelsLayersItems
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_13.X
+                                    Y: =Label94_17.Y
+                              - Label94_18:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Office/Cubicle Number'),"No Office or Cubicle",ThisItem.'Office/Cubicle Number')
+                                    Width: =Button43_1.Width/2
+                                    X: =Label94_13.X
+                                    Y: =Label94_17.Y+Label94_17.Height
+                              - Icon34_10:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.Items
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_13.X
+                                    Y: =Label94_18.Y
+                              - Label94_19:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Deployment Date'),"No Date",ThisItem.'Deployment Date')
+                                    Width: =Len(Self.Text)*Self.Size +25
+                                    X: =Label94_13.X
+                                    Y: =Label94_18.Y+Label94_18.Height
+                              - Icon34_11:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.CalendarBlank
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_13.X
+                                    Y: =Label94_19.Y
+                              - Button43_1:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.TemplateHeight
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, .25), -20%)
+                                    OnSelect: =Navigate(AssetDetails,ScreenTransition.Cover,{equipmentAsset:ThisItem})
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =ColorFade(Self.HoverFill,-100%)
+                                    Text: =
+                                    Width: =Parent.TemplateWidth
+                        - AssetCardGallery:
+                            Control: Gallery@2.15.0
+                            Variant: VariableHeight
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =Parent.Height-AssetsTopBar.Height
+                              Items: |-
+                                =If(Len(TextInput24.Text)>0,Filter('PubDef Computer Inventory_ Asset List_Computers',StartsWith('Asset Name',TextInput24.Text) || (IsNumeric(TextInput24.Text) &&Value(TextInput24.Text)= AssetID )),Filter('PubDef Computer Inventory_ Asset List_Computers', IsBlank(Dropdown14.Selected.Value) || 'Asset Model'.Value = Dropdown14.Selected.Value, 
+                                IsBlank(Dropdown14_6.Selected.Value) || 'Asset Status'.Value = Dropdown14_6.Selected.Value))
+                              ShowScrollbar: =false
+                              TemplateSize: =500
+                              Visible: =amSelection= "Computer Assets"
+                              Width: =Parent.Width
+                              Y: =60
+                            Children:
+                              - Button37:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(241, 244, 249, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =500
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: =Select(Parent)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: =
+                                    Width: =Parent.TemplateWidth
+                              - Label94:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.AssetID),"SKU Misssing",ThisItem.AssetID)
+                                    Width: =210
+                              - Label94_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Right
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Connection Type'.Value),"N/A",ThisItem.'Connection Type'.Value)
+                                    Width: =210
+                                    X: =Parent.TemplateWidth-Self.Width
+                              - Label94_2:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Asset Status'.Value),"Status Unknown",ThisItem.'Asset Status'.Value)
+                                    Width: =(Len(Self.Text))*(Self.Size)
+                                    Y: =Parent.TemplateHeight-Self.Height
+                              - Label94_3:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Right
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Asset Model'.Value),"Model Unknown",ThisItem.'Asset Model'.Value)
+                                    Width: =220
+                                    X: =Parent.TemplateWidth-Self.Width
+                                    Y: =Parent.TemplateHeight-Self.Height
+                              - Circle6:
+                                  Control: Circle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Fill: =Switch(ThisItem.'Asset Condition'.Value,"Red",Color.Red,"Green",Color.Green,"Blue",Color.Blue,"Yellow",Color.Yellow,Color.Gray)
+                                    Height: =18
+                                    OnSelect: =Select(Parent)
+                                    Width: =18
+                                    X: =Label94_2.Width
+                                    Y: =Label94_2.Y+Self.Height/2
+                              - Button37_1:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(241, 244, 249, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.TemplateHeight/1.2
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: =Select(Parent)
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: =
+                                    Width: =Parent.TemplateWidth/1.1
+                                    X: =(Parent.TemplateWidth-Self.Width)/2
+                                    Y: =(Parent.TemplateHeight-Self.Height)/2
+                              - Label94_4:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Asset Name'),"Asset Name Missing",ThisItem.'Asset Name')
+                                    Width: =(Len(Self.Text)+2)*Self.Size
+                                    X: =Button37_1.X+(Button37_1.Width-Self.Width)/2
+                                    Y: =Button37_1.Y
+                              - Icon34:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.DocumentWithContent
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_4.X
+                                    Y: =Label94_4.Y
+                              - Label94_5:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Assigned User'.DisplayName),"Not Assigned",ThisItem.'Assigned User'.DisplayName)
+                                    Width: =(Len(Self.Text)+2)*Self.Size
+                                    X: =Label94_4.X
+                                    Y: =Label94_4.Y+Label94_4.Height
+                              - Icon34_1:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.Person
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_4.X
+                                    Y: =Label94_5.Y
+                              - Label94_6:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Asset Location'.Value),"Location Not Specified",ThisItem.'Asset Location'.Value)
+                                    Width: =(Len(Self.Text)+2)*Self.Size
+                                    X: =Label94_4.X
+                                    Y: =Label94_5.Y+Label94_5.Height
+                              - Icon34_2:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.Waypoint
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_4.X
+                                    Y: =Label94_6.Y
+                              - Label94_7:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Asset Type'.Value),"Type Not Specified",ThisItem.'Asset Type'.Value)
+                                    Width: =(Len(Self.Text)+2)*Self.Size
+                                    X: =Label94_4.X
+                                    Y: =Label94_6.Y+Label94_6.Height
+                              - Icon34_3:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.Laptop
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_4.X
+                                    Y: =Label94_7.Y
+                              - Label94_8:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingLeft: =32
+                                    Size: =14
+                                    Text: =If(IsBlank(ThisItem.'Device Last Updated'),"Last Update Unknown",ThisItem.'Device Last Updated')
+                                    Width: =Label94_4.Width
+                                    X: =Label94_4.X
+                                    Y: =Label94_7.Y+Label94_7.Height
+                              - Icon34_4:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =32
+                                    Icon: =Icon.CalendarBlank
+                                    OnSelect: =Select(Parent)
+                                    PaddingTop: =5
+                                    Width: =32
+                                    X: =Label94_4.X
+                                    Y: =Label94_8.Y
+                              - Button43:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.TemplateHeight
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, .25), -20%)
+                                    OnSelect: =Navigate(AssetDetails,ScreenTransition.Cover,{computerAsset:ThisItem})
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =ColorFade(Self.HoverFill,-100%)
+                                    Text: =
+                                    Width: =Parent.TemplateWidth
+                        - Container33:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorScheme.screenBackgroundSeeThroughDark
+                              Height: =Parent.Height
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Visible: =IsEmpty(AssetCardGallery.AllItems)
+                              Width: =Parent.Width
+                            Children:
+                              - Label92:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Font: =Font.'Open Sans'
+                                    Text: ="Data not found. Would you like to reset the filters?"
+                                    Width: =Parent.Width/1.1
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: =(Parent.Height-Self.Height)/2.5
+                              - Button34:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(56, 96, 178, 1)
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: |-
+                                      =Reset(Dropdown14);
+                                      Reset(Dropdown14_6);
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Reset"
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: =Label92.Y+Label92.Height+10
+                        - AssetsTopBar:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(241, 244, 249, 1)
+                              Height: =50
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Parent.Width
+                            Children:
+                              - Icon32:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =50
+                                    Icon: =Icon.LineWeight
+                                    OnSelect: =UpdateContext({assetScan:true})
+                                    X: =15
+                              - TextInput24:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =
+                                    Font: =Font.'Open Sans'
+                                    Height: =32
+                                    HintText: ="Search Asset by Name or Full SKU"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Width: =(Parent.Width/1.1) - Icon33.Width
+                                    X: =Icon32.X+Icon32.Width
+                                    Y: =(Parent.Height-Self.Height)/2
+                              - Icon33:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(0, 18, 107, 1)
+                                    Height: =50
+                                    Icon: =Icon.FilterFlat
+                                    OnSelect: =UpdateContext({assetFilter:true})
+                                    X: =Parent.Width-Self.Width
+                        - Container31:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                              Height: =Parent.Height
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Visible: =assetScan
+                              Width: =Parent.Width
+                            Children:
+                              - BCodeBackground:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    BorderThickness: =2
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Parent.Height/1.2
+                                    Width: =Parent.Width/1.1
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: =(Parent.Height-Self.Height)/2
+                              - BCodeTitleBar:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Fill: =RGBA(56, 96, 178, 1)
+                                    Height: =50
+                                    Width: =BCodeBackground.Width
+                                    X: =BCodeBackground.X
+                                    Y: =BCodeBackground.Y
+                              - BCodeTitleBarLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =1
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =BCodeTitleBar.Height
+                                    Size: =18
+                                    Text: ="Scan Barcode"
+                                    Width: =BCodeTitleBar.Width
+                                    X: =BCodeTitleBar.X
+                                    Y: =BCodeTitleBar.Y
+                              - AssetBarcodeScanner:
+                                  Control: BarcodeReader@1.0.25
+                                  Properties:
+                                    FontWeight: =FontWeight.Bold
+                                    OnScan: =UpdateContext({assetValue:First(AssetBarcodeScanner.Barcodes)})
+                                    ScanningMode: ='BarcodeReader.ScanningMode'.AutomaticallyScan
+                                    X: =BCodeBackground.X+(BCodeBackground.Width-Self.Width)/2
+                                    Y: =BCodeTitleBar.Height+BCodeTitleBar.Y+25
+                              - Gallery18:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =BCodeBackground.Height/5
+                                    Items: =If(!IsBlank(assetValue),LookUp('PubDef Computer Inventory_ Asset List_Computers',AssetID = assetValue.Value))
+                                    Visible: =amSelection= "Computer Assets"
+                                    Width: =BCodeBackground.Width/1.1
+                                    X: =BCodeBackground.X+(BCodeBackground.Width-Self.Width)/2
+                                    Y: =BCodeBackground.Y+(BCodeBackground.Height+Self.Height)/2
+                                  Children:
+                                    - Image7:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =72
+                                          Image: =
+                                          OnSelect: =Select(Parent)
+                                          RadiusBottomLeft: =8
+                                          RadiusBottomRight: =8
+                                          RadiusTopLeft: =8
+                                          RadiusTopRight: =8
+                                          Width: =72
+                                          X: =16
+                                          Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                                    - Title2:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(71, 69, 64, 1)
+                                          DisabledColor: =RGBA(186, 186, 186, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =Self.Size * 1.8
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =If(IsBlank(ThisItem.AssetID),"No SKU found",ThisItem.AssetID)
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =Parent.TemplateWidth - 173
+                                          X: =103
+                                          Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2.Size * 1.8)) / 2
+                                    - Subtitle2:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(71, 69, 64, 1)
+                                          DisabledColor: =RGBA(186, 186, 186, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =Self.Size * 1.8
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =ThisItem.'Assigned User'.DisplayName
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =Title2.Width
+                                          X: =Title2.X
+                                          Y: =Title2.Y + Title2.Height
+                                    - NextArrow2:
+                                        Control: Classic/Icon@2.5.0
+                                        Properties:
+                                          AccessibleLabel: =Self.Tooltip
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(166, 166, 166, 1)
+                                          DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                          DisabledColor: =RGBA(119, 119, 119, 1)
+                                          Height: =50
+                                          Icon: =Icon.ChevronRight
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =16
+                                          PaddingLeft: =16
+                                          PaddingRight: =16
+                                          PaddingTop: =16
+                                          Tooltip: ="View item details"
+                                          Width: =50
+                                          X: =Parent.TemplateWidth - Self.Width - 12
+                                          Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                                    - Separator2:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 255, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =8
+                                          OnSelect: =Select(Parent)
+                                          Width: =Parent.TemplateWidth
+                                          Y: =Parent.TemplateHeight - Self.Height
+                                    - Rectangle45:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Fill: =RGBA(0, 18, 107, 1)
+                                          Height: =Parent.TemplateHeight - Separator2.Height
+                                          OnSelect: =Select(Parent)
+                                          Visible: =ThisItem.IsSelected
+                                          Width: =4
+                                    - Button34_1:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =RGBA(0, 0, 0, 0)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, .1), -20%)
+                                          OnSelect: =Navigate(AssetDetails,ScreenTransition.Fade,{computerAsset:ThisItem});
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =
+                                          PressedFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                                          Text: =
+                                          Width: =Parent.TemplateWidth
+                              - Gallery18_1:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =BCodeBackground.Height/5
+                                    Items: =If(!IsBlank(assetValue),LookUp('PubDef Computer Inventory_ Asset List_Equipment',SKU = assetValue.Value))
+                                    Visible: =amSelection = "Equipment Assets"
+                                    Width: =BCodeBackground.Width/1.1
+                                    X: =BCodeBackground.X+(BCodeBackground.Width-Self.Width)/2
+                                    Y: =BCodeBackground.Y+(BCodeBackground.Height+Self.Height)/2
+                                  Children:
+                                    - Image7_1:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =72
+                                          Image: =
+                                          OnSelect: =Select(Parent)
+                                          RadiusBottomLeft: =8
+                                          RadiusBottomRight: =8
+                                          RadiusTopLeft: =8
+                                          RadiusTopRight: =8
+                                          Width: =72
+                                          X: =16
+                                          Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                                    - Title2_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(71, 69, 64, 1)
+                                          DisabledColor: =RGBA(186, 186, 186, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =Self.Size * 1.8
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =If(IsBlank(ThisItem.SKU),"No SKU found",ThisItem.SKU)
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =Parent.TemplateWidth - 173
+                                          X: =103
+                                          Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_1.Size * 1.8)) / 2
+                                    - Subtitle2_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(71, 69, 64, 1)
+                                          DisabledColor: =RGBA(186, 186, 186, 1)
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                                          Height: =Self.Size * 1.8
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =ThisItem.User.DisplayName
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =Title2_1.Width
+                                          X: =Title2_1.X
+                                          Y: =Title2_1.Y + Title2_1.Height
+                                    - NextArrow2_1:
+                                        Control: Classic/Icon@2.5.0
+                                        Properties:
+                                          AccessibleLabel: =Self.Tooltip
+                                          BorderColor: =RGBA(0, 0, 0, 1)
+                                          Color: =RGBA(166, 166, 166, 1)
+                                          DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                          DisabledColor: =RGBA(119, 119, 119, 1)
+                                          Height: =50
+                                          Icon: =Icon.ChevronRight
+                                          OnSelect: =Select(Parent)
+                                          PaddingBottom: =16
+                                          PaddingLeft: =16
+                                          PaddingRight: =16
+                                          PaddingTop: =16
+                                          Tooltip: ="View item details"
+                                          Width: =50
+                                          X: =Parent.TemplateWidth - Self.Width - 12
+                                          Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                                    - Separator2_1:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 255, 1)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =8
+                                          OnSelect: =Select(Parent)
+                                          Width: =Parent.TemplateWidth
+                                          Y: =Parent.TemplateHeight - Self.Height
+                                    - Rectangle45_5:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Fill: =RGBA(0, 18, 107, 1)
+                                          Height: =Parent.TemplateHeight - Separator2_1.Height
+                                          OnSelect: =Select(Parent)
+                                          Visible: =ThisItem.IsSelected
+                                          Width: =4
+                                    - Button34_2:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =RGBA(0, 0, 0, 0)
+                                          Font: =Font.'Open Sans'
+                                          Height: =Parent.TemplateHeight
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, .1), -20%)
+                                          OnSelect: =Navigate(AssetDetails,ScreenTransition.Fade,{equipmentAsset:ThisItem});
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =
+                                          PressedFill: =ColorFade(RGBA(56, 96, 178, .5), -20%)
+                                          Text: =
+                                          Width: =Parent.TemplateWidth
+                              - Button45:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(56, 96, 178, 1)
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: =UpdateContext({testValue:11123423134123})
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Visible: =false
+                                    X: =90
+                                    Y: =128
+                              - Icon28_2:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(203, 102, 102, 1)
+                                    Height: =Self.Width
+                                    Icon: =Icon.Cancel
+                                    OnSelect: =UpdateContext({assetScan:false});
+                                    Width: =BCodeTitleBar.Height
+                                    X: =BCodeTitleBar.Width+ BCodeTitleBar.X-Self.Width
+                                    Y: =BCodeTitleBar.Y
+                        - Container32:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                              Height: =Parent.Height
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Visible: =assetFilter
+                              Width: =Parent.Width
+                            Children:
+                              - Rectangle47:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(173, 153, 95, 1)
+                                    BorderThickness: =2
+                                    Fill: =RGBA(9, 33, 98, 1)
+                                    Height: =300
+                                    Width: =300
+                                    X: =Parent.Width-Self.Width
+                              - Icon33_1:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(149, 149, 149, 1)
+                                    Height: =50
+                                    Icon: =Icon.FilterFlatFilled
+                                    OnSelect: =UpdateContext({assetFilter:false})
+                                    X: =Parent.Width-Self.Width
+                              - Dropdown14:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    AllowEmptySelection: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =RGBA(56, 96, 178, 1)
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =Blank()
+                                    Font: =Font.'Open Sans'
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =Table({Value:""},Distinct('PubDef Computer Inventory_ Asset List_Computers','Asset Model'.Value))
+                                    Items.Value: =Value
+                                    OnChange: =UpdateContext({assetFilter:false})
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: =Rectangle47.Width-10
+                                    X: =Parent.Width-Self.Width-5
+                                    Y: =Icon33_1.Y+Icon33_1.Height+36
+                              - Label87:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(173, 153, 95, 1)
+                                    BorderThickness: =1
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(9, 33, 98, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: =If(amSelection = "Computer Assets", "Model","Asset Type")
+                                    Width: =Rectangle47.Width
+                                    X: =Rectangle47.X
+                                    Y: =Dropdown14.Y-Self.Height-2
+                              - Icon33_3:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(128, 128, 128, 1)
+                                    Height: =50
+                                    Icon: =Icon.Reload
+                                    OnSelect: |-
+                                      =Reset(Dropdown14);
+                                      Reset(Dropdown14_6)
+                                    PaddingBottom: =2
+                                    PaddingTop: =2
+                                    X: =Parent.Width-Self.Width*2
+                              - Dropdown14_6:
+                                  Control: Classic/DropDown@2.3.1
+                                  Properties:
+                                    AllowEmptySelection: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    ChevronBackground: =RGBA(56, 96, 178, 1)
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =Blank()
+                                    Font: =Font.'Open Sans'
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =Table({Value:""},Distinct('PubDef Computer Inventory_ Asset List_Computers','Asset Status'.Value))
+                                    Items.Value: =Value
+                                    OnChange: =UpdateContext({assetFilter:false})
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Width: =Rectangle47.Width-10
+                                    X: =Parent.Width-Self.Width-5
+                                    Y: =Dropdown14.Y+Dropdown14.Height+36
+                              - Label87_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    BorderColor: =RGBA(173, 153, 95, 1)
+                                    BorderThickness: =1
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(9, 33, 98, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Status Filter"
+                                    Width: =Rectangle47.Width
+                                    X: =Rectangle47.X
+                                    Y: =Dropdown14_6.Y-Self.Height-2
+            - AssetsFooter:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(255,255,255, 1)
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    =Assets.Size=1
+                  Width: =Parent.Width
+                Children:
+                  - AssetsWebMobileMenu:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Width: =Parent.Width
+      - AssetsWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, Parent.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: =Assets.Size > 1
+            Width: =If(showMenu, Parent.Width, 80)
+      - AssetsBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =AssetsLabel.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Navigate('Asset Manager Menu',ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(AssetsHeaderContainer.Height-AssetsLabel.Height)/1.05
+      - FeedbackBugReportAssets:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

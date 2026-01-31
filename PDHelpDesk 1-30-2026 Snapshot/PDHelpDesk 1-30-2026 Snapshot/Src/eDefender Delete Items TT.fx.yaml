@@ -1,0 +1,1015 @@
+"'eDefender Delete Items TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |
+        =ResetForm(eDefenderDeleteItemsForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({usingCamera:false,altImagePopUp:false});
+        UpdateContext({DeletePopup:false});
+
+    eDefenderDeleteItemsMainContainer As groupContainer.horizontalAutoLayoutContainer:
+        Height: ='eDefender Delete Items TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='eDefender Delete Items TT'.Width
+        ZIndex: =2
+
+        eDefenderDeleteItemsVerticalLayoutContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            eDefenderDeleteItemsHeaderContaner As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                "'Add/DeleteListItemsHeaderElements' As groupContainer.manualLayoutContainer":
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =11
+
+                    HomeBackgroundGradient_8 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    eDefenderDeleteItemsHeaderLabel As label:
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-eDefenderDeleteItemsWebHeader.Height
+                        Size: =If('eDefender Delete Items TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Delete Case Request Form"
+                        Width: =Parent.Width
+                        Y: =eDefenderDeleteItemsWebHeader.Height
+                        ZIndex: =2
+
+                    eDefenderDeleteItemsWebHeader As compWebHeader:
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='eDefender Delete Items TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        Height: |-
+                            =82
+                            //Parent.Height
+                        ZIndex: =3
+
+            eDefenderDeleteItemsMainContentContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                eDefenderDeleteItemsForm As form:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    eDefenderDeleteItemsTitle_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =90
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        eDefenderDeleteItemsTitleLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="PD Number"
+                            Width: =115
+                            Wrap: =false
+                            X: =30
+                            Y: ='eDefenderA/SDisclaimerLabel_4'.Y+'eDefenderA/SDisclaimerLabel_4'.Height+25
+                            ZIndex: =1
+
+                        eDefenderDeleteItemsTitleError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderDeleteItemsTitleInput.Y + eDefenderDeleteItemsTitleInput.Height
+                            ZIndex: =3
+
+                        eDefenderDeleteItemsTitleStarVisible As label:
+                            Align: =Align.Center
+                            Color: =eDefenderDeleteItemsTitleLabel.Color
+                            Height: =eDefenderDeleteItemsTitleLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderDeleteItemsTitleLabel.Y
+                            ZIndex: =4
+
+                        eDefenderDeleteItemsTitleInput As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =35
+                            HintText: ="Enter the PD number"
+                            Width: =If('eDefender Delete Items TT'.Size = 1,Parent.Width/1.20,Parent.Width/1.1)
+                            X: =30
+                            Y: =eDefenderDeleteItemsTitleLabel.Y+eDefenderDeleteItemsTitleLabel.Height
+                            ZIndex: =5
+
+                        "'eDefenderA/SDisclaimerLabel_4' As label":
+                            Align: =Align.Center
+                            BorderColor: =RGBA(221, 79, 14, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(221, 79, 14, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =If(App.ActiveScreen.Size =1,100,50)
+                            Size: =If('eDefender Broken File Paths TT'.Size =1,13,16)
+                            Text: ='eDefender_A/S_Disclaimer_Label'.Text
+                            Width: =Parent.Width
+                            Y: =
+                            ZIndex: =6
+
+                    eDefenderDeleteItemsMainCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Delete Items TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        eDefenderDeleteItemsMainCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderDeleteItemsMainCategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderDeleteItemsMainCategoryDropdown.Y + eDefenderDeleteItemsMainCategoryDropdown.Height
+                            ZIndex: =3
+
+                        eDefenderDeleteItemsMainCategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderDeleteItemsMainCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderDeleteItemsMainCategoryLabel.Y
+                            ZIndex: =4
+
+                        eDefenderDeleteItemsMainCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderDeleteItemsSubCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Delete Items TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        eDefenderDeleteItemsSubCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderDeleteItemsSubcategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderDeleteItemsSubCategoryDropdown.Y + eDefenderDeleteItemsSubCategoryDropdown.Height
+                            ZIndex: =3
+
+                        eDefenderDeleteItemsSubcategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderDeleteItemsSubCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderDeleteItemsSubCategoryLabel.Y
+                            ZIndex: =4
+
+                        eDefenderDeleteItemsSubCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = eDefenderDeleteItemsMainCategoryDropdown.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderDeleteItemsFields As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =150
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        ExField1_3 As label:
+                            AutoHeight: =true
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Reason "
+                            Width: =80
+                            X: =30
+                            Y: =5
+                            ZIndex: =1
+
+                        DeleteReasonInput As text:
+                            Default: =""
+                            EnableSpellCheck: =true
+                            Height: =100
+                            HintText: ="Enter reason for deletion"
+                            Mode: =TextMode.MultiLine
+                            Width: =eDefenderDeleteItemsTitleInput.Width
+                            X: =30
+                            Y: =ExField1_3.Height+ExField1_3.Y
+                            ZIndex: =2
+
+                    eDefenderDeleteItemsSpecificIssue_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank(eDefenderDeleteItemsSpecificIssueDropdown.Selected.Name), false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        eDefenderDeleteItemsSpecificIssueLabel As label:
+                            AutoHeight: =true
+                            Height: =30
+                            Text: ="Specific Issue"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            ZIndex: =1
+
+                        eDefenderDeleteItemsSpecificIssueError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderDeleteItemsSpecificIssueDropdown.Y + eDefenderDeleteItemsSpecificIssueDropdown.Height
+                            ZIndex: =3
+
+                        eDefenderDeleteItemsSpecificIssueStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderDeleteItemsSpecificIssueLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderDeleteItemsSpecificIssueLabel.Y
+                            ZIndex: =4
+
+                        eDefenderDeleteItemsSpecificIssueDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =35
+                            Items: =Filter(Category, parentId = eDefenderDeleteItemsSubCategoryDropdown.Selected.ID)
+                            Width: =eDefenderDeleteItemsTitleInput.Width
+                            X: =30
+                            Y: =eDefenderDeleteItemsSpecificIssueLabel.Height
+                            ZIndex: =5
+
+                    eDefenderDeleteItemsDescription_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Delete Items TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        eDefenderDeleteItemsDescriptionLabel As label:
+                            AutoHeight: =true
+                            Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderDeleteItemsDescriptionErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderDeleteItemsDescriptionTextInputArea.Y + eDefenderDeleteItemsDescriptionTextInputArea.Height
+                            ZIndex: =3
+
+                        eDefenderDeleteItemsDescriptionStarVisible As label:
+                            Align: =Align.Center
+                            Color: =eDefenderDeleteItemsDescriptionLabel.Color
+                            Height: =eDefenderDeleteItemsDescriptionLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderDeleteItemsDescriptionLabel.Y
+                            ZIndex: =4
+
+                        eDefenderDeleteItemsDescriptionTextInputArea As text:
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: ="Please Describe Your Issue"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: =eDefenderDeleteItemsDescription_DataCard.Visible
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    eDefenderDeleteItemsLocationID_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =127
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        eDefenderDeleteItemsLocationIDLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        eDefenderDeleteItemsLocationIDErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =eDefenderDeleteItemsLocationIDDropdown.Y + eDefenderDeleteItemsLocationIDDropdown.Height
+                            ZIndex: =3
+
+                        eDefenderDeleteItemsLocationIDStarVisible As label:
+                            Align: =Align.Center
+                            Height: =eDefenderDeleteItemsLocationIDLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =eDefenderDeleteItemsLocationIDLabel.Y
+                            ZIndex: =4
+
+                        eDefenderDeleteItemsLocationIDDropdown As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =Parent.Height/3.5
+                            Items: =Locations
+                            Width: =eDefenderDeleteItemsTitleInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    eDefenderDeleteItemsAttatchments_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'eDefender Delete Items TT'.Size = 1, Parent.Height/2, Parent.Height/3.5)
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        eDefenderDeleteItemsAttachmentControl As attachments:
+                            BorderColor: =Color.Black
+                            Height: =If( 'eDefender Delete Items TT'.Size = 1, Parent.Height/1.5, Parent.Height/1.5)
+                            IsInDataCard: =true
+                            Items: =RTEImages
+                            MaxAttachments: =10
+                            PaddingBottom: =5
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            Width: =If('eDefender Delete Items TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =36
+                            ZIndex: =1
+
+                    eDefenderDeleteItemsButtons_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: |-
+                            =//If( 'eDefender Delete Items TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                            125
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        eDefenderDeleteItemsSubmitButton As button:
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: =eDefenderDeleteItemsCancelButton.Height
+                            OnSelect: |
+                                =
+                                If(!eDefenderDeleteItemsDescriptionTextInputArea.Visible,
+                                UpdateContext({TicketDescText:Concatenate("PD Number: ",eDefenderDeleteItemsTitleInput.Text,Char(13),Char(13),"Reason:",Char(13),DeleteReasonInput.Text)}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    Len(Trim(eDefenderDeleteItemsTitleInput.Text)) > 0 && !IsBlank(eDefenderDeleteItemsLocationIDDropdown.Selected.Name) && Len(Trim(DeleteReasonInput.Text))>0,
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: "Delete Item/Case Request",
+                                                description: Trim(eDefenderDeleteItemsDescriptionTextInputArea.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: eDefenderDeleteItemsMainCategoryDropdown.Selected.ID,
+                                                category: eDefenderDeleteItemsSubCategoryDropdown.Selected.ID,
+                                                subCategory: eDefenderDeleteItemsSpecificIssueDropdown.Selected.ID,
+                                                locationId: eDefenderDeleteItemsLocationIDDropdown.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(eDefenderDeleteItemsAttachmentControl.Attachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = eDefenderDeleteItemsMainCategoryDropdown.Selected.ID && locationId = eDefenderDeleteItemsLocationIDDropdown.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = eDefenderDeleteItemsMainCategoryDropdown.Selected.ID && locationId = eDefenderDeleteItemsLocationIDDropdown.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" Delete Item/Case Request"
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                    ForAll(
+                                        eDefenderDeleteItemsAttachmentControl.Attachments As Attachment,
+                                               /*AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file: {
+                                                    contentBytes: Value,
+                                                    name: Name
+                                                }
+                                            }
+                                        )*/
+                                If(Left(Attachment.Value,6) = "appres", 
+                                        AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) ;,
+                                
+                                
+                                With({varHTMLTable: Split(Attachment.Name , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",Attachment.Name)+32},With({varB64End:Find("""",Mid(Attachment.Name,varB64Start))-1},CopyPasteTest.Run(Mid(Attachment.Name,varB64Start,varB64End),Attachment.Value & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        )
+                                    );
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm(eDefenderDeleteItemsForm);
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({DeletePopup:true});
+                            Text: ="Submit"
+                            Width: =eDefenderDeleteItemsCancelButton.Width
+                            X: =eDefenderDeleteItemsCancelButton.X + (Self.Width*1.3)
+                            Y: =eDefenderDeleteItemsCancelButton.Y
+                            ZIndex: =1
+
+                        eDefenderDeleteItemsCancelButton As button:
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm(eDefenderDeleteItemsForm);
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('eDefender Delete Items TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            eDefenderDeleteItemsFooter As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='eDefender Delete Items TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                eDefenderDeleteItemsMobileMenu As compMobileMenu:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    eDefenderDeleteItemsBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =eDefenderDeleteItemsHeaderLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm(eDefenderDeleteItemsForm); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(eDefenderDeleteItemsHeaderContaner.Height-eDefenderDeleteItemsHeaderLabel.Height)/1.05
+        ZIndex: =3
+
+    eDefenderDeleteItemsWebMenu As compWebMenu:
+        Visible: ='eDefender Delete Items TT'.Size > 1
+        ZIndex: =4
+
+    AlternativeAddImageContainer_5 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =altImagePopUp
+        Width: =Parent.Width
+        ZIndex: =9
+
+        AlternativeAddImageBackgroundTint_5 As rectangle:
+            Fill: =RGBA(56, 96, 178, .35)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        AlternativeAddImageBackground_5 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(227, 234, 243, 1)
+            Height: =Parent.Height/1.10
+            Width: =Parent.Width/1.10
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        AlternativeAddImageHeader_5 As rectangle:
+            BorderThickness: =2
+            Height: =80
+            Width: =AlternativeAddImageBackground_5.Width
+            X: =AlternativeAddImageBackground_5.X
+            Y: =AlternativeAddImageBackground_5.Y
+            ZIndex: =3
+
+        AlternativeAddImageHeaderLabel_5 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =AlternativeAddImageHeader_5.Height
+            Size: =18
+            Text: ="Using "&If(usingCamera, "Camera","Copy Paste")
+            Width: =AlternativeAddImageHeader_5.Width
+            X: =AlternativeAddImageHeader_5.X
+            Y: =AlternativeAddImageHeader_5.Y
+            ZIndex: =4
+
+        CopyPasteRTE_5 As richTextEditor:
+            Default: ="Erase this text and then you can paste your Screenshot here, then hit add at the bottom, you have to do this for every screenshot you add."
+            Height: =AlternativeAddImageBackground_5.Height/1.5
+            Visible: =!usingCamera
+            Width: =AlternativeAddImageBackground_5.Width
+            X: =AlternativeAddImageBackground_5.X
+            Y: =AlternativeAddImageBackground_5.Y+AlternativeAddImageHeader_5.Height
+            ZIndex: =5
+
+        Camera_4 As camera:
+            Camera: |-
+                =//Checks if there are anyback cameras, if there are none then default the camera to the first one otherwise use the first back camera
+                If(IsBlank(LookUp(Camera_4.AvailableDevices, "Back" in Name).Id),0,LookUp(Camera_4.AvailableDevices, "Back" in Name).Id)
+            Height: =AlternativeAddImageBackground_5.Height/1.5
+            OnSelect: |-
+                =UpdateContext({photoCounter:photoCounter+1});
+                Collect(RTEImages,{copyName:"Photo"&photoCounter,base64Image: "<img src="&JSON(Camera_4.Photo,JSONFormat.IncludeBinaryData)&" />"});
+                UpdateContext({altImagePopUp:false});
+            Visible: =usingCamera
+            Width: =AlternativeAddImageBackground_5.Width
+            X: =AlternativeAddImageBackground_5.X
+            Y: =AlternativeAddImageBackground_5.Y+AlternativeAddImageHeader_5.Height
+            ZIndex: =6
+
+        AddScreenshotButton_4 As button:
+            OnSelect: |-
+                =If( "<img" in CopyPasteRTE_5.HtmlText, Collect(RTEImages,{copyName:TextInput3.Text, base64Image:CopyPasteRTE_5.HtmlText});
+                Reset(CopyPasteRTE_5);
+                Reset(TextInput3), Notify("No Valid Image"));
+                UpdateContext({altImagePopUp:false})
+            Text: =If(usingCamera,"Take Picture","Add ScreenShot")
+            Visible: =!usingCamera
+            X: =(AlternativeAddImageBackground_5.Width-Self.Width)/2 +AlternativeAddImageBackground_5.X
+            Y: =AlternativeAddImageBackground_5.Height-Self.Height-7
+            ZIndex: =7
+
+        ClosePanelButton_4 As icon.Cancel:
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(203, 102, 102, 1)
+            Height: =40
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =UpdateContext({altImagePopUp:false});
+                Reset(CopyPasteRTE_5);
+            Width: =40
+            X: =AlternativeAddImageHeader_5.Width
+            Y: =(AlternativeAddImageHeader_5.Height- Self.Height)/2 +AlternativeAddImageHeader_5.Y
+            ZIndex: =8
+
+        CameraInfoLabel_4 As label:
+            Align: =Align.Center
+            Height: =50
+            Size: =18
+            Text: ="Tap or Click the camera to take a picture"
+            Visible: =usingCamera
+            Width: =Camera_4.Width
+            X: =(AlternativeAddImageBackground_5.Width-Self.Width)/2 +AlternativeAddImageBackground_5.X
+            Y: =AlternativeAddImageBackground_5.Height-Self.Height-7
+            ZIndex: =9
+
+    DeleteCasePopup As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =DeletePopup
+        Width: =Parent.Width
+        ZIndex: =10
+
+        ACPopupBackground_2 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_2 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_9 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_2.Width
+            X: =ACPopupRectangle_2.X
+            Y: =ACPopupRectangle_2.Y
+            ZIndex: =3
+
+        Label10_20 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_9.Width
+            X: =Rectangle8_9.X
+            Y: =Rectangle8_9.Y
+            ZIndex: =4
+
+        Button1_8 As button:
+            OnSelect: |-
+                =UpdateContext({DeletePopup:false})
+            Text: ="Close"
+            X: =(ACPopupRectangle_2.Width-Self.Width)/2 +ACPopupRectangle_2.X
+            Y: =ACPopupRectangle_2.Height-Self.Height
+            ZIndex: =9
+
+        Label18_15 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(eDefenderDeleteItemsLocationIDDropdown.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: |+
+                =If(IsBlank(eDefenderDeleteItemsLocationIDDropdown.Selected.Name),"Location Missing", "Location OK")
+                
+            Width: =ACPopupRectangle_2.Width
+            X: =ACPopupBackground_2.X
+            Y: =Rectangle8_9.Y+Rectangle8_9.Height+15
+            ZIndex: =11
+
+        Label18_16 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(eDefenderDeleteItemsTitleInput.Text)) = 0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(eDefenderDeleteItemsTitleInput.Text)) = 0 ,"PD Number Blank", "PD Number OK")
+            Width: =ACPopupRectangle_2.Width
+            X: =ACPopupBackground_2.X
+            Y: =Label18_15.Y+Label18_15.Height+10
+            ZIndex: =12
+
+        Label18_17 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(DeleteReasonInput.Text))= 0,Color.Red,Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(DeleteReasonInput.Text))= 0,"Reason Blank","Reason OK")
+            Width: =ACPopupRectangle_2.Width
+            X: =ACPopupBackground_2.X
+            Y: =Label18_16.Y+Label18_16.Height+10
+            ZIndex: =13
+
+    FeedbackBugReportDeleteItems As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='eDefender Delete Items TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =11
+

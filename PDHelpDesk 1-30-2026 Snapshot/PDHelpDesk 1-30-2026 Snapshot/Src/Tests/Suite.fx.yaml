@@ -1,0 +1,12 @@
+"'9c27b37e-ad9e-48eb-9d42-6cec7beeb487' As TestSuite":
+    Description: =""
+    DisplayName: ="Suite"
+
+    "'f127c478-034f-4b14-9c66-4850af3ac1aa' As TestCase":
+        Description: =""
+        DisplayName: ="Case"
+
+        Step1 As TestStep:
+            Description: ="New step"
+            Value: =
+

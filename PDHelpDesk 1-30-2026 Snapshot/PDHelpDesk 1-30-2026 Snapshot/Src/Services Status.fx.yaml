@@ -1,0 +1,359 @@
+"'Services Status' As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnVisible: |
+        =
+        UpdateContext({recentTime:Text(DateValue(Today())&" "&Text(Now(),DateTimeFormat.LongTime))});
+        UpdateContext({serviceDown:Blank()});
+
+    TemplateContainer_1 As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        TemplateHeaderContainer_1 As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.primary
+            FillPortions: =0
+            Height: =130
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Width: =Parent.Width
+            ZIndex: =2
+
+            Container23 As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =4
+
+                HomeBackgroundGradient_68 As htmlViewer:
+                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                    Height: =130
+                    HtmlText: =Home_Background_Gradient.HtmlText
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                TemplateLabel_1 As label:
+                    Align: =Align.Center
+                    Color: =Color.White
+                    Fill: =Color.Transparent
+                    Height: =Parent.Height-TemplateWebHeader_1.Height
+                    Size: =If('Services Status'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                    Text: ="Services Status"
+                    Width: =Parent.Width
+                    Y: =TemplateWebHeader_1.Height
+                    ZIndex: =2
+
+                TemplateWebHeader_1 As compWebHeader:
+                    BackgroundColor: =Color.Transparent
+                    CompScreenSize: ='Services Status'.Size
+                    EnableFeedback: =Set(varFeedback,true)
+                    ZIndex: =3
+
+        MainSectionTemplateContainer_1 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =ColorScheme.screenBackgroundSeeThroughDark
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =3
+
+            Container13 As groupContainer.manualLayoutContainer:
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                ZIndex: =2
+
+                Gallery4 As gallery.galleryVertical:
+                    '#CopilotOverlayLabel': ="Filtered"
+                    BorderColor: =RGBA(219, 219, 219, 1)
+                    BorderThickness: =2
+                    DelayItemLoading: =true
+                    Height: =Parent.Height-Label63.Height-Label63_1.Height-1
+                    Items: ='Services Active'
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplateSize: =100
+                    Width: =Parent.Width-2
+                    X: =1
+                    Y: =100
+                    ZIndex: =1
+
+                    Rectangle27 As rectangle:
+                        BorderColor: =RGBA(219, 219, 219, 1)
+                        BorderThickness: =2
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =Parent.TemplateHeight
+                        OnSelect: =Select(Parent)
+                        Width: =Parent.TemplateWidth
+                        ZIndex: =1
+
+                    Label59 As label:
+                        FontWeight: =FontWeight.Semibold
+                        Height: =Circle4.Height
+                        OnSelect: =Select(Parent)
+                        Size: =If('Services Status'.Size=1,16,25)
+                        Text: =ThisItem.Name
+                        Width: =200
+                        X: =Circle4.X+Circle4.Width+If('Services Status'.Size=1,10,20)
+                        Y: =Circle4.Y
+                        ZIndex: =2
+
+                    Circle4 As circle:
+                        Fill: =If(ThisItem.Active= true,Color.Green,Color.Red)
+                        Height: =Self.Width
+                        OnSelect: =Select(Parent)
+                        Width: =If('Services Status'.Size=1,32,64)
+                        X: =Parent.TemplateWidth/Self.Height
+                        Y: =If('Services Status'.Size=1,(Parent.TemplateHeight-Self.Height)/4,(Parent.TemplateHeight-Self.Height)/2)
+                        ZIndex: =3
+
+                    Toggle1 As toggleSwitch:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        Default: =ThisItem.Active
+                        FalseText: ="Down"
+                        Height: =If('Services Status'.Size=1,Parent.TemplateHeight/4,Parent.TemplateHeight/2)
+                        LabelPaddingLeft: =0
+                        OnSelect: |+
+                            =Patch('Services Active',LookUp('Services Active',Title = ThisItem.Name),
+                            {
+                                Active:Self.Value,
+                                lastDown: If(Self.Value = false,Now())
+                            });
+                            UpdateContext({serviceDown: ThisItem.Title});
+                            
+                            //Check if service is set to down, send out email, replace last parameter with allEmails
+                            If(ThisItem.Active = true, SendEmail.Run("pdhelpdeskapp@countyofsb.org","Service Down",ServiceDownBody.HtmlText,"mperez@countyofsb.org"));
+                            
+                            //Check if service is set to up, send out email, replace last parameter with allEmails
+                            If(ThisItem.Active = false, SendEmail.Run("pdhelpdeskapp@countyofsb.org","Service Restored",ServiceUpBody.HtmlText,"mperez@countyofsb.org"))
+                            
+                        OnUncheck: |
+                            =false
+                        Size: =If('Services Status'.Size=1,13,25)
+                        TrueText: ="UP"
+                        Visible: =userData.role= "admin" || userData.role="tech"
+                        Width: =4*Self.Height
+                        X: =Parent.TemplateWidth-Self.Width
+                        Y: =(Parent.TemplateHeight-Self.Height)/2
+                        ZIndex: =4
+
+                    Label59_1 As label:
+                        FontWeight: =FontWeight.Semibold
+                        Height: =Circle4.Height
+                        OnSelect: =Select(Parent)
+                        Size: =If('Services Status'.Size=1,10,13)
+                        Text: |-
+                            ="Last Known Uptime: "&ThisItem.lastDown
+                        Visible: =ThisItem.Active = false
+                        Width: =400
+                        X: =If('Services Status'.Size=1,Circle4.X+(Circle4.Width/2),(Parent.TemplateWidth-Self.Width)/2)
+                        Y: =If('Services Status'.Size=1,Circle4.Y+Circle4.Height+5,Circle4.Y)
+                        ZIndex: =5
+
+                Label63 As label:
+                    Align: =Align.Center
+                    FontWeight: =FontWeight.Bold
+                    Text: ="Last Updated "&recentTime
+                    Width: =Parent.Width
+                    ZIndex: =2
+
+                Label63_1 As label:
+                    Align: =Align.Center
+                    FontWeight: =FontWeight.Bold
+                    Height: =50
+                    Text: ="Next Update in "&Timer1.Text&" seconds"
+                    Width: =Parent.Width
+                    Y: =40
+                    ZIndex: =3
+
+        TemplateFooter_1 As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Fill: =RGBA(255,255,255, 1)
+            FillPortions: =0
+            Height: =60
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            Visible: |
+                ='Services Status'.Size =1
+            Width: =Parent.Width
+            ZIndex: =4
+
+            TemplateWebMobileMenu_1 As compMobileMenu:
+                Height: =Parent.Height
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Width: =Parent.Width
+
+    TemplateBackButton_1 As icon.BackArrow:
+        Color: =Color.White
+        Height: =TemplateLabel_1.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(TemplateHeaderContainer_1.Height-TemplateLabel_1.Height)/1.05
+        ZIndex: =2
+
+    TemplateWebMenu_1 As compWebMenu:
+        Height: =If(showMenu, Parent.Height, 80)
+        Visible: ='Services Status'.Size > 1
+        Width: =If(showMenu, Parent.Width, 80)
+        ZIndex: =3
+
+    Timer1 As timer:
+        AutoPause: =false
+        AutoStart: =true
+        Duration: =30000
+        OnTimerEnd: |-
+            =//Refresh('Services Active');
+            UpdateContext({recentTime:Text(DateValue(Today())&" "&Text(Now(),DateTimeFormat.LongTime))})
+        Repeat: =true
+        Text: =Text(Time(0, 0, (Self.Duration-Self.Value)/1000), "ss")
+        Visible: =false
+        X: =40
+        Y: =40
+        ZIndex: =4
+
+    FeedbackBugReportSS As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =5
+
+    ServiceUpBody As htmlViewer:
+        HtmlText: |-
+            ="<table style='border-style: double ; width:100% '>
+                <tr>
+                <td>
+                    <Table style='width:100%'>
+                    <tr>
+                    <th style='border-bottom-style: solid;'>
+            	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style='text-align:center;'>
+            	This email is to inform you that the Service "&serviceDown&" has been restored. We thank you for your continued patience.
+            	</div>
+                    </th>
+                    </tr>
+                    <tr>
+                    <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>
+            	<div>
+            	"&serviceDown&" Restored
+                    </tr>
+                    </td>
+                    <tr>
+                    <td style='font-family: monospace; font-size: 20px '>
+                    </tr>
+                    </td>
+                
+                <tr>
+                <td style='font-family: monospace; font-size: 20px; border-bottom-style: solid '>
+                
+                </td>
+                </tr>
+                
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Visible: =false
+        X: =60
+        Y: =60
+        ZIndex: =6
+
+    ServiceDownBody As htmlViewer:
+        Height: =404
+        HtmlText: |-
+            ="<table style='border-style: double ; width:100% '>
+                <tr>
+                <td>
+                    <Table style='width:100%'>
+                    <tr>
+                    <th style='border-bottom-style: solid;'>
+            	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style='text-align:center;'>
+            	This email is to inform you that the Service "&serviceDown&" has gone down. We are working to get it back up. Be on the lookout for a follow up email when the service has been restored.
+            	</div>
+                    </th>
+                    </tr>
+                    <tr>
+                    <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>
+            	<div>
+            	"&serviceDown&" is Down
+                    </tr>
+                    </td>
+                    <tr>
+                    <td style='font-family: monospace; font-size: 20px '>
+                    </tr>
+                    </td>
+                
+                <tr>
+                <td style='font-family: monospace; font-size: 20px; border-bottom-style: solid '>
+                
+                </td>
+                </tr>
+                
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Visible: =false
+        Width: =1055
+        X: =102
+        Y: =210
+        ZIndex: =7
+

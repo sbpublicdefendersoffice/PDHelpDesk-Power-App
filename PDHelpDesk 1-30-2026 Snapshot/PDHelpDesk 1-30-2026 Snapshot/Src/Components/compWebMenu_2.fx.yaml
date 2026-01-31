@@ -1,0 +1,196 @@
+compWebMenu_2 As CanvasComponent:
+    ExpandMenu: =showMenu
+    Fill: =Color.Transparent
+    HamburgerColor: =Color.White
+    Height: =If(showMenu, App.Height, 80)
+    MenuItems: =gblNavItems
+    OnReset: |-
+        =Set(showMenu, compWebMenu_2.ExpandMenu);
+        //Set(showHamIcon, compWebMenu.showHamburgerIcon);
+        Set(showHamIcon, !compWebMenu_2.ExpandMenu)
+    Width: =If(showMenu, App.Width, 80)
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Background_2 As rectangle:
+        Fill: =RGBA(56, 96, 178, 0.5)
+        Height: =App.Height
+        OnSelect: =Set(showMenu, false);
+        Visible: =showMenu
+        Width: =App.Width
+        ZIndex: =1
+
+    "'White nav background_2' As rectangle":
+        Fill: =Color.White
+        Height: =App.Height
+        OnSelect: =//Select(Parent)
+        Visible: =showMenu
+        Width: =200
+        ZIndex: =2
+
+    HtmlText1_4 As htmlViewer:
+        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+        Height: =80
+        HtmlText: |-
+            ="<div style=
+            '
+            height:55px;
+            width:55px;
+            -webkit-border-radius: 50px;
+            border-radius: 15px;
+            
+            margin:10px;
+            '></div>"
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        Width: =80
+        ZIndex: =3
+
+    icoHamburgerMenu_2 As icon.Hamburger:
+        Color: =compWebMenu_2.HamburgerColor
+        Fill: =Color.Transparent
+        Height: =48
+        Icon: =Icon.Hamburger
+        OnSelect: |
+            =Set(showMenu, !showMenu);
+        TabIndex: =1
+        Visible: =!showMenu
+        Width: =62
+        X: =(Parent.Width-Self.Width)/2
+        Y: =(Parent.Height-Self.Height)/2
+        ZIndex: =4
+
+    xIcon_2 As icon.Cancel:
+        Fill: =Color.Transparent
+        Height: =48
+        Icon: =Icon.Cancel
+        OnSelect: =Set(showMenu, !showMenu);
+        PaddingTop: =2
+        TabIndex: =2
+        Visible: =showMenu
+        Width: =62
+        X: =6
+        Y: =12
+        ZIndex: =5
+
+    MenuOpened_2 As gallery.variableTemplateHeightGallery:
+        '#CopilotOverlayLabel': ="Filtered"
+        DelayItemLoading: =true
+        Height: =App.DesignHeight
+        Items: =compWebMenu_2.MenuItems
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        ShowScrollbar: =false
+        TemplateSize: =47
+        Visible: =showMenu
+        Width: =185
+        Y: |-
+            =//icoHamburgerMenu.Height
+            82
+        ZIndex: =6
+
+        Rectangle2_6 As rectangle:
+            Height: =48
+            OnSelect: =
+            Visible: =ThisItem.ScreenToGoTo.Name = App.ActiveScreen.Name
+            Width: =6
+            ZIndex: =2
+
+        Icon3_3 As icon.Add:
+            Height: =48
+            Icon: =ThisItem.MenuIcon
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Width: =62
+            X: =3
+            ZIndex: =3
+
+        Label2_5 As label:
+            FontWeight: =FontWeight.Lighter
+            Height: =48
+            OnSelect: =Select(Parent)
+            Size: =14
+            Text: =ThisItem.MenuText
+            Width: =175
+            X: =Icon3_3.Width
+            ZIndex: =4
+
+        Button2_5 As button:
+            Fill: =Color.Transparent
+            FocusedBorderColor: =Color.Black
+            Height: =Label2_5.Height + Label2_5.Y
+            HoverFill: =Color.Transparent
+            OnSelect: |-
+                =Set(showMenu, false);
+                Navigate(ThisItem.ScreenToGoTo);
+            PressedFill: =Color.Transparent
+            TabIndex: =3
+            Text: =""
+            Width: =175
+            ZIndex: =5
+
+    MenuClosed_2 As gallery.variableTemplateHeightGallery:
+        '#CopilotOverlayLabel': ="Filtered"
+        DelayItemLoading: =true
+        Height: =558
+        Items: =compWebMenu_2.MenuItems
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        ShowScrollbar: =false
+        TemplateSize: =280
+        Visible: |-
+            =false
+            //!showMenu
+        Width: =185
+        Y: |-
+            =//icoHamburgerMenu.Height
+            82
+        ZIndex: =7
+
+        Rectangle2_7 As rectangle:
+            Height: =48
+            OnSelect: =
+            Visible: =ThisItem.ScreenToGoTo.Name = App.ActiveScreen.Name
+            Width: =6
+            ZIndex: =1
+
+        Icon3_7 As icon.Add:
+            Height: =48
+            Icon: =ThisItem.MenuIcon
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Width: =58
+            ZIndex: =2
+
+        Label2_6 As label:
+            FontWeight: =FontWeight.Lighter
+            Height: =48
+            OnSelect: =Select(Parent)
+            Size: =14
+            Text: =ThisItem.MenuText
+            Visible: |
+                =false
+            Width: =58
+            ZIndex: =3
+
+        Button2_6 As button:
+            Fill: =Color.Transparent
+            Height: =Label2_5.Height + Label2_5.Y
+            HoverFill: =Color.Transparent
+            OnSelect: |-
+                =Set(showMenu, false);
+                Navigate(ThisItem.ScreenToGoTo);
+            PressedFill: =Color.Transparent
+            Text: =""
+            Width: =58
+            ZIndex: =4
+

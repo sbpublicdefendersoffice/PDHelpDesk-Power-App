@@ -1,0 +1,2606 @@
+"'Case Support Audio/Image/Video Enhancements TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |-
+        =ResetForm(CSAIVEForm);
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        ClearCollect(enhanceOptions,
+        {
+            option:"Video"
+        },
+        {
+            option:"Audio"
+        }
+        ,
+        {
+            option:"Both"
+        }
+        );
+        
+         ClearCollect(times, 
+         {
+                    startTime:"00:01:56",
+                    endTime:"00:22:00"
+                });
+        ClearCollect(NestedCol, 
+        {
+         fileName:"SpongebobEp1.mp4",
+         filePath:"V:PubDef/TV/SpongebobSquarePantsSeason1",
+         enhanceType:"Video",
+         videoTrue:false,
+         videoTimes: times,
+         notes:""
+        
+        });
+        
+        Clear(NestedCol);
+        
+        UpdateContext({videoRecord:Blank()});
+        UpdateContext({notesPopUp:false});
+
+    CSAIVEMainContainer As groupContainer.horizontalAutoLayoutContainer:
+        Height: ='Case Support Audio/Image/Video Enhancements TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='Case Support Audio/Image/Video Enhancements TT'.Width
+        ZIndex: =1
+
+        CSAIVEVerticalLayoutContainer As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            CSAIVEHeaderContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                EnhancementsHeaderElements As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =4
+
+                    HomeBackgroundGradient_51 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    CSAIVEHeaderLabel As label:
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-CSAIVEWebHeader.Height
+                        Size: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Audio/Image/Video Enhancement Form"
+                        Width: =Parent.Width
+                        Y: =CSAIVEWebHeader.Height
+                        ZIndex: =2
+
+                    CSAIVEWebHeader As compWebHeader:
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='Case Support Audio/Image/Video Enhancements TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        ZIndex: =3
+
+            CSAIVEMainContentContainer As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                CSAIVEForm As form:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    CSAIVETitle_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =200
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        CSAIVETitleError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =65
+                            ZIndex: =1
+
+                        CSAIVETitleStarVisible As label:
+                            Align: =Align.Center
+                            Color: =CSAIVETitleLabel.Color
+                            Height: =CSAIVETitleLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSAIVETitleLabel.Y
+                            ZIndex: =2
+
+                        CSAIVETitleInput As text:
+                            Default: =""
+                            Height: =35
+                            HintText: ="Please enter a case number"
+                            Width: =CSAIVETitleInput_1.Width
+                            X: =30
+                            Y: =CSAIVETitleLabel.Y+CSAIVETitleLabel.Height
+                            ZIndex: =3
+
+                        CSAIVETitleLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =36
+                            Text: ="Case Number"
+                            Width: =130
+                            Wrap: =false
+                            X: =30
+                            Y: =CSAIVETitleInput_1.Y+CSAIVETitleInput_1.Height+20
+                            ZIndex: =4
+
+                        CSAIVETitleInput_1 As text:
+                            Default: =userData.fullName
+                            DisplayMode: =DisplayMode.View
+                            Height: =35
+                            HintText: =""
+                            Width: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: =CSAIVETitleLabel_1.Y+CSAIVETitleLabel_1.Height
+                            ZIndex: =5
+
+                        CSAIVETitleLabel_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =30
+                            Text: ="Attorney Name"
+                            Wrap: =false
+                            X: =30
+                            Y: =20
+                            ZIndex: =6
+
+                    CSAIVEMainCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Audio/Image/Video Enhancements TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        CSAIVEMainCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSAIVEMainCategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =CSAIVEMainCategoryDropdown.Y + CSAIVEMainCategoryDropdown.Height
+                            ZIndex: =3
+
+                        CSAIVEMainCategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSAIVEMainCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =10
+                            ZIndex: =4
+
+                        CSAIVEMainCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSAIVESubCategory_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Audio/Image/Video Enhancements TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        CSAIVESubCategoryLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSAIVESubcategoryError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =73
+                            ZIndex: =3
+
+                        CSAIVESubcategoryStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSAIVESubCategoryLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSAIVESubCategoryLabel.Y
+                            ZIndex: =4
+
+                        CSAIVESubCategoryDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = CSAIVEMainCategoryDropdown.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSAIVEFields As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =800
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        EstimatedDatePicker As datepicker:
+                            DefaultDate: =Blank()
+                            Height: =35
+                            IconBackground: =ColorScheme.primary
+                            InputTextPlaceholder: ="Select Date"
+                            OnSelect: =If(Self.SelectedDate<Today(),Notify("Selecting Invalid Date",NotificationType.Error))
+                            Width: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,Gallery1Header_1.Width,Gallery1Header_1.Width/3)
+                            X: =30
+                            Y: =EstimatedDate.Y+EstimatedDate.Height
+                            ZIndex: =1
+
+                        EstimatedDate As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Text: ="Estimated Date Needed"
+                            Width: =210
+                            X: =30
+                            Y: =4
+                            ZIndex: =2
+
+                        Container9 As groupContainer:
+                            Height: =1000
+                            LayoutGridColumns: =6
+                            LayoutGridRows: =6
+                            Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                            Width: =Parent.Width
+                            Y: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,'Video/AudioEditingMobileGallery_2'.Y+'Video/AudioEditingMobileGallery_2'.Height+20,VideoEnhancementGallery.Y+VideoEnhancementGallery.Height+20)
+                            ZIndex: =19
+
+                            AddEntryButton_3 As button:
+                                Fill: =ColorScheme.primary
+                                OnSelect: =Reset(Gallery4_1);
+                                Text: ="Clear"
+                                Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                Width: =AddEntryButton.Width
+                                X: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,FileEntryRectangle.Width+FileEntryRectangle.X-Self.Width,FileEntryRectangle.Width/1.25)
+                                Y: =FileEntryRectangle_1.Y+FileEntryRectangle_1.Height+20
+                                ZIndex: =24
+
+                            "'Time Entry Group' As group":
+                                Height: =5
+                                Width: =5
+                                X: =60
+                                Y: =60
+                                ZIndex: =24
+
+                                Gallery1Header_2 As rectangle:
+                                    BorderThickness: =1
+                                    Fill: =ColorScheme.primary
+                                    Height: =50
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =CSAIVETitleInput.Width
+                                    X: =30
+                                    Y: =Label21_1.Y+Label21_1.Height+15
+                                    ZIndex: =1
+
+                                FileEntryRectangle_1 As rectangle:
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Dropdown1_5.Y
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =CSAIVETitleInput.Width
+                                    X: =30
+                                    Y: =Gallery1Header_2.Y+Gallery1Header_2.Height
+                                    ZIndex: =2
+
+                                Gallery1Title_2 As label:
+                                    Align: =Align.Center
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Height: =Gallery1Header_2.Height
+                                    Size: =Gallery1Title_1.Size
+                                    Text: ="Time Snippet Entry- "&videoRecord.fileName
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1Header_2.Width
+                                    X: =Gallery1Header_2.X
+                                    Y: =Gallery1Header_2.Y
+                                    ZIndex: =3
+
+                                Gallery1FileName_2 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =50
+                                    Size: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,15,20)
+                                    Text: ="Hour"
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1Header_2.Width/3
+                                    X: =Gallery1Header_2.X
+                                    Y: =Gallery1Title_3.Y+Gallery1Title_3.Height
+                                    ZIndex: =4
+
+                                Gallery1FilePath_2 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =50
+                                    Size: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,15,20)
+                                    Text: |-
+                                        ="Minute
+                                        "
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1Header_2.Width/3
+                                    X: =Gallery1FileName_2.X+Gallery1FileName_2.Width
+                                    Y: =Gallery1Title_3.Y+Gallery1Title_3.Height
+                                    ZIndex: =5
+
+                                Gallery1VideoOption_2 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =50
+                                    Size: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,15,20)
+                                    Text: |-
+                                        ="Seconds
+                                        "
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1Header_2.Width/3
+                                    X: =Gallery1FilePath_2.X+Gallery1FilePath_2.Width
+                                    Y: =Gallery1Title_3.Y+Gallery1Title_3.Height
+                                    ZIndex: =6
+
+                                Dropdown1 As dropdown:
+                                    ChevronBackground: =ColorScheme.primary
+                                    Default: =If(Gallery4_1.Visible,If(IsBlank(Gallery4_1.Selected),"0",Left(Gallery4_1.Selected.startTime,2)),If(IsBlank('Video/AudioEditingMobileGallery_3'.Selected),"0",Left('Video/AudioEditingMobileGallery_3'.Selected.startTime,2)))
+                                    Items: =ForAll(Sequence(100), Text(Value-1,"[$-en-US]00"))
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1FileName_2.Width-10
+                                    X: =35
+                                    Y: =Gallery1FileName_2.Y+Gallery1FileName_2.Height+5
+                                    ZIndex: =7
+
+                                AddEntryButton_1 As button:
+                                    Fill: =ColorScheme.primary
+                                    OnSelect: |-
+                                        =Clear(times);
+                                        Collect(times,LookUp(NestedCol,videoRecord.fileName = fileName).videoTimes);
+                                        
+                                        If(Gallery4_1.Visible,
+                                        
+                                        If(IsBlank(Gallery4_1.Selected),
+                                        
+                                        Patch(times, Defaults(times), 
+                                        {
+                                            startTime: Dropdown1.Selected.Value&":"&Dropdown1_1.Selected.Value&":"&Dropdown1_2.Selected.Value,
+                                            endTime:Dropdown1_3.Selected.Value&":"&Dropdown1_4.Selected.Value&":"&Dropdown1_5.Selected.Value
+                                        });
+                                        ,
+                                        Patch(times, LookUp(times, Gallery4_1.Selected.startTime = startTime && Gallery4_1.Selected.endTime = endTime),
+                                        {
+                                            startTime: Dropdown1.Selected.Value&":"&Dropdown1_1.Selected.Value&":"&Dropdown1_2.Selected.Value,
+                                            endTime:Dropdown1_3.Selected.Value&":"&Dropdown1_4.Selected.Value&":"&Dropdown1_5.Selected.Value
+                                        });
+                                        
+                                        Reset(Gallery4_1);
+                                        );
+                                        
+                                        Patch(NestedCol,LookUp(NestedCol, videoRecord.fileName = fileName),
+                                        {
+                                            videoTimes:times
+                                        }
+                                        );,
+                                        If(IsBlank('Video/AudioEditingMobileGallery_3'.Selected),
+                                        
+                                        Patch(times, Defaults(times), 
+                                        {
+                                            startTime: Dropdown1.Selected.Value&":"&Dropdown1_1.Selected.Value&":"&Dropdown1_2.Selected.Value,
+                                            endTime:Dropdown1_3.Selected.Value&":"&Dropdown1_4.Selected.Value&":"&Dropdown1_5.Selected.Value
+                                        });
+                                        ,
+                                        Patch(times, LookUp(times, 'Video/AudioEditingMobileGallery_3'.Selected.startTime = startTime && 'Video/AudioEditingMobileGallery_3'.Selected.endTime = endTime),
+                                        {
+                                            startTime: Dropdown1.Selected.Value&":"&Dropdown1_1.Selected.Value&":"&Dropdown1_2.Selected.Value,
+                                            endTime:Dropdown1_3.Selected.Value&":"&Dropdown1_4.Selected.Value&":"&Dropdown1_5.Selected.Value
+                                        });
+                                        
+                                        Reset('Video/AudioEditingMobileGallery_3');
+                                        );
+                                        
+                                        Patch(NestedCol,LookUp(NestedCol, videoRecord.fileName = fileName),
+                                        {
+                                            videoTimes:times
+                                        }
+                                        );
+                                        )
+                                    Text: =If(!IsBlank(Gallery4_1.Visible),If(IsBlank(Gallery4_1.Selected),"Add Time","Update Time"),If(IsBlank('Video/AudioEditingMobileGallery_3'.Selected),"Add Time","Update Time"))
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =AddEntryButton.Width
+                                    X: =If('Case Support Audio or Video Redactions TT'.Size=1,Gallery1Header_1.X,FileEntryRectangle.Width/6)
+                                    Y: =FileEntryRectangle_1.Y+FileEntryRectangle_1.Height+20
+                                    ZIndex: =8
+
+                                Gallery1FileName_3 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =50
+                                    Size: =Gallery1FileName_1.Size
+                                    Text: ="Hour"
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1Header_2.Width/3
+                                    X: =Gallery1Header_2.X
+                                    Y: =Gallery1Title_4.Y+Gallery1Title_4.Height
+                                    ZIndex: =9
+
+                                Gallery1FilePath_3 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =50
+                                    Size: =Gallery1FileName_1.Size
+                                    Text: |-
+                                        ="Minute
+                                        "
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1Header_2.Width/3
+                                    X: =Gallery1FileName_3.X+Gallery1FileName_3.Width
+                                    Y: =Gallery1Title_4.Y+Gallery1Title_4.Height
+                                    ZIndex: =10
+
+                                Gallery1VideoOption_3 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =50
+                                    Size: =Gallery1FileName_1.Size
+                                    Text: |-
+                                        ="Seconds
+                                        "
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1Header_2.Width/3
+                                    X: =Gallery1FilePath_3.X+Gallery1FilePath_3.Width
+                                    Y: =Gallery1Title_4.Y+Gallery1Title_4.Height
+                                    ZIndex: =11
+
+                                Dropdown1_1 As dropdown:
+                                    ChevronBackground: =ColorScheme.primary
+                                    Default: =If(Gallery4_1.Visible,If(IsBlank(Gallery4_1.Selected),"0",Right(Left(Gallery4_1.Selected.startTime,5),2)),If(IsBlank('Video/AudioEditingMobileGallery_3'.Selected),"0",Right(Left('Video/AudioEditingMobileGallery_3'.Selected.startTime,5),2)))
+                                    Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1FileName_2.Width-10
+                                    X: =Dropdown1.X+Dropdown1.Width+10
+                                    Y: =Gallery1FileName_2.Y+Gallery1FileName_2.Height+5
+                                    ZIndex: =12
+
+                                Dropdown1_2 As dropdown:
+                                    ChevronBackground: =ColorScheme.primary
+                                    Default: =If(Gallery4_1.Visible,If(IsBlank(Gallery4_1.Selected),"0",Right(Gallery4_1.Selected.startTime,2)),If(IsBlank('Video/AudioEditingMobileGallery_3'.Selected),"0",Right('Video/AudioEditingMobileGallery_3'.Selected.startTime,2)))
+                                    Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1FileName_2.Width-10
+                                    X: =Dropdown1_1.X+Dropdown1_1.Width+10
+                                    Y: =Gallery1FileName_2.Y+Gallery1FileName_2.Height+5
+                                    ZIndex: =13
+
+                                Gallery1Title_3 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =2
+                                    Fill: =RGBA(187, 221, 140, 1)
+                                    Height: =Gallery1Header_2.Height
+                                    Size: =Gallery1FileName_1.Size
+                                    Text: ="Clip Start"
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1Header_2.Width
+                                    X: =Gallery1Header_2.X
+                                    Y: =Gallery1Header_2.Y+Gallery1Header_2.Height
+                                    ZIndex: =14
+
+                                Gallery1Title_4 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =2
+                                    Fill: =RGBA(220, 153, 153, 1)
+                                    Height: =Gallery1Header_2.Height
+                                    Size: =Gallery1FileName_1.Size
+                                    Text: ="Clip End"
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1Header_2.Width
+                                    X: =Gallery1Header_2.X
+                                    Y: =Dropdown1.Y+Dropdown1.Height+5
+                                    ZIndex: =15
+
+                                Dropdown1_3 As dropdown:
+                                    ChevronBackground: =ColorScheme.primary
+                                    Default: =If(Gallery4_1.Visible,If(IsBlank(Gallery4_1.Selected),"0",Left(Gallery4_1.Selected.endTime,2)),If(IsBlank('Video/AudioEditingMobileGallery_3'.Selected),"0",Left('Video/AudioEditingMobileGallery_3'.Selected.endTime,2)))
+                                    Items: =ForAll(Sequence(100), Text(Value-1,"[$-en-US]00"))
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1FileName_2.Width-10
+                                    X: =35
+                                    Y: =Gallery1FileName_3.Y+Gallery1FileName_3.Height+5
+                                    ZIndex: =16
+
+                                Dropdown1_4 As dropdown:
+                                    ChevronBackground: =ColorScheme.primary
+                                    Default: =If(Gallery4_1.Visible,If(IsBlank(Gallery4_1.Selected),"0",Right(Left(Gallery4_1.Selected.endTime,5),2)),If(IsBlank('Video/AudioEditingMobileGallery_3'.Selected),"0",Right(Left('Video/AudioEditingMobileGallery_3'.Selected.endTime,5),2)))
+                                    Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1FileName_2.Width-10
+                                    X: =Dropdown1_3.X+Dropdown1_3.Width+10
+                                    Y: =Gallery1FileName_3.Y+Gallery1FileName_3.Height+5
+                                    ZIndex: =17
+
+                                Dropdown1_5 As dropdown:
+                                    ChevronBackground: =ColorScheme.primary
+                                    Default: =If(Gallery4_1.Visible,If(IsBlank(Gallery4_1.Selected),"0",Right(Gallery4_1.Selected.endTime,2)),If(IsBlank('Video/AudioEditingMobileGallery_3'.Selected),"0",Right('Video/AudioEditingMobileGallery_3'.Selected.endTime,2)))
+                                    Items: =ForAll(Sequence(60), Text(Value-1,"[$-en-US]00"))
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1FileName_2.Width-10
+                                    X: =Dropdown1_4.X+Dropdown1_4.Width+10
+                                    Y: =Gallery1FileName_3.Y+Gallery1FileName_3.Height+5
+                                    ZIndex: =18
+
+                            Label21_1 As label:
+                                Align: =Align.Center
+                                AutoHeight: =true
+                                Color: =RGBA(168, 0, 0, 1)
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Size: =16
+                                Text: ="When adding times, remember to reference the times in the video player. DO NOT USE THE TIMES PROVIDED BY THE SURVAILLENCE FOOTAGE!"
+                                Width: =Parent.Width
+                                ZIndex: =26
+
+                            Group15 As group:
+                                Height: =5
+                                Width: =5
+                                X: =40
+                                Y: =40
+                                ZIndex: =27
+
+                                Gallery4_1 As gallery.variableTemplateHeightGallery:
+                                    '#CopilotOverlayLabel': ="Filtered"
+                                    BorderThickness: =1
+                                    Default: ={}
+                                    DelayItemLoading: =true
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =300
+                                    Items: =If(!VideoEnhancementGallery.Selected.videoTrue,VideoEnhancementGallery.Selected.videoTimes,Blank())
+                                    Layout: =Layout.Vertical
+                                    LoadingSpinner: =LoadingSpinner.Data
+                                    TemplatePadding: =0
+                                    TemplateSize: =50
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)&&'Case Support Audio/Image/Video Enhancements TT'.Size>1
+                                    Width: =Gallery1Header.Width
+                                    X: =Gallery1Header.X
+                                    Y: =Label10.Y+Label10.Height
+                                    ZIndex: =19
+
+                                    Container7_1 As groupContainer.verticalAutoLayoutContainer:
+                                        BorderThickness: =1
+                                        Height: =50
+                                        LayoutDirection: =LayoutDirection.Vertical
+                                        LayoutGridColumns: =6
+                                        LayoutGridRows: =6
+                                        LayoutMode: =LayoutMode.Auto
+                                        Width: =Parent.TemplateWidth
+                                        ZIndex: =1
+
+                                        Container8_1 As groupContainer.horizontalAutoLayoutContainer:
+                                            FillPortions: =0
+                                            Height: =Parent.Height
+                                            LayoutGridColumns: =6
+                                            LayoutGridRows: =6
+                                            LayoutMaxHeight: =
+                                            LayoutMaxWidth: =
+                                            LayoutMinHeight: =100
+                                            LayoutMinWidth: =250
+                                            LayoutMode: =LayoutMode.Auto
+                                            ZIndex: =1
+
+                                            NestedColFileName_1 As label:
+                                                Align: =Align.Center
+                                                BorderThickness: =1
+                                                FillPortions: =1
+                                                Height: =Parent.Height   
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                Size: =15
+                                                Text: =ThisItem.startTime
+                                                ZIndex: =1
+
+                                            NestedColFilePath_1 As label:
+                                                Align: =Align.Center
+                                                BorderThickness: =1
+                                                FillPortions: =1
+                                                Height: =Parent.Height   
+                                                LayoutMaxHeight: =
+                                                LayoutMaxWidth: =
+                                                Size: =15
+                                                Text: =ThisItem.endTime
+                                                ZIndex: =2
+
+                                    Button11 As button:
+                                        Color: =RGBA(0, 0, 0, 0)
+                                        Fill: =RGBA(0, 0, 0, 0)
+                                        Height: =50
+                                        HoverFill: =RGBA(99, 139, 44, .35)
+                                        OnSelect: =Select(Parent)
+                                        PressedFill: =RGBA(99, 139, 44, .5)
+                                        Text: ="Edit Times"
+                                        Width: =Parent.TemplateWidth/2
+                                        ZIndex: =2
+
+                                    Button11_1 As button:
+                                        Color: =RGBA(0, 0, 0, 0)
+                                        Fill: =RGBA(0, 0, 0, 0)
+                                        Height: =50
+                                        HoverFill: =RGBA(151, 0, 0, .35)
+                                        OnSelect: |-
+                                            =Clear(times);
+                                            Collect(times, LookUp(NestedCol, videoRecord.fileName=fileName).videoTimes);
+                                            Remove(times,ThisItem);
+                                            Patch(NestedCol, LookUp(NestedCol,videoRecord.fileName=fileName), 
+                                            {
+                                                videoTimes:times
+                                            });
+                                        PressedFill: =RGBA(151, 0, 0, .50)
+                                        Text: ="Remove Entry"
+                                        Width: =Parent.TemplateWidth/2
+                                        X: =Button11.X+Button11.Width
+                                        ZIndex: =3
+
+                                Label10_9 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =2
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =50
+                                    Size: =17
+                                    Text: ="End Time"
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)&&'Case Support Audio/Image/Video Enhancements TT'.Size>1
+                                    Width: =Gallery1Header_3.Width/2
+                                    X: =Label10.X+Label10.Width
+                                    Y: =Label10.Y
+                                    ZIndex: =20
+
+                                Label10 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =2
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =50
+                                    Size: =17
+                                    Text: ="Start Time"
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)&&'Case Support Audio/Image/Video Enhancements TT'.Size>1
+                                    Width: =Gallery1Header_3.Width/2
+                                    X: =30
+                                    Y: =Gallery1Header_3.Y+Gallery1Header_3.Height
+                                    ZIndex: =21
+
+                                Gallery1Header_3 As rectangle:
+                                    BorderThickness: =1
+                                    Fill: =ColorScheme.primary
+                                    Height: =50
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =CSAIVETitleInput.Width
+                                    X: =30
+                                    Y: |
+                                        =AddEntryButton_1.Y+AddEntryButton_1.Height+20
+                                    ZIndex: =22
+
+                                Gallery1Title_5 As label:
+                                    Align: =Align.Center
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Height: =Gallery1Header_3.Height
+                                    Size: =Gallery1Title_1.Size
+                                    Text: ="Add Time Snippets"
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)
+                                    Width: =Gallery1Header_3.Width
+                                    X: =Gallery1Header_3.X
+                                    Y: =Gallery1Header_3.Y
+                                    ZIndex: =23
+
+                                "'Video/AudioEditingMobileGallery_3' As gallery.galleryVertical":
+                                    '#CopilotOverlayLabel': ="Filtered"
+                                    BorderThickness: =1
+                                    Default: |-
+                                        =//First(MyTicketsGallery.AllItems)
+                                        {}
+                                    DelayItemLoading: |-
+                                        =//false
+                                        true
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =300
+                                    Items: ='Video/AudioEditingMobileGallery_2'.Selected.videoTimes
+                                    Layout: =Layout.Vertical
+                                    LoadingSpinner: |-
+                                        =//LoadingSpinner.None
+                                        LoadingSpinner.Controls
+                                    TemplatePadding: =10
+                                    TemplateSize: |-
+                                        =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                        //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+                                        
+                                        If(MyTickets.Size > 1, 250, 240)
+                                    Transition: =Transition.Push
+                                    Visible: =If(IsBlank(videoRecord),false,!videoRecord.videoTrue)&&'Case Support Audio/Image/Video Enhancements TT'.Size=1
+                                    Width: =Gallery1Header_3.Width
+                                    WrapCount: =RoundDown((Parent.Width / 320), 0)
+                                    X: =Rectangle10_1.X
+                                    Y: =Gallery1Header_3.Y+Gallery1Header_3.Height
+                                    ZIndex: =25
+
+                                    Rectangle6_8 As rectangle:
+                                        BorderColor: =RGBA(0, 0, 0, 0)
+                                        BorderThickness: =25
+                                        Fill: =RGBA(255, 255, 255, 1)
+                                        Height: =Image6_8.Height
+                                        OnSelect: =Select(Parent)
+                                        Width: =Image6_8.Width
+                                        ZIndex: =1
+
+                                    Image6_8 As image:
+                                        Height: |-
+                                            =//250
+                                            Parent.TemplateHeight
+                                        Image: |-
+                                            ="data:image/svg+xml," & EncodeUrl(
+                                                "<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+                                            <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+                                            <svg version='1.1'
+                                                xmlns='http://www.w3.org/2000/svg'
+                                                xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 " & Self.Width & " " & Self.Height & "' width='" & Self.Width & "' height='" & Self.Height & "'>
+                                                <defs>" &
+                                                // ----- Box for fill
+                                             "<path d='" &
+                                             // Upper left
+                                             "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0,0) &
+                                                // Upper right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                                // Lower right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                                // Lower left
+                                             "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                             "Z' id='box' stroke='" & "#ff0000" & "' stroke-width='" & 0 & "'></path>
+                                                </defs>
+                                                <g>
+                                                    <g>
+                                                        <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>
+                                                            <feFlood></feFlood>
+                                                            <feComposite in2='SourceAlpha' operator='in'></feComposite>
+                                                            <feGaussianBlur stdDeviation='" & 5 & "'></feGaussianBlur>
+                                                            <feOffset dx='" & 0 & "' dy='" & 0 & "' result='afterOffset'></feOffset>
+                                                            <feFlood flood-color='" & "#000000" & "' flood-opacity='" & Substitute(Text(0.5), ",", ".") & "'></feFlood>
+                                                            <feComposite in2='afterOffset' operator='in'></feComposite>
+                                                            <feMorphology operator='dilate' radius='1'></feMorphology>
+                                                            <feComposite in2='SourceAlpha' operator='out'></feComposite>
+                                                        </filter>" &
+                                                        // ----- Box for shadow
+                                             "<path d='" &
+                                             // Upper left
+                                             "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                                // Upper right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                                // Lower right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                                // Lower left
+                                             "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                             "Z' id='Component1' filter='url(#shadow)'></path>
+                                                    </g>
+                                                    <use xlink:href='#box' opacity='1' fill='" & "#ffffff" & "' fill-opacity='" & Substitute(Text(0), ",", ".") & "'></use>
+                                                </g>
+                                                <g>
+                                                    " &
+                                                    // ----- Edge
+                                             If(
+                                                    true,
+                                                    Switch(
+                                                        "left",
+                                                        "left",// -- Position: left
+                                                        "<path d='" &
+                                                    // Upper left
+                                             "M" & Max(5 * 3 - 0, 0) + 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                    // Upper right
+                                             "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                    // Lower right
+                                             "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                    // Lower left
+                                             "L" & Max(5 * 3 - 0, 0) + 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                             "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>",
+                                                         "right",// -- Position: right
+                                                        "<path d='" &
+                                                    // Upper left
+                                             "M" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                    // Upper right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                    // Lower right
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                    // Lower left
+                                             "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                             "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>"
+                                                       
+                                                    )
+                                                ) & "
+                                                </g>
+                                            </svg>"
+                                            )
+                                        OnSelect: =Select(Parent)
+                                        Width: |-
+                                            =//329
+                                            Parent.TemplateWidth
+                                        ZIndex: =2
+
+                                    btnBkg_8 As button:
+                                        Fill: =RGBA(255, 255, 255, 1)
+                                        Height: =Parent.TemplateHeight
+                                        HoverFill: =Self.Fill
+                                        OnSelect: =Select(Parent)
+                                        PressedFill: =Self.Fill
+                                        RadiusBottomLeft: =0
+                                        RadiusBottomRight: =0
+                                        RadiusTopLeft: =0
+                                        RadiusTopRight: =0
+                                        Text: =""
+                                        Visible: =false
+                                        Width: =Parent.TemplateWidth
+                                        ZIndex: =3
+
+                                    TitleLabel_8 As label:
+                                        FontWeight: =FontWeight.Semibold
+                                        Height: =54
+                                        OnSelect: =Select(Parent)
+                                        Size: =12
+                                        Text: =If(ThisItem.IsSelected,"Selected","")
+                                        Width: |-
+                                            =//208
+                                            Parent.TemplateWidth - Icon18_6.Width - 47
+                                        X: =24
+                                        Y: =27
+                                        ZIndex: =4
+
+                                    DateExpiredLabel_7 As label:
+                                        Align: =Align.Center
+                                        Height: |-
+                                            =//25
+                                            34
+                                        OnSelect: =Select(Parent)
+                                        Size: =11
+                                        Text: =ThisItem.endTime
+                                        Width: =StartedLabelTextValue_6.Width
+                                        X: =ExpiresLabelText_6.X
+                                        Y: =ExpiresLabelText_6.Y+ExpiresLabelText_6.Height
+                                        ZIndex: =7
+
+                                    ExpiresLabelText_6 As label:
+                                        Align: =Align.Center
+                                        BorderThickness: =1
+                                        Color: =RGBA(255, 255, 255, 1)
+                                        Fill: =RGBA(203, 102, 102, 1)
+                                        Height: =25
+                                        OnSelect: =Select(Parent)
+                                        Size: =10
+                                        Text: ="End"
+                                        Visible: |-
+                                            =//is_admin
+                                            true
+                                        Width: =60
+                                        X: |-
+                                            =//67
+                                            StaratedLabelText_6.X
+                                        Y: |-
+                                            =//180
+                                            //Parent.TemplateHeight - Self.Height - 27
+                                            Rectangle19_4.Y+Rectangle19_4.Height+10
+                                        ZIndex: =8
+
+                                    OverlapButton_6 As button:
+                                        BorderThickness: =0
+                                        Fill: =Color.Transparent
+                                        Height: |-
+                                            =//220
+                                            Parent.TemplateHeight
+                                        HoverFill: =Self.Fill
+                                        OnSelect: |-
+                                            =
+                                            
+                                            // Sharepoint List
+                                            Select(Parent)
+                                        PressedFill: =Self.Fill
+                                        Text: =""
+                                        Width: |-
+                                            =//303
+                                            Parent.TemplateWidth
+                                        X: |-
+                                            =//24
+                                            (Parent.TemplateWidth - Self.Width) / 2
+                                        Y: |-
+                                            =//15
+                                            (Parent.TemplateHeight - Self.Height) / 2
+                                        ZIndex: =13
+
+                                    Icon18_6 As icon.CancelBadge:
+                                        Height: =32
+                                        Icon: =Icon.CancelBadge
+                                        OnSelect: |-
+                                            =Clear(times);
+                                            Collect(times, LookUp(NestedCol, videoRecord.fileName=fileName).videoTimes);
+                                            Remove(times,ThisItem);
+                                            Patch(NestedCol, LookUp(NestedCol,videoRecord.fileName=fileName), 
+                                            {
+                                                videoTimes:times
+                                            });
+                                        Width: =32
+                                        X: =Parent.TemplateWidth - Self.Width - 23
+                                        Y: =27
+                                        ZIndex: =14
+
+                                    Rectangle20_4 As rectangle:
+                                        BorderThickness: =1
+                                        Fill: =RGBA(0, 0, 0, 0)
+                                        Height: =ExpiresLabelText_6.Height+DateExpiredLabel_7.Height
+                                        OnSelect: =Select(Parent)
+                                        Width: =Parent.TemplateWidth/1.5
+                                        X: =ExpiresLabelText_6.X
+                                        Y: =ExpiresLabelText_6.Y
+                                        ZIndex: =16
+
+                                    Group11_4 As group:
+                                        Height: =5
+                                        Width: =5
+                                        X: =60
+                                        Y: =60
+                                        ZIndex: =16
+
+                                        StartedLabelTextValue_6 As label:
+                                            Align: =Align.Center
+                                            Height: |-
+                                                =//25
+                                                34
+                                            OnSelect: =Select(Parent)
+                                            Size: =11
+                                            Text: =ThisItem.startTime
+                                            Width: |-
+                                                =//143
+                                                Parent.TemplateWidth - StaratedLabelText_6.Width - 47
+                                            Wrap: =false
+                                            X: |-
+                                                =//89
+                                                StaratedLabelText_6.X
+                                            Y: |
+                                                =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                //((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                                StaratedLabelText_6.Y+StaratedLabelText_6.Height
+                                            ZIndex: =11
+
+                                        StaratedLabelText_6 As label:
+                                            Align: =Align.Center
+                                            BorderThickness: =1
+                                            Color: =RGBA(255, 255, 255, 1)
+                                            Fill: =RGBA(127, 178, 57, 1)
+                                            Height: =25
+                                            OnSelect: =Select(Parent)
+                                            Size: =10
+                                            Text: ="Start"
+                                            Width: =60
+                                            X: =(Parent.TemplateWidth-Self.Width)/4
+                                            Y: |
+                                                =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                                //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                                ((Parent.TemplateHeight - Self.Height) / 2.8) 
+                                            ZIndex: =12
+
+                                        Rectangle19_4 As rectangle:
+                                            BorderThickness: =1
+                                            Fill: =RGBA(0, 0, 0, 0)
+                                            Height: =StaratedLabelText_6.Height+StartedLabelTextValue_6.Height
+                                            OnSelect: =Select(Parent)
+                                            Width: =Parent.TemplateWidth/1.5
+                                            X: =StaratedLabelText_6.X
+                                            Y: =StaratedLabelText_6.Y
+                                            ZIndex: =15
+
+                        AddEntryButton_2 As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: |-
+                                =UpdateContext({videoRecord:Blank()});
+                            Text: ="Clear"
+                            Width: =AddEntryButton.Width
+                            X: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,FileEntryRectangle.Width+FileEntryRectangle.X-Self.Width,FileEntryRectangle.Width/1.25)
+                            Y: =FileEntryRectangle.Y+FileEntryRectangle.Height+20
+                            ZIndex: =20
+
+                        Radio6 As radio:
+                            BorderThickness: =1
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =60
+                            Items: =enhanceOptions
+                            Layout: =Layout.Horizontal
+                            RadioSize: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,30,40)
+                            Width: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,Gallery1Header_1.Width,Gallery1Header_1.Width/3)
+                            X: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,30,Gallery1Header_1.Width-Self.Width+Gallery1Header_1.X)
+                            Y: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,Label49.Y+Label49.Height,Gallery1Header_1.Y+Gallery1Header_1.Height)
+                            ZIndex: =21
+
+                        Label49 As label:
+                            Align: =Align.Center
+                            BorderThickness: =1
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =Radio6.Height
+                            Size: =15
+                            Text: ="Your File is going to need which enhancement?"
+                            Width: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,Gallery1Header_1.Width,Gallery1Header_1.Width-Radio6.Width)
+                            X: =30
+                            Y: =Gallery1Header_1.Y+Gallery1Header_1.Height
+                            ZIndex: =22
+
+                        Label21 As label:
+                            Align: =Align.Center
+                            AutoHeight: =true
+                            Color: =RGBA(168, 0, 0, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Size: =16
+                            Text: ="Keep in mind longer videos means longer render times, Ex. 30s of video can take 1hr to enhance."
+                            Width: =Parent.Width
+                            Y: =EstimatedDatePicker.Y+EstimatedDatePicker.Height+15
+                            ZIndex: =25
+
+                        VideoEnhaceEntry As group:
+                            Height: =5
+                            Width: =5
+                            X: =60
+                            Y: =60
+                            ZIndex: =25
+
+                            Gallery1Header_1 As rectangle:
+                                BorderThickness: =1
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Width: =CSAIVETitleInput.Width
+                                X: =30
+                                Y: =Label21.Y+Label21.Height+15
+                                ZIndex: =9
+
+                            FileEntryRectangle As rectangle:
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,150+If(!(Radio6.Selected.option="Audio"),100,0),50)
+                                Width: =CSAIVETitleInput.Width
+                                X: =30
+                                Y: =Gallery1FileName_1.Height+Gallery1FileName_1.Y
+                                ZIndex: =10
+
+                            Gallery1Title_1 As label:
+                                Align: =Align.Center
+                                BorderThickness: =2
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =Gallery1Header_1.Height
+                                Size: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,16,20)
+                                Text: ="File Enhance Entry"
+                                Width: =Gallery1Header_1.Width
+                                X: =Gallery1Header_1.X
+                                Y: =Gallery1Header_1.Y
+                                ZIndex: =11
+
+                            Gallery1FileName_1 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Size: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,18,20)
+                                Text: ="File Name"
+                                Width: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,Gallery1Header_1.Width,If(Gallery1VideoOption_1.Visible,(2*Gallery1Header_1.Width)/5,Gallery1Header_1.Width/2))
+                                X: =Gallery1Header_1.X
+                                Y: =Radio6.Y+Radio6.Height
+                                ZIndex: =12
+
+                            Gallery1FilePath_1 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Size: =Gallery1FileName_1.Size
+                                Text: ="File Path"
+                                Width: =Gallery1FileName_1.Width
+                                X: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,Gallery1FileName.X,Gallery1FileName_1.X+Gallery1FileName_1.Width)
+                                Y: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,FileNameEntryInput.Y+FileNameEntryInput.Height+5,Gallery1FileName_1.Y)
+                                ZIndex: =13
+
+                            Gallery1VideoOption_1 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Size: =18
+                                Text: =If(Radio6.Selected.option = "Video" || Radio6.Selected.option = "Both", "Whole Clip","")
+                                Visible: =If(Radio6.Selected.option = "Video" || Radio6.Selected.option = "Both", true,false)
+                                Width: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,Gallery1Header_1.Width,Gallery1Header_1.Width/5)
+                                X: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,30,Gallery1FilePath_1.X+Gallery1FilePath_1.Width)
+                                Y: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,FileNameEntryInput_1.Y+FileNameEntryInput_1.Height+5,Gallery1FileName_1.Y)
+                                ZIndex: =14
+
+                            FileNameEntryInput As text:
+                                Default: =If(IsBlank(videoRecord),Blank(),videoRecord.fileName)
+                                HintText: ="Enter File Name"
+                                Width: =Gallery1FileName_1.Width-10
+                                X: =35
+                                Y: =Gallery1FileName_1.Y+Gallery1FileName_1.Height+5
+                                ZIndex: =15
+
+                            FileNameEntryInput_1 As text:
+                                Default: =If(IsBlank(videoRecord),Blank(),videoRecord.filePath)
+                                HintText: ="Enter File Path"
+                                Width: =Gallery1FileName_1.Width-10
+                                X: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,Gallery1FileName.X+5,FileNameEntryInput.X+FileNameEntryInput.Width+10)
+                                Y: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,Gallery1FilePath_1.Y+Gallery1FilePath_1.Height+5,FileNameEntryInput.Y)
+                                ZIndex: =16
+
+                            Checkbox2 As checkbox:
+                                Default: =If(IsBlank(videoRecord),Blank(),videoRecord.videoTrue)
+                                PaddingLeft: =5
+                                Text: =""
+                                Visible: =Radio6.Selected.option = "Video" || Radio6.Selected.option = "Both"
+                                Width: =50
+                                X: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,(Parent.Width-Self.Width)/2,(FileNameEntryInput_1.X+FileNameEntryInput_1.Width+10)+(Gallery1VideoOption_1.Width-Self.Width)/2)
+                                Y: =If('Case Support Audio/Image/Video Enhancements TT'.Size=1,FileEntryRectangle.Y+FileEntryRectangle.Height-Self.Height,FileEntryRectangle.Y)
+                                ZIndex: =17
+
+                            AddEntryButton As button:
+                                Fill: =ColorScheme.primary
+                                OnSelect: |-
+                                    =If(IsBlank(videoRecord),
+                                    Patch(
+                                        NestedCol,
+                                        Defaults(NestedCol),
+                                        {
+                                            fileName: FileNameEntryInput.Text,
+                                            filePath: FileNameEntryInput_1.Text,
+                                            videoTrue:Checkbox2.Value
+                                        }
+                                    );
+                                    
+                                    Reset(FileNameEntryInput);
+                                    Reset(FileNameEntryInput_1);
+                                    Reset(Checkbox2);
+                                    UpdateContext({videoRecord:Blank()});,
+                                    Patch(
+                                        NestedCol,
+                                        LookUp(NestedCol, fileName = videoRecord.fileName),
+                                        {
+                                            fileName: FileNameEntryInput.Text,
+                                            filePath: FileNameEntryInput_1.Text,
+                                            videoTrue:Checkbox2.Value
+                                        }
+                                    );
+                                    
+                                    Reset(FileNameEntryInput);
+                                    Reset(FileNameEntryInput_1);
+                                    Reset(Checkbox2);
+                                    UpdateContext({videoRecord:Blank()});)
+                                Text: =If(IsBlank(videoRecord),"Add", "Update")
+                                Width: =If('Case Support Audio or Video Redactions TT'.Size=1,100,160)
+                                X: =If('Case Support Audio or Video Redactions TT'.Size=1,Gallery1Header_1.X,FileEntryRectangle.Width/6)
+                                Y: =FileEntryRectangle.Y+FileEntryRectangle.Height+20
+                                ZIndex: =18
+
+                        Group10 As group:
+                            Height: =5
+                            Width: =5
+                            X: =60
+                            Y: =60
+                            ZIndex: =48
+
+                            VideoEnhancementGallery As gallery.variableTemplateHeightGallery:
+                                '#CopilotOverlayLabel': ="Filtered"
+                                BorderThickness: =1
+                                DelayItemLoading: =true
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =150
+                                Items: =NestedCol
+                                Layout: =Layout.Vertical
+                                LoadingSpinner: =LoadingSpinner.Data
+                                TemplatePadding: =0
+                                TemplateSize: =50
+                                Visible: ='Case Support Audio/Image/Video Enhancements TT'.Size>1 &&!IsEmpty(NestedCol)
+                                Width: =Gallery1Header.Width
+                                X: =Gallery1Header.X
+                                Y: =Gallery1FileName.Y+Gallery1FileName.Height
+                                ZIndex: =3
+
+                                Container7 As groupContainer.verticalAutoLayoutContainer:
+                                    BorderThickness: =1
+                                    Height: =50
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGridColumns: =6
+                                    LayoutGridRows: =6
+                                    LayoutMode: =LayoutMode.Auto
+                                    Width: =Parent.TemplateWidth
+                                    ZIndex: =1
+
+                                    Container8 As groupContainer.horizontalAutoLayoutContainer:
+                                        FillPortions: =0
+                                        Height: =Parent.Height
+                                        LayoutGridColumns: =6
+                                        LayoutGridRows: =6
+                                        LayoutMaxHeight: =
+                                        LayoutMaxWidth: =
+                                        LayoutMinHeight: =100
+                                        LayoutMinWidth: =250
+                                        LayoutMode: =LayoutMode.Auto
+                                        ZIndex: =1
+
+                                        NestedColFileName As label:
+                                            Align: =Align.Center
+                                            BorderThickness: =1
+                                            FillPortions: =4
+                                            Height: =Parent.Height   
+                                            LayoutMaxHeight: =
+                                            LayoutMaxWidth: =
+                                            Size: =15
+                                            Text: =ThisItem.fileName
+                                            ZIndex: =1
+
+                                        NestedColFilePath As label:
+                                            Align: =Align.Center
+                                            BorderThickness: =1
+                                            FillPortions: =4
+                                            Height: =Parent.Height   
+                                            LayoutMaxHeight: =
+                                            LayoutMaxWidth: =
+                                            Size: =15
+                                            Text: =ThisItem.filePath
+                                            ZIndex: =2
+
+                                        NestedColOption As label:
+                                            Align: =Align.Center
+                                            BorderThickness: =1
+                                            FillPortions: =1
+                                            Height: =Parent.Height   
+                                            LayoutMaxHeight: =
+                                            LayoutMaxWidth: =
+                                            LayoutMinWidth: =75
+                                            Size: =15
+                                            Text: =If(ThisItem.videoTrue, "Yes","No")
+                                            ZIndex: =3
+
+                                        "Icon9 As icon.'3DPrinting'":
+                                            FillPortions: =1
+                                            Height: =Parent.Height
+                                            Icon: =Icon.Note
+                                            LayoutMaxHeight: =
+                                            LayoutMaxWidth: =
+                                            LayoutMinWidth: =75
+                                            ZIndex: =4
+
+                                Button12 As button:
+                                    Color: =RGBA(0, 0, 0, 0)
+                                    Fill: =RGBA(0,0,0,0)
+                                    Height: =50
+                                    HoverFill: =RGBA(0, 16, 96, .35)
+                                    OnSelect: |-
+                                        =If(ThisItem.videoTrue,UpdateContext({videoRecord:Blank()}),UpdateContext({videoRecord:ThisItem}))
+                                    PressedFill: =RGBA(0, 16, 96, .50)
+                                    Text: ="Select"
+                                    Width: =Gallery1FileName.Width
+                                    ZIndex: =2
+
+                                Button12_1 As button:
+                                    Color: =RGBA(0, 0, 0, 0)
+                                    Fill: =RGBA(0,0,0,0)
+                                    Height: =50
+                                    HoverFill: =RGBA(99, 139, 44, .35)
+                                    OnSelect: |-
+                                        =UpdateContext({videoRecord: ThisItem})
+                                    PressedFill: =RGBA(99, 139, 44, .50)
+                                    Text: ="Edit"
+                                    Width: =Gallery1FileName.Width
+                                    X: =Button12.X+Button12.Width
+                                    ZIndex: =3
+
+                                Button12_2 As button:
+                                    Color: =RGBA(0, 0, 0, 0)
+                                    Fill: =RGBA(0,0,0,0)
+                                    Height: =50
+                                    HoverFill: =RGBA(151, 0, 0, .35)
+                                    OnSelect: |-
+                                        =Remove(NestedCol,ThisItem);
+                                        UpdateContext({videoRecord:Blank()})
+                                    PressedFill: =RGBA(151, 0, 0, .50)
+                                    Text: ="Delete"
+                                    Width: =Gallery1FileName.Width/4
+                                    X: =Button12_1.X+Button12_1.Width
+                                    ZIndex: =4
+
+                                Button12_6 As button:
+                                    Color: =RGBA(0, 0, 0, 0)
+                                    Fill: =RGBA(0,0,0,0)
+                                    Height: =50
+                                    HoverFill: =RGBA(237, 237, 237, .2)
+                                    OnSelect: |-
+                                        =UpdateContext({notesPopUp:true})
+                                    PressedFill: =RGBA(237, 237, 237, .8)
+                                    Text: =""
+                                    Width: =Gallery1FileName.Width/4
+                                    X: =Button12_2.X+Button12_2.Width
+                                    ZIndex: =5
+
+                            Gallery1Header As rectangle:
+                                BorderThickness: =1
+                                Fill: =ColorScheme.primary
+                                Height: =50
+                                Visible: =!IsEmpty(NestedCol)
+                                Width: =CSAIVETitleInput.Width
+                                X: =30
+                                Y: =AddEntryButton.Y+AddEntryButton.Height+20
+                                ZIndex: =4
+
+                            Gallery1Title As label:
+                                Align: =Align.Center
+                                Color: =RGBA(255, 255, 255, 1)
+                                Height: =Gallery1Header.Height
+                                Size: =Gallery1Title_1.Size
+                                Text: ="Files To Enhance"
+                                Visible: =!IsEmpty(NestedCol)
+                                Width: =Gallery1Header.Width
+                                X: =Gallery1Header.X
+                                Y: =Gallery1Header.Y
+                                ZIndex: =5
+
+                            Gallery1FileName As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Size: =Gallery1FileName_1.Size
+                                Text: ="File Name"
+                                Visible: ='Case Support Audio/Image/Video Enhancements TT'.Size>1 && !IsEmpty(NestedCol)
+                                Width: =(2*Gallery1Header.Width)/5
+                                X: =Gallery1Header.X
+                                Y: =Gallery1Header.Height+Gallery1Header.Y
+                                ZIndex: =6
+
+                            Gallery1FilePath As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Size: =Gallery1FileName_1.Size
+                                Text: ="File Path"
+                                Visible: ='Case Support Audio/Image/Video Enhancements TT'.Size>1 && !IsEmpty(NestedCol)
+                                Width: =(2*Gallery1Header.Width)/5
+                                X: =Gallery1FileName.X+Gallery1FileName.Width
+                                Y: =Gallery1Header.Height+Gallery1Header.Y
+                                ZIndex: =7
+
+                            Gallery1VideoOption As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Text: ="Whole Clip"
+                                Visible: ='Case Support Audio/Image/Video Enhancements TT'.Size>1 && !IsEmpty(NestedCol)
+                                Width: =Gallery1Header.Width/10
+                                X: =Gallery1FilePath.X+Gallery1FilePath.Width
+                                Y: =Gallery1Header.Height+Gallery1Header.Y
+                                ZIndex: =8
+
+                            Gallery1VideoOption_9 As label:
+                                Align: =Align.Center
+                                BorderThickness: =1
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =50
+                                Text: ="Details"
+                                Visible: ='Case Support Audio/Image/Video Enhancements TT'.Size>1 && !IsEmpty(NestedCol)
+                                Width: =Gallery1Header.Width/10
+                                X: =Gallery1VideoOption.X+Gallery1VideoOption.Width
+                                Y: =Gallery1Header.Height+Gallery1Header.Y
+                                ZIndex: =23
+
+                            "'Video/AudioEditingMobileGallery_2' As gallery.galleryVertical":
+                                '#CopilotOverlayLabel': ="Filtered"
+                                BorderThickness: =1
+                                Default: |-
+                                    =//First(MyTicketsGallery.AllItems)
+                                    {}
+                                DelayItemLoading: |-
+                                    =//false
+                                    true
+                                Fill: =RGBA(255, 255, 255, 1)
+                                Height: =300
+                                Items: =NestedCol
+                                Layout: =Layout.Vertical
+                                LoadingSpinner: |-
+                                    =//LoadingSpinner.None
+                                    LoadingSpinner.Controls
+                                TemplatePadding: =10
+                                TemplateSize: |-
+                                    =//If(Self.Layout = Layout.Horizontal, Min(250, Self.Width - 60), Min(250, Self.Height - 60))
+                                    //If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(260, Self.Height - 60))
+                                    
+                                    If(MyTickets.Size > 1, 250, 240)
+                                Transition: =Transition.Push
+                                Visible: ='Case Support Audio/Image/Video Enhancements TT'.Size=1 && !IsEmpty(NestedCol)
+                                Width: =Gallery1Header.Width
+                                WrapCount: =RoundDown((Parent.Width / 320), 0)
+                                X: =Rectangle10_1.X
+                                Y: =Gallery1Header.Y+Gallery1Header.Height
+                                ZIndex: =24
+
+                                Rectangle6_7 As rectangle:
+                                    BorderColor: =RGBA(0, 0, 0, 0)
+                                    BorderThickness: =25
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Image6_7.Height
+                                    OnSelect: =Select(Parent)
+                                    Width: =Image6_7.Width
+                                    ZIndex: =1
+
+                                Image6_7 As image:
+                                    Height: |-
+                                        =//250
+                                        Parent.TemplateHeight
+                                    Image: |-
+                                        ="data:image/svg+xml," & EncodeUrl(
+                                            "<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+                                        <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+                                        <svg version='1.1'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            xmlns:xlink='http://www.w3.org/1999/xlink' preserveAspectRatio='xMidYMid meet' viewBox='0 0 " & Self.Width & " " & Self.Height & "' width='" & Self.Width & "' height='" & Self.Height & "'>
+                                            <defs>" &
+                                            // ----- Box for fill
+                                         "<path d='" &
+                                         // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0,0) &
+                                            // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                            // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                         "Z' id='box' stroke='" & "#ff0000" & "' stroke-width='" & 0 & "'></path>
+                                            </defs>
+                                            <g>
+                                                <g>
+                                                    <filter id='shadow' x='-20%' y='-20%' width='200%' height='200%' filterUnits='userSpaceOnUse' primitiveUnits='userSpaceOnUse'>
+                                                        <feFlood></feFlood>
+                                                        <feComposite in2='SourceAlpha' operator='in'></feComposite>
+                                                        <feGaussianBlur stdDeviation='" & 5 & "'></feGaussianBlur>
+                                                        <feOffset dx='" & 0 & "' dy='" & 0 & "' result='afterOffset'></feOffset>
+                                                        <feFlood flood-color='" & "#000000" & "' flood-opacity='" & Substitute(Text(0.5), ",", ".") & "'></feFlood>
+                                                        <feComposite in2='afterOffset' operator='in'></feComposite>
+                                                        <feMorphology operator='dilate' radius='1'></feMorphology>
+                                                        <feComposite in2='SourceAlpha' operator='out'></feComposite>
+                                                    </filter>" &
+                                                    // ----- Box for shadow
+                                         "<path d='" &
+                                         // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Max(5 * 3 - 0, 0) &
+                                            // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) &
+                                            // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) & " " & Self.Height - Max(5 * 3 + 0, 0) & 
+                                         "Z' id='Component1' filter='url(#shadow)'></path>
+                                                </g>
+                                                <use xlink:href='#box' opacity='1' fill='" & "#ffffff" & "' fill-opacity='" & Substitute(Text(0), ",", ".") & "'></use>
+                                            </g>
+                                            <g>
+                                                " &
+                                                // ----- Edge
+                                         If(
+                                                true,
+                                                Switch(
+                                                    "left",
+                                                    "left",// -- Position: left
+                                                    "<path d='" &
+                                                // Upper left
+                                         "M" & Max(5 * 3 - 0, 0) + 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Upper right
+                                         "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Lower right
+                                         "L" & Max(5 * 3 - 0, 0) + 0 + 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                // Lower left
+                                         "L" & Max(5 * 3 - 0, 0) + 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                         "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>",
+                                                     "right",// -- Position: right
+                                                    "<path d='" &
+                                                // Upper left
+                                         "M" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Upper right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Max(5 * 3 - 0, 0) + 0 &
+                                                // Lower right
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 &
+                                                // Lower left
+                                         "L" & Self.Width - Max(5 * 3 + 0, 0) - 0 - 8 & " " & Self.Height - Max(5 * 3 + 0, 0) - 0 & 
+                                         "Z' id='box' stroke-width='0' fill='" & "#ffffff" & "'></path>"
+                                                   
+                                                )
+                                            ) & "
+                                            </g>
+                                        </svg>"
+                                        )
+                                    OnSelect: =Select(Parent)
+                                    Width: |-
+                                        =//329
+                                        Parent.TemplateWidth
+                                    ZIndex: =2
+
+                                btnBkg_7 As button:
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Parent.TemplateHeight
+                                    HoverFill: =Self.Fill
+                                    OnSelect: =Select(Parent)
+                                    PressedFill: =Self.Fill
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: =""
+                                    Visible: =false
+                                    Width: =Parent.TemplateWidth
+                                    ZIndex: =3
+
+                                TitleLabel_7 As label:
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =54
+                                    OnSelect: =Select(Parent)
+                                    Size: =12
+                                    Text: =If(ThisItem.IsSelected,"Selected","")
+                                    Width: |-
+                                        =//208
+                                        Parent.TemplateWidth - Icon18_4.Width - 47
+                                    X: =24
+                                    Y: =27
+                                    ZIndex: =4
+
+                                DateExpiredLabel_6 As label:
+                                    Height: |-
+                                        =//25
+                                        34
+                                    OnSelect: =Select(Parent)
+                                    Size: =11
+                                    Text: =ThisItem.filePath
+                                    Width: =StartedLabelTextValue_5.Width
+                                    X: =ExpiresLabelText_5.X
+                                    Y: =ExpiresLabelText_5.Y+ExpiresLabelText_5.Height
+                                    ZIndex: =5
+
+                                ExpiresLabelText_5 As label:
+                                    Align: =Align.Center
+                                    BorderThickness: =1
+                                    Height: =25
+                                    OnSelect: =Select(Parent)
+                                    Size: =10
+                                    Text: ="File Path"
+                                    Visible: |-
+                                        =//is_admin
+                                        true
+                                    Width: |-
+                                        =//154
+                                        80
+                                    X: |-
+                                        =//67
+                                        StaratedLabelText_5.X
+                                    Y: |-
+                                        =//180
+                                        //Parent.TemplateHeight - Self.Height - 27
+                                        Rectangle19_3.Y+Rectangle19_3.Height+10
+                                    ZIndex: =6
+
+                                Rectangle20_3 As rectangle:
+                                    BorderThickness: =1
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    Height: =ExpiresLabelText_5.Height+DateExpiredLabel_6.Height
+                                    OnSelect: =Select(Parent)
+                                    Width: =Parent.TemplateWidth/1.25
+                                    X: =ExpiresLabelText_5.X
+                                    Y: =ExpiresLabelText_5.Y
+                                    ZIndex: =10
+
+                                OverlapButton_5 As button:
+                                    BorderThickness: =0
+                                    Fill: =Color.Transparent
+                                    Height: |-
+                                        =//220
+                                        Parent.TemplateHeight
+                                    HoverFill: =Self.Fill
+                                    OnSelect: |-
+                                        =
+                                        
+                                        // Sharepoint List
+                                        UpdateContext({videoRecord:ThisItem})
+                                    PressedFill: =Self.Fill
+                                    Text: =""
+                                    Width: |-
+                                        =//303
+                                        Parent.TemplateWidth
+                                    X: |-
+                                        =//24
+                                        (Parent.TemplateWidth - Self.Width) / 2
+                                    Y: |-
+                                        =//15
+                                        (Parent.TemplateHeight - Self.Height) / 2
+                                    ZIndex: =11
+
+                                Icon18_4 As icon.CancelBadge:
+                                    Height: =32
+                                    Icon: =Icon.CancelBadge
+                                    OnSelect: |-
+                                        =Remove(NestedCol,ThisItem);
+                                        UpdateContext({videoRecord:Blank()})
+                                    Width: =32
+                                    X: =Parent.TemplateWidth - Self.Width - 23
+                                    Y: =27
+                                    ZIndex: =12
+
+                                Icon18_5 As icon.CancelBadge:
+                                    Height: =32
+                                    Icon: =Icon.Post
+                                    OnSelect: |-
+                                        =UpdateContext({notesPopUp:true})
+                                    Width: =32
+                                    X: =Parent.TemplateWidth - (Self.Width*2.1) - 23
+                                    Y: =27
+                                    ZIndex: =13
+
+                                Icon20 As icon.Video:
+                                    DisplayMode: =DisplayMode.View
+                                    Fill: =If(ThisItem.videoTrue,Color.Red,Color.Transparent)
+                                    Height: =Self.Width
+                                    Icon: =Icon.Video
+                                    OnSelect: =Select(Parent)
+                                    Width: =32
+                                    X: =Parent.TemplateWidth - (Self.Width*3.25) - 23
+                                    Y: =27
+                                    ZIndex: =14
+
+                                Group11_3 As group:
+                                    Height: =5
+                                    Width: =5
+                                    X: =60
+                                    Y: =60
+                                    ZIndex: =16
+
+                                    StartedLabelTextValue_5 As label:
+                                        Height: |-
+                                            =//25
+                                            34
+                                        OnSelect: =Select(Parent)
+                                        Size: =11
+                                        Text: =ThisItem.fileName
+                                        Width: |-
+                                            =//143
+                                            Rectangle19_3.Width
+                                        Wrap: =false
+                                        X: |-
+                                            =//89
+                                            StaratedLabelText_5.X
+                                        Y: |
+                                            =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                            //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                            //((Parent.TemplateHeight - Self.Height) / 2) + 40
+                                            StaratedLabelText_5.Y+StaratedLabelText_5.Height
+                                        ZIndex: =7
+
+                                    StaratedLabelText_5 As label:
+                                        Align: =Align.Center
+                                        BorderThickness: =1
+                                        Height: =25
+                                        OnSelect: =Select(Parent)
+                                        Size: =10
+                                        Text: ="File Name"
+                                        Width: =80
+                                        X: =(Parent.TemplateWidth-Self.Width)/8
+                                        Y: |
+                                            =//If(is_admin, 147, (StatusLabel.Y + StatusLabel.Height - Self.Height))
+                                            //If(is_admin, ((Parent.TemplateHeight - Self.Height) / 2) + 20, StatusLabel.Y + StatusLabel.Height - Self.Height)
+                                            ((Parent.TemplateHeight - Self.Height) / 2.8) 
+                                        ZIndex: =8
+
+                                    Rectangle19_3 As rectangle:
+                                        BorderThickness: =1
+                                        Fill: =RGBA(0, 0, 0, 0)
+                                        Height: =StaratedLabelText_5.Height+StartedLabelTextValue_5.Height
+                                        OnSelect: =Select(Parent)
+                                        Width: =Parent.TemplateWidth/1.25
+                                        X: =StaratedLabelText_5.X
+                                        Y: =StaratedLabelText_5.Y
+                                        ZIndex: =9
+
+                    CSAIVESpecificIssue_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank(CSAIVESpecificIssueDropdown.Selected.Name), false, true)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        CSAIVESpecificIssueLabel As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSAIVESpecificIssueError As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =80
+                            ZIndex: =3
+
+                        CSAIVESpecificIssueStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSAIVESpecificIssueLabel.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSAIVESpecificIssueLabel.Y
+                            ZIndex: =4
+
+                        CSAIVESpecificIssueDropdown As dropdown:
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =35
+                            Items: =Filter(Category, parentId = CSAIVESubCategoryDropdown.Selected.ID)
+                            Width: =CSAIVETitleInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSAIVEDescription_DataCard As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Audio/Image/Video Enhancements TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        CSAIVEDescriptionLabel As label:
+                            AutoHeight: =true
+                            Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSAIVEDescriptionErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =CSAIVEDescriptionTextInputArea.Y + CSAIVEDescriptionTextInputArea.Height
+                            ZIndex: =3
+
+                        CSAIVEDescriptionStarVisible As label:
+                            Align: =Align.Center
+                            Color: =CSAIVEDescriptionLabel.Color
+                            Height: =CSAIVEDescriptionLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSAIVEDescriptionLabel.Y
+                            ZIndex: =4
+
+                        CSAIVEDescriptionTextInputArea As text:
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: ="Please Describe Your Issue"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: =CSAIVEDescription_DataCard.Visible
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    CSAIVELocationID_DataCard As typedDataCard.numberEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =80
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        CSAIVELocationIDLabel As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting From"
+                            Width: =170
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        CSAIVELocationIDErrorMessage As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =CSAIVELocationIDDropdown.Y + CSAIVELocationIDDropdown.Height
+                            ZIndex: =3
+
+                        CSAIVELocationIDStarVisible As label:
+                            Align: =Align.Center
+                            Height: =CSAIVELocationIDLabel.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: =CSAIVELocationIDLabel.Y
+                            ZIndex: =4
+
+                        CSAIVELocationIDDropdown As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =35
+                            Items: =Locations
+                            Width: =CSAIVETitleInput.Width
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    CSAIVEAttatchments_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Audio/Image/Video Enhancements TT'.Size = 1, Parent.Height/2, Parent.Height/3.5)
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        CSAIVEAttachmentControl As attachments:
+                            BorderColor: =Color.Black
+                            Height: =If( 'Case Support Audio/Image/Video Enhancements TT'.Size = 1, Parent.Height/1.5, Parent.Height/1.5)
+                            IsInDataCard: =true
+                            Items: =
+                            MaxAttachments: =10
+                            PaddingBottom: =5
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            Width: =If('Case Support Audio/Image/Video Enhancements TT'.Size = 1, Parent.Width/1.24,Parent.Width/1.5)
+                            X: =228
+                            Y: =28
+                            ZIndex: =1
+
+                    CSAIVEButtons_DataCard As typedDataCard.blankCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Case Support Audio/Image/Video Enhancements TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        CSAIVESubmitButton As button:
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: =CSAIVECancelButton.Height
+                            OnSelect: |
+                                =
+                                If(!CSAIVEDescriptionTextInputArea.Visible,
+                                UpdateContext({TicketDescText:Concatenate("Attorney Name: ",CSAIVETitleInput_1.Text,Char(13),"Case Number: ",CSAIVETitleInput.Text,Char(13),Char(13),"Estimated Date needed: ", DateValue(EstimatedDatePicker.SelectedDate),Char(13),Char(13),Concat(NestedCol,"File To Enhance:"&Char(13)&fileName&Char(13)&"File Path: "&filePath&Char(13)&"Enhancement Type: "&enhanceType&Char(13)&Char(13)&"Notes: "&Char(13)&If(IsBlank(notes),"No description",notes)&Char(13)&Char(13)&If(videoTrue,"Whole Clip Chosen","Times:"&Char(13)&Concat(videoTimes,"Start: "&startTime&Char(13)&"End Time: "&endTime,Char(13)&Char(13))),Char(13)&Char(13)))}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If(
+                                    !IsBlank(CSAIVELocationIDDropdown.Selected.Name) And !IsEmpty(NestedCol) And IfError(!IsEmpty(Index(NestedCol,1).videoTimes),false) And Len(Trim(CSAIVETitleInput.Text))>0 And If(EstimatedDatePicker.SelectedDate<Today(),false,true),
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: "Audio/Image/Video Enhancement Request",
+                                                description: Trim(CSAIVEDescriptionTextInputArea.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: CSAIVEMainCategoryDropdown.Selected.ID,
+                                                category: CSAIVESubCategoryDropdown.Selected.ID,
+                                                subCategory: CSAIVESpecificIssueDropdown.Selected.ID,
+                                                locationId: CSAIVELocationIDDropdown.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(CSAIVEAttachmentControl.Attachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = CSAIVEMainCategoryDropdown.Selected.ID && locationId = CSAIVELocationIDDropdown.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = CSAIVEMainCategoryDropdown.Selected.ID && locationId = CSAIVELocationIDDropdown.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" Audio/Image/Video Enhancement Request"
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                    ForAll(
+                                        CSAIVEAttachmentControl.Attachments As Attachment,
+                                               /*AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file: {
+                                                    contentBytes: Value,
+                                                    name: Name
+                                                }
+                                            }
+                                        )*/
+                                        If(Left(Attachment.Value,6) = "appres", 
+                                        AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) ;,
+                                
+                                
+                                With({varHTMLTable: Split(Attachment.Name , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",Attachment.Name)+32},With({varB64End:Find("""",Mid(Attachment.Name,varB64Start))-1},CopyPasteTest.Run(Mid(Attachment.Name,varB64Start,varB64End),Attachment.Value & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        ) 
+                                    );
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),    TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm(CSAIVEForm);
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({CSEnhancementForm:true});
+                            Text: ="Submit"
+                            Width: =CSAIVECancelButton.Width
+                            X: =CSAIVECancelButton.X + (Self.Width*1.3)
+                            Y: =CSAIVECancelButton.Y
+                            ZIndex: =1
+
+                        CSAIVECancelButton As button:
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |-
+                                =ResetForm(CSAIVEForm);
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('Case Support Audio/Image/Video Enhancements TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            CSAIVEFooter As groupContainer.verticalAutoLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='Case Support Audio/Image/Video Enhancements TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                CSAIVEMobileMenu As compMobileMenu_3:
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    CSAIVEBackButton As icon.BackArrow:
+        Color: =Color.White
+        Height: =CSAIVEHeaderLabel.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm(CSAIVEForm); Back(ScreenTransition.Fade)
+        Width: =49
+        X: =Self.Width/5 
+        Y: =(CSAIVEHeaderContainer.Height-CSAIVEHeaderLabel.Height)/1.05
+        ZIndex: =2
+
+    CSAIVEWebMenu As compWebMenu_3:
+        Visible: ='Case Support Audio/Image/Video Enhancements TT'.Size > 1
+        ZIndex: =3
+
+    TechAssignMessageRTE_45 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            //Combine string as html body
+            /*
+            Concatenate("Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href="
+            , Char(34), "https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.")*/
+            
+            "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                <tr>
+                <td>
+                    <Table style="&Char(34)&"width:100% "&Char(34)&">
+                    <tr>
+                    <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+            	A ticket has been asssigned to you, to check additional ticket details: 
+                <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+            	</div>
+                    </th>
+                    </tr>
+            	<br>
+                    <tr>
+                    <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+            	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                <br>
+                Ticket # "&rec.ID&"
+                <br>
+                Status: "&rec.status&"
+                <br>
+                <br>
+                "&rec.description&"
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Height: =9
+        Visible: =false
+        Width: =0
+        X: =892
+        Y: =759
+        ZIndex: =4
+
+    TicketCreatorMessageRTE_45 As richTextEditor:
+        Default: |-
+            =//Concatenate("Please click <a href=", Char(34), "https://google.com", Char(34), ">here</a>")
+            /*
+            Concatenate("<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href=", Char(34),"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID=" & rec.ID & "", Char(34), ">here</a> to view more details for the ticket.</div>")*/
+            
+            "<table style="&Char(34)&"border-style: double ; width:100% "&Char(34)&">
+                <tr>
+                <td>
+                    <Table style="&Char(34)&"width:100% "&Char(34)&">
+                    <tr>
+                    <th style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center"&Char(34)&">
+            	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!
+            	</div>
+            	<br>
+            	<div style="&Char(34)&" text-align:center;"&Char(34)&">
+            	Your ticket has been created, a technician will be assigned to your case, if you would like to see additional details about your ticket: 
+                <a style="&Char(34)&"text-decoration: none"&Char(34)&" href="&Char(34)&"https://apps.gov.powerapps.us/play/e/default-e64b3773-9890-4a2f-87cd-23725df35ace/a/f6450f20-7440-48ad-9e16-de22b828b577?tenantId=e64b3773-9890-4a2f-87cd-23725df35ace&TickID="&rec.ID&Char(34)&"> Click here</a>
+            	</div>
+                    </th>
+                    </tr>
+            	<br>
+                    <tr>
+                    <td style="&Char(34)&"border-bottom-style: solid;"&Char(34)&">
+            	<div style="&Char(34)&"font-family: monospace; font-size: 20px "&Char(34)&">
+            	<p style="&Char(34)&"font-family: Arial; font-size: 24px; font-weight: bold; text-align: center"&Char(34)&">Ticket Description</p>
+                <br>
+                Ticket # "&rec.ID&"
+                <br>
+                Status: "&rec.status&"
+                <br>
+                <br>
+                "&rec.description&"
+            	</div>
+                    </td>
+                    </tr>
+                </td>
+                </tr>
+                </Table>
+            </table>"
+        Height: =99
+        Visible: =false
+        Width: =293
+        X: =988
+        Y: =40
+        ZIndex: =5
+
+    RichTextEditor2_44 As richTextEditor:
+        Default: =
+        Height: =20
+        Visible: =false
+        Width: =208
+        X: =40
+        Y: =40
+        ZIndex: =6
+
+    Label15 As label:
+        Height: =50
+        Text: |-
+            =Concatenate("Attorney Name: ",CSAIVETitleInput_1.Text,Char(13),"Case Number: ",CSAIVETitleInput.Text,Char(13),Char(13),"Estimated Date needed: ", DateValue(EstimatedDatePicker.SelectedDate),Char(13),Char(13),
+            
+            Concat(NestedCol,"Video To Enhance:"&Char(13)&fileName&Char(13)&Char(13)&"File Path: "&filePath&Char(13)&Char(13)&"Times:"&Char(13)&
+            
+            Concat(videoTimes,If(!videoTrue,"Start: "&startTime&Char(13)&"End Time: "&endTime&Char(13)&Char(13),"Whole Video"),Char(13)&Char(13))))
+        Visible: =false
+        Width: =300
+        X: =140
+        Y: =40
+        ZIndex: =7
+
+    ErrorPopupContainer_2 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =notesPopUp
+        Width: =Parent.Width
+        ZIndex: =8
+
+        PopupBackground_4 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        PopupRectangle_4 As rectangle:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_4 As rectangle:
+            Fill: =ColorScheme.primary
+            Width: =PopupRectangle_4.Width
+            X: =PopupRectangle_4.X
+            Y: =PopupRectangle_4.Y
+            ZIndex: =3
+
+        Label10_15 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =Gallery1FileName_1.Size
+            Text: =videoRecord.fileName&" Details"
+            Width: =Rectangle8_4.Width
+            X: =Rectangle8_4.X
+            Y: =Rectangle8_4.Y
+            ZIndex: =4
+
+        Button1_3 As button:
+            Fill: =ColorScheme.primary
+            OnSelect: |-
+                =UpdateContext({notesPopUp:false});
+                Patch(NestedCol,LookUp(NestedCol, videoRecord.fileName = fileName && videoRecord.filePath = filePath),
+                {
+                    notes:ContentOfInterestInput_1.Text
+                });
+                Reset(ContentOfInterestInput_1);
+            Text: ="Save & Close"
+            X: =(PopupRectangle_4.Width-Self.Width)/2 +PopupRectangle_4.X
+            Y: =PopupRectangle_4.Height-Self.Height
+            ZIndex: =9
+
+        Label18_3 As label:
+            Align: =Align.Center
+            Color: =
+            Size: =20
+            Text: ="View/Edit Information"
+            Width: =PopupRectangle_4.Width
+            X: =PopupRectangle_4.X
+            Y: =Rectangle8_4.Y+Rectangle8_4.Height
+            ZIndex: =11
+
+        ContentOfInterestInput_1 As text:
+            Default: =If(!IsBlank(videoRecord.notes),videoRecord.notes,Blank())
+            Height: =PopupRectangle_4.Height*.60
+            HintText: ="Insert audio enhancement details directions along with times for better results."
+            HoverFill: =RGBA(0, 0, 0, 0)
+            Mode: =TextMode.MultiLine
+            Width: =PopupRectangle_4.Width-40
+            X: =(PopupRectangle_4.Width-Self.Width)/2 +PopupRectangle_4.X
+            Y: =196
+            ZIndex: =12
+
+    CSEnhancementForm As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =CSEnhancementForm
+        Width: =Parent.Width
+        ZIndex: =9
+
+        ACPopupBackground_42 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_42 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_49 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_42.Width
+            X: =ACPopupRectangle_42.X
+            Y: =ACPopupRectangle_42.Y
+            ZIndex: =3
+
+        Label10_60 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_49.Width
+            X: =Rectangle8_49.X
+            Y: =Rectangle8_49.Y
+            ZIndex: =4
+
+        Button1_48 As button:
+            OnSelect: |-
+                =UpdateContext({CSEnhancementForm:false});
+            Text: ="Close"
+            X: =(ACPopupRectangle_42.Width-Self.Width)/2 +ACPopupRectangle_42.X
+            Y: =ACPopupRectangle_42.Height-Self.Height
+            ZIndex: =9
+
+        Label18_139 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(CSAIVELocationIDDropdown.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank(CSAIVELocationIDDropdown.Selected.Name),"Location Missing", "Location OK")
+            Width: =ACPopupRectangle_42.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_49.Y+Rectangle8_49.Height+15
+            ZIndex: =11
+
+        Label18_140 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(CSAIVETitleInput.Text))=0,Color.Red, Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(CSAIVETitleInput.Text))=0, "Case Number Blank","Case Number OK" )
+            Width: =ACPopupRectangle_42.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_139.Y+Label18_139.Height+10
+            ZIndex: =12
+
+        Label18_141 As label:
+            Align: =Align.Center
+            Color: =If((EstimatedDatePicker.SelectedDate<Today() Or IsBlank(EstimatedDatePicker.SelectedDate)),Color.Red, Color.Green)
+            Size: =20
+            Text: =If((EstimatedDatePicker.SelectedDate<Today() Or IsBlank(EstimatedDatePicker.SelectedDate)),"Date not Selected or Invalid", "Date OK")
+            Width: =ACPopupRectangle_42.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_140.Y+Label18_140.Height+10
+            ZIndex: =13
+
+        Label18_142 As label:
+            Align: =Align.Center
+            Color: |-
+                =If(!IsEmpty(NestedCol) And 
+                IfError(!IsEmpty(Index(NestedCol,1).videoTimes),false),Color.Green, Color.Red)
+            Size: =20
+            Text: =If(!IsEmpty(NestedCol) And IfError(!IsEmpty(Index(NestedCol,1).videoTimes),false), "List Ok","List Missing Entries" )
+            Width: =ACPopupRectangle_42.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_141.Y+Label18_141.Height+10
+            ZIndex: =14
+
+    FeedbackBugReportAVI As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =10
+

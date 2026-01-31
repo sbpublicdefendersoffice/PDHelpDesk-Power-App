@@ -1,0 +1,959 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Create Alert:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: =UpdateContext({TitleReq:"Title"});
+      OnVisible: |+
+        =Set(allEmails, Concat(Users, "'" & email & "'",","));
+        UpdateContext({TitleReq:"Title"});
+        UpdateContext({templateMode:false});
+        ClearCollect(tempTemplates,
+        {
+            alertName:"",
+            alertSubject:"",
+            alertHTMLText: "<div></div>"
+        });
+        Clear(tempTemplates);
+        ForAll(ATemplates As t,
+
+            Patch(tempTemplates,Defaults(tempTemplates),
+            {
+                alertName:t.Title,
+                alertSubject:t.alertSubject,
+                alertHTMLText:t.alertHTMLText
+            });
+
+        );
+        UpdateContext({newTemplate:false});
+    Children:
+      - CreateAlertContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - CreateAlertHeader:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: |-
+                    =130
+                    //Parent.Height/5.7
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - CreateAlertHeaderElements:
+                      Control: GroupContainer@1.4.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - HomeBackgroundGradient_64:
+                            Control: HtmlViewer@2.1.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =130
+                              HtmlText: =Home_Background_Gradient.HtmlText
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =11
+                              Width: =Parent.Width
+                        - CreateAlertLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =Color.White
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =Parent.Height-CreateAlertWebHeader.Height
+                              Size: =If('Create Alert'.Size = 1, titleText.mobileSize, titleText.desktopSize)
+                              Text: ="Create Alert"
+                              Width: =Parent.Width
+                              Y: =CreateAlertWebHeader.Height
+                        - CreateAlertWebHeader:
+                            Control: CanvasComponent
+                            ComponentName: compWebHeader
+                            Properties:
+                              BackgroundColor: =Color.Transparent
+                              CompScreenSize: ='Create Alert'.Size
+                              EnableFeedback: =Set(varFeedback,true)
+                              FeedbackBool: =varFeedback
+                              Height: =82
+                              Width: =App.Width
+            - CreateAlertMain:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =Color.Transparent
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  PaddingTop: =If('Create Alert'.Size=1,100, 80)
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - CreateAlertForm:
+                      Control: Form@2.4.4
+                      Variant: Classic
+                      Layout: Vertical
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        DataSource: =Alerts
+                        DefaultMode: =FormMode.New
+                        Item: =recordVar
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NumberOfColumns: =1
+                        Width: =Parent.Width
+                      Children:
+                        - TemplateGallery_DataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Visible: =templateMode
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =0
+                            Children:
+                              - Gallery5:
+                                  Control: Gallery@2.15.0
+                                  Variant: Horizontal
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Default: ={}
+                                    DisplayMode: =If(newTemplate,DisplayMode.Disabled,DisplayMode.Edit)
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =100
+                                    Items: =tempTemplates
+                                    ShowScrollbar: =false
+                                    TemplateSize: =161
+                                    Width: =Parent.Width-80
+                                    WrapCount: =2
+                                    X: =30
+                                    Y: =44
+                                  Children:
+                                    - Button3:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(255, 255, 255, 1)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: =Select(Parent)
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =Self.Fill
+                                          PressedFill: =Self.Color
+                                          Size: =If('Create Alert'.Size=1,12, 15)
+                                          Text: =ThisItem.alertName
+                                          Width: =Parent.TemplateWidth
+                              - CreateAlertTitleLabel_2:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: |-
+                                      =//If(CreateAlertTitleLabel_2.Text = "Title Required",Color.Red,RGBA(0, 18, 107, 1))
+                                      Color.White
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Text: |-
+                                      ="Templates
+                                      "
+                                    Width: =90
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =Gallery5.Y-Self.Height
+                        - Subject_DataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =100
+                              Width: =Parent.Width
+                              WidthFit: =true
+                              X: =0
+                              Y: =1
+                            Children:
+                              - TextInput1:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: ="Service Outage"
+                                    DisplayMode: =If(templateMode && !newTemplate,DisplayMode.View,DisplayMode.Edit)
+                                    Font: =Font.'Open Sans'
+                                    HintText: ="Service Outage if left Blank"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Width: =If('Create Alert'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                                    X: =30
+                                    Y: =44
+                              - CreateAlertTitleLabel_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: |-
+                                      =//If(CreateAlertTitleLabel_1.Text = "Title Required",Color.Red,RGBA(0, 18, 107, 1))
+                                      Color.White
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: |-
+                                      ="Subject
+                                      "
+                                    Width: =100
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =TextInput1.Y-Self.Height
+                        - TitleDataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicTextualEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="Title"
+                              Default: =ThisItem.messageText
+                              DisplayName: =DataSourceInfo([@Alerts],DataSourceInfo.DisplayName,messageText)
+                              Height: =Parent.Height/6
+                              MaxLength: =DataSourceInfo([@Alerts], DataSourceInfo.MaxLength, Create_A_Ticket_Title_Label)
+                              Required: =true
+                              Update: =CreateAlertTitleValue.Text
+                              Width: =Parent.Width
+                              X: =0
+                              Y: =2
+                            Children:
+                              - CreateAlertTitleLabel:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: |-
+                                      =//If(CreateAlertTitleLabel.Text = "Title Required",Color.Red,RGBA(0, 18, 107, 1))
+                                      Color.White
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: =TitleReq
+                                    Width: =50
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =10
+                              - CreateAlertTitleValue:
+                                  Control: Classic/TextInput@2.3.2
+                                  MetadataKey: FieldValue
+                                  Properties:
+                                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                                    Default: =If(templateMode, Gallery5.Selected.alertName ,ThisItem.Title)
+                                    DelayOutput: =true
+                                    DisplayMode: =If(templateMode && !newTemplate,DisplayMode.View,Parent.DisplayMode)
+                                    Font: =Font.'Open Sans'
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    MaxLength: =Parent.MaxLength
+                                    PaddingLeft: =5
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Tooltip: =Parent.DisplayName
+                                    Width: =TextInput1.Width
+                                    X: =30
+                                    Y: =CreateAlertTitleLabel.Y + CreateAlertTitleLabel.Height +1
+                              - ErrorMessage39_1:
+                                  Control: Label@2.5.1
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(168, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =10
+                                    Live: =Live.Assertive
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =Parent.Error
+                                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                    Width: =Parent.Width - 60
+                                    X: =30
+                                    Y: =CreateAlertTitleValue.Y + CreateAlertTitleValue.Height
+                              - CreateAlertTitleStarVisible:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =If(CreateAlertTitleLabel.Text = "Title Required",Color.Red,RGBA(0, 18, 107, 1))
+                                    Font: =Font.'Open Sans'
+                                    Height: =CreateAlertTitleLabel.Height
+                                    PaddingBottom: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Text: ="*"
+                                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =30
+                                    Wrap: =false
+                                    Y: =CreateAlertTitleLabel.Y
+                        - Html_DataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =500
+                              Visible: =templateMode
+                              Width: =1366
+                              WidthFit: =true
+                              X: =0
+                              Y: =3
+                            Children:
+                              - RichTextEditor1:
+                                  Control: RichTextEditor@2.7.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: |-
+                                      =If(templateMode && !IsBlank(Gallery5.Selected.alertHTMLText),Gallery5.Selected.alertHTMLText,
+                                      "<div>Please be advised, Service " & CreateAlertTitleValue.Text & " is down. IT is responding and will notify all users when full functionality is restored. Thank you for your patience.</div> <br> <div> Do NOT email or respond to this automated message. This is an automated message created by our notification system. </div>")
+                                    DisplayMode: =If(templateMode && !newTemplate,DisplayMode.View, DisplayMode.Edit)
+                                    Height: =400
+                                    Width: =Parent.Width-80
+                                    X: =30
+                                    Y: =CreateAlertTitleLabel_3.Y+CreateAlertTitleLabel_3.Height
+                              - CreateAlertTitleLabel_3:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: |-
+                                      =//If(CreateAlertTitleLabel_3.Text = "Title Required",Color.Red,RGBA(0, 18, 107, 1))
+                                      Color.White
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: |-
+                                      ="Preview
+                                      "
+                                    Width: =80
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =TextInput1.Y-Self.Height
+                        - DescriptionDataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicTextualEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="Description"
+                              Default: =ThisItem.messageText
+                              DisplayName: =DataSourceInfo([@Alerts],DataSourceInfo.DisplayName,Create_A_Ticket_Title_Label)
+                              Height: =Parent.Height/3
+                              MaxLength: =//DataSourceInfo([@Alerts], DataSourceInfo.MaxLength, "messageText")
+                              Required: =false
+                              Update: =CreateAlertDescriptionTextAreaInput.Text
+                              Visible: =!templateMode
+                              Width: =Parent.Width
+                              X: =0
+                              Y: =4
+                            Children:
+                              - CreateAlertDescriptionLabel:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Description"
+                                    Width: =120
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =10
+                              - CreateAlertDescriptionTextAreaInput:
+                                  Control: Classic/TextInput@2.3.2
+                                  MetadataKey: FieldValue
+                                  Properties:
+                                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                                    Default: =ThisItem.messageText
+                                    DelayOutput: =true
+                                    DisplayMode: =Parent.DisplayMode
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height/1.5
+                                    HintText: ="Please Describe Your Issue"
+                                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    MaxLength: =Parent.MaxLength
+                                    Mode: =TextMode.MultiLine
+                                    PaddingLeft: =5
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Tooltip: =Parent.DisplayName
+                                    Width: =TextInput1.Width
+                                    X: =30
+                                    Y: '=CreateAlertDescriptionLabel.Y + CreateAlertDescriptionLabel.Height '
+                              - ErrorMessage46_1:
+                                  Control: Label@2.5.1
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(168, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =10
+                                    Live: =Live.Assertive
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =Parent.Error
+                                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                    Width: =Parent.Width - 60
+                                    X: =30
+                                    Y: =CreateAlertDescriptionTextAreaInput.Y + CreateAlertDescriptionTextAreaInput.Height
+                        - ExpirationDateDataCard:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ClassicDateTimeEdit
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              DataField: ="field_7"
+                              Default: =ThisItem.dateExpired
+                              DisplayMode: =If(!templateMode && !newTemplate, DisplayMode.Edit, DisplayMode.View)
+                              DisplayName: =//DataSourceInfo([@Alerts],DataSourceInfo.DisplayName,"field_7")
+                              Fill: =Color.Transparent
+                              Height: =Parent.Height/6
+                              Required: =false
+                              Update: =DateValue14_1.SelectedDate + Time(Value(HourValue14_1.Selected.Value), Value(MinuteValue14_1.Selected.Value), 0)
+                              Width: =Parent.Width
+                              X: =0
+                              Y: =5
+                            Children:
+                              - ExpirationDateLabel:
+                                  Control: Label@2.5.1
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderThickness: =2
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =34
+                                    Text: ="Expiration Date"
+                                    Width: =160
+                                    Wrap: =false
+                                    X: =30
+                                    Y: =10
+                              - DateValue14_1:
+                                  Control: Classic/DatePicker@2.6.0
+                                  MetadataKey: DateFieldValue
+                                  Properties:
+                                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                                    DefaultDate: |-
+                                      =// check if we are trying to update a record, if so then the default date would be the date it would expire.
+                                      // if not then there should be no date
+
+                                      If(Editing, ThisItem.dateExpired, Today())
+                                    DisplayMode: =Parent.DisplayMode
+                                    EndYear: =Year(Today())+100
+                                    Font: =Font.'Open Sans'
+                                    IconBackground: =ColorScheme.primary
+                                    IconFill: =RGBA(255, 255, 255, 1)
+                                    InputTextPlaceholder: =If(IsBlank(Self.SelectedDate), Text(Date(Year(Now()),01,01), Self.Format, Self.Language))
+                                    IsEditable: =true
+                                    PaddingBottom: =0
+                                    PaddingLeft: =5
+                                    PaddingRight: =0
+                                    StartYear: =2022
+                                    Tooltip: =Parent.DisplayName
+                                    Width: =(TextInput1.Width) / 2
+                                    X: =30
+                                    Y: '=ExpirationDateLabel.Y + ExpirationDateLabel.Height '
+                              - HourValue14_1:
+                                  Control: Classic/DropDown@2.3.1
+                                  MetadataKey: HourFieldValue
+                                  Properties:
+                                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                                    ChevronBackground: =ColorScheme.primary
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =If(Editing, Text(Hour(Parent.Default),"00"), Blank())
+                                    DisplayMode: =Parent.DisplayMode
+                                    Font: =Font.'Open Sans'
+                                    Height: =DateValue14_1.Height
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =ForAll(Sequence(26), If(Value > 13, Text(Value-14,"[$-en-US]00"), Text(Value-1,"[$-en-US]00")))
+                                    Items.Value: =Value
+                                    PaddingBottom: =0
+                                    PaddingLeft: =5
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Tooltip: =Parent.DisplayName
+                                    Width: =DateValue14_1.Width / 2 - 10
+                                    X: =DateValue14_1.X + DateValue14_1.Width + 10
+                                    Y: =DateValue14_1.Y
+                              - Separator15_1:
+                                  Control: Label@2.5.1
+                                  MetadataKey: HourMinuteSeparator
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =HourValue14_1.Height
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Text: =":"
+                                    Width: =10
+                                    Wrap: =false
+                                    X: =HourValue14_1.X + HourValue14_1.Width
+                                    Y: =HourValue14_1.Y
+                              - MinuteValue14_1:
+                                  Control: Classic/DropDown@2.3.1
+                                  MetadataKey: MinuteFieldValue
+                                  Properties:
+                                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                                    ChevronBackground: =ColorScheme.primary
+                                    ChevronFill: =RGBA(255, 255, 255, 1)
+                                    ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                                    Default: =If(Editing, Text(Minute(Parent.Default),"00"), Blank())
+                                    DisplayMode: =Parent.DisplayMode
+                                    Font: =Font.'Open Sans'
+                                    Height: =HourValue14_1.Height
+                                    HoverFill: =RGBA(186, 202, 226, 1)
+                                    Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                                    Items.Value: =Value
+                                    PaddingBottom: =0
+                                    PaddingLeft: =5
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    PressedColor: =RGBA(255, 255, 255, 1)
+                                    PressedFill: =RGBA(0, 18, 107, 1)
+                                    SelectionColor: =RGBA(255, 255, 255, 1)
+                                    SelectionFill: =RGBA(56, 96, 178, 1)
+                                    Tooltip: =Parent.DisplayName
+                                    Width: =HourValue14_1.Width
+                                    X: =HourValue14_1.X + HourValue14_1.Width + Separator15_1.Width
+                                    Y: =HourValue14_1.Y
+                              - ErrorMessage42_1:
+                                  Control: Label@2.5.1
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    AutoHeight: =true
+                                    BorderColor: =RGBA(0, 0, 0, 1)
+                                    Color: =RGBA(168, 0, 0, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =10
+                                    Live: =Live.Assertive
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =Parent.Error
+                                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                    Width: =Parent.Width - 60
+                                    X: =30
+                                    Y: =HourValue14_1.Y + HourValue14_1.Height
+                        - DataCard3:
+                            Control: TypedDataCard@1.0.7
+                            Variant: BlankCard
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Width: =Parent.Width
+                              X: =0
+                              Y: =6
+                            Children:
+                              - UpdateAlertBtn:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(56, 96, 178, 1)
+                                    Font: =Font.'Open Sans'
+                                    FontWeight: =FontWeight.Bold
+                                    Height: =CreateAlertBtn.Height
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: |+
+                                      =//update the record with the new edited fields
+
+                                      Patch (
+                                          Alerts,
+                                          AlertsGallery.Selected,
+                                          {
+                                              Title: CreateAlertTitleValue.Text,
+                                              messageText: CreateAlertDescriptionTextAreaInput.Text,
+                                              dateExpired: DateTimeValue(DateValue14_1.SelectedDate & " " & HourValue14_1.SelectedText.Value & ":" & MinuteValue14_1.SelectedText.Value)
+                                          }
+                                      );
+                                      ResetForm(CreateAlertForm);
+                                      Set(
+                                          Editing,
+                                          false
+                                      );
+                                      Navigate('Alert Manager');
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Update Alert"
+                                    Visible: =If(Editing, true, false)
+                                    Width: =CreateAlertBtn.Width
+                                    X: =CreateAlertBtn.X
+                                    Y: =CreateAlertBtn.Y
+                              - CancelBtn:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(184,0,0,1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =CreateAlertBtn.Height
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(184,0,0,1), -20%)
+                                    OnSelect: |-
+                                      =ResetForm(CreateAlertForm);
+                                      Set(Editing, false);
+                                      Navigate('Alert Manager',ScreenTransition.None);
+                                      UpdateContext({TitleReq:"Title"});
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: ="Cancel"
+                                    Visible: =!(CreateAlertForm.Mode = FormMode.View)
+                                    Width: =CreateAlertBtn.Width
+                                    X: =3*(Parent.Width-Self.Width)/4 +20
+                                    Y: =CreateAlertBtn.Y
+                              - CreateAlertBtn:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderColor: =ColorFade(Self.Fill, -15%)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorScheme.primary
+                                    Font: =Font.'Open Sans'
+                                    Height: =60
+                                    HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                    OnSelect: |-
+                                      =
+                                      If(!templateMode && !newTemplate,//Check if the title is blank if it is then update screen variable to state that a required field is empty
+                                      If(!IsBlank(Trim(CreateAlertTitleValue.Text)),
+                                      //otherwise make a new alert variable
+                                      Set(
+                                          newAlert,
+                                          Patch(
+                                              Alerts,
+                                              Defaults(Alerts),
+                                              {
+                                                  Title: CreateAlertTitleValue.Text,
+                                                  messageText: CreateAlertDescriptionTextAreaInput.Text,
+                                                  dateCreated: Now(),
+                                                  dateExpired: If(
+                                                      !IsBlank(DateValue14_1.SelectedDate),
+                                                      DateTimeValue(DateValue14_1.SelectedDate & " " & HourValue14_1.SelectedText.Value & ":" & MinuteValue14_1.SelectedText.Value),
+                                                      Blank()
+                                                  ),
+                                                  creatorId: userData.id
+                                              }
+                                          ));
+                                          Set(
+                                              galleryVisible,
+                                              true
+                                          );
+                                          Notify(
+                                              "Alert Successfully created!",
+                                              NotificationType.Success
+                                          );
+
+                                          //send a mass email to all users stat that the created alert is down.
+                                          SendEmail.Run(
+                                              Concatenate(
+                                                  "pdhelpdesk@countyofsb.org" 
+                                              ),
+                                                  TextInput1.Text,
+                                                  RichTextEditor1.HtmlText,
+                                                  //allEmails 
+                                                  "mperez@countyofsb.org"
+                                          );
+                                      /*SMTP.SendEmailV3(
+                                          {
+                                              From: "sbpdhelpdesk@outlook.com",
+                                              To: "<Do Not Reply> sbpdhelpdesk@outlook.com",
+                                              Bcc: allEmails,
+                                              Subject: "Service Outage",
+                                              Body: "<div>Please be advised, " & DataCardValue23_1.Text & " is down. IT is responding and will notify all users when full functionality is restored. Thank you for your patience.</div> <br> <div> Do NOT email or respond to this automated message. This is an automated message created by our notification system. </div>"
+                                          }
+                                      );*/
+                                      //go to alert manager
+                                          Navigate('Alert Manager');
+                                          ResetForm(CreateAlertForm);
+                                      , 
+                                      UpdateContext({TitleReq:"Title Required"})),
+                                      If(!IsBlank(Trim(TextInput1.Text)) &&!IsBlank(Trim(CreateAlertTitleValue.Text))&&!IsBlank(Trim(RichTextEditor1.HtmlText)),Patch(tempTemplates,Defaults(tempTemplates),
+                                      {
+                                          alertName:CreateAlertTitleValue.Text,
+                                          alertSubject:TextInput1.Text,
+                                          alertHTMLText:RichTextEditor1.HtmlText
+                                      });
+                                      Patch(ATemplates,Defaults(ATemplates),
+                                      {
+                                          Title:CreateAlertTitleValue.Text,
+                                          alertSubject:TextInput1.Text,
+                                          alertHTMLText:RichTextEditor1.HtmlText
+                                      });
+                                      UpdateContext({newTemplate:!newTemplate});,Notify("Subject, Title,or Email message is missing!"))
+
+                                      )
+                                    PressedBorderColor: =Self.Fill
+                                    PressedColor: =Self.Fill
+                                    PressedFill: =Self.Color
+                                    Text: =If(!templateMode && !newTemplate ,"Create Alert", "Create Template")
+                                    Visible: =If(Editing, false, true)
+                                    Width: =Parent.Width/3 // If( 'Create Alert'.Size =1 || 'Create Alert'.Size =2,  Parent.Width/3 ,Parent.Width/7)
+                                    X: =(Parent.Width-Self.Width)/If('Alert Manager'.Size=1,8,4)
+                                    Y: =Parent.Height/3
+            - CreateAlertFooter:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: =60
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =If('Create Alert'.Size > 1, false, true)
+                  Width: =Parent.Width
+                Children:
+                  - CreateAlertMobileMenu:
+                      Control: CanvasComponent
+                      ComponentName: compMobileMenu
+                      Properties:
+                        BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                        ForegroundColor: |-
+                          =//RGBA(70, 130, 180, 1)
+                          ColorScheme.primary
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        NavigationItems: |-
+                          =// IF adimn or tech show this table, if not show Staff table
+                          gblNavItems
+                        SelectedItemBackground: =Color.LightGray
+                        Visible: =Home.Size=1
+                        Width: =Parent.Width
+                        Y: =Parent.Height-Self.Height
+      - CreateAlertBackButton:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =CreateAlertLabel.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(CreateAlertHeader.Height-CreateAlertLabel.Height)/1.05
+      - Rectangle30:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            BorderThickness: =2
+            Fill: =ColorScheme.secondary
+            Height: =CreateAlertMain.PaddingTop
+            Width: =Parent.Width
+            Y: =CreateAlertHeader.Height
+      - CreateAlertWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, App.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Create Alert'.Size > 1
+            Width: =If(showMenu, App.Width, 80)
+      - UseAlertTemplateButton:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =ColorScheme.primary
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: =UpdateContext({templateMode:true});
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: ="Select a Template"
+            Visible: =!templateMode&& !Editing
+            Width: =220
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Rectangle30.Height-Self.Height)/2 +Rectangle30.Y
+      - RichTextEditor2_1:
+          Control: RichTextEditor@2.7.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: =    "<div>Please be advised, " & CreateAlertTitleValue.Text & " is down. IT is responding and will notify all users when full functionality is restored. Thank you for your patience.</div> <br> <div> Do NOT email or respond to this automated message. This is an automated message created by our notification system. </div>"
+            Height: =209
+            Visible: =false
+            Width: =677
+            X: =224
+            Y: =216
+      - UseAlertTemplateButton_1:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =ColorScheme.primary
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: =UpdateContext({templateMode:false, newTemplate:false});
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: ="Create New Alert"
+            Visible: =templateMode
+            Width: =UseAlertTemplateButton.Width
+            X: =If('Create Alert'.Size=1,(Parent.Width-Self.Width)/2,UseAlertTemplateButton.X - Self.Width/2 -5)
+            Y: =UseAlertTemplateButton.Y
+      - UseAlertTemplateButton_2:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =ColorScheme.primary
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: |+
+              =UpdateContext({newTemplate:!newTemplate});
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =14
+            Text: =If(!newTemplate,"Create New Template","Select Template")
+            Visible: =templateMode
+            Width: =UseAlertTemplateButton.Width
+            X: =If('Create Alert'.Size=1,(Parent.Width - Self.Width)/2 ,UseAlertTemplateButton.X+Self.Width/2 +5)
+            Y: =If('Create Alert'.Size=1,UseAlertTemplateButton_1.Y+UseAlertTemplateButton_1.Height+10, UseAlertTemplateButton.Y)
+      - FeedbackBugReportCA:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width
+      - HtmlText10:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =26
+            HtmlText: "=\"<table style='border-style: double ; width:100% '>\r\n    <tr>\r\n    <td>\r\n        <Table style='width:100%'>\r\n        <tr>\r\n        <th style='border-bottom-style: solid;'>\r\n	<div style='font-size: 24px; font-family:Helvetica; font-weight: bold ; text-align: center'>\r\n	This Email Has Been Sent From The Automated HelpDesk System. DO NOT RESPOND TO THIS EMAIL!\r\n	</div>\r\n	<br>\r\n	<div style='text-align:center;'>\r\n	</div>\r\n        </th>\r\n        </tr>\r\n        <tr>\r\n        <td style='font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; border-bottom-style: dashed; '>\r\n	<div>\r\n	\"&CreateAlertTitleValue.Text&\"\r\n        </tr>\r\n        </td>\r\n        <tr>\r\n        <td style='font-family: monospace; font-size: 20px '>\r\n        \"&CreateAlertDescriptionTextAreaInput.Text&\" \r\n        </tr>\r\n        </td>\r\n    <tr>\r\n    <td style='font-family: monospace; font-size: 20px; border-bottom-style: solid '>\r\n    </td>\r\n    </tr>\r\n    \r\n	</div>\r\n        </td>\r\n        </tr>\r\n    </td>\r\n    </tr>\r\n    </Table>\r\n</table>\""
+            Visible: =false
+            Width: =36
+            X: =1302
+            Y: =130

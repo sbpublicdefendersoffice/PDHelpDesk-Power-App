@@ -1,0 +1,380 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Sub Category Select:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =//Refresh the Category List
+        Refresh(Category);
+        //Clear Feedback Bug Report Collections
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+    Children:
+      - SubCategory_Main_Container:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - SubCategory_Vertical_Layout_Container:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutOverflowX: =LayoutOverflow.Scroll
+                  LayoutOverflowY: =LayoutOverflow.Scroll
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - SubCategory_Header_Container:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: |-
+                          =130
+                          //Parent.Height/9.5
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =Parent.Width
+                      Children:
+                        - SubCategory_Header_Elements:
+                            Control: GroupContainer@1.4.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - SubCategory_Select_Header_Background_Gradient:
+                                  Control: HtmlViewer@2.1.0
+                                  Properties:
+                                    DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height
+                                    HtmlText: =Home_Background_Gradient.HtmlText
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =11
+                                    Width: =Parent.Width
+                              - SubCategory_Select_Header_Label:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =Color.Transparent
+                                    Font: =Font.'Open Sans'
+                                    Height: =Parent.Height-SubCategory_Select_WebHeader.Height
+                                    Size: =If('Sub Category Select'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                                    Text: ="Select a Sub Category"
+                                    Width: =App.Width
+                                    Y: =SubCategory_Select_WebHeader.Height
+                              - SubCategory_Select_WebHeader:
+                                  Control: CanvasComponent
+                                  ComponentName: compWebHeader
+                                  Properties:
+                                    BackgroundColor: =Color.Transparent
+                                    CompScreenSize: ='Sub Category Select'.Size
+                                    EnableFeedback: =Set(varFeedback,true)
+                                    FeedbackBool: =varFeedback
+                                    Height: |-
+                                      =82
+                                      //Parent.Height
+                                    Width: =App.Width
+                  - SubCategory_Main_Content_Container:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                        FillPortions: =10
+                        Height: =Parent.Height
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |-
+                          =true
+                          //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                        Width: =Parent.Width
+                      Children:
+                        - SubCategory_Buttons_Container:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              DropShadow: =DropShadow.None
+                              FillPortions: =8
+                              Height: =Parent.Height
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutWrap: =true
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Parent.Width
+                            Children:
+                              - SubCategory_Select_Gallery:
+                                  Control: Gallery@2.15.0
+                                  Variant: Vertical
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    DelayItemLoading: =false
+                                    Height: =553
+                                    Items: |-
+                                      =//SortByColumns(Filter(Category, parentId = TicketCategoryID),"categoryHits",SortOrder.Descending)
+
+                                      Sort(Filter(Category, parentId = TicketCategoryID),Name)
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LoadingSpinner: =LoadingSpinner.None
+                                    OnSelect: =
+                                    ShowScrollbar: =false
+                                    TemplateSize: |-
+                                      =//Parent.Height/3
+                                      //If('Sub Category Select'.Size > 1, Parent.Height/3, 200)
+                                      200
+                                    Width: =Parent.Width
+                                    WrapCount: =Switch('Sub Category Select'.Size, ScreenSize.Small, 2, ScreenSize.Medium, 3, ScreenSize.Large, 3, If(userData.role ="staff", 3, 4))
+                                    Y: =215
+                                  Children:
+                                    - SubCategory_Select_Gallery_Button_Background:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =ColorFade(Self.Fill, -15%)
+                                          Color: =ColorScheme.secondary
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          DisabledFill: =RGBA(0, 0, 0, 0)
+                                          Fill: =ColorScheme.primary
+                                          Font: =Font.'Open Sans'
+                                          Height: |-
+                                            =//If('Category Select'.Size = 1, Parent.TemplateHeight/2,Parent.TemplateHeight-50)
+                                            Parent.TemplateHeight-50
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(0, 0, 0,0)
+                                          HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                                          OnSelect: |-
+                                            =Navigate('Create A Ticket', ScreenTransition.Fade, {FirstCategory: ThisItem.ID})
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =RGBA(0, 0, 0,0)
+                                          PressedFill: =
+                                          Text: =""
+                                          Visible: =false
+                                          Width: =If('Sub Category Select'.Size = 1, Parent.Width/2.5, Parent.Width/5)
+                                          X: =(Parent.TemplateWidth - Self.Width)/2
+                                          Y: =(Parent.TemplateHeight - Self.Height)/2
+                                    - SubCategory_Select_Button_Gradient:
+                                        Control: HtmlViewer@2.1.0
+                                        Properties:
+                                          DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                          Font: =Font.'Open Sans'
+                                          Height: =    SubCategory_Select_Gallery_Button_Background.Height
+                                          HtmlText: =Home_Gallery_Button_Color_Gradient.HtmlText
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =11
+                                          Width: =SubCategory_Select_Gallery_Button_Background.Width
+                                          X: = SubCategory_Select_Gallery_Button_Background.X
+                                          Y: =SubCategory_Select_Gallery_Button_Background.Y
+                                    - SubCategory_Select_Button_Label:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Color: =Color.White
+                                          Font: =Font.'Open Sans'
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =SubCategory_Select_Gallery_Button_Background.Height
+                                          HoverColor: =
+                                          OnSelect: |-
+                                            =Navigate('Create A Ticket', ScreenTransition.Fade, {FirstCategory: ThisItem.ID})
+                                          Size: =If('Sub Category Select'.Size =1,11,15)
+                                          Text: |-
+                                            =//ThisItem.name
+
+                                            // If Screen is in mobile view and string contains / and cannot fit on one line, then move the second half to another line
+                                            If('Sub Category Select'.Size > 2, ThisItem.Name, If(Len(ThisItem.Name) > 15 && "/" in ThisItem.Name , Left(ThisItem.Name, Find("/", ThisItem.Name)) & Char(10) & Right(ThisItem.Name, Len(ThisItem.Name) - Find("/", ThisItem.Name)), ThisItem.Name))
+                                          Width: =SubCategory_Select_Gallery_Button_Background.Width
+                                          X: =SubCategory_Select_Gallery_Button_Background.X
+                                          Y: =SubCategory_Select_Gallery_Button_Background.Y
+                                    - SubCategory_Html_Shadow:
+                                        Control: HtmlViewer@2.1.0
+                                        Properties:
+                                          DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                                          DisplayMode: =DisplayMode.View
+                                          Font: =Font.'Open Sans'
+                                          Height: =If('Sub Category Select'.Size=1, Parent.TemplateHeight-Self.Y-10, Parent.TemplateHeight)
+                                          HtmlText: |-
+                                            =// you can use inline Css to create effects that can be found in modern webapps
+                                            //you cannot link style sheets
+                                            //some elements of html are not supported
+                                            //you can include variables in the html string by adding "&PowerAppsVar&" 
+                                            "<div style='box-shadow: 23px 21px 33px 13px rgba(0,0,0,.025);
+                                            -webkit-box-shadow: 23px 21px 33px 13px rgba(0,0,0,.025);
+                                            -moz-box-shadow: 23px 21px 33px 13px rgba(0,0,0,.025); height:"&SubCategory_Select_Gallery_Button_Background.Height-11&"px; width:"&SubCategory_Select_Gallery_Button_Background.Width-11&"px; border-style:none; border-radius:10px'></div>"
+                                          OnSelect: =Select(Parent)
+                                          Size: =11
+                                          Width: =If('Sub Category Select'.Size=1, Parent.TemplateWidth-Self.X, Parent.TemplateWidth)
+                                          X: =SubCategory_Select_Gallery_Button_Background.X
+                                          Y: =SubCategory_Select_Gallery_Button_Background.Y
+                                    - SubCategory_Overlap_Button:
+                                        Control: Classic/Button@2.2.0
+                                        Properties:
+                                          BorderColor: =RGBA(0, 0, 0, 0)
+                                          Color: =RGBA(0, 0, 0,0)
+                                          DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                                          DisabledFill: =RGBA(0, 0, 0, 0)
+                                          Fill: =RGBA(0, 0, 0,0)
+                                          Font: =Font.'Open Sans'
+                                          Height: =SubCategory_Select_Gallery_Button_Background.Height
+                                          HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                                          HoverColor: =RGBA(0, 0, 0,0)
+                                          HoverFill: =ColorFade(RGBA(105,105,105,.35),-10%)
+                                          OnSelect: |+
+                                            =//Got to screen specified, type of transition, data to pass into screen
+                                            Set(TicketSubCategoryID, ThisItem.ID);
+                                            //Check if entry has no children (Specific issues), if it does then check the table for navigation.
+                                              //If the there is no entry then navigate to the default create a ticket
+                                              //Otherwise navigate to the appropriate page
+                                            //Otherwise navigate to the specific issue page
+
+                                            If(ThisItem.ID = 38, Navigate(LookUp(ticketTemplateScreens,ThisItem.ID = NavID).ScreenTemplate,ScreenTransition.Cover),
+
+                                            If(IsBlank(LookUp(Category, parentId = ThisItem.ID)),If(IsBlank(LookUp(ticketTemplateScreens, ThisItem.ID = NavID).ScreenTemplate),Navigate('Create A Ticket', ScreenTransition.Cover), Navigate(LookUp(ticketTemplateScreens, ThisItem.ID = NavID).ScreenTemplate,ScreenTransition.Cover) );, Navigate('Specific Issue Select',ScreenTransition.Cover));
+
+                                            );
+
+                                            IncrementCatHits.Run("",ThisItem.ID)
+                                          PressedBorderColor: =Self.Fill
+                                          PressedColor: =RGBA(0, 0, 0,0)
+                                          PressedFill: =ColorFade(RGBA(255,255,255,.7),50%)
+                                          Text: =""
+                                          Width: =SubCategory_Select_Gallery_Button_Background.Width
+                                          X: =SubCategory_Select_Gallery_Button_Background.X
+                                          Y: =SubCategory_Select_Gallery_Button_Background.Y
+                  - SubCategory_Select_Footer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(255,255,255, 1)
+                        FillPortions: =0
+                        Height: =60
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: |+
+                          ='Sub Category Select'.Size =1
+                        Width: =Parent.Width
+                      Children:
+                        - SubCategory_Select_MobileMenu:
+                            Control: CanvasComponent
+                            ComponentName: compMobileMenu
+                            Properties:
+                              BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+                              ForegroundColor: |-
+                                =//RGBA(70, 130, 180, 1)
+                                ColorScheme.primary
+                              Height: =Parent.Height
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              NavigationItems: |-
+                                =// IF adimn or tech show this table, if not show Staff table
+                                gblNavItems
+                              SelectedItemBackground: =Color.LightGray
+                              Width: =Parent.Width
+      - SubCategory_Back_Button:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: ="Back Arrow Button"
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =SubCategory_Select_Header_Label.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.UnCoverRight)
+            Tooltip: ="Return to previous page"
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(SubCategory_Header_Container.Height-SubCategory_Select_Header_Label.Height)/1.05
+      - SubCategory_Select_WebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, App.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Sub Category Select'.Size > 1
+            Width: =If(showMenu, App.Width, 80)
+      - SubCategory_Select_Feedback_Bug_Report:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

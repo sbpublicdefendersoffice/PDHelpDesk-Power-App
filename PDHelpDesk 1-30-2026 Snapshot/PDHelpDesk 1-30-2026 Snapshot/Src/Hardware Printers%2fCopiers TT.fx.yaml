@@ -1,0 +1,1171 @@
+"'Hardware Printers/Copiers TT' As screen":
+    BackgroundImage: =PUBDEF_IT__LOGO_Vector
+    Fill: =ColorScheme.screenBackground
+    OnHidden: |
+        =UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+    OnVisible: |
+        =ResetForm('HardwarePrinters/CopiersForm');
+        UpdateContext({CreateTicketTitle: "Title", CreateTicketDescription: "Description"});
+        UpdateContext({TicketDescText:""});
+        Clear(RTEImages);
+        Clear(JointAttachments);
+        Clear(attItems);
+        UpdateContext({altImagePopUp:false,usingCamera:false});
+        ClearCollect(printerMacroLocationCol,
+        {
+            Location:"North County"
+        }
+        ,
+        {
+            Location:"South County"
+        }
+        );
+        ClearCollect(printerLocationCol,
+        {
+            Location:"Santa Maria"
+        },
+        {
+            Location:"Juvenile"
+        },
+        {
+            Location:"Lompoc"
+        },
+        {
+            Location:"Santa Barbara"
+        },
+        {
+            Location:"Non Kyocera"
+        }
+        );
+        ClearCollect(printerConsolidatedLocationCol,
+        {
+            Location:"Santa Maria Front",
+            tag:"SM"
+        },
+        {
+        
+            Location:"Santa Maria Back",tag:"SM"
+        },
+        {
+            Location:"Santa Barbara - 1st Floor",tag:"SB"
+        },
+        {
+            Location:"Santa Barbara - 2nd Floor",tag:"SB"
+        }
+        ,
+        {
+            Location:"Santa Barbara - 3rd Floor",tag:"SB"
+        },
+        {
+            Location:"Santa Barbara - 4th Floor",tag:"SB"
+        }
+        );
+        UpdateContext({PrinterPopup:false, copierChild:{hasChildren:false, tag:""}});
+
+    "'HardwarePrinters/CopiersMainContainer' As groupContainer.horizontalAutoLayoutContainer":
+        Height: ='Hardware Printers/Copiers TT'.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        LayoutMode: =LayoutMode.Auto
+        Width: ='Hardware Printers/Copiers TT'.Width
+        ZIndex: =1
+
+        "'HardwarePrinters/CopiersVerticalLayoutContainer' As groupContainer.verticalAutoLayoutContainer":
+            AlignInContainer: =AlignInContainer.SetByContainer
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGridColumns: =6
+            LayoutGridRows: =6
+            LayoutMaxHeight: =
+            LayoutMaxWidth: =
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            "'HardwarePrinters/CopiersHeaderContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.primary
+                FillPortions: =0
+                Height: |-
+                    =130
+                    //Parent.Height/11
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |-
+                    =//Home.Size<>1
+                    //This is the top most header container that houses the navbar links
+                    true
+                Width: =Parent.Width
+                ZIndex: =1
+
+                Container18 As groupContainer.manualLayoutContainer:
+                    LayoutGridColumns: =6
+                    LayoutGridRows: =6
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    ZIndex: =11
+
+                    HomeBackgroundGradient_28 As htmlViewer:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Parent.Height
+                        HtmlText: =Home_Background_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        ZIndex: =1
+
+                    "'HardwarePrinters/CopiersHeaderLabel' As label":
+                        Align: =Align.Center
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =Color.Transparent
+                        Height: =Parent.Height-'HardwarePrinters/CopiersWebHeader'.Height
+                        Size: =If('Hardware Printers/Copiers TT'.Size=1, titleText.mobileSize, titleText.desktopSize)
+                        Text: ="Printers/Copiers Form"
+                        Width: =Parent.Width
+                        Y: ='HardwarePrinters/CopiersWebHeader'.Height
+                        ZIndex: =2
+
+                    "'HardwarePrinters/CopiersWebHeader' As compWebHeader":
+                        BackgroundColor: =Color.Transparent
+                        CompScreenSize: ='Hardware Printers/Copiers TT'.Size
+                        EnableFeedback: =Set(varFeedback,true)
+                        Height: |-
+                            =82
+                            //Parent.Height
+                        ZIndex: =3
+
+            "'HardwarePrinters/CopiersMainContentContainer' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                Height: =Parent.Height/1.21
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Visible: |-
+                    =true
+                    //Main Content container this houses certian elements such as the searchbar, and 2 button galleries, one for desktop, and another for mobile
+                Width: =Parent.Width
+                ZIndex: =3
+
+                "'HardwarePrinters/CopiersForm' As form":
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    DataSource: =Tickets
+                    DefaultMode: =FormMode.New
+                    Height: =Parent.Height/1.21
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =250
+                    LayoutMinWidth: =400
+                    NumberOfColumns: =1
+                    Width: =Parent.Width
+                    Y: =Parent.Height/5.7
+                    ZIndex: =1
+
+                    "'HardwarePrinters/CopiersSpecificIssue_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="subCategory"
+                        Default: =ThisItem.subCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =100
+                        Required: =false
+                        Update: =
+                        Visible: |
+                            =If(IsBlank('HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name), false, true)
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        "'HardwarePrinters/CopiersSpecificIssueLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Specific Issue"
+                            Width: =120
+                            Wrap: =false
+                            X: =30
+                            Y: ='eDefenderAdding/CodingDisclaimerLabel_13'.Height+25
+                            ZIndex: =1
+
+                        "'HardwarePrinters/CopiersSpecificIssueError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='HardwarePrinters/CopiersSpecificIssueDropdown'.Y + 'HardwarePrinters/CopiersSpecificIssueDropdown'.Height
+                            ZIndex: =3
+
+                        "'HardwarePrinters/CopiersSpecificIssueStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='HardwarePrinters/CopiersSpecificIssueLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='HardwarePrinters/CopiersSpecificIssueLabel'.Y
+                            ZIndex: =4
+
+                        "'HardwarePrinters/CopiersSpecificIssueDropdown' As dropdown":
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =LookUp(Category, ID = TicketSpecificIssue).Name
+                            Height: =35
+                            Items: =Filter(Category, parentId = 'HardwarePrinters/CopiersSubCategoryDropdown'.Selected.ID)
+                            Width: =If('Hardware Printers/Copiers TT'.Size=1,Parent.Width/1.2,Parent.Width/1.1)
+                            X: =30
+                            Y: ='HardwarePrinters/CopiersSpecificIssueLabel'.Y+'HardwarePrinters/CopiersSpecificIssueLabel'.Height
+                            ZIndex: =5
+
+                        "'eDefenderAdding/CodingDisclaimerLabel_13' As label":
+                            Align: =Align.Center
+                            BorderColor: =RGBA(221, 79, 14, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(221, 79, 14, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FontWeight: =FontWeight.Semibold
+                            Height: =If('Hardware Printers/Copiers TT'.Size=1,80,40)
+                            Size: =If('eDefender Adding/Coding Items TT'.Size =1,13,16)
+                            Text: ="When Submitting media, DO NOT SUBMIT SENSITIVE DOCUMENTS. In addition, Documents should be uploaded to Box"
+                            Width: =Parent.Width
+                            ZIndex: =6
+
+                    "'HardwarePrinters/CopiersLocationID_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="locationId"
+                        Default: =ThisItem.locationId
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =175
+                        Required: =false
+                        Update: =//Value(DataCardValue6.Text)
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        "'HardwarePrinters/CopiersLocationIDLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Requesting from"
+                            Wrap: =false
+                            X: =30
+                            Y: =Dropdown7.Y+Dropdown7.Height+20
+                            ZIndex: =1
+
+                        "'HardwarePrinters/CopiersLocationIDErrorMessage' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =43
+                            Y: =144
+                            ZIndex: =3
+
+                        "'HardwarePrinters/CopiersLocationIDStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='HardwarePrinters/CopiersLocationIDLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='HardwarePrinters/CopiersLocationIDLabel'.Y
+                            ZIndex: =4
+
+                        "'HardwarePrinters/CopiersLocationIDDropdown' As dropdown":
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =35
+                            Items: =Locations
+                            Width: ='HardwarePrinters/CopiersSpecificIssueDropdown'.Width
+                            X: =30
+                            Y: ='HardwarePrinters/CopiersLocationIDLabel'.Y+'HardwarePrinters/CopiersLocationIDLabel'.Height
+                            ZIndex: =5
+
+                        Label54 As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Text: ="Printer Location"
+                            Width: =180
+                            X: =30
+                            ZIndex: =6
+
+                        Dropdown7 As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =CopierCounty
+                            Height: =35
+                            Items: =printerLocationCol
+                            Width: ='HardwarePrinters/CopiersSpecificIssueDropdown'.Width
+                            X: =30
+                            Y: =Label54.Height
+                            ZIndex: =7
+
+                    "'HardwarePrinters/CopiersTitle_DataCard' As typedDataCard.textualEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="title"
+                        Default: =ThisItem.Title
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =//DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, "field_2")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If('HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name = "Other Printer Issue",260, 90)
+                        MaxLength: =//DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, "field_2")
+                        Required: =false
+                        Update: =
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =2
+                        ZIndex: =1
+
+                        "'HardwarePrinters/CopiersTitleLabel' As label":
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 18, 107, 1)
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Printer Type"
+                            Width: =130
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'HardwarePrinters/CopiersTitleError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            ZIndex: =3
+
+                        "'HardwarePrinters/CopiersTitleStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='HardwarePrinters/CopiersTitleLabel'.Color
+                            Height: ='HardwarePrinters/CopiersTitleLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='HardwarePrinters/CopiersTitleLabel'.Y
+                            ZIndex: =4
+
+                        Dropdown2 As dropdown:
+                            AllowEmptySelection: =true
+                            ChevronBackground: =ColorScheme.primary
+                            Default: =Blank()
+                            Height: =35
+                            Items: |-
+                                =Table({printerName:"Kyocera"},{printerName:"Rico"},{printerName:"HP"})
+                            Width: ='HardwarePrinters/CopiersSpecificIssueDropdown'.Width
+                            X: =30
+                            Y: ='HardwarePrinters/CopiersTitleLabel'.Y+'HardwarePrinters/CopiersTitleLabel'.Height
+                            ZIndex: =5
+
+                        Label41 As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Text: ="Describe the problem"
+                            Visible: =If('HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name = "Other Printer Issue",true,false)
+                            Width: =200
+                            X: =30
+                            Y: =Dropdown2.Y+Dropdown2.Height+20
+                            ZIndex: =8
+
+                        TextInput9 As text:
+                            Default: =""
+                            Height: =100
+                            HintText: ="What is the issue with the printer?"
+                            Mode: =TextMode.MultiLine
+                            Visible: =If('HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name = "Other Printer Issue",true,false)
+                            Width: ='HardwarePrinters/CopiersSpecificIssueDropdown'.Width
+                            X: =30
+                            Y: =Label41.Y+Label41.Height
+                            ZIndex: =9
+
+                    "'HardwarePrinters/CopiersMainCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="mainCategory"
+                        Default: =ThisItem.mainCategory
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Hardware Printers/Copiers TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =3
+                        ZIndex: =1
+
+                        "'HardwarePrinters/CopiersMainCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'HardwarePrinters/CopiersMainCategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='HardwarePrinters/CopiersMainCategoryDropdown'.Y + 'HardwarePrinters/CopiersMainCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'HardwarePrinters/CopiersMainCategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='HardwarePrinters/CopiersMainCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='HardwarePrinters/CopiersMainCategoryLabel'.Y
+                            ZIndex: =4
+
+                        "'HardwarePrinters/CopiersMainCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =(If(is_admin, Filter(Category, parentId = Blank()), Filter(Category, parentId = Blank(),technicianOnly=0)))
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'HardwarePrinters/CopiersSubCategory_DataCard' As typedDataCard.numberEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="category"
+                        Default: =ThisItem.category
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName,Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Hardware Printers/Copiers TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        Required: =true
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =4
+                        ZIndex: =1
+
+                        "'HardwarePrinters/CopiersSubCategoryLabel' As label":
+                            AutoHeight: =true
+                            Height: =34
+                            Text: ="Sub Category"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'HardwarePrinters/CopiersSubcategoryError' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='HardwarePrinters/CopiersSubCategoryDropdown'.Y + 'HardwarePrinters/CopiersSubCategoryDropdown'.Height
+                            ZIndex: =3
+
+                        "'HardwarePrinters/CopiersSubcategoryStarVisible' As label":
+                            Align: =Align.Center
+                            Height: ='HardwarePrinters/CopiersSubCategoryLabel'.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: ='HardwarePrinters/CopiersSubCategoryLabel'.Y
+                            ZIndex: =4
+
+                        "'HardwarePrinters/CopiersSubCategoryDropdown' As dropdown":
+                            Default: =LookUp(Category, ID = TicketSubCategoryID, Name)
+                            Height: =Parent.Height/3.5
+                            Items: =Filter(Category, parentId = 'HardwarePrinters/CopiersMainCategoryDropdown'.Selected.ID)
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =44
+                            ZIndex: =5
+
+                    "'HardwarePrinters/CopiersFields' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =200
+                        Visible: |
+                            ='HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name = "Out of Ink"
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =5
+                        ZIndex: =1
+
+                        ExField1_21 As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Ink/Toner"
+                            Width: =90
+                            X: =30
+                            Y: =ExFieldInput2_21.Height+ExFieldInput2_21.Y+20
+                            ZIndex: =1
+
+                        ExFieldInput1_22 As text:
+                            Default: =""
+                            Height: =35
+                            HintText: ="Enter Ink Cartridge/Toner ID"
+                            Width: ='HardwarePrinters/CopiersSpecificIssueDropdown'.Width
+                            X: =30
+                            Y: =ExField1_21.Height+ExField1_21.Y
+                            ZIndex: =2
+
+                        ExField2_21 As label:
+                            BorderThickness: =2
+                            Color: =RGBA(255, 255, 255, 1)
+                            Fill: =ColorScheme.primary
+                            Height: =34
+                            Text: ="Printer ID"
+                            Width: =90
+                            X: =30
+                            Y: =2
+                            ZIndex: =3
+
+                        ExFieldInput2_21 As text:
+                            Default: =""
+                            Height: =35
+                            HintText: ="Enter Printer ID"
+                            Width: ='HardwarePrinters/CopiersSpecificIssueDropdown'.Width
+                            X: =30
+                            Y: =ExField2_21.Height+ExField2_21.Y
+                            ZIndex: =4
+
+                    "'HardwarePrinters/CopiersDescription_DataCard' As typedDataCard.textualEditCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="description"
+                        Default: =ThisItem.description
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@Tickets],DataSourceInfo.DisplayName, Name)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Hardware Printers/Copiers TT'.Size = 1, Parent.Height/7, Parent.Height/5)
+                        MaxLength: =DataSourceInfo([@Tickets], DataSourceInfo.MaxLength, Name)
+                        Required: =false
+                        Update: =
+                        Visible: =false
+                        Width: =1366
+                        WidthFit: =true
+                        X: =0
+                        Y: =6
+                        ZIndex: =1
+
+                        "'HardwarePrinters/CopiersEquipmentDescriptionLabel' As label":
+                            AutoHeight: =true
+                            Color: =If(DataCardKey5 = "Description", RGBA(0, 18, 107, 1), Color.Red)
+                            Height: =34
+                            Text: =CreateTicketDescription
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        "'HardwarePrinters/CopiersEquipmentDescriptionErrorMessage' As label":
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: ='HardwarePrinters/CopiersDescriptionTextInputArea'.Y + 'HardwarePrinters/CopiersDescriptionTextInputArea'.Height
+                            ZIndex: =3
+
+                        "'HardwarePrinters/CopiersDescriptionStarVisible' As label":
+                            Align: =Align.Center
+                            Color: ='HardwarePrinters/CopiersEquipmentDescriptionLabel'.Color
+                            Height: ='HardwarePrinters/CopiersEquipmentDescriptionLabel'.Height
+                            Text: ="*"
+                            Width: =30
+                            Wrap: =false
+                            Y: ='HardwarePrinters/CopiersEquipmentDescriptionLabel'.Y
+                            ZIndex: =4
+
+                        "'HardwarePrinters/CopiersDescriptionTextInputArea' As text":
+                            Default: =TicketDescText
+                            Height: =Parent.Height/1.5
+                            HintText: ="Please Describe Your Issue"
+                            Mode: =TextMode.MultiLine
+                            Size: =15
+                            Visible: ='HardwarePrinters/CopiersDescription_DataCard'.Visible
+                            Width: =Parent.Width/1.05
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
+
+                    "'HardwarePrinters/CopiersAttatchments_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Visible: =true
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =7
+                        ZIndex: =1
+
+                        AddMediaButton_19 As button:
+                            Fill: =ColorScheme.primary
+                            OnSelect: =Set(varOpenMedia,!varOpenMedia)
+                            Text: ="Add Media"
+                            X: =(Parent.Width-Self.Width)/2
+                            Y: =(Parent.Height-Self.Height)/2
+                            ZIndex: =8
+
+                    "'HardwarePrinters/CopiersButtons_DataCard' As typedDataCard.blankCard":
+                        BorderStyle: =BorderStyle.Solid
+                        DisplayMode: =DisplayMode.Edit
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =If( 'Hardware Printers/Copiers TT'.Size = 1, Parent.Height/3, Parent.Height/5)
+                        Width: =Parent.Width
+                        WidthFit: =true
+                        X: =0
+                        Y: =8
+                        ZIndex: =1
+
+                        "'HardwarePrinters/CopiersSubmitButton' As button":
+                            DisplayMode: |-
+                                =
+                                //could use this to enable/disable button behaviour
+                                //If(CreateATicketForm_1.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+                                
+                                DisplayMode.Edit
+                            Fill: =ColorScheme.primary
+                            Height: ='HardwarePrinters/CopiersCancelButton'.Height
+                            OnSelect: |
+                                =
+                                If(!'HardwarePrinters/CopiersDescriptionTextInputArea'.Visible,
+                                UpdateContext({TicketDescText:Concatenate("Printer Located: "&Dropdown7.Selected.Location&Char(13)&Char(13),"Printer Type: "&Dropdown2.Selected.printerName&Char(13)&Char(13),If('HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name = "Out of Ink","Printer ID: "&ExFieldInput2_21.Text&Char(13)&"Cartridge ID: "&ExFieldInput1_22.Text,If('HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name="Other Printer Issue","Printer Issue Details: "&Char(13)&TextInput9.Text)))}), Notify("Description is Blank"));
+                                
+                                //Check if the title or Description are empty, if they are the form will not be submitted
+                                If( !IsBlank(Dropdown7.Selected.Location) And !IsBlank('HardwarePrinters/CopiersLocationIDDropdown'.Selected.Name) And
+                                If('HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name = "Out of Ink",(!IsBlank(Dropdown2.Selected.printerName) And Len(Trim(ExFieldInput2_21.Text))>0 And Len(Trim(ExFieldInput1_22.Text))>0), 
+                                If('HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name = "Other Printer Issue",(!IsBlank(Dropdown2.Selected.printerName) And Len(Trim(TextInput9.Text))>0),true)),
+                                    UpdateContext({DataCardKey1_1: "Title"});
+                                    UpdateContext({DataCardKey5: "Description"});
+                                    //Set(DataCardKey5: "Description");
+                                Set(
+                                        //Temporary record
+                                        rec,
+                                        //DB operation, from Ticket table, new record, change these columns
+                                        Patch(
+                                            Tickets,
+                                            Defaults(Tickets),
+                                            {
+                                                Title: "Printer/Copier Request",
+                                                description: Trim('HardwarePrinters/CopiersDescriptionTextInputArea'.Text),
+                                                creatorId: userData.id,
+                                                mainCategory: 'HardwarePrinters/CopiersMainCategoryDropdown'.Selected.ID,
+                                                category: 'HardwarePrinters/CopiersSubCategoryDropdown'.Selected.ID,
+                                                subCategory: 'HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.ID,
+                                                locationId: 'HardwarePrinters/CopiersLocationIDDropdown'.Selected.ID,
+                                                status: "open",
+                                                metricDate: Concatenate(
+                                                    Month(Today()),
+                                                    "/",
+                                                    Year(Today())
+                                                ),
+                                                hasAttachment: If(
+                                                    IsEmpty(JointAttachments),
+                                                    0,
+                                                    1
+                                                ),
+                                                //Automation rules table is used to assign tickets
+                                                assignedTo: If(
+                                                    IsEmpty(
+                                                        Filter(
+                                                            'Ticket Automation Rules',
+                                                            categoryId = 'HardwarePrinters/CopiersMainCategoryDropdown'.Selected.ID && locationId = 'HardwarePrinters/CopiersLocationIDDropdown'.Selected.ID
+                                                        )
+                                                    ),
+                                                    0,
+                                                    LookUp(
+                                                        'Ticket Automation Rules',
+                                                        categoryId = 'HardwarePrinters/CopiersMainCategoryDropdown'.Selected.ID && locationId = 'HardwarePrinters/CopiersLocationIDDropdown'.Selected.ID,
+                                                        userID
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    );
+                                
+                                Patch(
+                                    Tickets, 
+                                    LookUp(Tickets,ID = rec.ID),
+                                    {
+                                        Title: "# "&rec.ID&" Printer/Copier Request"
+                                    });
+                                // for the attachments, run power automate flow for each attached file
+                                ForAll(
+                                    attItems As Attachment,
+                                            AttachFiles.Run(
+                                            rec.ID,
+                                            {
+                                                file:{
+                                                    contentBytes: Attachment.Value,
+                                                    name: Attachment.Name
+                                                }
+                                            }
+                                        ) 
+                                );
+                                ForAll(
+                                    RTEImages As RTEI,
+                                    With({varHTMLTable: Split(RTEI.base64Image , "<img")}, If(CountRows(varHTMLTable)>1, With({varB64Start:Find("<img",RTEI.base64Image)+32},With({varB64End:Find("""",Mid(RTEI.base64Image,varB64Start))-1},CopyPasteTest.Run(Mid(RTEI.base64Image,varB64Start,varB64End),RTEI.copyName & Text(Now(),DateTimeFormat.UTC) &".png", rec.ID)
+                                ))))
+                                        );
+                                
+                                    
+                                    /*SMTP.SendEmailV3(
+                                        {
+                                            From: "sbpdhelpdesk@outlook.com",
+                                            To: userData.email,
+                                            Subject: "Help Desk Ticket Received",
+                                            Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was created on your behalf. A technician will contact you soon to begin troubleshooting.</div><br> <div> To view the status of the ticket or add comments, please visit <a href="https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a>.</div>"
+                                        }
+                                    );*/
+                                    /*If(
+                                        rec.assignedTo > 0,
+                                        SMTP.SendEmailV3(
+                                            {
+                                                From: "sbpdhelpdesk@outlook.com",
+                                                To: LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                                Subject: "Help Desk Ticket Assigned",
+                                                Body: "<div>Hello, this is an automated response. An IT Help Desk ticket # " & rec.ID & " was assigned to you. Please click <a href='https://apps.powerapps.com/play/e/default-ce8a2002-448f-4f58-82b1-d86f73e3afdd/a/a370d8a4-8906-4ac3-bff0-0a588e959ea7?tenantId=ce8a2002-448f-4f58-82b1-d86f73e3afdd&TickID=" & rec.ID & "'>here</a> to view more details for the ticket.</div>"
+                                            }
+                                        );
+                                    );*/
+                                Set(rec,Patch(rec,{description:Substitute(rec.description,Char(13),"<br>")}));
+                                //Power automate flow, sends email to ticket creator 
+                                SendEmail.Run(
+                                            userData.email,
+                                        "Help Desk Ticket Recieved",
+                                        //Email Message body
+                                        TicketCreatorMessageRTE_1.HtmlText,
+                                        Text(Blank())
+                                    );
+                                    // If the ticket it assigned to someone, send them an email
+                                    If(
+                                        rec.assignedTo > 0,
+                                        SendEmail.Run(
+                                                LookUp(
+                                                    Users,
+                                                    ID = rec.assignedTo,
+                                                    email
+                                                ),
+                                            "Help Desk Ticket Assigned",
+                                            //Email message body
+                                            TechAssignMessageRTE_1.HtmlText,
+                                            Text(Blank())
+                                        );
+                                TicketCreatedBoth.Run(userData.email,LookUp(Users,rec.assignedTo=ID,email),rec.ID,"Ticket #"&rec.ID&" has been created. Touch this notification for more information."),   TicketCreatedUser.Run(userData.email,rec.ID,"Ticket #"&rec.ID&" has been created on your behalf. Touch this notification for more information.")
+                                
+                                    );
+                                    //Reset the form upon completion
+                                    ResetForm('HardwarePrinters/CopiersForm');
+                                    Navigate(Success);
+                                
+                                );
+                                // variables that control color elements
+                                    UpdateContext({CreateTicketTitle: "Title is Required"});
+                                    UpdateContext({CreateTicketDescription: "Description is Required"});
+                                    UpdateContext({PrinterPopup:true});
+                            Text: ="Submit"
+                            Width: ='HardwarePrinters/CopiersCancelButton'.Width
+                            X: ='HardwarePrinters/CopiersCancelButton'.X + (Self.Width*1.3)
+                            Y: ='HardwarePrinters/CopiersCancelButton'.Y
+                            ZIndex: =1
+
+                        "'HardwarePrinters/CopiersCancelButton' As button":
+                            Fill: =ColorScheme.orange
+                            HoverFill: =ColorFade(ColorScheme.orange, -20%)
+                            OnSelect: |
+                                =ResetForm('HardwarePrinters/CopiersForm');
+                                Set(TicketCategoryID,1); Set(TicketSubCategoryID,9); Set(TicketSpecificIssue,1);
+                                Set(CopierVar,true);Set(CopierCounty,"None");
+                                Navigate(Home);
+                            Text: ="Cancel"
+                            Width: =Parent.Width/3
+                            X: =If('Hardware Printers/Copiers TT'.Size =1, Parent.Width - (Self.Width *2.73),Parent.Width - (Self.Width *2.5))
+                            Y: =Parent.Height - (Self.Height *2)
+                            ZIndex: =2
+
+            "'HardwarePrinters/CopiersFooter' As groupContainer.verticalAutoLayoutContainer":
+                AlignInContainer: =AlignInContainer.SetByContainer
+                Fill: =RGBA(255,255,255, 1)
+                FillPortions: =0
+                Height: =60
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGridColumns: =6
+                LayoutGridRows: =6
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMaxHeight: =
+                LayoutMaxWidth: =
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                Visible: |
+                    ='Hardware Printers/Copiers TT'.Size =1
+                Width: =Parent.Width
+                ZIndex: =5
+
+                "'HardwarePrinters/CopiersMobileMenu' As compMobileMenu":
+                    Height: =Parent.Height
+                    LayoutMaxHeight: =
+                    LayoutMaxWidth: =
+                    LayoutMinHeight: =640
+                    LayoutMinWidth: =640
+                    Width: =Parent.Width
+
+    "'HardwarePrinters/CopiersBackButton' As icon.BackArrow":
+        Color: =Color.White
+        Height: ='HardwarePrinters/CopiersHeaderLabel'.Height/1.05
+        Icon: =Icon.BackArrow
+        OnSelect: =ResetForm('HardwarePrinters/CopiersForm'); Back(ScreenTransition.UnCoverRight); Set(CopierVar,true);Set(CopierCounty,"None");
+        Width: =49
+        X: =Self.Width/5 
+        Y: =('HardwarePrinters/CopiersHeaderContainer'.Height-'HardwarePrinters/CopiersHeaderLabel'.Height)/1.05
+        ZIndex: =2
+
+    Container12 As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height-130
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =CopierVar
+        Width: =Parent.Width
+        Y: =130
+        ZIndex: =6
+
+        Image3 As image:
+            Fill: =ColorScheme.screenBackground
+            Height: =Parent.Height
+            Image: =PUBDEF_IT__LOGO_Vector
+            Width: =Parent.Width
+            ZIndex: =1
+
+        Rectangle5 As rectangle:
+            Fill: =ColorScheme.screenBackgroundSeeThroughMid
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =2
+
+        NavigationButtonsGallery_1 As gallery.galleryVertical:
+            '#CopilotOverlayLabel': ="Filtered"
+            Height: =Parent.Height
+            Items: =If(copierChild.hasChildren,Filter(printerConsolidatedLocationCol,tag = copierChild.tag),printerLocationCol)
+            Layout: =Layout.Vertical
+            ShowScrollbar: =false
+            TemplateSize: =200
+            Width: =Parent.Width
+            WrapCount: =Switch(Home.Size, ScreenSize.Small, 2, ScreenSize.Medium, 2, ScreenSize.Large, 3, If(userData.role ="staff", 3, 4))
+            X: |-
+                =//Self.Width/4
+                0
+            Y: |-
+                =//(Parent.Height-Self.Height)/2
+                0
+            ZIndex: =3
+
+            ButtonGalleryBackgroundButton_7 As button:
+                Color: =ColorScheme.secondary
+                Fill: =ColorScheme.primary
+                Height: |-
+                    =//If ( Home.Size =1 , Parent.TemplateHeight/1.5,Parent.TemplateHeight/1.1)
+                    Parent.TemplateHeight-50
+                OnSelect: =Select(Parent)
+                Text: =""
+                Visible: =false
+                Width: =If(Home.Size = 1, Parent.Width/2.5, Parent.Width/5)
+                X: =(Parent.TemplateWidth - Self.Width)/2
+                Y: =(Parent.TemplateHeight - Self.Height)/2
+                ZIndex: =1
+
+            GalleryButtonColorGradient_5 As htmlViewer:
+                DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                Height: =ButtonGalleryBackgroundButton_7.Height
+                HtmlText: =Home_Gallery_Button_Color_Gradient.HtmlText
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Width: =ButtonGalleryBackgroundButton_7.Width
+                X: =ButtonGalleryBackgroundButton_7.X
+                Y: =ButtonGalleryBackgroundButton_7.Y
+                ZIndex: =2
+
+            ButtonGalleryNavLabel_3 As label:
+                Align: =Align.Center
+                Color: =Color.White
+                FontWeight: =FontWeight.Semibold
+                Height: |-
+                    =//If(Home.Size >1,ButtonGalleryBackgroundButton_1.Height/4.5,15)
+                    40
+                OnSelect: =Select(Parent)
+                Size: |-
+                    =//If(Home.Size =1,11,15)
+                    15
+                Text: =ThisItem.Location
+                Width: =ButtonGalleryBackgroundButton_7.Width
+                X: =(Parent.TemplateWidth-Self.Width)/2
+                Y: =ButtonGalleryNavIcon_3.Y+ButtonGalleryNavIcon_3.Height
+                ZIndex: =3
+
+            ButtonGalleryNavIcon_3 As icon.Add:
+                Color: =Color.White
+                Height: |-
+                    =
+                    
+                    //If(Home.Size >1, Parent.TemplateHeight/2.5,Parent.TemplateHeight/3)
+                    Parent.TemplateHeight-150
+                Icon: =Icon.Print
+                OnSelect: =Select(Parent)
+                Width: =Parent.TemplateWidth/2
+                X: =(Parent.TemplateWidth-Self.Width)/2
+                Y: |-
+                    =//If( Home.Size = 1, (ButtonGalleryBackgroundButton_1.Height-Self.Height)/1.2,(ButtonGalleryBackgroundButton_1.Height-Self.Height)/2)
+                    (ButtonGalleryBackgroundButton_7.Height-Self.Height)/2
+                ZIndex: =4
+
+            HtmlText1_7 As htmlViewer:
+                DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                DisplayMode: =DisplayMode.View
+                Height: =175
+                HtmlText: |-
+                    =// you can use inline Css to create effects that can be found in modern webapps
+                    //you cannot link style sheets
+                    //some elements of html are not supported
+                    //you can include variables in the html string by adding "&PowerAppsVar&" 
+                    "<div style='box-shadow: 23px 21px 33px 8px rgba(0,0,0,.05);
+                    -webkit-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.05);
+                    -moz-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.05); height:"&ButtonGalleryBackgroundButton_7.Height-11&"px; width:"&ButtonGalleryBackgroundButton_7.Width-11&"px; border-style:none; border-radius:10px'></div>"
+                OnSelect: =Select(Parent)
+                Width: =Parent.TemplateWidth
+                X: =ButtonGalleryBackgroundButton_7.X
+                Y: =25
+                ZIndex: =5
+
+            Overlapbtn_3 As button:
+                Fill: =RGBA(255, 255, 255, 0)
+                Height: =ButtonGalleryBackgroundButton_7.Height
+                HoverFill: =ColorFade(RGBA(105,105,105,.35),-10%)
+                OnSelect: |-
+                    =If(copierChild.hasChildren, Set(CopierCounty,ThisItem.Location); Navigate('Specific Issue Select',ScreenTransition.Cover),
+                        If((ThisItem.Location = "Santa Maria" || ThisItem.Location = "Santa Barbara"),If(ThisItem.Location = "Santa Maria",UpdateContext({copierChild:{hasChildren:true,tag:"SM"}}),UpdateContext({copierChild:{hasChildren:true,tag:"SB"}})),Set(CopierCounty,ThisItem.Location);
+                        Navigate('Specific Issue Select',ScreenTransition.Cover))
+                      )
+                PressedFill: =ColorFade(RGBA(105,105,105,.7),-50%)
+                Text: =""
+                Width: =ButtonGalleryBackgroundButton_7.Width
+                X: =ButtonGalleryBackgroundButton_7.X
+                Y: |
+                    =ButtonGalleryBackgroundButton_7.Y
+                ZIndex: =6
+
+    "'HardwarePrinters/CopiersWebMenu' As compWebMenu":
+        Visible: ='Hardware Printers/Copiers TT'.Size > 1
+        ZIndex: =7
+
+    PrinterPopup As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        LayoutGridColumns: =6
+        LayoutGridRows: =6
+        Visible: =PrinterPopup
+        Width: =Parent.Width
+        ZIndex: =9
+
+        ACPopupBackground_19 As rectangle:
+            Fill: =RGBA(56, 96, 178, .25)
+            Height: =Parent.Height
+            Width: =Parent.Width
+            ZIndex: =1
+
+        ACPopupRectangle_19 As rectangle:
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height/1.125
+            Width: =Parent.Width/1.125
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height-Self.Height)/2
+            ZIndex: =2
+
+        Rectangle8_26 As rectangle:
+            BorderThickness: =2
+            Width: =ACPopupRectangle_19.Width
+            X: =ACPopupRectangle_19.X
+            Y: =ACPopupRectangle_19.Y
+            ZIndex: =3
+
+        Label10_37 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Size: =30
+            Text: ="Form Error"
+            Width: =Rectangle8_26.Width
+            X: =Rectangle8_26.X
+            Y: =Rectangle8_26.Y
+            ZIndex: =4
+
+        Button1_25 As button:
+            OnSelect: |
+                =UpdateContext({PrinterPopup:false});
+            Text: ="Close"
+            X: =(ACPopupRectangle_19.Width-Self.Width)/2 +ACPopupRectangle_19.X
+            Y: =ACPopupRectangle_19.Height-Self.Height
+            ZIndex: =9
+
+        Label18_67 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank('HardwarePrinters/CopiersLocationIDDropdown'.Selected.Name),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank('HardwarePrinters/CopiersLocationIDDropdown'.Selected.Name),"Location Missing", "Location OK")
+            Width: =ACPopupRectangle_19.Width
+            X: =PopupRectangle_5.X
+            Y: =Rectangle8_26.Y+Rectangle8_26.Height+15
+            ZIndex: =11
+
+        Label18_68 As label:
+            Align: =Align.Center
+            Color: =If(IsBlank(Dropdown2.Selected.printerName),Color.Red, Color.Green)
+            Size: =20
+            Text: =If(IsBlank(Dropdown2.Selected.printerName),"No Printer Type Selected", "Printer Type OK")
+            Width: =ACPopupRectangle_19.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_67.Y+Label18_67.Height+10
+            ZIndex: =12
+
+        Label18_69 As label:
+            Align: =Align.Center
+            Color: =If('HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name="Other Printer Issue",If(Len(Trim(TextInput9.Text))=0,Color.Red,Color.Green), If(Len(Trim(ExFieldInput2_21.Text))=0, Color.Red,Color.Green))
+            Size: =20
+            Text: =If('HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name="Other Printer Issue",If(Len(Trim(TextInput9.Text))=0,"Additional Information Blank","Additional Information OK"), If(Len(Trim(ExFieldInput2_21.Text))=0, "Printer ID Blank","Printer ID OK"))
+            Visible: =If('HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name="Out of Ink" || 'HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name="Other Printer Issue",true,false)
+            Width: =ACPopupRectangle_19.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_68.Y+Label18_68.Height+10
+            ZIndex: =13
+
+        Label18_70 As label:
+            Align: =Align.Center
+            Color: =If(Len(Trim(ExFieldInput1_22.Text))=0,Color.Red,Color.Green)
+            Size: =20
+            Text: =If(Len(Trim(ExFieldInput1_22.Text))=0,"Ink/Toner ID Blank","Ink/Toner OK")
+            Visible: ='HardwarePrinters/CopiersSpecificIssueDropdown'.Selected.Name="Out of Ink"
+            Width: =ACPopupRectangle_19.Width
+            X: =PopupRectangle_5.X
+            Y: =Label18_69.Y+Label18_69.Height+10
+            ZIndex: =14
+
+    FeedbackBugReportPC As FeedbackBugReport:
+        CloseReport: =Set(varFeedback,false)
+        DisablePickMedia: =Set(PickMedia,false)
+        EnablePickMedia: =Set(PickMedia,true)
+        FBSize: ='Hardware Printers/Copiers TT'.Size
+        FeedbackCameraOff: =Set(FeedbackCamera,false);
+        FeedbackCameraOn: =Set(FeedbackCamera,true);
+        PhotoModeDisable: =Set(FeedbackPhoto,false)
+        PhotoModeEnable: =Set(FeedbackPhoto,true)
+        Visible: =varFeedback
+        ZIndex: =10
+
+    AddMedia_20 As AddMedia:
+        AMSize: ='Hardware Printers/Copiers TT'.Size
+        AttachCameraOff: =Set(AttachCamera,false);
+        AttachCameraOn: =Set(AttachCamera,true);
+        DisablePickMedia: =Set(AttachFiles,false)
+        EnablePickMedia: =Set(AttachFiles,true)
+        InitiateMediaDelay: =Set(mediaDelay,!mediaDelay)
+        OpenMedia: =Set(varOpenMedia,!varOpenMedia)
+        PhotoModeDisable: =Set(AttachPhoto,false)
+        PhotoModeEnable: =Set(AttachPhoto,true)
+        Visible: =varOpenMedia
+        ZIndex: =11
+

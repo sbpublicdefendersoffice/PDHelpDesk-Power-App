@@ -1,0 +1,692 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Knowledge Base:
+    Properties:
+      BackgroundImage: =PUBDEF_IT__LOGO_Vector
+      Fill: =ColorScheme.screenBackground
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: |-
+        =UpdateContext({SearchVisible:false, SearchText:"", ResetScreen:false});
+        UpdateContext({KBPageVar:1});
+      OnVisible: |-
+        =ClearCollect(Ktags,'KB Tags');
+        ClearCollect(sortedTags,SortByColumns(Ktags,"Hits",SortOrder.Descending));
+        ClearCollect(KBTagcol,Index(sortedTags,1),Index(sortedTags,2),Index(sortedTags,3),Index(sortedTags,4),Index(sortedTags,5),Index(sortedTags,6));
+        ClearCollect(Articles,KBArticles);
+        ClearCollect(SearchResults,Blank());
+        Set(SearchVisible,false);
+        Set(ResetScreen,false);
+        Set(SearchText,"");
+        UpdateContext({KBPageVar:1});
+    Children:
+      - KnowledgeBaseContainer:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            PaddingTop: =KBWebHeader.Height+KBScreenTitle.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - KnowledgeBaseSearchContainer:
+                Control: GroupContainer@1.4.0
+                Variant: ManualLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  BorderColor: =RGBA(9, 33, 98, 1)
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.secondary
+                  Height: =Parent.Height/5//150
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinWidth: =Parent.Width
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =!ResetScreen
+                  Width: =Parent.Width
+                Children:
+                  - Image4:
+                      Control: Image@2.2.3
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =Parent.Height
+                        Image: =SantaBarabaraBuilding
+                        ImagePosition: =ImagePosition.Fill
+                        Width: =Parent.Width
+                  - HomeBackgroundGradient_60:
+                      Control: HtmlViewer@2.1.0
+                      Properties:
+                        BorderColor: =RGBA(9, 33, 98, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =2
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =    Parent.Height
+                        HtmlText: |-
+                          ="<div style='
+                          height:"&Self.Height-1&"px;
+                          width:100%;
+                          bbackground: rgb(53,89,137);
+                          background: linear-gradient(90deg, rgba(53,89,137,.5) 25%, rgba(126,149,180,.5) 75%, rgba(180,194,203,.5) 100%);' ></div>"
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =11
+                        Width: =Parent.Width
+                  - SearchKBBar:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Default: =""
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HintText: ="Type in keywords, tags, or titles"
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: |-
+                          =//if no search string was provided make it blank
+
+                          If(IsBlank(Trim(SearchKBBar.Text)), UpdateContext({SearchVisible:true,SearchText:"",ResetScreen:true}); Reset(SearchKBBar);ClearCollect(SearchResults,Blank());, 
+
+                              //otherwise, enable the search variable and populate the collection with our search criteria then reset for a new search
+                              UpdateContext({SearchVisible:true});
+                              ClearCollect(SearchResults,Filter(Articles,SearchKBBar.Text in Tags || SearchKBBar.Text in Name || SearchKBBar.Text in ArticleBlurb));
+                              UpdateContext({SearchText:SearchKBBar.Text});
+                              Reset(SearchKBBar);
+                              UpdateContext({ResetScreen:true});
+                          )
+                        PaddingRight: =SendIcon.Width+5
+                        RadiusBottomRight: =20
+                        RadiusTopRight: =20
+                        Width: =Parent.Width*.90
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =(Parent.Height-Self.Height)/2
+                  - SendUnderneathButton:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =ColorScheme.primary
+                        Font: =Font.'Open Sans'
+                        Height: =SearchKBBar.Height
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =20
+                        Text: =""
+                        Width: =50
+                        X: =SearchKBBar.Width+SearchKBBar.X-Self.Width
+                        Y: =SearchKBBar.Y
+                  - SendIcon:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =ColorScheme.secondary
+                        Fill: =Color.Transparent
+                        Height: =SearchKBBar.Height
+                        Icon: =Icon.Search
+                        Width: =50
+                        X: =SendUnderneathButton.X
+                        Y: =SearchKBBar.Y
+                  - SearchBarText:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.View
+                        Font: =Font.'Open Sans'
+                        Height: =If('Knowledge Base'.Size=1,20,43)
+                        Size: =If('Knowledge Base'.Size=1,18,24)
+                        Text: ="How can we help?"
+                        Width: =SearchKBBar.Width
+                        X: =SearchKBBar.X
+                        Y: =Parent.Height/8
+                  - SearchOverlapButton:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =Color.Transparent
+                        Font: =Font.'Open Sans'
+                        Height: =SearchKBBar.Height
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, .25), -20%)
+                        OnSelect: |-
+                          =If(IsBlank(Trim(SearchKBBar.Text)), UpdateContext({SearchVisible:true,SearchText:"",ResetScreen:true}); Reset(SearchKBBar);ClearCollect(SearchResults,Blank());, 
+
+                              UpdateContext({SearchVisible:true});
+                              ClearCollect(SearchResults,Filter(Articles,SearchKBBar.Text in Tags || SearchKBBar.Text in Name || SearchKBBar.Text in ArticleBlurb));
+                              UpdateContext({SearchText:SearchKBBar.Text});
+                              Reset(SearchKBBar);
+                              UpdateContext({ResetScreen:true});
+                          )
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =ColorScheme.secondaryPressedColor
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =20
+                        Text: =""
+                        Width: =50
+                        X: =SearchKBBar.Width+SearchKBBar.X-Self.Width
+                        Y: =SearchKBBar.Y
+                  - ManualResetButton:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =27
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: |-
+                          =UpdateContext({SearchVisible:false, SearchText:""});
+                          Reset(SearchKBBar);
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Text: ="Reset"
+                        Visible: =false
+                        X: =21
+                        Y: =12
+            - KnowledgeBaseResultsContainer:
+                Control: GroupContainer@1.4.0
+                Variant: ManualLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                  FillPortions: =0
+                  Height: |-
+                    =//If(Rectangle4.Height+100 <768,Rectangle4.Height+100,768)
+                    If(StartsWith(ResultsFoundText.Text,"We"),100,If(GalleryBox.Height+100 <768,GalleryBox.Height+200,900))
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |+
+                    =SearchVisible && !ResetScreen
+                  Width: =Parent.Width
+                Children:
+                  - GalleryBox:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderThickness: =2
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: |-
+                          =//Parent.Height*.85
+                          If(CountRows(SearchResults)*ArticlesGallery.TemplateHeight+If(CountRows(SearchResults)=0,0,15)>= 500, 529.5, CountRows(SearchResults)*ArticlesGallery.TemplateHeight+If(CountRows(SearchResults)=0,0,15))
+                        Width: =Parent.Width/1.05
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: |-
+                          =//Parent.Height/(4*CountRows(SearchResults))
+                          60
+                  - ArticlesGallery:
+                      Control: Gallery@2.15.0
+                      Variant: Vertical
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =1
+                        DelayItemLoading: =false
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =GalleryBox.Height
+                        Items: |-
+                          =//SearchResults, seperate the results into pages, hold 5 per page
+                          If(KBPageVar=1, FirstN(Sort(SearchResults,Name,SortOrder.Ascending),5*KBPageVar), LastN(FirstN(Sort(SearchResults,Name,SortOrder.Ascending),5*KBPageVar),5*1))
+                        LoadingSpinner: =LoadingSpinner.None
+                        TemplateSize: =100
+                        Visible: =If(Self.Height=0,false,true)
+                        Width: =GalleryBox.Width+5
+                        X: =GalleryBox.X
+                        Y: =GalleryBox.Y
+                      Children:
+                        - ArticleIcon:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(0, 18, 107, 1)
+                              DisplayMode: =DisplayMode.View
+                              Icon: =Icon.DocumentWithContent
+                              OnSelect: =Select(Parent)
+                              Visible: =If('Knowledge Base'.Size>1, true, false)
+                              Y: =
+                        - ArticleTags:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =20
+                              OnSelect: =Select(Parent)
+                              Size: =If('Knowledge Base'.Size>1, 13, 8)
+                              Text: =ThisItem.Tags
+                              Width: =Parent.TemplateWidth-Self.X
+                              X: =ArticleName.X
+                              Y: =ArticleDescription.Y+ArticleDescription.Height+5
+                        - ArticleDescription:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =30
+                              OnSelect: =Select(Parent)
+                              Size: =If('Knowledge Base'.Size>1, 13, 8)
+                              Text: =ThisItem.ArticleBlurb
+                              Width: =Parent.TemplateWidth-Self.X
+                              X: =ArticleName.X
+                              Y: =ArticleName.Height
+                        - ArticleName:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(102, 182, 227, 1)
+                              Font: =Font.'Open Sans'
+                              FontWeight: =FontWeight.Semibold
+                              Height: =30
+                              OnSelect: =Select(Parent)
+                              Size: =If('Knowledge Base'.Size>1,21, 12)
+                              Text: =ThisItem.'File name with extension'
+                              Underline: =true
+                              Width: =Parent.TemplateWidth-Self.X
+                              X: =If(ArticleIcon.Visible,ArticleIcon.X+ArticleIcon.Width+5,0)
+                              Y: =
+                        - SeparatorRectangle:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Fill: =ColorScheme.primary
+                              Height: =3
+                              OnSelect: =Select(Parent)
+                              Width: =GalleryBox.Width+10
+                              Y: =Parent.TemplateHeight
+                        - LaunchItemButton:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -15%)
+                              Color: =RGBA(255, 255, 255, 1)
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              Fill: =RGBA(0, 0, 0, 0)
+                              Font: =Font.'Open Sans'
+                              Height: =Parent.TemplateHeight
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =RGBA(214, 223, 238, .35)
+                              OnSelect: |-
+                                =// open tab to resource and run flow to increment tag counters
+                                Launch(ThisItem.'Link to item');
+                                IncrementTagHits.Run(ThisItem.Tags)
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =ColorFade(ColorScheme.secondaryPressedColor,79%)
+                              Text: =""
+                              Width: =Parent.TemplateWidth
+                        - Label3:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =20
+                              OnSelect: =Select(Parent)
+                              Text: =ThisItem.Value
+                              Width: =20
+                              X: =1204
+                  - ResultsFoundText:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =60
+                        Size: =If('Knowledge Base'.Size>1, 20, 13)
+                        Text: |-
+                          =If(IsEmpty(ArticlesGallery.AllItems),Concatenate("We couldn't find anything for '",SearchText,"'"),Concatenate("Found ",Text(CountRows(SearchResults)) ,
+                          If(CountRows(SearchResults)>=2," Results"," Result")," for '",SearchText,"'"))
+                        Visible: =SearchVisible
+                        Width: =Parent.Width
+                        Y: =If(ArticlesGallery.Visible,GalleryBox.Y -Self.Height,0)
+                  - KBPageNext:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Height: =Self.Width
+                        Icon: =Icon.ArrowRight
+                        OnSelect: =UpdateContext({KBPageVar:KBPageVar+1})
+                        Visible: =If(KBPageVar >=RoundUp(CountRows(SearchResults)/5,0), false, true)
+                        X: =KBPagesLabel.X+KBPagesLabel.Width+10
+                        Y: =KBPagePrevious.Y
+                  - KBPagePrevious:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Height: =Self.Width
+                        Icon: =Icon.ArrowLeft
+                        OnSelect: =UpdateContext({KBPageVar:KBPageVar-1})
+                        Visible: =If(KBPageVar <=1, false, true)
+                        X: =KBPagesLabel.X-Self.Width-10
+                        Y: =GalleryBox.Height+GalleryBox.Y
+                  - KBPagesLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderThickness: =1
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =64
+                        Text: =If(RoundUp(CountRows(SearchResults)/5,0) = 1,1 & " of " & RoundUp(CountRows(SearchResults)/5,0),KBPageVar & " of " & RoundUp(CountRows(SearchResults)/5,0))
+                        Visible: =If(RoundUp(CountRows(SearchResults)/5,0) = 0, false, true)
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =KBPagePrevious.Y
+            - TagGallery:
+                Control: Gallery@2.15.0
+                Variant: Vertical
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DelayItemLoading: =false
+                  Fill: =ColorScheme.screenBackgroundSeeThroughMid
+                  FillPortions: =0
+                  Height: =If(KBMobileMenu.Visible,450,415)
+                  Items: =KBTagcol
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LoadingSpinner: =LoadingSpinner.None
+                  TemplateSize: =If('Knowledge Base'.Size>1,200, 100)
+                  Visible: =!ResetScreen
+                  Width: =Parent.Width
+                  WrapCount: =Switch('Knowledge Base'.Size, ScreenSize.Small, 2, ScreenSize.Medium, 2, ScreenSize.Large, 3, 3)
+                Children:
+                  - HtmlText1_3:
+                      Control: HtmlViewer@2.1.0
+                      Properties:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        DisplayMode: =DisplayMode.View
+                        Font: =Font.'Open Sans'
+                        Height: =Parent.TemplateHeight
+                        HtmlText: |-
+                          =// you can use inline Css to create effects that can be found in modern webapps
+                          //you cannot link style sheets
+                          //some elements of html are not supported
+                          //you can include variables in the html string by adding "&PowerAppsVar&" 
+                          "<div style='box-shadow: 23px 21px 33px 8px rgba(0,0,0,.05);
+                          -webkit-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.05);
+                          -moz-box-shadow: 23px 21px 33px 8px rgba(0,0,0,.05); height:"&ButtonGalleryBackgroundButton_2.Height-11&"px; width:"&ButtonGalleryBackgroundButton_2.Width-11&"px; border-style:none; border-radius:10px'></div>"
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Width: =Parent.TemplateWidth
+                        X: =ButtonGalleryBackgroundButton_2.X
+                        Y: =ButtonGalleryBackgroundButton_2.Y
+                  - ButtonGalleryBackgroundButton_2:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =ColorScheme.secondary
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =ColorScheme.primary
+                        Font: =Font.'Open Sans'
+                        Height: =150
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: =Select(Parent)
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Text: =""
+                        Visible: =false
+                        Width: =Parent.TemplateWidth *.80
+                        X: =(Parent.TemplateWidth - Self.Width)/2
+                        Y: =(Parent.TemplateHeight - Self.Height)/2
+                  - GalleryButtonColorGradient_6:
+                      Control: HtmlViewer@2.1.0
+                      Properties:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =ButtonGalleryBackgroundButton_2.Height
+                        HtmlText: =Home_Gallery_Button_Color_Gradient.HtmlText
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =11
+                        Width: =ButtonGalleryBackgroundButton_2.Width
+                        X: =ButtonGalleryBackgroundButton_2.X
+                        Y: =ButtonGalleryBackgroundButton_2.Y
+                  - TagLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =Color.White
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        OnSelect: =Select(Parent)
+                        Size: =If('Knowledge Base'.Size=1, 11,15)
+                        Text: =ThisItem.Name
+                        X: =(Parent.TemplateWidth-Self.Width)/2
+                        Y: =(Parent.TemplateHeight-Self.Height)/2
+                  - Overlapbtn_4:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(255, 255, 255, 0)
+                        Font: =Font.'Open Sans'
+                        Height: =ButtonGalleryBackgroundButton_2.Height
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(105,105,105,.35),-10%)
+                        OnSelect: |-
+                          =//Create a collection called search results update screen variables
+
+                          ClearCollect(SearchResults, Filter(Articles, ThisItem.Name in Tags));
+                          UpdateContext({SearchVisible:false, ResetScreen:true});
+                          UpdateContext({SearchText:ThisItem.Name});
+                          //empty the searchbar
+                          Reset(SearchKBBar);
+                          UpdateContext({SearchVisible:true});
+                          //run a power automate to increment a counter
+                          IncrementTagHits.Run(ThisItem.Name)
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =ColorFade(RGBA(105,105,105,.7),-50%)
+                        Text: =""
+                        Width: =ButtonGalleryBackgroundButton_2.Width
+                        X: =ButtonGalleryBackgroundButton_2.X
+                        Y: =ButtonGalleryBackgroundButton_2.Y
+            - KnowledgeBaseFooterContainer:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  DropShadow: =DropShadow.None
+                  Height: =75
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: |-
+                    =//'Knowledge Base'.Size=1
+                    false
+      - HomeBackgroundGradient_59:
+          Control: HtmlViewer@2.1.0
+          Group: StickyHeaderElements
+          Properties:
+            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+            Font: =Font.'Open Sans'
+            Height: =132
+            HtmlText: =Home_Background_Gradient.HtmlText
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Width: =Parent.Width
+      - KBMobileMenu:
+          Control: CanvasComponent
+          ComponentName: compMobileMenu
+          Group: StickyHeaderElements
+          Properties:
+            BackgroundMenuColor: =RGBA(227, 234, 243, 1)
+            ForegroundColor: |-
+              =//RGBA(70, 130, 180, 1)
+              ColorScheme.primary
+            Height: =60
+            NavigationItems: |-
+              =// IF adimn or tech show this table, if not show Staff table
+              gblNavItems
+            SelectedItemBackground: =Color.LightGray
+            Visible: ='Knowledge Base'.Size=1
+            Width: =Parent.Width
+            Y: =Parent.Height-Self.Height
+      - KBScreenTitle:
+          Control: Label@2.5.1
+          Group: StickyHeaderElements
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =Color.Transparent
+            Font: =Font.'Open Sans'
+            Height: |-
+              =48
+              //If('Knowledge Base'.Size=1,35,70)
+            PaddingTop: =0
+            Size: =If('Knowledge Base'.Size=1, titleText.mobileSize, titleText.desktopSize)
+            Text: ="Knowledge Base"
+            Width: =Parent.Width
+            Y: =KBWebHeader.Height
+      - NormalViewBackButton:
+          Control: Classic/Icon@2.5.0
+          Group: StickyHeaderElements
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =ColorScheme.secondary
+            Height: |+
+              =AllTicketsLabel.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Back(ScreenTransition.Fade)
+            Visible: =false
+            Width: =49
+            X: '=Self.Width/5 '
+            Y: =(KBScreenTitle.Height-KBScreenTitle.Height)
+      - KBWebHeader:
+          Control: CanvasComponent
+          ComponentName: compWebHeader
+          Group: StickyHeaderElements
+          Properties:
+            BackgroundColor: =Color.Transparent
+            CompScreenSize: ='Knowledge Base'.Size
+            EnableFeedback: =Set(varFeedback,true)
+            FeedbackBool: =varFeedback
+            Height: |-
+              =82
+              //70
+            Width: =Parent.Width
+      - KBBackButton:
+          Control: Classic/Icon@2.5.0
+          Group: StickyHeaderElements
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =KBScreenTitle.Height/1.05
+            Icon: =Icon.BackArrow
+            OnSelect: =Navigate(Home, ScreenTransition.Fade)//Back(ScreenTransition.Fade)
+            Visible: |-
+              =//'Knowledge Base'.Size=1
+              true
+            Width: =49
+            X: =Self.Width/5
+            Y: =KBWebHeader.Height/1.05
+      - SearchEffectTimer:
+          Control: Timer@2.1.0
+          Group: StickyHeaderElements
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Duration: =999
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: =UpdateContext({ResetScreen:false});
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Start: =ResetScreen
+            Visible: =false
+            X: =70
+            Y: =40
+      - KBWebMenu:
+          Control: CanvasComponent
+          ComponentName: compWebMenu
+          Group: StickyHeaderElements
+          Properties:
+            ExpandMenu: =showMenu
+            Fill: =Color.Transparent
+            HamburgerColor: =Color.White
+            Height: =If(showMenu, App.Height, 80)
+            MenuItems: =gblNavItems
+            Visible: ='Knowledge Base'.Size > 1
+            Width: =If(showMenu, App.Width, 80)
+      - FeedbackBugReportKB:
+          Control: CanvasComponent
+          ComponentName: FeedbackBugReport
+          Properties:
+            CloseReport: =Set(varFeedback,false)
+            DisablePickMedia: =Set(PickMedia,false)
+            EnablePickMedia: =Set(PickMedia,true)
+            FBSize: =App.ActiveScreen.Size
+            FeedbackCameraOff: =Set(FeedbackCamera,false);
+            FeedbackCameraOn: =Set(FeedbackCamera,true);
+            Height: =App.Height
+            PhotoModeDisable: =Set(FeedbackPhoto,false)
+            PhotoModeEnable: =Set(FeedbackPhoto,true)
+            Visible: =varFeedback
+            Width: =App.Width

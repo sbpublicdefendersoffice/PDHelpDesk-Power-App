@@ -1,0 +1,161 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  compWebHeader:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      BackgroundColor:
+        PropertyKind: Input
+        DisplayName: Background Color
+        Description: A custom property
+        DataType: Color
+        Default: =ColorScheme.primary
+      CompScreenSize:
+        PropertyKind: Input
+        DisplayName: CompScreenSize
+        Description: Pass in the Screen Size here
+        DataType: Number
+        Default: =1
+      EnableFeedback:
+        PropertyKind: Event
+        DisplayName: EnableFeedback
+        Description: A custom property
+        ReturnType: Boolean
+        Default: =Set(varFeedback,true)
+      FeedBackResult:
+        PropertyKind: Output
+        DisplayName: FeedBackResult
+        Description: Opens up a popup for feedback
+        DataType: Boolean
+      FeedbackBool:
+        PropertyKind: Input
+        DisplayName: FeedbackBool
+        Description: A custom property
+        DataType: Boolean
+        Default: =varFeedback
+    Properties:
+      FeedBackResult: =compWebHeader.FeedbackBool
+      Height: =82
+      Width: =App.Width
+    Children:
+      - Rectangle3:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =compWebHeader.BackgroundColor
+            Height: =Parent.Height
+            Width: =App.Width
+      - Label9_2:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =77
+            OnSelect: =
+            Size: =If(compWebHeader.CompScreenSize=1, 13, 18)
+            Text: |-
+              ="COUNTY of SANTA BARBARA
+              PUBLIC DEFENDER"
+            Width: =332
+            X: =(Parent.Width-Self.Width)/2
+            Y: =(Parent.Height - Self.Height) / 2
+      - Image3_1:
+          Control: Image@2.2.3
+          Properties:
+            AccessibleLabel: ="County of Santa Barbara Public Defender Header Logo"
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =Parent.Height * 0.85
+            Image: =PUBDEF_IT__LOGO_Vector
+            OnSelect: =//Select(Parent)
+            PaddingBottom: =2
+            PaddingLeft: =3
+            PaddingRight: =2
+            PaddingTop: =2
+            Width: =Self.Height
+            X: |-
+              =//Parent.Width - Self.Width
+              Parent.Width - Self.Width - If(App.Width > 500, 10, 0)
+            Y: =(Parent.Height - Self.Height) / 2
+      - Image3_6:
+          Control: Image@2.2.3
+          Properties:
+            AccessibleLabel: ="County of Santa Barbara Public Defender Header Logo"
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =Parent.Height * 0.50
+            Image: |-
+              ="data:image/svg+xml,"&EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-bug-fill' viewBox='0 0 16 16'>
+                <path d='M4.978.855a.5.5 0 1 0-.956.29l.41 1.352A5 5 0 0 0 3 6h10a5 5 0 0 0-1.432-3.503l.41-1.352a.5.5 0 1 0-.956-.29l-.291.956A5 5 0 0 0 8 1a5 5 0 0 0-2.731.811l-.29-.956z'/>
+                <path d='M13 6v1H8.5v8.975A5 5 0 0 0 13 11h.5a.5.5 0 0 1 .5.5v.5a.5.5 0 1 0 1 0v-.5a1.5 1.5 0 0 0-1.5-1.5H13V9h1.5a.5.5 0 0 0 0-1H13V7h.5A1.5 1.5 0 0 0 15 5.5V5a.5.5 0 0 0-1 0v.5a.5.5 0 0 1-.5.5zm-5.5 9.975V7H3V6h-.5a.5.5 0 0 1-.5-.5V5a.5.5 0 0 0-1 0v.5A1.5 1.5 0 0 0 2.5 7H3v1H1.5a.5.5 0 0 0 0 1H3v1h-.5A1.5 1.5 0 0 0 1 11.5v.5a.5.5 0 1 0 1 0v-.5a.5.5 0 0 1 .5-.5H3a5 5 0 0 0 4.5 4.975'/>
+              </svg>")
+            OnSelect: =//Select(Parent)
+            PaddingBottom: =2
+            PaddingLeft: =3
+            PaddingRight: =2
+            PaddingTop: =2
+            Width: =Self.Height
+            X: |-
+              =//Parent.Width - Self.Width
+              If(compWebHeader.CompScreenSize>2,Parent.Width - Self.Width - If(App.Width > 500, 10, 0) - Image3_1.Width-10,41)
+            Y: =(Parent.Height - Self.Height) / 1.25
+      - Image3_7:
+          Control: Image@2.2.3
+          Properties:
+            AccessibleLabel: ="County of Santa Barbara Public Defender Header Logo"
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =Parent.Height * 0.50
+            Image: |-
+              ="data:image/svg+xml,"&EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-emoji-smile-fill' viewBox='0 0 16 16'>
+                <path d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5M4.285 9.567a.5.5 0 0 1 .683.183A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683M10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8'/>
+              </svg>")
+            OnSelect: =//Select(Parent)
+            PaddingBottom: =2
+            PaddingLeft: =3
+            PaddingRight: =2
+            PaddingTop: =2
+            Width: =Self.Height
+            X: |-
+              =//Parent.Width - Self.Width
+              //Parent.Width - Self.Width - If(App.Width > 500, 10, 0) - ('Image3_6'.Width*)
+              Image3_6.X-Self.Width
+            Y: =(Parent.Height - Self.Height) / 4
+      - Button26:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(0, 0, 0, 0)
+            Font: =Font.'Open Sans'
+            Height: =Image3_6.Y*2
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(0,0,0,0.125)
+            OnSelect: =compWebHeader.EnableFeedback()
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =RGBA(0,0,0,0.25)
+            Text: =
+            Width: =Image3_7.Width*2
+            X: =Image3_7.X
+            Y: =Image3_7.Y
+      - Checkbox3:
+          Control: Classic/CheckBox@2.1.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            CheckboxBorderColor: =RGBA(0, 18, 107, 1)
+            CheckmarkFill: =RGBA(0, 0, 0, 1)
+            Default: =compWebHeader.FeedbackBool
+            Font: =Font.'Open Sans'
+            HoverColor: =RGBA(0, 18, 107, 1)
+            Text: ="Clicked?"
+            Visible: =false
+            X: =40
+            Y: =40

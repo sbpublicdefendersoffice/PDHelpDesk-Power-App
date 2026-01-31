@@ -1,0 +1,14 @@
+compPageTextSizeFormatter As CanvasComponent:
+    Fill: =RGBA(0, 0, 0, 0)
+    FinalTextSize: =Switch(compPageTextSizeFormatter.PageSizeVariable, 4,compPageTextSizeFormatter.TextSize4,3,compPageTextSizeFormatter.TextSize3,2,compPageTextSizeFormatter.TextSize2,1,compPageTextSizeFormatter.TextSize1)
+    Height: =0
+    PageSizeVariable: =100
+    TextSize1: =8
+    TextSize2: =10
+    TextSize3: =13
+    TextSize4: =15
+    Width: =0
+    X: =0
+    Y: =0
+    ZIndex: =1
+

@@ -1,55 +1,64 @@
 # PDHelpDesk-Power-App
-This folder contains everything necessary to setup the PDHelpDesk for whatever reason.
+Power App Deployment & Restoration Guide
+This guide outlines the process for restructuring and deploying the application into a new environment with minimal errors.
 
-There are 2 folders, one is .msapp file this is the Power App saved as a proprietary file type that the Power APP
-Studio can read and import. The other is the Power App with everything extracted from it into Yaml files. With the
-Yaml files, the entire folder will need to be repackaged with the Power Platform CLI (more on this later) into a
-.msapp file
+📋 Prerequisites
+Before starting, ensure you have the following tools installed and configured:
 
-Inorder to completely restructure with the least amount of errors
+Visual Studio Code: Download here
 
-1.Create the sharepoint site, remember the name you gave it
-2.Create the sharepoint groups
-3.Import the schemas one by one, create the document libraries accordingly (refer to the schema list in the folder)
+Power Platform CLI Extension: Available in the VS Code Marketplace.
 
-Flows
-4.Import each flow one by one refer to the flow list
-  4a. Each flow was exported to be created as a new flow in a new environment
-  4b. As a result new connections will need to be made when importing these
-  4c. This is why it is important to create the sharepoint site first
+PAC CLI Verification: Open your terminal and run the following command to ensure the CLI is active:
 
-Power App
-5. Once the environment is setup import the app from the .msapp file
+PowerShell
+pac
+🚀 Step-by-Step Installation
+1. SharePoint Environment Setup
+Create the SharePoint Site: Note the exact name used.
 
+Create SharePoint Groups: Ensure permissions align with the previous environment.
 
-Troubleshooting
-The Automate flows in the app might throw errors or have strange names follow the names or conventions when importing
- -You can recreate the flows with proper names later and removes these when you do and change the old flow to the new one
-  -While this is extra work, there are quirks to using the Power Platform this is unfortunately one of them
-This also applies to the sharepoint site and its lists
- -The CSV files have the headers at the end of the file
+Import Schemas: Create Document Libraries one by one according to the schema list provided in the /schemas folder.
 
-Future Back-ups
+2. Power Automate (Flows)
+Import Flows: Import each flow individually according to the flow list.
 
-A good rule of thumb is to create a back up every 3 months or sooner
+Connections: Since flows are exported as "Create as New," you must manually establish new connections during the import process.
 
-To begin in the Power App studio, select the application to edit.
-From here you will hover over the save icon, there should be a small downward chevron to the bottom right
-Expand it and you will see options, what we are interested is in Download A Copy
-It can be named however you Like, but take note of what it is called
+Note: This is why the SharePoint site must be created first—so the connections have a destination to point to.
 
-Download VSCode "Link to VSCode"
-Setup VSCode however you like
-Download the Power Platform CLI extension from the library (there is a note that the pack and unpack commands will be deprecated, another solution will be provided)
-Ensure that your terminal is PAC enabled
-"Give pac command to test"
-After you have ensured that everything is working, navigate to the folder you will be working in to unpack the application
-Take note of the path
-Open a new terminal
-You may now use this command to unpack the application
-pac canvas unpack --msapp "C:\examplepathtofile\NameOfApp.msapp" --sources "C:\exampledestinationpath\NameOfApp"
+3. Power App Restoration
+Once the backend and flows are ready, import the application using the .msapp file located in this repository.
 
-The terminal will work, and the result will be the extracted contents in the destination folder provided
+🛠️ Troubleshooting & Quirks
+Flow Naming: Flows may appear with strange names or GUIDs after import. Follow the naming conventions provided in the documentation.
 
-To repackage the application specify the output path and name, then provide the source folder
-pac canvas pack --msapp "C:\exampleoutputpath\NewNameOfApp.msapp" --sources "C:\examplepathtosourcefolder\NameOfApp"
+Workaround: You can recreate flows with proper names later, swap them in the app, and delete the "quirky" versions.
+
+SharePoint Lists: Note that the provided CSV files for data migration have headers located at the end of the file.
+
+Platform Quirks: Power Platform can be temperamental during environment migrations; manual reconnection is often required.
+
+💾 Backup Procedures
+Frequency: It is a best practice to create a full backup every 3 months or after any major milestone.
+
+How to Download a Local Copy
+Open the Power Apps Studio and edit your application.
+
+Locate the Save icon in the top right.
+
+Click the downward chevron (v) next to the icon.
+
+Select Download a copy.
+
+How to Unpack for Version Control
+To see the source code (YAML) and track changes in Git, use the Power Platform CLI:
+
+Open a terminal in your project directory.
+
+Run the unpack command (using quotes for paths with spaces):
+
+PowerShell
+pac canvas unpack --msapp "C:\path\to\App Name.msapp" --sources "C:\destination\Folder Name"
+[!WARNING] The pack and unpack commands may be deprecated in future CLI versions. An updated solution will be provided in this README when the official transition occurs.

@@ -61,3 +61,9 @@ A good rule of thumb is to create a backup every **3 months** or sooner.
     ```powershell
     pac canvas pack --msapp "C:\exampleoutputpath\NewNameOfApp.msapp" --sources "C:\examplepathtosourcefolder\NameOfApp"
     ```
+
+
+---
+## Alternative Solution
+Provided is a link to an older version of the microsoft power apps tooling follow that guide to achieve a the same results, this action might be necessary because we might not be able to use the built-in Git Integration.
+https://github.com/MSYuey/PowerApps-Language-Tooling
